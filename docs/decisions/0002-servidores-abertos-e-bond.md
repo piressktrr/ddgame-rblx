@@ -1,5 +1,5 @@
 # 0002 — Servidores abertos + equipes por Bond
-- Status: Aceita
+- Status: Substituída por 0013 (suspensa durante os testes)
 - Data: 2026-11-11
 ## Contexto
 Servidores abertos permitem jogar com desconhecidos, mas abrem espaço para atrapalhar os outros.

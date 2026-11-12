@@ -4,18 +4,24 @@
 
 ## Onde estamos
 
-- **Marco atual:** M0 (fundação) ✅ concluído e verificado em 2026-11-12.
-- **Fase atual:** fechar decisões de design/arquitetura antes de escrever gameplay.
-- **Código existente:** só o esqueleto (Loader, Config, Types, scripts de entrada). Pastas
-  `src/server/Services` e `src/client/Controllers` vazias.
+- **Marco atual:** M0 ✅. Design v0.3 fechado (ADRs até 0025). Próximo: **M1**.
+- **Branch atual:** `design/refinamento-ideias`.
+- **Código existente:** esqueleto (Loader, Config, Types) + `CameraPrototypeController` (3ª pessoa/2.5D).
 
-## Próximo passo
+## Próximo passo: M1 — movimento solo (câmera 2.5D + gancho)
 
-1. Câmera decidida: 2.5D (ADR 0011). No M1, `CameraPrototypeController.luau` vira `CameraController`
-   definitivo, sem o modo 3ª pessoa. Pista de teste `Workspace.CameraTestCourse` (place não salvo).
-2. Resolver as demais dúvidas de [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md) com o dono.
-3. Registrar cada resposta como decisão em [`decisions/`](decisions/README.md).
-4. Escrever requisitos detalhados do M1 (gancho solo) antes de codar.
+Criar a branch `feat/m1-movimento` a partir da `main` (depois do merge desta branch, se o dono aprovar).
+
+Requisitos do M1:
+1. `CameraController` definitivo, só 2.5D (vem do protótipo).
+2. `CharacterController`: trava o personagem no plano Z.
+3. `HookController`: mira com o mouse no plano; segurar botão = preso, soltar = solta; gruda em
+   tudo menos `NoHook`; `HookOnce` uma vez por jogador; alcance/força em `Config.Hook`.
+4. `HookService`: guarda o uso do `HookOnce` por jogador.
+5. `Config.Tags`: trocar `Hookable` por `NoHook` e `HookOnce`.
+6. Pista de teste greybox com superfícies comum, `NoHook` e `HookOnce`.
+7. Verde volta ao morrer/passar checkpoint (ADR 0024); vermelho é grudável (ADR 0021).
+8. Sem pulo duplo (ADR 0027).
 
 ## Verificação do M0
 
@@ -31,3 +37,6 @@
 | 2026-11-12 | Claude Code | Criado o palácio da memória (AGENTS.md, STATUS, decisions, OPEN_QUESTIONS, GLOSSARY) |
 | 2026-11-12 | Claude Code | Decisões 0008–0010 (nome, PC, MVP 2 mapas labirinto); protótipo de câmera 3ª pessoa/2.5D testado em playtest |
 | 2026-11-12 | Claude Code | Decisões 0011 (câmera 2.5D) e 0012 (várias rotas); nova dúvida Q10 (gancho sobre paredes) |
+| 2026-11-12 | Claude Code | Design v0.2: ADRs 0013–0020 (sem Bond, gelo mata, cores, gancho, Bouncer, progresso por jogador, lâmina, mesmo mapa); GDD e arquitetura revisados |
+| 2026-11-12 | Claude Code | Design v0.3: ADRs 0021–0025 (cores finais, MVP 1 mapa, solo primeiro, detalhes das ferramentas, monetização com vantagens) |
+| 2026-11-12 | Claude Code | ADRs 0026–0028 (deuses romanos, sem pulo duplo, ranking separa boost) |

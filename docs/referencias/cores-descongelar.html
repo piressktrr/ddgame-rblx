@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cores do descongelar</title>
+<style>
+:root{--bg:#14161c;--fg:#eef;--muted:#99a}
+body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,sans-serif;max-width:720px}
+h1{font-size:20px;margin:0 0 4px}p{color:var(--muted);margin:4px 0 16px}
+.card{background:#1d2029;border-radius:12px;padding:12px;margin:0 0 14px}
+.row{display:flex;gap:8px;align-items:stretch}
+.sw{flex:1;height:70px;border-radius:8px;display:flex;align-items:flex-end;padding:6px;font-size:12px;font-weight:700;color:#000}
+.ice{background:linear-gradient(135deg,#bff0ff,#6fd3f2)}
+h2{font-size:16px;margin:10px 0 2px}.tag{font-size:12px;padding:2px 6px;border-radius:6px;background:#2c3140;margin-left:6px}
+.ok{color:#7ee08a}.warn{color:#ffb35c}
+.ctx{display:flex;gap:6px;margin-top:8px}.ctx div{flex:1;height:28px;border-radius:6px;font-size:11px;display:flex;align-items:center;justify-content:center;color:#000;font-weight:700}
+</style></head><body>
+<h1>Descongelar: qual cor contrasta com o gelo?</h1>
+<p>Regra das referências: o par mais legível com azul-gelo é <b>azul × laranja</b> (cores opostas no círculo, e funciona para a maioria dos daltônicos). Embaixo de cada opção aparecem as outras cores do jogo, para ver se alguma se confunde.</p>
+
+<div class="card"><h2>A · Laranja-brasa <span class="tag ok">recomendada</span></h2>
+<div class="row"><div class="sw ice">Gelo</div><div class="sw" style="background:#ff8a1f">#FF8A1F</div></div>
+<p>Oposto direto do gelo: "fogo derrete gelo" é entendido na hora. Bom contraste para daltônicos. Fica longe do vermelho da morte se for bem alaranjado.</p></div>
+
+<div class="card"><h2>B · Magenta arcano <span class="tag ok">bem mágico</span></h2>
+<div class="row"><div class="sw ice">Gelo</div><div class="sw" style="background:#e040c8;color:#fff">#E040C8</div></div>
+<p>Cor que quase não aparece em cenário natural, então chama atenção. Combina com o tema de fantasia. Menos óbvia que "fogo derrete gelo".</p></div>
+
+<div class="card"><h2>C · Âmbar dourado <span class="tag warn">conflito</span></h2>
+<div class="row"><div class="sw ice">Gelo</div><div class="sw" style="background:#ffc43d">#FFC43D</div></div>
+<p>Contrasta bem, mas o <b>checkpoint já é dourado</b>. Só serve se o checkpoint mudar de cor.</p></div>
+
+<div class="card"><h2>D · Rosa-chama <span class="tag warn">risco</span></h2>
+<div class="row"><div class="sw ice">Gelo</div><div class="sw" style="background:#ff5f7a">#FF5F7A</div></div>
+<p>Quente e vibrante, mas fica perto do <b>vermelho da morte</b>, o que pode confundir num momento de pressa.</p></div>
+
+<div class="card"><h2>As outras cores do jogo, para comparar</h2>
+<div class="ctx"><div class="ice">Gelo</div><div style="background:#e0262b;color:#fff">Morte</div><div style="background:#4cd964">Gancho 1x</div><div style="background:#ffd23f">Checkpoint</div></div>
+<p>Dica das referências: além da cor, dê <b>forma</b> diferente a cada zona (ex.: descongelar com chamas/runas subindo, gelo com cristais), e teste num simulador de daltonismo.</p></div>
+</body></html>

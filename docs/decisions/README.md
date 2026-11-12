@@ -19,7 +19,7 @@ Modelo:
 | # | Decisão | Status |
 |---|---|---|
 | [0001](0001-genero-e-originalidade.md) | Corrida cooperativa fantasia, 100% original | Aceita |
-| [0002](0002-servidores-abertos-e-bond.md) | Servidores abertos + equipes por Bond | Aceita |
+| [0002](0002-servidores-abertos-e-bond.md) | Servidores abertos + equipes por Bond | Substituída por 0013 |
 | [0003](0003-gancho-puxa-os-dois.md) | O gancho puxa os dois jogadores | Aceita |
 | [0004](0004-solo-com-objetos-magicos.md) | Todo mapa completável solo com objetos mágicos | Aceita |
 | [0005](0005-toolchain-rojo.md) | Rojo + Rokit + Wally, código só em arquivos | Aceita |
@@ -27,6 +27,22 @@ Modelo:
 | [0007](0007-loader-sem-framework.md) | Loader próprio Init/Start, sem Knit | Aceita |
 | [0008](0008-nome-race-and-escape.md) | Nome: Race and Escape | Aceita |
 | [0009](0009-foco-pc.md) | Foco total no PC | Aceita |
-| [0010](0010-mvp-mapas.md) | MVP: mapa solo + mapa coop (labirinto) | Aceita |
+| [0010](0010-mvp-mapas.md) | MVP: mapa solo + mapa coop (labirinto) | Substituída por 0022 |
 | [0011](0011-camera-2-5d.md) | Câmera 2.5D lateral | Aceita |
 | [0012](0012-varias-rotas.md) | Mapas com várias rotas até o final | Aceita |
+| [0013](0013-sem-bond-por-enquanto.md) | Sem Bond por enquanto (substitui 0002) | Aceita |
+| [0014](0014-gelo-mata.md) | Gelo: 15 s congelado, depois morte | Aceita |
+| [0015](0015-cores.md) | Linguagem de cores (parcial) | Aceita |
+| [0016](0016-gancho-regras.md) | Regras do gancho | Aceita |
+| [0017](0017-bouncer.md) | Bouncer, pistola de impulso | Aceita |
+| [0018](0018-progresso-por-jogador.md) | Progresso por jogador, checkpoints ~3 min | Aceita |
+| [0019](0019-lamina-magica.md) | Lâmina mágica (empurrão) | Aceita |
+| [0020](0020-mesmo-mapa-solo-e-grupo.md) | Mesmo mapa solo e grupo | Aceita |
+| [0021](0021-cores-finais.md) | Descongelar laranja-brasa, não-grudável roxo | Aceita |
+| [0022](0022-mvp-um-mapa.md) | MVP com um mapa (substitui 0010) | Aceita |
+| [0023](0023-solo-primeiro.md) | Solo primeiro; Bond sem proteção depois do MVP | Aceita |
+| [0024](0024-detalhes-ferramentas.md) | Bouncer some ao sair do trecho; lâmina descongela; verde volta | Aceita |
+| [0025](0025-monetizacao-com-vantagens.md) | Monetização pode dar vantagens | Aceita |
+| [0026](0026-objetos-deuses-romanos.md) | Objetos mágicos com nomes de deuses romanos | Aceita |
+| [0027](0027-sem-pulo-duplo.md) | Sem pulo duplo: movimento é gancho + Bouncer | Aceita |
+| [0028](0028-ranking-separa-boost.md) | Ranking separa quem usou boost | Aceita |

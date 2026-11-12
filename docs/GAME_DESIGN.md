@@ -1,183 +1,130 @@
-# Game Design Document (rascunho v0.1)
+# Game Design Document — Race and Escape (v0.3)
 
-> Codinome: **dddrace-roblox** (nome final a definir; vamos criar uma identidade própria,
-> inspirada no gênero "race cooperativo", sem copiar arte, nomes ou mapas de outros jogos).
-> Visão geral em linguagem simples: [README](../README.md).
+> Jogo original no gênero de corrida cooperativa. Nada de arte, nomes ou mapas copiados.
+> Visão simples: [README](../README.md). Decisões numeradas: [decisions/](decisions/README.md).
 
 ## 1. Pitch
 
-Plataforma de **fantasia** em servidor aberto. Os jogadores usam um **gancho mágico** para se
-balançar e puxar uns aos outros, desviam de **gelo mágico** e atravessam mapas que podem ser
-feitos **sozinho ou em equipe**. Falhar não mata: congela. Em equipe, seu parceiro te salva.
+Plataforma de **fantasia em 2.5D** num servidor aberto. Cada mapa é um labirinto visto de lado,
+com **várias rotas até o final**. Os jogadores usam um **gancho mágico** para se balançar e puxar
+uns aos outros, desviam de **gelo mágico** e usam o **Bouncer**, uma pistola mágica de impulso, em
+trechos especiais. Qualquer um pode **salvar ou atrapalhar** qualquer outro.
 
 **Tema:** fantasia (ruínas flutuantes, florestas mágicas, cavernas de cristal, torres de magos).
 
 **Pilares (toda decisão de design deve servir a pelo menos um):**
 
-1. **Cooperação recompensada, solo sempre possível**: todo mapa pode ser terminado sozinho;
-   jogar em equipe abre jeitos diferentes (e mais divertidos) de passar pelos obstáculos.
-2. **Movimento com skill**: o gancho tem um teto de habilidade alto (balanço, momentum, timing).
-3. **Falha barata**: congelar custa segundos, não progresso. Sem frustração de "voltar tudo".
-4. **Legibilidade**: qualquer jogador entende o que uma superfície faz só pela cor e textura.
+1. **Caos social divertido:** puxar estranhos, salvar alguém no último segundo ou atrapalhar de
+   brincadeira. Jogar junto é mais rápido, mas sozinho sempre dá.
+2. **Movimento com skill:** gancho, Bouncer e lâmina têm teto de habilidade alto (momentum, timing).
+3. **Ritmo rápido:** nada de ficar esperando. Congelar é um relógio de 15 s, não uma espera parada.
+4. **Conquista que se sente:** checkpoints espaçados (~3 min) tornam cada um uma vitória.
+5. **Legibilidade:** a cor de uma superfície diz o que ela faz (§6).
 
 ## 2. Core loop
 
 ```
-Hub → escolhe mapa (por dificuldade) → joga solo OU forma equipe (Bond) → corre seções entre checkpoints
-   → termina → tempo no ranking + moedas/XP → desbloqueia cosméticos e mapas → volta ao Hub
+Entra no mapa → corre entre checkpoints (sozinho ou ajudando/atrapalhando outros)
+   → descobre rotas e atalhos → chega ao fim → tempo pessoal no ranking → tenta de novo mais rápido
 ```
-
-Sessão-alvo: 10–25 min. Um mapa fácil leva de 3 a 6 min; um difícil, 15 min ou mais.
 
 ## 3. Mecânicas
 
-| Mecânica | Descrição | Notas de design |
+| Mecânica | Como funciona | Decisão |
 |---|---|---|
-| **Gancho** | Dispara na direção da mira; prende em superfície *enganchável* e puxa o jogador. Se acertar um parceiro, **puxa os dois um em direção ao outro** (decidido). | Alcance fixo (~40 studs), cooldown curto. Mobile: botão dedicado + mira automática assistida. |
-| **Empurrão** | Ataque de curto alcance que empurra parceiro e descongela. | Principal ferramenta para "lançar" o parceiro. |
-| **Congelamento** | Ao tocar zona de gelo, o jogador congela: não anda nem usa gancho, mas **pode ser enganchado e empurrado**. | Descongela sozinho após X s **ou** ao entrar em zona de descongelamento. |
-| **Descongelamento** | Zona que tira o congelamento imediatamente. | Normalmente fica do "outro lado" de um obstáculo: o parceiro te leva até lá. |
-| **Superfícies** | Enganchável / não enganchável / mortal (teleporta pro checkpoint). | Linguagem visual fixa (ver §6). |
-| **Checkpoints** | Salvam o progresso **da dupla**. | Um a cada 30–90 s de jogo para um jogador médio. |
-| **Botões/portas** | Um jogador segura e o outro passa. | Clássico de coop, barato de construir. |
+| **Gancho** | Mira com o mouse. **Segura** o botão para ficar preso, solta para soltar. Gruda em **qualquer superfície**, exceto as não-grudáveis. Superfícies **roxas** não grudam. Em superfície **verde**, cada jogador gruda **só uma vez** (volta ao morrer ou passar de checkpoint). Se acertar outro jogador, **puxa os dois**. | 0003, 0016 |
+| **Gelo** | Tocar no gelo congela por **15 s**: não anda nem usa ferramentas, mas pode ser puxado/empurrado. Se chegar a uma zona de descongelar, volta ao normal. Se o tempo acabar, **morre**. | 0014 |
+| **Descongelar** | Zona **laranja-brasa** que tira o congelamento na hora. Fica perto do gelo para que outro jogador possa salvar. | 0014, 0021 |
+| **Zona mortal** | Vermelha. Mata na hora → volta ao último checkpoint. O gancho gruda nela. | 0015, 0021 |
+| **Bouncer** | Pistola mágica pega num ponto do mapa e usada num trecho. Cada tiro empurra o próprio jogador para o lado oposto da mira; empurra **um pouco** quem for atingido. Munição que recarrega sozinha. Some ao sair do trecho. | 0017, 0024 |
+| **Lâmina mágica** | É o empurrão: golpe corpo a corpo que empurra e **descongela** quem acerta. Sem dano. | 0019, 0024 |
+| **Checkpoints** | **Por jogador**. Um a cada ~3 min de jogo. | 0018 |
+| **Objetos mágicos (solo)** | Ajudam quem está sozinho no lugar de um parceiro (§3.2). | 0004, 0020 |
 
-### 3.1 Bond (como o coop funciona em servidor aberto)
+### 3.1 Interação entre jogadores (MVP: sem Bond)
 
-Servidor aberto tem um problema conhecido do gênero: um estranho pode te enganchar e jogar no
-gelo (griefing). Solução proposta:
+- Todos interagem com todos: gancho, Bouncer e lâmina afetam qualquer jogador (ADR 0013).
+- Não existe equipe no sistema. "Grupo" é só quem combina de se ajudar.
+- Tempo, checkpoint e ranking são **pessoais**, mesmo jogando junto.
+- **Depois do MVP** o Bond volta como formação de grupo, **sem proteção**: grupos diferentes
+  continuam podendo se atrapalhar (ADR 0023).
+- Risco de troll aceito nos testes. Toda regra de "posso afetar esse jogador?" fica num único
+  módulo (`InteractionPolicy`), para religar alguma proteção no futuro.
 
-- Jogadores **sem Bond** não colidem nem interagem com outros (CollisionGroup "Ghost").
-- No início do mapa há um **Portal de Bond**: 2–4 jogadores entram juntos e viram uma equipe.
-- Só membros da mesma equipe podem enganchar/empurrar uns aos outros e compartilham checkpoints e timer.
-- Botão "Procurar parceiro" no Hub para quem chega sozinho (matchmaking leve dentro do servidor).
-- Sair da equipe é imediato. Ficar AFK por um tempo dissolve a equipe.
-- O Portal de Bond é opcional: quem passa direto joga **solo** (equipe de 1).
+### 3.2 Jogo solo com objetos mágicos
 
-### 3.2 Jogo solo
+O mesmo mapa serve para quem está sozinho e para quem está em grupo. Quem está sozinho conta com
+objetos que fazem o papel do colega (nomes provisórios):
 
-Requisito: muita gente não tem com quem jogar, então **todo mapa precisa ser concluível sozinho**.
-O desafio de design é não tornar os obstáculos de coop inúteis no solo.
-
-**Decisão: objetos mágicos que substituem o parceiro.** No modo solo, aparecem objetos que fazem o
-papel do colega. O mesmo mapa serve para os dois modos. Uma rota paralela só entra como exceção,
-quando nenhum objeto resolve bem o obstáculo.
-
-Regras:
-
-- O modo é definido ao passar (ou não) pelo Portal de Bond. Os objetos são ativados por tags:
-  `SoloOnly` aparece só para quem está sozinho, `TeamOnly` só para equipes.
-- Os objetos existem **só para o jogador solo** (renderizados no cliente dele, validados no
-  servidor). Assim dois jogadores solo no mesmo trecho não atrapalham um ao outro.
-- Cada padrão de coop da §5 precisa ter um objeto equivalente:
-
-| Padrão de coop | Objeto mágico (nomes provisórios) | Como funciona |
+| Situação de coop | Objeto mágico | Como ajuda |
 |---|---|---|
-| Elevador | **Pedra-âncora** | Ponto enganchável que puxa o jogador para cima com mais força. |
-| Lançamento | **Orbe de impulso** | Ao ser enganchado, arremessa o jogador na direção marcada. |
-| Resgate | **Cristal de degelo** | Atingido pelo gancho, descongela o jogador. Funciona até congelado, então tem alcance curto. |
-| Ponte (botão) | **Totem de peso** | Bloco que o jogador arrasta com o gancho até o botão. |
-| Revezamento | Combinação dos acima | Cada obstáculo usa um objeto diferente. |
+| Elevar o parceiro | **Pedra-âncora** | Ponto que puxa o jogador para cima com mais força. |
+| Lançar o parceiro | **Orbe de impulso** | Enganchado, arremessa o jogador na direção marcada. |
+| Salvar do gelo | **Cristal de degelo** | Atingido pelo gancho, descongela (funciona mesmo congelado; alcance curto). |
+| Segurar botão | **Totem de peso** | Bloco que o jogador arrasta com o gancho até o botão. |
 
-- Objetos são **prefabs reutilizáveis**: o level designer só posiciona e marca a tag.
-- Balanceamento: o solo deve ser **um pouco mais lento** que a equipe, nunca mais rápido.
-  Rankings separados para solo e equipe.
+No MVP (solo primeiro, ADR 0023) os objetos ficam **sempre ativos para todos**. Com o Bond, passam a
+aparecer só para quem não está em grupo.
 
-## 4. Estrutura de mundo
+## 4. Estrutura de mundo (MVP)
 
-- **Hub**: área social com portais por dificuldade, leaderboards físicos (placas 3D), loja de cosméticos.
-- **Tutorial** (obrigatório na primeira vez, ~2 min): ensina gancho → gelo → parceiro, nessa ordem.
-- **Mapas** por tiers (nomes próprios a definir): Iniciante, Intermediário, Avançado, Extremo.
-- Cada mapa: 5–12 **seções** entre checkpoints, cada seção com uma ideia central.
+- MVP: **um** mapa labirinto 2.5D com várias rotas, jogável sozinho e em grupo (ADR 0012, 0022). Sem hub elaborado.
+- Cada mapa: seções entre checkpoints de ~3 min, cada seção com uma ideia central.
+- Depois do MVP: hub, tutorial, mapas por dificuldade.
 
 ## 5. Princípios de design de fases
 
-Práticas que os obbies e jogos de plataforma mais bem-sucedidos do Roblox (e fora dele) usam:
-
 1. **Ensinar → Testar → Torcer.** Cada mecânica aparece primeiro num lugar seguro, depois sob
-   pressão e depois combinada com outra. Nunca introduza duas ideias novas na mesma seção.
-2. **Os primeiros 60 segundos decidem a retenção.** O jogador precisa enganchar algo nos primeiros
-   10 s e sentir uma pequena vitória antes de 1 min. Nada de texto longo.
-3. **Ritmo de tensão e alívio.** Depois de um trecho difícil vem uma área calma (checkpoint, vista
-   bonita, coletável). Dificuldade sobe em "dentes de serra", não em linha reta.
-4. **Coop por design de espaço.** Padrões reutilizáveis:
-   - *Elevador*: um jogador sobe e engancha o outro para cima.
-   - *Ponte*: um segura um botão ou fica de "âncora" para o outro balançar.
-   - *Resgate*: passagem obrigatória por gelo; o parceiro te puxa até o descongelamento.
-   - *Lançamento*: empurrão + gancho para cruzar um vão impossível sozinho.
-   - *Revezamento*: os jogadores trocam de papel a cada obstáculo.
-5. **Linhas de condução.** Iluminação, cor e geometria apontam o caminho; o jogador nunca deve
-   procurar "para onde eu vou?". Use marcos visuais altos visíveis de longe.
-6. **Falha visível e justa.** Hitboxes do tamanho do visual, sem gelo "escondido". Se o jogador
-   morrer, ele deve saber por quê.
-7. **Rotas para níveis de skill diferentes.** Atalhos opcionais para jogadores avançados
-   (speedrun) e coletáveis fora da rota principal; o caminho padrão continua acessível.
-8. **Mobile-first.** Boa parte do público do Roblox joga no celular: vãos e timings precisam ser
-   jogáveis no touch, e a câmera não pode ficar presa em paredes.
-9. **Orçamento de tamanho.** Seções compactas (streaming eficiente, menos partes); prefira
-   reaproveitar *prefabs* de obstáculos a modelar tudo do zero.
+   pressão e depois combinada com outra.
+2. **Os primeiros 60 segundos decidem a retenção.** Enganchar algo nos primeiros 10 s.
+3. **Tensão e alívio** em "dentes de serra". Com checkpoints de 3 min, cada seção precisa ter
+   pequenas vitórias no meio (atalhos, vistas, rotas descobertas) para a morte não frustrar.
+4. **Várias rotas:** toda seção tem pelo menos uma rota segura e uma rápida/arriscada. Bouncer e
+   superfícies verdes são ótimas chaves de atalho.
+5. **Gelo sempre com resgate possível:** descongelar ao alcance de um gancho ou empurrão.
+6. **Linhas de condução:** luz, cor e geometria apontam o caminho.
+7. **Falha visível e justa:** hitboxes do tamanho do visual.
+8. **PC primeiro** (ADR 0009): timings pensados para teclado e mouse.
+9. **Orçamento de tamanho:** prefabs reutilizáveis.
 
 ### 5.1 Processo de produção de um mapa
 
-1. **Papel**: lista de seções (ideia central de cada uma + papel de cada jogador).
-2. **Greybox** no Studio só com blocos e as cores da §6, sem arte.
-3. **Playtest em dupla**: medir tempo por seção e onde as pessoas congelam/desistem.
-4. **Iterar** até o tempo médio por seção bater a meta do tier.
-5. **Arte/iluminação** só depois do layout aprovado.
+1. **Papel:** seções, rotas e mecânica central de cada uma.
+2. **Greybox** só com blocos nas cores da §6.
+3. **Playtest** sozinho e em grupo: tempo por seção, onde as pessoas morrem.
+4. **Iterar.** Arte e iluminação só depois do layout aprovado.
 
-## 5.2 Câmera: 2.5D lateral (decidido, ADR 0011)
+### 5.2 Câmera: 2.5D lateral (ADR 0011)
 
-Visão lateral com profundidade só visual: o personagem anda num plano (esquerda/direita + pulo).
-Cada mapa é um labirinto 2.5D com **várias rotas até o final** (ADR 0012): rotas se dividem e se
-juntam, com pelo menos uma segura e uma rápida/arriscada.
+O personagem anda num plano (esquerda/direita + pulo). A profundidade é só visual.
 
-Comparação que levou à decisão:
+## 6. Linguagem visual
 
-| | 2.5D lateral | 3ª pessoa livre |
+| Elemento | Cor | Tag (CollectionService) |
 |---|---|---|
-| Mira do gancho | Simples (plano 2D), ótima no celular | Precisa de mira 3D/assistida |
-| Design de fases | Mais controlado e legível | Mais liberdade, mais difícil de balancear |
-| Exploração | Limitada ao plano | Ampla |
-| Identidade | Diferencia o jogo no Roblox | Padrão de obbies |
-
-## 6. Linguagem visual (fixa em todos os mapas)
-
-Cores fixas, com materiais de fantasia (pedra rúnica, cristal, musgo luminoso) aplicados por cima.
-
-| Elemento | Cor / material | Tag (CollectionService) |
-|---|---|---|
-| Enganchável | Cinza claro, textura de grade | `Hookable` |
-| Não enganchável | Escuro, liso | (padrão) |
-| Congelamento | Azul gelo, translúcido, partículas | `FreezeZone` |
-| Descongelamento | Verde, brilho | `UnfreezeZone` |
-| Mortal | Vermelho pulsante | `KillZone` |
-| Checkpoint | Faixa dourada no chão | `Checkpoint` |
+| Superfície comum (gancho gruda) | Neutra (pedra, madeira, cristal) | (padrão) |
+| Não-grudável | **Roxo** | `NoHook` |
+| Gruda uma vez por jogador | Verde | `HookOnce` |
+| Congela | Azul-gelo | `FreezeZone` |
+| Descongelar | **Laranja-brasa** `#FF8A1F` ([referência](referencias/cores-descongelar.html)) | `UnfreezeZone` |
+| Mortal | Vermelho | `KillZone` |
+| Checkpoint | Dourado | `Checkpoint` |
+| Ponto do Bouncer | A definir | `BouncerPickup` / `BouncerZone` |
 | Início / Fim | Arcos com placa | `RaceStart` / `RaceFinish` |
 
-## 7. Progressão e monetização (ética)
+Além da cor, cada zona tem **forma** própria (cristais no gelo, chamas/runas no descongelar etc.)
+para ajudar daltônicos.
 
-- **XP e moedas** por mapa concluído; bônus por primeira conclusão e por recorde pessoal.
-- **Cosméticos**: trilhas, skin do gancho, efeito de congelamento, títulos. Nada que dê vantagem.
-- **Game Passes**: cosméticos e, no máximo, conveniências (ex.: salvar replay). Sem "pular fase".
-- **Rankings**: por mapa (melhor tempo da equipe), diário/semanal/global.
+## 7. Progressão e monetização (pós-MVP, ADR 0025)
+
+- XP e moedas por mapa concluído; bônus por recorde pessoal.
+- Cosméticos (trilha, skin do gancho/Bouncer/lâmina, efeito de gelo).
+- **Boosts e perks com vantagem são permitidos** (ex.: congelar por menos tempo, mais munição no
+  Bouncer). Os valores do Config são o padrão sem boost; perks aplicam modificadores por jogador.
+- Rankings por mapa, pessoais. A definir: separar ou não quem usou boost.
 
 ## 8. Escopo do MVP
 
-Somente o que valida a diversão: gancho, gelo/descongelamento, modo solo, Bond em dupla,
-checkpoints, timer, 1 tutorial + 2 mapas (Iniciante e Intermediário), salvamento de recordes.
-Fora do MVP: loja, replays, editor de mapas, trios/quartetos.
-
-## 9. Decisões
-
-| Tema | Decisão |
-|---|---|
-| Tema visual | Fantasia |
-| Gancho em parceiro | Puxa os dois |
-| Solo | Todo mapa concluível sozinho |
-| Solo nas seções de coop | Objetos mágicos substituem o parceiro (§3.2) |
-
-## 10. Perguntas em aberto
-
-- Nome do jogo.
-- Câmera: 2.5D lateral (ver §5.2).
-- Nomes e visual finais dos objetos mágicos do modo solo.
-- Tamanho máximo de equipe (2, 3 ou 4). O código vai suportar N jogadores; o limite é só configuração.
+Gancho, gelo/descongelar, zona mortal, checkpoints por jogador, timer pessoal, Bouncer, lâmina,
+objetos mágicos do solo, um mapa labirinto 2.5D. Fora do MVP: Bond, hub, tutorial, loja, boosts,
+salvar recordes entre sessões.

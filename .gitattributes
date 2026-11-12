@@ -1,0 +1,8 @@
+# Todos os arquivos de texto usam quebra de linha LF (igual ao StyLua), em qualquer sistema.
+* text=auto eol=lf
+
+# Arquivos binários do Roblox
+*.rbxl binary
+*.rbxm binary
+*.rbxlx text eol=lf
+*.rbxmx text eol=lf
