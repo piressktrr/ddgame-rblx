@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1194 396" font-family="sans-serif">
+<rect width="1194" height="396" fill="#1b1d24"/>
+<rect x="42" y="10" width="348" height="376" fill="none" stroke="#3a3f4f" stroke-dasharray="6 6"/>
+<text x="50" y="30" fill="#c9cbe0" font-size="16">S1 · Aquecimento</text>
+<rect x="390" y="10" width="267" height="376" fill="none" stroke="#3a3f4f" stroke-dasharray="6 6"/>
+<text x="398" y="30" fill="#c9cbe0" font-size="16">S2 · Bifurcação</text>
+<rect x="657" y="10" width="507" height="376" fill="none" stroke="#3a3f4f" stroke-dasharray="6 6"/>
+<text x="665" y="30" fill="#c9cbe0" font-size="16">S3 · Torre ou atalho</text>
+<rect x="30.0" y="70.0" width="12.0" height="222.0" fill="rgb(163,162,165)" fill-opacity="1"><title>WallLeft</title></rect>
+<rect x="42.0" y="280.0" width="180.0" height="12.0" fill="rgb(90,160,110)" fill-opacity="1"><title>StartFloor</title></rect>
+<rect x="42.0" y="220.0" width="180.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>StartCeiling</title></rect>
+<rect x="234.0" y="274.0" width="42.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S1_Step1</title></rect>
+<rect x="288.0" y="265.0" width="36.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S1_Step2</title></rect>
+<rect x="336.0" y="256.0" width="42.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S1_Step3</title></rect>
+<rect x="390.0" y="256.0" width="102.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Hub</title></rect>
+<rect x="498.0" y="244.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up1</title></rect>
+<rect x="525.0" y="235.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up2</title></rect>
+<rect x="558.0" y="235.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up3</title></rect>
+<rect x="591.0" y="235.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up4</title></rect>
+<rect x="624.0" y="235.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up5</title></rect>
+<rect x="492.0" y="292.0" width="120.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_TunnelFloor</title></rect>
+<rect x="516.0" y="256.0" width="90.0" height="6.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_TunnelCeiling</title></rect>
+<rect x="546.0" y="283.0" width="9.0" height="9.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_TunnelBump1</title></rect>
+<rect x="579.0" y="283.0" width="9.0" height="9.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_TunnelBump2</title></rect>
+<rect x="612.0" y="280.0" width="15.0" height="24.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Stair1</title></rect>
+<rect x="627.0" y="271.0" width="15.0" height="33.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Stair2</title></rect>
+<rect x="642.0" y="262.0" width="15.0" height="42.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Stair3</title></rect>
+<rect x="657.0" y="250.0" width="135.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Rejoin</title></rect>
+<rect x="699.0" y="248.8" width="18.0" height="2.0" fill="rgb(255,210,63)" fill-opacity="1"><title>CP1</title></rect>
+<rect x="801.0" y="241.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower1</title></rect>
+<rect x="828.0" y="232.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower2</title></rect>
+<rect x="855.0" y="223.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower3</title></rect>
+<rect x="882.0" y="214.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower4</title></rect>
+<rect x="909.0" y="205.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower5</title></rect>
+<rect x="936.0" y="196.0" width="126.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_TopWalk</title></rect>
+<rect x="792.0" y="274.0" width="36.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low1</title></rect>
+<rect x="843.0" y="274.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low2</title></rect>
+<rect x="876.0" y="274.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low3</title></rect>
+<rect x="909.0" y="274.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low4</title></rect>
+<rect x="942.0" y="274.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low5</title></rect>
+<rect x="972.0" y="265.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_LowStair1</title></rect>
+<rect x="999.0" y="256.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_LowStair2</title></rect>
+<rect x="1026.0" y="250.0" width="126.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>FinishFloor</title></rect>
+<rect x="1107.0" y="248.8" width="18.0" height="2.0" fill="rgb(255,255,255)" fill-opacity="1"><title>Finish</title></rect>
+<rect x="1152.0" y="70.0" width="12.0" height="192.0" fill="rgb(163,162,165)" fill-opacity="1"><title>WallRight</title></rect>
+<rect x="42.0" y="340.0" width="1110.0" height="6.0" fill="rgb(224,38,43)" fill-opacity="0.45"><title>PitMarker</title></rect>
+<circle cx="72" cy="272" r="6" fill="#5ad07a"/>
+<text x="82" y="276" fill="#5ad07a" font-size="13">spawn</text>
+</svg>

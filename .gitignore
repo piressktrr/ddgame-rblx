@@ -11,3 +11,7 @@ sourcemap.json
 
 # Configuracoes locais
 .claude/settings.local.json
+
+# Trava do Studio enquanto o place está aberto
+*.rbxl.lock
+*.rbxlx.lock

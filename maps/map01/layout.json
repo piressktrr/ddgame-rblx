@@ -1,0 +1,463 @@
+{
+  "name": "Map01",
+  "description": "Mapa 01 (greybox). Visto de lado: X = horizontal, Y = altura, em studs. Tudo no plano Z = 0. Cada bloco: [x1, x2, y1, y2].",
+  "depth": 12,
+  "killHeight": -30,
+  "kinds": {
+    "solid": {
+      "color": [
+        163,
+        162,
+        165
+      ],
+      "label": "Chão / parede"
+    },
+    "kill": {
+      "color": [
+        224,
+        38,
+        43
+      ],
+      "label": "Zona mortal (marcador)"
+    },
+    "checkpoint": {
+      "color": [
+        255,
+        210,
+        63
+      ],
+      "label": "Checkpoint"
+    },
+    "start": {
+      "color": [
+        90,
+        160,
+        110
+      ],
+      "label": "Início"
+    },
+    "finish": {
+      "color": [
+        255,
+        255,
+        255
+      ],
+      "label": "Fim"
+    }
+  },
+  "sections": [
+    {
+      "id": "S1",
+      "name": "Aquecimento",
+      "x1": 0,
+      "x2": 116,
+      "note": "Andar e pular degraus sobre o abismo"
+    },
+    {
+      "id": "S2",
+      "name": "Bifurcação",
+      "x1": 116,
+      "x2": 205,
+      "note": "Rota de cima (rápida, pulos; quem cai vai para o túnel) x túnel de baixo (seguro)"
+    },
+    {
+      "id": "S3",
+      "name": "Torre ou atalho",
+      "x1": 205,
+      "x2": 374,
+      "note": "Subir a torre de degraus (segura, mais longa) x descer e pular o abismo (rápida, arriscada)"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "WallLeft",
+      "kind": "solid",
+      "box": [
+        -4,
+        0,
+        -4,
+        70
+      ]
+    },
+    {
+      "name": "StartFloor",
+      "kind": "start",
+      "box": [
+        0,
+        60,
+        -4,
+        0
+      ]
+    },
+    {
+      "name": "StartCeiling",
+      "kind": "solid",
+      "box": [
+        0,
+        60,
+        16,
+        20
+      ]
+    },
+    {
+      "name": "S1_Step1",
+      "kind": "solid",
+      "box": [
+        64,
+        78,
+        -2,
+        2
+      ]
+    },
+    {
+      "name": "S1_Step2",
+      "kind": "solid",
+      "box": [
+        82,
+        94,
+        1,
+        5
+      ]
+    },
+    {
+      "name": "S1_Step3",
+      "kind": "solid",
+      "box": [
+        98,
+        112,
+        4,
+        8
+      ]
+    },
+    {
+      "name": "S2_Hub",
+      "kind": "solid",
+      "box": [
+        116,
+        150,
+        4,
+        8
+      ]
+    },
+    {
+      "name": "S2_Up1",
+      "kind": "solid",
+      "box": [
+        152,
+        158,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "S2_Up2",
+      "kind": "solid",
+      "box": [
+        161,
+        167,
+        14,
+        15
+      ]
+    },
+    {
+      "name": "S2_Up3",
+      "kind": "solid",
+      "box": [
+        172,
+        178,
+        14,
+        15
+      ]
+    },
+    {
+      "name": "S2_Up4",
+      "kind": "solid",
+      "box": [
+        183,
+        189,
+        14,
+        15
+      ]
+    },
+    {
+      "name": "S2_Up5",
+      "kind": "solid",
+      "box": [
+        194,
+        200,
+        14,
+        15
+      ]
+    },
+    {
+      "name": "S2_TunnelFloor",
+      "kind": "solid",
+      "box": [
+        150,
+        190,
+        -8,
+        -4
+      ]
+    },
+    {
+      "name": "S2_TunnelCeiling",
+      "kind": "solid",
+      "box": [
+        158,
+        188,
+        6,
+        8
+      ]
+    },
+    {
+      "name": "S2_TunnelBump1",
+      "kind": "solid",
+      "box": [
+        168,
+        171,
+        -4,
+        -1
+      ]
+    },
+    {
+      "name": "S2_TunnelBump2",
+      "kind": "solid",
+      "box": [
+        179,
+        182,
+        -4,
+        -1
+      ]
+    },
+    {
+      "name": "S2_Stair1",
+      "kind": "solid",
+      "box": [
+        190,
+        195,
+        -8,
+        0
+      ]
+    },
+    {
+      "name": "S2_Stair2",
+      "kind": "solid",
+      "box": [
+        195,
+        200,
+        -8,
+        3
+      ]
+    },
+    {
+      "name": "S2_Stair3",
+      "kind": "solid",
+      "box": [
+        200,
+        205,
+        -8,
+        6
+      ]
+    },
+    {
+      "name": "S3_Rejoin",
+      "kind": "solid",
+      "box": [
+        205,
+        250,
+        6,
+        10
+      ]
+    },
+    {
+      "name": "CP1",
+      "kind": "checkpoint",
+      "box": [
+        219,
+        225,
+        10,
+        10.4
+      ]
+    },
+    {
+      "name": "S3_Tower1",
+      "kind": "solid",
+      "box": [
+        253,
+        259,
+        12,
+        13
+      ]
+    },
+    {
+      "name": "S3_Tower2",
+      "kind": "solid",
+      "box": [
+        262,
+        268,
+        15,
+        16
+      ]
+    },
+    {
+      "name": "S3_Tower3",
+      "kind": "solid",
+      "box": [
+        271,
+        277,
+        18,
+        19
+      ]
+    },
+    {
+      "name": "S3_Tower4",
+      "kind": "solid",
+      "box": [
+        280,
+        286,
+        21,
+        22
+      ]
+    },
+    {
+      "name": "S3_Tower5",
+      "kind": "solid",
+      "box": [
+        289,
+        295,
+        24,
+        25
+      ]
+    },
+    {
+      "name": "S3_TopWalk",
+      "kind": "solid",
+      "box": [
+        298,
+        340,
+        27,
+        28
+      ]
+    },
+    {
+      "name": "S3_Low1",
+      "kind": "solid",
+      "box": [
+        250,
+        262,
+        -2,
+        2
+      ]
+    },
+    {
+      "name": "S3_Low2",
+      "kind": "solid",
+      "box": [
+        267,
+        273,
+        -2,
+        2
+      ]
+    },
+    {
+      "name": "S3_Low3",
+      "kind": "solid",
+      "box": [
+        278,
+        284,
+        -2,
+        2
+      ]
+    },
+    {
+      "name": "S3_Low4",
+      "kind": "solid",
+      "box": [
+        289,
+        295,
+        -2,
+        2
+      ]
+    },
+    {
+      "name": "S3_Low5",
+      "kind": "solid",
+      "box": [
+        300,
+        306,
+        -2,
+        2
+      ]
+    },
+    {
+      "name": "S3_LowStair1",
+      "kind": "solid",
+      "box": [
+        310,
+        316,
+        1,
+        5
+      ]
+    },
+    {
+      "name": "S3_LowStair2",
+      "kind": "solid",
+      "box": [
+        319,
+        325,
+        4,
+        8
+      ]
+    },
+    {
+      "name": "FinishFloor",
+      "kind": "solid",
+      "box": [
+        328,
+        370,
+        6,
+        10
+      ]
+    },
+    {
+      "name": "Finish",
+      "kind": "finish",
+      "box": [
+        355,
+        361,
+        10,
+        10.4
+      ]
+    },
+    {
+      "name": "WallRight",
+      "kind": "solid",
+      "box": [
+        370,
+        374,
+        6,
+        70
+      ]
+    },
+    {
+      "name": "PitMarker",
+      "kind": "kill",
+      "box": [
+        0,
+        370,
+        -22,
+        -20
+      ]
+    }
+  ],
+  "spawn": [
+    10,
+    0
+  ],
+  "notes": [
+    "Pulo padrão do Roblox (JumpPower 50, gravidade 196,2): ~6,4 studs de altura e ~8 studs de distância no total.",
+    "Regras usadas: vão <= 5 no mesmo nível; subida de 3 com vão <= 4; subida de 4 só com vão <= 2.",
+    "Cair abaixo de killHeight mata e renasce no início (sem checkpoints funcionais ainda).",
+    "Marcadores 'kill' são só visuais (sem colisão) até o ZoneService existir."
+  ]
+}
