@@ -1,10 +1,10 @@
 # 0026 — Objetos mágicos têm nomes de deuses romanos
-- Status: Aceita (nomes individuais: proposta, aguardando confirmação do dono)
+- Status: Aceita (mapeamento confirmado pelo dono em 2026-11-12)
 - Data: 2026-11-12
 ## Decisão
-Os objetos mágicos do solo recebem nomes de deuses romanos. Proposta de mapeamento:
+Os objetos mágicos do solo recebem nomes de deuses romanos. Mapeamento:
 
-| Antes (provisório) | Proposta | Por quê |
+| Antes (provisório) | Nome | Por quê |
 |---|---|---|
 | Pedra-âncora (puxa para cima) | **Júpiter** | Deus do céu: eleva |
 | Orbe de impulso (arremessa) | **Mercúrio** | Mensageiro veloz |

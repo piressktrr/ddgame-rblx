@@ -54,7 +54,7 @@ Entra no mapa → corre entre checkpoints (sozinho ou ajudando/atrapalhando outr
 ### 3.2 Jogo solo com objetos mágicos
 
 O mesmo mapa serve para quem está sozinho e para quem está em grupo. Quem está sozinho conta com
-objetos que fazem o papel do colega (nomes provisórios):
+objetos que fazem o papel do colega (ADR 0026):
 
 | Situação de coop | Objeto mágico | Como ajuda |
 |---|---|---|
