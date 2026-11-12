@@ -8,20 +8,12 @@
 - **Branch atual:** `design/refinamento-ideias`.
 - **Código existente:** esqueleto (Loader, Config, Types) + `CameraPrototypeController` (3ª pessoa/2.5D).
 
-## Próximo passo: M1 — movimento solo (câmera 2.5D + gancho)
+## Próximo passo: Fase 1 — `feat/m1-movimento`
 
-Criar a branch `feat/m1-movimento` a partir da `main` (depois do merge desta branch, se o dono aprovar).
-
-Requisitos do M1:
-1. `CameraController` definitivo, só 2.5D (vem do protótipo).
-2. `CharacterController`: trava o personagem no plano Z.
-3. `HookController`: mira com o mouse no plano; segurar botão = preso, soltar = solta; gruda em
-   tudo menos `NoHook`; `HookOnce` uma vez por jogador; alcance/força em `Config.Hook`.
-4. `HookService`: guarda o uso do `HookOnce` por jogador.
-5. `Config.Tags`: trocar `Hookable` por `NoHook` e `HookOnce`.
-6. Pista de teste greybox com superfícies comum, `NoHook` e `HookOnce`.
-7. Verde volta ao morrer/passar checkpoint (ADR 0024); vermelho é grudável (ADR 0021).
-8. Sem pulo duplo (ADR 0027).
+Requisitos fechados em [REQUIREMENTS.md](REQUIREMENTS.md); plano em
+[IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) §3 Fase 1.
+Antes de começar: dono aprova merge de `design/refinamento-ideias` na `main` e o salvamento do
+place em `place/RaceAndEscape.rbxlx` (§2 do plano).
 
 ## Verificação do M0
 
@@ -40,3 +32,4 @@ Requisitos do M1:
 | 2026-11-12 | Claude Code | Design v0.2: ADRs 0013–0020 (sem Bond, gelo mata, cores, gancho, Bouncer, progresso por jogador, lâmina, mesmo mapa); GDD e arquitetura revisados |
 | 2026-11-12 | Claude Code | Design v0.3: ADRs 0021–0025 (cores finais, MVP 1 mapa, solo primeiro, detalhes das ferramentas, monetização com vantagens) |
 | 2026-11-12 | Claude Code | ADRs 0026–0028 (deuses romanos, sem pulo duplo, ranking separa boost) |
+| 2026-11-12 | Claude Code | Requisitos do MVP (RF/RNF) e plano de implementação em 4 fases |

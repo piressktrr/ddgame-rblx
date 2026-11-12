@@ -13,6 +13,8 @@ Codex, Antigravity/Gemini, Cursor etc.) deve ler este arquivo **antes de qualque
 | 4 | Sala das dúvidas | [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md) | Antes de assumir algo não decidido |
 | 5 | Biblioteca de design | [`docs/GAME_DESIGN.md`](docs/GAME_DESIGN.md) | Ao mexer em mecânica ou mapa |
 | 6 | Oficina técnica | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Ao escrever código |
+| 6a | Lista de requisitos | [`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md) | Antes de implementar: IDs RF/RNF |
+| 6b | Planta da obra | [`docs/IMPLEMENTATION_PLAN.md`](docs/IMPLEMENTATION_PLAN.md) | Para saber a fase e a branch |
 | 7 | Dicionário | [`docs/GLOSSARY.md`](docs/GLOSSARY.md) | Quando um termo não for claro |
 | 8 | Almoxarifado | [`docs/TOOLS.md`](docs/TOOLS.md), [`docs/UNINSTALL.md`](docs/UNINSTALL.md) | Ao instalar/remover ferramenta ou biblioteca |
 | 9 | Vitrine pública | [`README.md`](README.md) | Visão simples para pessoas comuns |
