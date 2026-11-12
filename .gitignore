@@ -1,0 +1,13 @@
+# Pacotes do Wally (baixados com `wally install`)
+Packages/
+ServerPackages/
+wally.lock
+
+# Arquivos gerados pelo Rojo
+build/
+*.rbxl.lock
+*.rbxlx.lock
+sourcemap.json
+
+# Configuracoes locais
+.claude/settings.local.json
