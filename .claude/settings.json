@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(./**)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(rojo *)",
+      "Bash(selene *)",
+      "Bash(stylua *)",
+      "Bash(wally *)"
+    ],
+    "ask": [
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(rm *)",
+      "Bash(del *)",
+      "PowerShell(Remove-Item*)"
+    ]
+  }
+}
