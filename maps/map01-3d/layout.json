@@ -1,0 +1,1506 @@
+{
+ "name": "Map01",
+ "camera": "ThirdPerson",
+ "stageLength": 96,
+ "killHeight": -40,
+ "spawn": [
+  -20,
+  0,
+  0
+ ],
+ "colors": {
+  "solid": [
+   163,
+   162,
+   165
+  ],
+  "start": [
+   90,
+   160,
+   110
+  ],
+  "checkpoint": [
+   255,
+   210,
+   63
+  ],
+  "finish": [
+   245,
+   245,
+   245
+  ],
+  "shortcut": [
+   120,
+   170,
+   220
+  ]
+ },
+ "stages": [
+  {
+   "index": 1,
+   "name": "Aquecimento",
+   "x": 0,
+   "y": 0,
+   "exitY": 0
+  },
+  {
+   "index": 2,
+   "name": "Zigue-zague",
+   "x": 96,
+   "y": 0,
+   "exitY": 0
+  },
+  {
+   "index": 3,
+   "name": "Rampas",
+   "x": 192,
+   "y": 0,
+   "exitY": 0
+  },
+  {
+   "index": 4,
+   "name": "Serpentina",
+   "x": 288,
+   "y": 0,
+   "exitY": 18
+  },
+  {
+   "index": 5,
+   "name": "Labirinto",
+   "x": 384,
+   "y": 18,
+   "exitY": 18
+  },
+  {
+   "index": 6,
+   "name": "Torre final",
+   "x": 480,
+   "y": 18,
+   "exitY": 45
+  }
+ ],
+ "parts": [
+  {
+   "name": "LobbyPiso",
+   "kind": "start",
+   "center": [
+    -20.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    40,
+    2,
+    40
+   ],
+   "rotZ": 0,
+   "tags": []
+  },
+  {
+   "name": "E1_Entrada",
+   "kind": "solid",
+   "center": [
+    6.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 1
+  },
+  {
+   "name": "E1_Saida",
+   "kind": "solid",
+   "center": [
+    90.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 1
+  },
+  {
+   "name": "E1_SaidaMarco",
+   "kind": "checkpoint",
+   "center": [
+    90.0,
+    0.2,
+    0.0
+   ],
+   "size": [
+    4,
+    0.4,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [
+    "Checkpoint"
+   ],
+   "stage": 1,
+   "attrs": {
+    "Order": 1
+   }
+  },
+  {
+   "name": "E1_Plat1",
+   "kind": "solid",
+   "center": [
+    22.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    10
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 1
+  },
+  {
+   "name": "E1_Plat2",
+   "kind": "solid",
+   "center": [
+    38.0,
+    0.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    10
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 1
+  },
+  {
+   "name": "E1_Plat3",
+   "kind": "solid",
+   "center": [
+    54.0,
+    1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    10
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 1
+  },
+  {
+   "name": "E1_Plat4",
+   "kind": "solid",
+   "center": [
+    72.0,
+    0.0,
+    0.0
+   ],
+   "size": [
+    16,
+    2,
+    10
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 1
+  },
+  {
+   "name": "E1_AtalhoViga",
+   "kind": "shortcut",
+   "center": [
+    48.0,
+    -0.5,
+    9.0
+   ],
+   "size": [
+    72,
+    1,
+    2
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 1
+  },
+  {
+   "name": "E2_Entrada",
+   "kind": "solid",
+   "center": [
+    102.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Saida",
+   "kind": "solid",
+   "center": [
+    186.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_SaidaMarco",
+   "kind": "checkpoint",
+   "center": [
+    186.0,
+    0.2,
+    0.0
+   ],
+   "size": [
+    4,
+    0.4,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [
+    "Checkpoint"
+   ],
+   "stage": 2,
+   "attrs": {
+    "Order": 2
+   }
+  },
+  {
+   "name": "E2_Passarela1",
+   "kind": "solid",
+   "center": [
+    116.0,
+    -1.0,
+    -9.0
+   ],
+   "size": [
+    16,
+    2,
+    6
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Passarela2",
+   "kind": "solid",
+   "center": [
+    130.0,
+    -1.0,
+    9.0
+   ],
+   "size": [
+    20,
+    2,
+    6
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Passarela3",
+   "kind": "solid",
+   "center": [
+    146.0,
+    -1.0,
+    -9.0
+   ],
+   "size": [
+    20,
+    2,
+    6
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Passarela4",
+   "kind": "solid",
+   "center": [
+    162.0,
+    -1.0,
+    9.0
+   ],
+   "size": [
+    20,
+    2,
+    6
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Passarela5",
+   "kind": "solid",
+   "center": [
+    174.0,
+    -1.0,
+    -9.0
+   ],
+   "size": [
+    12,
+    2,
+    6
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Travessia1",
+   "kind": "solid",
+   "center": [
+    122.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Travessia2",
+   "kind": "solid",
+   "center": [
+    138.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Travessia3",
+   "kind": "solid",
+   "center": [
+    154.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_Travessia4",
+   "kind": "solid",
+   "center": [
+    170.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_AtalhoPino1",
+   "kind": "shortcut",
+   "center": [
+    114.0,
+    -0.5,
+    0.0
+   ],
+   "size": [
+    3.0,
+    1,
+    3.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_AtalhoPino2",
+   "kind": "shortcut",
+   "center": [
+    130.0,
+    -0.5,
+    0.0
+   ],
+   "size": [
+    3.0,
+    1,
+    3.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_AtalhoPino3",
+   "kind": "shortcut",
+   "center": [
+    146.0,
+    -0.5,
+    0.0
+   ],
+   "size": [
+    3.0,
+    1,
+    3.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_AtalhoPino4",
+   "kind": "shortcut",
+   "center": [
+    162.0,
+    -0.5,
+    0.0
+   ],
+   "size": [
+    3.0,
+    1,
+    3.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E2_AtalhoPino5",
+   "kind": "shortcut",
+   "center": [
+    176.0,
+    -0.5,
+    0.0
+   ],
+   "size": [
+    3.0,
+    1,
+    3.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 2
+  },
+  {
+   "name": "E3_Entrada",
+   "kind": "solid",
+   "center": [
+    198.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 3
+  },
+  {
+   "name": "E3_Saida",
+   "kind": "solid",
+   "center": [
+    282.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 3
+  },
+  {
+   "name": "E3_SaidaMarco",
+   "kind": "checkpoint",
+   "center": [
+    282.0,
+    0.2,
+    0.0
+   ],
+   "size": [
+    4,
+    0.4,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [
+    "Checkpoint"
+   ],
+   "stage": 3,
+   "attrs": {
+    "Order": 3
+   }
+  },
+  {
+   "name": "E3_RampaSobe1",
+   "kind": "solid",
+   "center": [
+    214.3713906763541,
+    3.071523309114741,
+    0.0
+   ],
+   "size": [
+    21.540659228538015,
+    2,
+    12
+   ],
+   "rotZ": 21.80140948635181,
+   "tags": [],
+   "top": [
+    [
+     12,
+     0
+    ],
+    [
+     32,
+     8
+    ]
+   ],
+   "stage": 3
+  },
+  {
+   "name": "E3_Plato1",
+   "kind": "solid",
+   "center": [
+    230.0,
+    7.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    12
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 3
+  },
+  {
+   "name": "E3_RampaDesce",
+   "kind": "solid",
+   "center": [
+    241.4452998037748,
+    3.1679497056621564,
+    0.0
+   ],
+   "size": [
+    14.422205101855956,
+    2,
+    12
+   ],
+   "rotZ": -33.690067525979785,
+   "tags": [],
+   "top": [
+    [
+     44,
+     8
+    ],
+    [
+     56,
+     0
+    ]
+   ],
+   "stage": 3
+  },
+  {
+   "name": "E3_RampaSobe2",
+   "kind": "solid",
+   "center": [
+    254.5547001962252,
+    3.1679497056621564,
+    0.0
+   ],
+   "size": [
+    14.422205101855956,
+    2,
+    12
+   ],
+   "rotZ": 33.690067525979785,
+   "tags": [],
+   "top": [
+    [
+     56,
+     0
+    ],
+    [
+     68,
+     8
+    ]
+   ],
+   "stage": 3
+  },
+  {
+   "name": "E3_Plato2",
+   "kind": "solid",
+   "center": [
+    264.0,
+    7.0,
+    0.0
+   ],
+   "size": [
+    8,
+    2,
+    12
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 3
+  },
+  {
+   "name": "E3_RampaDesce2",
+   "kind": "solid",
+   "center": [
+    271.29289321881345,
+    3.2928932188134525,
+    0.0
+   ],
+   "size": [
+    11.313708498984761,
+    2,
+    12
+   ],
+   "rotZ": -45.0,
+   "tags": [],
+   "top": [
+    [
+     76,
+     8
+    ],
+    [
+     84,
+     0
+    ]
+   ],
+   "stage": 3
+  },
+  {
+   "name": "E3_AtalhoPonte1",
+   "kind": "shortcut",
+   "center": [
+    241.0,
+    7.5,
+    7.0
+   ],
+   "size": [
+    10,
+    1,
+    2
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 3
+  },
+  {
+   "name": "E3_AtalhoPonte2",
+   "kind": "shortcut",
+   "center": [
+    255.0,
+    7.5,
+    7.0
+   ],
+   "size": [
+    10,
+    1,
+    2
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 3
+  },
+  {
+   "name": "E4_Entrada",
+   "kind": "solid",
+   "center": [
+    294.0,
+    -1.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 4
+  },
+  {
+   "name": "E4_Saida",
+   "kind": "solid",
+   "center": [
+    378.0,
+    17.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 4
+  },
+  {
+   "name": "E4_SaidaMarco",
+   "kind": "checkpoint",
+   "center": [
+    378.0,
+    18.2,
+    0.0
+   ],
+   "size": [
+    4,
+    0.3999999999999986,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [
+    "Checkpoint"
+   ],
+   "stage": 4,
+   "attrs": {
+    "Order": 4
+   }
+  },
+  {
+   "name": "E4_Degrau1",
+   "kind": "solid",
+   "center": [
+    306.0,
+    2.5,
+    -5.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 4
+  },
+  {
+   "name": "E4_Degrau2",
+   "kind": "solid",
+   "center": [
+    318.0,
+    5.5,
+    5.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 4
+  },
+  {
+   "name": "E4_Degrau3",
+   "kind": "solid",
+   "center": [
+    330.0,
+    8.5,
+    -5.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 4
+  },
+  {
+   "name": "E4_Degrau4",
+   "kind": "solid",
+   "center": [
+    342.0,
+    11.5,
+    5.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 4
+  },
+  {
+   "name": "E4_Degrau5",
+   "kind": "solid",
+   "center": [
+    354.0,
+    14.5,
+    -5.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 4
+  },
+  {
+   "name": "E4_Degrau6",
+   "kind": "solid",
+   "center": [
+    366.0,
+    17.5,
+    5.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 4
+  },
+  {
+   "name": "E4_AtalhoRampa1",
+   "kind": "shortcut",
+   "center": [
+    310.12126781251817,
+    2.014928749927334,
+    11.0
+   ],
+   "size": [
+    20.615528128088304,
+    1,
+    2
+   ],
+   "rotZ": 14.036243467926479,
+   "tags": [],
+   "top": [
+    [
+     12,
+     0.0
+    ],
+    [
+     32,
+     5.0
+    ]
+   ],
+   "stage": 4
+  },
+  {
+   "name": "E4_AtalhoRampa2",
+   "kind": "shortcut",
+   "center": [
+    334.12126781251817,
+    8.014928749927334,
+    11.0
+   ],
+   "size": [
+    20.615528128088304,
+    1,
+    2
+   ],
+   "rotZ": 14.036243467926479,
+   "tags": [],
+   "top": [
+    [
+     36,
+     6.0
+    ],
+    [
+     56,
+     11.0
+    ]
+   ],
+   "stage": 4
+  },
+  {
+   "name": "E4_AtalhoRampa3",
+   "kind": "shortcut",
+   "center": [
+    360.12126781251817,
+    14.514928749927334,
+    11.0
+   ],
+   "size": [
+    24.73863375370596,
+    1,
+    2
+   ],
+   "rotZ": 14.036243467926479,
+   "tags": [],
+   "top": [
+    [
+     60,
+     12.0
+    ],
+    [
+     84,
+     18.0
+    ]
+   ],
+   "stage": 4
+  },
+  {
+   "name": "E5_Entrada",
+   "kind": "solid",
+   "center": [
+    390.0,
+    17.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Saida",
+   "kind": "solid",
+   "center": [
+    474.0,
+    17.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_SaidaMarco",
+   "kind": "checkpoint",
+   "center": [
+    474.0,
+    18.2,
+    0.0
+   ],
+   "size": [
+    4,
+    0.4,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [
+    "Checkpoint"
+   ],
+   "stage": 5,
+   "attrs": {
+    "Order": 5
+   }
+  },
+  {
+   "name": "E5_Piso",
+   "kind": "solid",
+   "center": [
+    432.0,
+    17.0,
+    0.0
+   ],
+   "size": [
+    72,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede1",
+   "kind": "solid",
+   "center": [
+    409.0,
+    22.5,
+    -3.0
+   ],
+   "size": [
+    2,
+    9,
+    18.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede2a",
+   "kind": "solid",
+   "center": [
+    421.0,
+    22.5,
+    -4.0
+   ],
+   "size": [
+    2,
+    9,
+    4
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede2b",
+   "kind": "solid",
+   "center": [
+    421.0,
+    22.5,
+    7.0
+   ],
+   "size": [
+    2,
+    9,
+    10.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede2Atalho",
+   "kind": "shortcut",
+   "center": [
+    421.0,
+    26.0,
+    0.0
+   ],
+   "size": [
+    2,
+    2,
+    4
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede3",
+   "kind": "solid",
+   "center": [
+    433.0,
+    22.5,
+    -3.0
+   ],
+   "size": [
+    2,
+    9,
+    18.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede4a",
+   "kind": "solid",
+   "center": [
+    445.0,
+    22.5,
+    -4.0
+   ],
+   "size": [
+    2,
+    9,
+    4
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede4b",
+   "kind": "solid",
+   "center": [
+    445.0,
+    22.5,
+    7.0
+   ],
+   "size": [
+    2,
+    9,
+    10.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede4Atalho",
+   "kind": "shortcut",
+   "center": [
+    445.0,
+    26.0,
+    0.0
+   ],
+   "size": [
+    2,
+    2,
+    4
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E5_Parede5",
+   "kind": "solid",
+   "center": [
+    457.0,
+    22.5,
+    -3.0
+   ],
+   "size": [
+    2,
+    9,
+    18.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 5
+  },
+  {
+   "name": "E6_Entrada",
+   "kind": "solid",
+   "center": [
+    486.0,
+    17.0,
+    0.0
+   ],
+   "size": [
+    12,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Pilar",
+   "kind": "solid",
+   "center": [
+    528.0,
+    30.5,
+    0.0
+   ],
+   "size": [
+    8,
+    29,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Espiral1",
+   "kind": "solid",
+   "center": [
+    518.0,
+    20.5,
+    -10.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Espiral2",
+   "kind": "solid",
+   "center": [
+    528.0,
+    23.5,
+    -10.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Espiral3",
+   "kind": "solid",
+   "center": [
+    538.0,
+    26.5,
+    -10.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Espiral4",
+   "kind": "solid",
+   "center": [
+    538.0,
+    29.5,
+    0.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Espiral5",
+   "kind": "solid",
+   "center": [
+    538.0,
+    32.5,
+    10.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Espiral6",
+   "kind": "solid",
+   "center": [
+    528.0,
+    35.5,
+    10.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Espiral7",
+   "kind": "solid",
+   "center": [
+    518.0,
+    38.5,
+    10.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Espiral8",
+   "kind": "solid",
+   "center": [
+    518.0,
+    41.5,
+    0.0
+   ],
+   "size": [
+    8,
+    1,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Acesso",
+   "kind": "solid",
+   "center": [
+    503.5,
+    17.0,
+    -10.0
+   ],
+   "size": [
+    15,
+    2,
+    8
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_AtalhoPino1",
+   "kind": "shortcut",
+   "center": [
+    544.5,
+    35.5,
+    14.5
+   ],
+   "size": [
+    3,
+    1,
+    3
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_AtalhoPino2",
+   "kind": "shortcut",
+   "center": [
+    550.5,
+    38.5,
+    14.5
+   ],
+   "size": [
+    3,
+    1,
+    3
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_AtalhoPino3",
+   "kind": "shortcut",
+   "center": [
+    556.5,
+    41.5,
+    14.5
+   ],
+   "size": [
+    3,
+    1,
+    3
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Chegada",
+   "kind": "solid",
+   "center": [
+    556.0,
+    44.0,
+    0.0
+   ],
+   "size": [
+    40,
+    2,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [],
+   "stage": 6
+  },
+  {
+   "name": "E6_Fim",
+   "kind": "finish",
+   "center": [
+    567.0,
+    45.2,
+    0.0
+   ],
+   "size": [
+    6,
+    0.3999999999999986,
+    24.0
+   ],
+   "rotZ": 0,
+   "tags": [
+    "RaceFinish"
+   ],
+   "stage": 6
+  }
+ ]
+}

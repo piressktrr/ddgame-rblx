@@ -1,6 +1,6 @@
 # Design: Bouncer (pistola mágica) e Lâmina mágica
 
-> Rascunho de design para as Fases 3 do [IMPLEMENTATION_PLAN](../IMPLEMENTATION_PLAN.md).
+> Rascunho de design para as Fases 3 do [IMPLEMENTATION_PLAN](../../05-arquitetura/IMPLEMENTATION_PLAN.md).
 > Base: ADRs 0017, 0019, 0024 e requisitos RF-30..33, RF-40..41.
 > Nada aqui é decisão final: os pontos marcados **[decidir]** precisam do dono.
 

@@ -21,7 +21,7 @@ Para quem vem do Java, a comparação ajuda:
 
 ## Ferramentas (linha de comando)
 
-Todas são instaladas e versionadas pelo **Rokit**. As versões ficam no [`rokit.toml`](../rokit.toml).
+Todas são instaladas e versionadas pelo **Rokit**. As versões ficam no [`rokit.toml`](../../rokit.toml).
 
 ### Rokit (v1.2.0)
 - **O que é:** gerenciador de ferramentas (*toolchain manager*).
@@ -37,13 +37,13 @@ Todas são instaladas e versionadas pelo **Rokit**. As versões ficam no [`rokit
   - `rojo serve`: mantém o Roblox Studio sincronizado com a pasta `src/` em tempo real.
     Precisa do **plugin do Rojo** instalado no Studio.
   - `rojo build -o build/jogo.rbxl`: gera um arquivo de jogo a partir do código.
-- **Configuração:** [`default.project.json`](../default.project.json) diz qual pasta vira o quê no
+- **Configuração:** [`default.project.json`](../../default.project.json) diz qual pasta vira o quê no
   Roblox (ex.: `src/server` → `ServerScriptService.Server`).
 - **Repositório:** https://github.com/rojo-rbx/rojo
 
 ### Wally (v0.3.2)
 - **O que é:** gerenciador de pacotes (bibliotecas) para Luau.
-- **Para que serve:** `wally install` baixa as bibliotecas listadas no [`wally.toml`](../wally.toml)
+- **Para que serve:** `wally install` baixa as bibliotecas listadas no [`wally.toml`](../../wally.toml)
   para a pasta `Packages/`. Essa pasta **não vai para o Git** (está no `.gitignore`).
 - **Repositório:** https://github.com/UpliftGames/wally
 
@@ -51,21 +51,21 @@ Todas são instaladas e versionadas pelo **Rokit**. As versões ficam no [`rokit
 - **O que é:** linter de Luau.
 - **Para que serve:** `selene src` analisa o código e aponta erros (variável não usada, API
   deprecada, etc.) antes de testar no jogo.
-- **Configuração:** [`selene.toml`](../selene.toml).
+- **Configuração:** [`selene.toml`](../../selene.toml).
 - **Repositório:** https://github.com/Kampfkarren/selene
 
 ### StyLua (v2.6.0)
 - **O que é:** formatador de código Luau.
 - **Para que serve:** `stylua src` deixa o código todo no mesmo estilo. `stylua --check src` só
   verifica sem alterar (para usar no CI).
-- **Configuração:** [`stylua.toml`](../stylua.toml) (tabs, 110 colunas, aspas duplas).
+- **Configuração:** [`stylua.toml`](../../stylua.toml) (tabs, 110 colunas, aspas duplas).
 - **Repositório:** https://github.com/JohnnyMorganz/StyLua
 
 ---
 
 ## Extensões do VS Code
 
-Recomendadas em [`.vscode/extensions.json`](../.vscode/extensions.json) (o VS Code sugere instalar
+Recomendadas em [`.vscode/extensions.json`](../../.vscode/extensions.json) (o VS Code sugere instalar
 ao abrir o projeto).
 
 | Extensão | Para que serve |
@@ -87,7 +87,7 @@ ao abrir o projeto).
   Conecta o Claude ao Studio aberto.
 - **Para que serve:** ler a estrutura do place, montar mapas de teste, rodar Luau no Studio,
   testar o jogo e ler o Output.
-- **Configuração:** [`.mcp.json`](../.mcp.json) na raiz do projeto. Ele roda
+- **Configuração:** [`.mcp.json`](../../.mcp.json) na raiz do projeto. Ele roda
   `%LOCALAPPDATA%\Roblox\mcp.bat`, que acha o `StudioMCP.exe` da versão atual do Studio.
 - **Regras de uso:**
   - **Código só pelo Rojo** (arquivos em `src/`). Nunca editar scripts pelo MCP: o Rojo sobrescreveria.

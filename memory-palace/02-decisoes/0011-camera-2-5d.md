@@ -1,5 +1,5 @@
 # 0011 — Câmera 2.5D lateral
-- Status: Aceita
+- Status: Substituída provisoriamente por 0031 (experimento 3D)
 - Data: 2026-11-12
 ## Contexto
 Comparados protótipos de 3ª pessoa e 2.5D (CameraPrototypeController, tecla C). Também foi

@@ -33,6 +33,9 @@ local function lockToPlane()
 end
 
 function CharacterController.Start()
+	if Config.Camera.Mode ~= "SideView" then
+		return -- só existe plano 2.5D no modo SideView
+	end
 	-- W/S (e setas cima/baixo) andariam para dentro/fora da tela: desligados no 2.5D.
 	ContextActionService:BindActionAtPriority(
 		"BlockDepthMovement",

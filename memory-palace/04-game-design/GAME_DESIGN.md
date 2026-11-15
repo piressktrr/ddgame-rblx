@@ -1,7 +1,7 @@
 # Game Design Document — Race and Escape (v0.3)
 
 > Jogo original no gênero de corrida cooperativa. Nada de arte, nomes ou mapas copiados.
-> Visão simples: [README](../README.md). Decisões numeradas: [decisions/](decisions/README.md).
+> Visão simples: [README](../../README.md). Decisões numeradas: [02-decisoes/](../02-decisoes/README.md).
 
 ## 1. Pitch
 

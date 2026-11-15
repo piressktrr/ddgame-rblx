@@ -5,8 +5,11 @@
 ]]
 
 local Config = {
-	-- Câmera lateral 2.5D (ADR 0011).
+	-- Câmera. "ThirdPerson" = padrão do Roblox (experimento 3D, ADR 0031).
+	-- "SideView" = câmera lateral 2.5D (ADR 0011), mantida para poder voltar rápido.
 	Camera = {
+		Mode = "ThirdPerson" :: "ThirdPerson" | "SideView",
+		-- Valores abaixo só valem no modo SideView.
 		Distance = 46, -- distância da câmera até o plano do jogo
 		Height = 6, -- quanto a câmera fica acima do personagem
 		LookAhead = 6, -- studs que a câmera adianta na direção em que o personagem anda
@@ -18,6 +21,15 @@ local Config = {
 	Plane = {
 		Z = 0,
 		MaxDrift = 0.05, -- desvio em Z tolerado antes de corrigir
+	},
+
+	Checkpoint = {
+		ZoneHeight = 10, -- studs acima da peça em que o checkpoint ainda conta
+		SpawnHeight = 4, -- studs acima da peça onde o jogador renasce
+	},
+
+	Race = {
+		RespawnTime = 1, -- segundos entre morrer e renascer
 	},
 
 	Hook = {
