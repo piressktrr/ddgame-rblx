@@ -28,7 +28,7 @@ Modelo:
 | [0008](0008-nome-race-and-escape.md) | Nome: Race and Escape | Aceita |
 | [0009](0009-foco-pc.md) | Foco total no PC | Aceita |
 | [0010](0010-mvp-mapas.md) | MVP: mapa solo + mapa coop (labirinto) | Substituída por 0022 |
-| [0011](0011-camera-2-5d.md) | Câmera 2.5D lateral | Aceita |
+| [0011](0011-camera-2-5d.md) | Câmera 2.5D lateral | Substituída provisoriamente por 0031 |
 | [0012](0012-varias-rotas.md) | Mapas com várias rotas até o final | Aceita |
 | [0013](0013-sem-bond-por-enquanto.md) | Sem Bond por enquanto (substitui 0002) | Aceita |
 | [0014](0014-gelo-mata.md) | Gelo: 15 s congelado, depois morte | Aceita |
@@ -46,3 +46,10 @@ Modelo:
 | [0026](0026-objetos-deuses-romanos.md) | Objetos mágicos com nomes de deuses romanos | Aceita |
 | [0027](0027-sem-pulo-duplo.md) | Sem pulo duplo: movimento é gancho + Bouncer | Aceita |
 | [0028](0028-ranking-separa-boost.md) | Ranking separa quem usou boost | Aceita |
+| [0029](0029-mapa-em-estagios.md) | Mapa em 6 estágios, ordem fixa, atalhos dentro dos estágios | Aceita |
+| [0030](0030-progressao-de-atributo.md) | Progressão por ganho de atributo (estilo +1 Speed) | Aceita |
+| [0031](0031-camera-3d-experimento.md) | Câmera 3D "sobre trilhos" (experimento; substitui 0011) | Aceita provisoriamente |
+| [0032](0032-rebirth-proposta.md) | Ciclo de rebirth | Proposta |
+| [0033](0033-gancho-no-centro.md) | Gancho é a habilidade central e evolui; velocidade depois | Aceita |
+| [0034](0034-checkpoint-a-cada-3-estagios.md) | Checkpoint a cada 3 estágios | Aceita |
+| [0035](0035-mapa-3d-reprovado.md) | Primeiro greybox 3D reprovado; 3D continua | Aceita |

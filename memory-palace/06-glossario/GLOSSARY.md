@@ -13,4 +13,4 @@
 | **Tags** | Etiquetas do CollectionService que dão comportamento às peças do mapa (lista em `Config.Tags`). |
 | **Service / Controller** | Módulo do servidor / do cliente carregado pelo Loader (`Init` e `Start`). |
 | **Marco (M0–M6)** | Etapas do roadmap em ARCHITECTURE.md. |
-| **ADR** | Registro de decisão em `docs/decisions/`. |
+| **ADR** | Registro de decisão em `memory-palace/02-decisoes/`. |

@@ -64,13 +64,13 @@ barato, aprender é rápido e dominar leva tempo.
 
 ## Para quem vai desenvolver
 
-Os detalhes técnicos e de design ficam em documentos separados:
+Toda a documentação técnica e de design fica no [palácio da memória](memory-palace/README.md). Os principais:
 
-- [Game Design](docs/GAME_DESIGN.md): mecânicas, regras, design de fases, progressão.
-- [Arquitetura](docs/ARCHITECTURE.md): estrutura do código, padrões de Luau, roadmap.
-- [Ferramentas](docs/TOOLS.md): cada ferramenta e biblioteca usada, para que serve e a versão.
-- [Desinstalação](docs/UNINSTALL.md): onde cada ferramenta está instalada no PC e como remover.
+- [Game Design](memory-palace/04-game-design/GAME_DESIGN.md): mecânicas, regras, design de fases, progressão.
+- [Arquitetura](memory-palace/05-arquitetura/ARCHITECTURE.md): estrutura do código, padrões de Luau, roadmap.
+- [Ferramentas](memory-palace/07-toolchain/TOOLS.md): cada ferramenta e biblioteca usada, para que serve e a versão.
+- [Desinstalação](memory-palace/07-toolchain/UNINSTALL.md): onde cada ferramenta está instalada no PC e como remover.
 
 ## Para IAs e desenvolvedores
 
-Comece por [`AGENTS.md`](AGENTS.md): ele explica a ordem de leitura, as regras e onde o projeto parou ([`docs/STATUS.md`](docs/STATUS.md)).
+Comece por [`AGENTS.md`](AGENTS.md): ele explica a ordem de leitura, as regras e onde o projeto parou ([`memory-palace/01-status/STATUS.md`](memory-palace/01-status/STATUS.md)).
