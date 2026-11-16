@@ -45,15 +45,15 @@ Requisitos: RF-01..05, RF-10..14, RF-17..19, RNF-01..06. Decisões: ADR 0036 e 0
    **no servidor** (`PlaneService`) e colisão entre jogadores (RF-04).
 3. `Logic/Aim.luau`: cursor → ponto do plano Z = 0; limita ao alcance; acha o alvo com raio e, se falhar,
    com `Spherecast` (esfera de ajuda). Só peças na profundidade do plano.
-4. `HookController` (cliente, só `RopeConstraint` + `VectorForce`, sem testar outras físicas antes):
-   botão esquerdo preso = gancho; W recolhe e S solta (mudança gradual do `Length`); funciona no ar e em
-   sequência; limite de velocidade; Humanoid em estado compatível enquanto preso.
+4. `HookController` (cliente): puxão direto com `LinearVelocity` (`PullPhysics`, ADR 0042); um clique vai ao
+   alvo, segurar fica preso; sem W/S; funciona no ar e em sequência; limite de velocidade; Humanoid em
+   `Physics` enquanto voa (`AirBody`) e pose de voo procedural (`HookPose`). O balanço (`SwingPhysics`) fica
+   como referência em `Config.Hook.Mode`. ✅ protótipo feito.
 5. Corda visível local (`Beam`) e cursor em três estados (sem alvo, válido, proibido).
 6. `HookService` (servidor): valida alcance e tag; guarda `HookOnce` usado por jogador (zera ao
    morrer/checkpoint); repassa início/fim da corda aos outros clientes.
 7. Pista de teste greybox `Maps/TestHook` via MCP: comum, roxo, verde, vãos de 20/30/40 studs, paredes e teto.
-8. Pronto quando: balanço fluido no playtest, selene/stylua ok, dono aprova o *feel*. Se o balanço
-   ficar difícil de jogar, trocar para puxão (ADR 0036).
+8. Pronto quando: puxão fluido no playtest com mouse, selene/stylua ok, dono aprova o *feel*.
 
 ### Fase 2 — `feat/m2-mapa` (mapa novo com o gancho)
 Requisitos: RF-70, RF-71, RF-73, RF-74. A estrutura do mapa é definida pelo dono (Q31).
@@ -104,8 +104,8 @@ rebirth (ADR 0032), boosts e loja (ADR 0025; a monetização é essencial), arte
 
 | Risco | Mitigação |
 |---|---|
-| *Feel* do gancho ruim | Fase 1 só cuida disso; começa com `RopeConstraint` e, se falhar, troca para puxão ou física própria |
-| Balanço da corda brigando com a trava de Z e a colisão entre jogadores | Testar na Fase 1 e na Fase 4, com correção de Z também no servidor |
+| *Feel* do gancho ruim | Fase 1 só cuida disso; o balanço foi trocado pelo puxão (ADR 0042); números todos em `Config.Hook` |
+| Puxão brigando com a trava de Z e a colisão entre jogadores | Testar na Fase 1 e na Fase 4, com correção de Z também no servidor |
 | Puxar/empurrar outro jogador com lag | Prototipar na Fase 4 com latência simulada; plano B é o caminho C (ADR 0037) |
 | Personagem escapa do plano 2.5D | Trava no cliente + correção no servidor se Z sair do limite (ADR 0039) |
 | Mapa no `.rbxlx` com conflito no Git | Só um agente edita o place por vez; registrar no STATUS |

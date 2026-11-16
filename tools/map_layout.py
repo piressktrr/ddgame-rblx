@@ -60,8 +60,8 @@ rect("tutorial", -150, 300, -75, 372)
 rect("start", -140, 300, -120, 302)
 title(-150, 392, "Tutorial")
 note(-148, 362, "gancho: mirar,")
-note(-148, 352, "segurar, balançar,")
-note(-148, 342, "W/S, roxo, verde")
+note(-148, 352, "clicar, segurar,")
+note(-148, 342, "trocar de alvo, roxo, verde")
 note(-148, 290, "portal → E1")
 
 # ---------- E1 Salão dos pilares (→) ----------

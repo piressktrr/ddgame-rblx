@@ -53,7 +53,7 @@ Modelo:
 | [0033](0033-gancho-no-centro.md) | Gancho é a habilidade central e evolui; velocidade depois | Aceita |
 | [0034](0034-checkpoint-a-cada-3-estagios.md) | Checkpoint a cada 3 estágios | Aceita |
 | [0035](0035-mapa-do-experimento-reprovado.md) | Greybox do experimento reprovado (descartado) | Substituída por 0038 |
-| [0036](0036-gancho-balanco-ropeconstraint.md) | Gancho: balanço (B) com RopeConstraint, mira com esfera, corda recolhível | Aceita |
+| [0036](0036-gancho-balanco-ropeconstraint.md) | Gancho: balanço (B) com RopeConstraint, mira com esfera, corda recolhível | Substituída em parte (0042) |
 | [0037](0037-gancho-em-jogador.md) | Gancho em jogador: caminho A; C como plano B; só após mapa aprovado | Aceita |
 | [0038](0038-camera-2-5d-definitiva.md) | O jogo é 2.5D (decisão da equipe) | Aceita |
 | [0039](0039-regras-do-plano-2-5d.md) | Regras do plano 2.5D: colisão, gancho, mira, W/S, altura da tela, estágios verticais, correção no servidor | Aceita |

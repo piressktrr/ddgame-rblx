@@ -18,7 +18,7 @@ guiado, celular/console.
 ### Personagem e câmera
 | ID | Requisito | Critério de aceite |
 |---|---|---|
-| RF-01 | Câmera lateral 2.5D segue o personagem | Personagem sempre visível e centralizado com leve folga; sem tremor ao balançar |
+| RF-01 | Câmera lateral 2.5D segue o personagem | Personagem sempre visível e centralizado com leve folga; sem tremor durante o puxão |
 | RF-02 | Personagem preso ao plano do mapa (eixo Z fixo), corrigido no cliente e no servidor (ADR 0039) | Após 5 min de jogo, desvio em Z < 0,1 stud, mesmo sendo puxado/empurrado |
 | RF-03 | Movimento base = padrão do Roblox (andar, pular). Sem pulo duplo (ADR 0027) | A/D anda, Espaço pula; W/S não tiram do plano |
 | RF-04 | Jogadores colidem entre si no plano (ADR 0039) | Dois jogadores se bloqueiam e um pode ficar em cima do outro, sem sair do plano |
@@ -29,14 +29,14 @@ guiado, celular/console.
 |---|---|---|
 | RF-10 | Mira com o mouse no plano 2.5D, 360°; cursor além do alcance é limitado ao alcance | O gancho sai na direção do cursor |
 | RF-10b | Esfera de ajuda de mira (raio inicial 3 studs, `Config.Hook.AimAssistRadius`) quando o raio não acerta | Alvo "quase na mira" é pego; sem alvo, nada prende |
-| RF-11 | **Segurar** o botão do mouse = preso; soltar = solta | Soltar a qualquer momento libera na hora |
+| RF-11 | **Um clique** no alvo prende e puxa até lá; **segurar** o botão ao chegar = fica preso no ponto (ADR 0042) | Clique simples: chega e solta com parte do embalo; segurando: fica parado no ponto até soltar |
 | RF-12 | Gruda em qualquer peça **na profundidade do plano**, exceto `NoHook` (roxo) | Acerto em `NoHook` não prende e mostra feedback visual; cenário fora do plano não prende |
 | RF-13 | `HookOnce` (verde): 1 uso por jogador; volta ao morrer ou passar checkpoint | 2ª tentativa falha; após morrer/checkpoint funciona de novo |
 | RF-14 | Alcance máximo e força de puxão configuráveis (`Config.Hook`) | Mudar o Config muda o comportamento sem tocar no código |
 | RF-15 | Enganchar outro jogador puxa os dois (caminho A, ADR 0037). Só entra depois do mapa aprovado | Ambos se aproximam; funciona com ping de 150 ms |
 | RF-16 | Corda visível para todos os jogadores | Outros clientes veem a corda em até 200 ms |
-| RF-17 | Preso, o personagem balança como pêndulo (`RopeConstraint`, ADR 0036) | O balanço dá impulso ao soltar; velocidade tem limite |
-| RF-18 | W recolhe e S solta corda enquanto preso | O comprimento muda de forma gradual, sem atravessar paredes |
+| RF-17 | Preso, o personagem é puxado em linha reta até o ponto, com aceleração suave e velocidade limitada (ADR 0042) | Sem teleporte; para ou solta ao bater numa parede, sem atravessar; clicar em outro alvo durante o voo troca de alvo |
+| RF-18 | ~~W recolhe e S solta corda~~ Removido pelo ADR 0042: W/S não fazem nada no gancho | W/S não mexem no gancho nem tiram do plano |
 | RF-19 | Gancho usável no ar e em sequência | Soltar e prender de novo sem tocar o chão |
 
 ### Gelo, morte e checkpoints (ADR 0014, 0018, 0021)

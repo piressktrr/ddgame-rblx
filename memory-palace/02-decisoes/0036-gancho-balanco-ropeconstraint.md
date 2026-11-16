@@ -1,5 +1,5 @@
 # 0036 — Gancho: balanço (B) com RopeConstraint, mira com esfera e corda recolhível
-- Status: Aceita (responde Q32; refina 0016 e 0033; mira ajustada ao 2.5D por 0038)
+- Status: Substituída em parte por 0042 (tipo e corda); mira, alcance e uso continuam. (Responde Q32; refina 0016 e 0033; mira ajustada ao 2.5D por 0038)
 - Data: 2026-11-16
 ## Decisão
 - **Tipo:** B, balanço (pêndulo). Se ficar difícil de jogar, muda para A (puxão). Esta troca já está aprovada de antemão.

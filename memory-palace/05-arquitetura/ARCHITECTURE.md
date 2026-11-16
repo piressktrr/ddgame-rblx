@@ -103,7 +103,7 @@ As versões exatas são fixadas no `wally.toml` quando fizermos o scaffold.
 | Marco | Entrega | Critério de pronto |
 |---|---|---|
 | M0 | Toolchain + scaffold | ✅ `rojo serve` sincroniza; lint/format passam |
-| M1 | Plano + gancho solo (balanço, recolher corda, esfera de ajuda) | Balançar e se puxar é gostoso no PC; `NoHook`/`HookOnce` funcionam |
+| M1 | Plano + gancho solo (puxão direto, esfera de ajuda) | Se puxar é gostoso no PC; `NoHook`/`HookOnce` funcionam |
 | M2 | Mapa novo com o gancho | Greybox aprovado pelo dono |
 | M3 | Zonas + checkpoints + timer + lobby | Percurso jogável do início ao fim sozinho, com gelo/morte/respawn |
 | M4 | Interação entre jogadores + Bouncer + lâmina | Gancho em jogador puxa os dois, lâmina e Bouncer empurram, resgate do gelo com ping de 150 ms |

@@ -7,14 +7,16 @@
 	  HookAttach   cliente -> servidor   (attachId: number, part: BasePart, point: Vector3)
 	  HookDetach   cliente -> servidor   (attachId: number)
 	  HookRejected servidor -> cliente   (attachId: number, reason: string)
+  HookRope     servidor -> clientes  (player: Player, part: BasePart?, localPoint: Vector3?)
+               corda de outro jogador (RF-16); part nil = soltou. O ponto vem no espaço da peça.
 ]]
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
-export type RemoteName = "HookAttach" | "HookDetach" | "HookRejected"
+export type RemoteName = "HookAttach" | "HookDetach" | "HookRejected" | "HookRope"
 
-local REMOTE_NAMES: { RemoteName } = { "HookAttach", "HookDetach", "HookRejected" }
+local REMOTE_NAMES: { RemoteName } = { "HookAttach", "HookDetach", "HookRejected", "HookRope" }
 local FOLDER_NAME = "Remotes"
 
 local Net = {}

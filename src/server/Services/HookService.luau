@@ -11,7 +11,10 @@
 	`Checkpoint` do Player muda, ver CheckpointService). O cliente espelha esse uso e limpa o espelho
 	quando o atributo `HookOnceEpoch` do Player muda.
 
-	Fora desta fase (Fase 4): repassar a corda aos outros clientes e gancho em outro jogador.
+	Repassa a corda de cada jogador aos outros clientes (`HookRope`, RF-16): quem já está no servidor
+	recebe ao prender/soltar; quem entra recebe as cordas que já estão presas.
+
+	Fora desta fase (Fase 4): gancho em outro jogador.
 ]]
 
 local Players = game:GetService("Players")
@@ -41,11 +44,30 @@ local HookService = {}
 
 local states: { [Player]: PlayerState } = {}
 local rejectedRemote: RemoteEvent? = nil
+local ropeRemote: RemoteEvent? = nil
 
-local function clearAttached(state: PlayerState)
+-- Avisa todos os outros clientes da corda deste jogador (part nil = soltou).
+local function broadcastRope(owner: Player, part: BasePart?, point: Vector3?)
+	local remote = ropeRemote
+	if not remote then
+		return
+	end
+	local localPoint = if part and point then part.CFrame:PointToObjectSpace(point) else nil
+	for _, other in Players:GetPlayers() do
+		if other ~= owner then
+			remote:FireClient(other, owner, part, localPoint)
+		end
+	end
+end
+
+local function clearAttached(player: Player, state: PlayerState)
+	local wasAttached = state.attachedId ~= nil
 	state.attachedId = nil
 	state.attachedPart = nil
 	state.attachedPoint = nil
+	if wasAttached then
+		broadcastRope(player, nil, nil)
+	end
 end
 
 local function resetHookOnce(player: Player, state: PlayerState)
@@ -168,6 +190,7 @@ local function onAttach(player: Player, id: unknown, part: unknown, point: unkno
 	state.attachedId = attachId
 	state.attachedPart = basePart
 	state.attachedPoint = position
+	broadcastRope(player, basePart, position)
 end
 
 local function onDetach(player: Player, id: unknown)
@@ -176,7 +199,7 @@ local function onDetach(player: Player, id: unknown)
 		return
 	end
 	if typeof(id) == "number" and state.attachedId == id then
-		clearAttached(state)
+		clearAttached(player, state)
 	end
 end
 
@@ -195,9 +218,20 @@ local function onPlayerAdded(player: Player)
 	states[player] = state
 	player:SetAttribute(EPOCH_ATTRIBUTE, 0)
 
+	-- Quem entra vê as cordas que já estão presas.
+	local remote = ropeRemote
+	if remote then
+		for other, otherState in states do
+			local part, point = otherState.attachedPart, otherState.attachedPoint
+			if other ~= player and part and point then
+				remote:FireClient(player, other, part, part.CFrame:PointToObjectSpace(point))
+			end
+		end
+	end
+
 	-- Renascer (morte ou reset) e passar checkpoint devolvem o uso dos verdes (RF-13).
 	trove:Connect(player.CharacterAdded, function()
-		clearAttached(state)
+		clearAttached(player, state)
 		resetHookOnce(player, state)
 	end)
 	trove:Connect(player:GetAttributeChangedSignal(Config.Attributes.Checkpoint), function()
@@ -208,6 +242,7 @@ end
 local function onPlayerRemoving(player: Player)
 	local state = states[player]
 	if state then
+		clearAttached(player, state)
 		state.trove:Destroy()
 		states[player] = nil
 	end
@@ -215,6 +250,7 @@ end
 
 function HookService.Start()
 	rejectedRemote = Net.get("HookRejected")
+	ropeRemote = Net.get("HookRope")
 	Net.get("HookAttach").OnServerEvent:Connect(onAttach)
 	Net.get("HookDetach").OnServerEvent:Connect(onDetach)
 

@@ -8,7 +8,7 @@
 - **Mira (Q35, valor padrão definido por mim, a ajustar em playtest):** esfera de ajuda com raio de
   **3 studs** (`Config.Hook.AimAssistRadius`); o alcance conta a partir do `HumanoidRootPart`; cursor
   além do alcance é limitado ao alcance, na mesma direção; mira em 360° no plano.
-- **Corda (Q36):** **W recolhe** e **S solta** corda enquanto preso (ficam livres porque a profundidade
+- ~~**Corda (Q36):**~~ (removido pelo ADR 0042: sem W/S no gancho) **W recolhe** e **S solta** corda enquanto preso (ficam livres porque a profundidade
   é bloqueada no 2.5D). Roda do mouse fica como alternativa para testar.
 - **Tela (Q37):** o que se fixa é a **altura visível**. O campo de visão do Roblox é vertical, então
   a câmera atual já faz isso; telas mais largas veem mais mundo nas laterais.

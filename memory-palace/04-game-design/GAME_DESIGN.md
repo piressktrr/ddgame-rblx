@@ -6,7 +6,7 @@
 ## 1. Pitch
 
 Plataforma de **fantasia em 2.5D** num servidor aberto. Cada mapa é um percurso visto de lado,
-que o dono vai reformular (Q31). Os jogadores usam um **gancho mágico** para se balançar e puxar
+que o dono vai reformular (Q31). Os jogadores usam um **gancho mágico** para se puxar
 uns aos outros, desviam de **gelo mágico** e usam o **Bouncer**, uma pistola mágica de impulso, em
 trechos especiais. Qualquer um pode **salvar ou atrapalhar** qualquer outro.
 
@@ -32,7 +32,7 @@ Entra no mapa → corre entre checkpoints (sozinho ou ajudando/atrapalhando outr
 
 | Mecânica | Como funciona | Decisão |
 |---|---|---|
-| **Gancho** | Ver §3.3. Mira com o mouse no plano; **segura** o botão esquerdo para ficar preso. Balança como pêndulo; W recolhe e S solta corda. Gruda em qualquer peça do plano, exceto **roxas**; em **verde**, uma vez por jogador (volta ao morrer ou passar de checkpoint). Em outro jogador, **puxa os dois** (só depois do mapa aprovado). | 0003, 0016, 0036, 0037, 0039 |
+| **Gancho** | Ver §3.3. Mira com o mouse no plano; um **clique** puxa o personagem direto ao alvo; **segurar** o botão o deixa preso no ponto. Gruda em qualquer peça do plano, exceto **roxas**; em **verde**, uma vez por jogador (volta ao morrer ou passar de checkpoint). Em outro jogador, **puxa os dois** (só depois do mapa aprovado). | 0003, 0016, 0036, 0037, 0039, 0042 |
 | **Gelo** | Tocar no gelo congela por **15 s**: não anda nem usa ferramentas, mas pode ser puxado/empurrado. Se chegar a uma zona de descongelar, volta ao normal. Se o tempo acabar, **morre**. | 0014 |
 | **Descongelar** | Zona **laranja-brasa** que tira o congelamento na hora. Fica perto do gelo para que outro jogador possa salvar. | 0014, 0021 |
 | **Zona mortal** | Vermelha. Mata na hora → volta ao último checkpoint. O gancho gruda nela. | 0015, 0021 |
@@ -53,9 +53,11 @@ Entra no mapa → corre entre checkpoints (sozinho ou ajudando/atrapalhando outr
 
 ### 3.3 Gancho em detalhe
 
-- **Tipo:** balanço (pêndulo) com `RopeConstraint` e força extra no cliente; se ficar difícil de jogar, vira puxão (ADR 0036).
+- **Tipo:** puxão direto ao alvo (ADR 0042, substitui o balanço do ADR 0036). Um clique prende e puxa em linha reta,
+  com aceleração suave, a ~58 studs/s; ao chegar, solta com parte do embalo. Segurando o botão, fica preso no ponto.
 - **Mira:** cursor no plano; se o raio não acerta, uma esfera de ajuda (raio inicial 3 studs, `Config.Hook.AimAssistRadius`) pega o alvo "quase na mira". Alcance inicial 40 studs, contado do centro do personagem.
-- **Corda:** enquanto preso, **W recolhe** e **S solta**. Funciona no ar e em sequência, sem tocar o chão.
+- **Uso:** funciona no ar e em sequência; clicar em outro alvo durante o voo troca de alvo. Bater numa parede no caminho solta.
+- **Voo:** pose de voo durante o puxão (braço para o alvo, corpo inclinado); ao pousar com embalo, desliza e freia.
 - **Superfícies:** só peças na profundidade do plano de jogo (ADR 0039).
 - **Em outro jogador:** o servidor valida e cada cliente se puxa em direção ao outro (caminho A). O caminho C (dar ao atacante a física do alvo) é o plano B (ADR 0037).
 - **Evolução:** alcance e raio da esfera crescem com o nível do gancho (§7).
@@ -108,7 +110,7 @@ aparecer só para quem não está em grupo.
 Todo o jogo acontece num plano (Z = 0); a profundidade é só visual (ADR 0038, 0039).
 
 - Câmera lateral com **altura visível fixa**; telas largas veem mais nas laterais.
-- A/D andam, Espaço pula; W/S não tiram do plano (preso ao gancho, recolhem e soltam corda).
+- A/D andam, Espaço pula; W/S não tiram do plano e não mexem no gancho.
 - Jogadores **colidem** entre si. Desvio de Z é corrigido no cliente e no servidor.
 - Estágios podem ter trechos verticais, não só avanço para a direita.
 

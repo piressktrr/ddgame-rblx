@@ -1,5 +1,8 @@
 # Gancho: o que é necessário para fazer (estudo de 2026-11-16)
 
+> **Atualização (ADR 0042):** o protótipo começou com o balanço (B), mas o dono trocou para o
+> **puxão direto (A)**: um clique vai ao alvo, segurar fica preso, sem W/S. O resto deste estudo fica como histórico.
+
 > Contexto: o gancho é a habilidade central e o que o jogador evolui (ADR 0033), em câmera 2.5D
 > lateral (ADR 0011, 0038). Regras já decididas: ADR 0003 (em jogador, puxa os dois) e ADR 0016 (gruda em tudo menos
 > roxo `NoHook`; verde `HookOnce` uma vez por jogador; segurar o botão = preso).
