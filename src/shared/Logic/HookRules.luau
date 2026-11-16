@@ -2,7 +2,7 @@
 --[[
 	Regras puras do gancho, usadas pelo cliente e pelo servidor (RNF-04: sem acesso a `game`).
 	RF-12 (gruda em tudo no plano menos roxo), RF-13 (verde uma vez), RF-17 (limite de velocidade),
-	RF-18 (corda recolhível); ADR 0016, 0036, 0039.
+	RF-18 (corda recolhível); ADR 0016, 0036, 0039, 0042 (puxão).
 ]]
 
 export type SurfaceKind = "Normal" | "NoHook" | "HookOnce"
@@ -92,6 +92,33 @@ function HookRules.clampSpeed(velocity: Vector3, maxSpeed: number): Vector3
 		return velocity
 	end
 	return velocity * (maxSpeed / speed)
+end
+
+-- Velocidade pedida no puxão (ADR 0042), a `remaining` studs de chegar. Com `braking` (botão ainda
+-- apertado, vai ficar preso no ponto), diminui para parar em cima do ponto com desaceleração `accel`;
+-- sem frear, segue na velocidade de cruzeiro até chegar. A frenagem não desce de `minSpeed`.
+function HookRules.pullSpeed(
+	remaining: number,
+	cruiseSpeed: number,
+	accel: number,
+	minSpeed: number,
+	braking: boolean
+): number
+	if not braking then
+		return cruiseSpeed
+	end
+	local brakingSpeed = math.sqrt(2 * accel * math.max(remaining, 0))
+	return math.clamp(brakingSpeed, math.min(minSpeed, cruiseSpeed), cruiseSpeed)
+end
+
+-- Leva `current` em direção a `target`, mudando no máximo `maxDelta` (aceleração suave).
+function HookRules.moveToward(current: Vector3, target: Vector3, maxDelta: number): Vector3
+	local delta = target - current
+	local size = delta.Magnitude
+	if size <= maxDelta or size == 0 then
+		return target
+	end
+	return current + delta * (maxDelta / size)
 end
 
 function HookRules.isFiniteNumber(value: number): boolean

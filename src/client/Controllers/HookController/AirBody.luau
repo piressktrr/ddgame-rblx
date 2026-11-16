@@ -8,17 +8,23 @@
 	controle próprio) e:
 	  - um `VectorForce` horizontal aplica A/D (dirige o balanço e dá controle no ar);
 	  - um `AlignOrientation` mantém o personagem em pé, virado para ±X;
-	  - a velocidade tem limite (`Config.Hook.MaxSwingSpeed`).
+	  - a velocidade horizontal tem limite (`Config.Hook.MaxSwingSpeed`); a queda não.
 
 	Se o gancho prende com o personagem no chão, o Humanoid continua andando normalmente (no estado
 	`Physics` o A/D mal vence o atrito do chão); o corpo só assume quando o personagem sai do chão
-	(`FloorMaterial` vira `Air`), e daí em diante não devolve até o fim (troca de mão única, sem piscar).
+	(`FloorMaterial` vira `Air`) ou quando alguém chama `takeOff()`, e daí em diante não devolve até o
+	fim (troca de mão única, sem piscar).
 
-	Depois de soltar vem o "embalo": o corpo continua até a velocidade horizontal cair até a de andar
-	(`Humanoid.WalkSpeed`) ou passar `Config.Hook.MomentumMaxTime`. Se pousar com embalo, desliza e
-	freia com `Config.Hook.LandingSlideDecel` (antes parava seco ao tocar o chão).
-	Enquanto o corpo controla, toca a animação de queda do `Animate` (no `Physics` o boneco ficava duro).
+	Depois de soltar vem o "embalo": no ar, só termina ao passar `Config.Hook.MomentumMaxTime`; ao pousar
+	com embalo, desliza e freia com `Config.Hook.LandingSlideDecel` e termina quando a velocidade
+	horizontal cai até a de andar (`Humanoid.WalkSpeed`).
 	Aí o Humanoid volta a `Freefall` e retoma o controle normal.
+
+	Pose: enquanto o corpo controla (no ar), `HookPose` põe uma pose procedural de voo (braço para o ponto
+	do gancho, corpo inclinado, pernas para trás), entrando e saindo em ~0,15 s. Quem prende chama
+	`setAimPoint(anchor)` e, ao soltar, `beginMomentum()` já tira o alvo (o braço volta para trás).
+	A animação de queda do `Animate` continua tocando por baixo só porque os `Transform` da pose não
+	replicam: é ela que os outros jogadores veem (no `Physics` o boneco deles ficaria duro).
 ]]
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -27,8 +33,15 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local HookRules = require(ReplicatedStorage.Shared.Logic.HookRules)
 local Trove = require(ReplicatedStorage.Packages.Trove)
 
+local HookPose = require(script.Parent.HookPose)
+
 export type AirBody = {
 	step: (self: AirBody, dt: number, horizontal: number) -> (),
+	-- Para onde o braço da pose aponta: o Attachment do ponto preso (acompanha peça que se move),
+	-- uma posição, ou nil (sem alvo).
+	setAimPoint: (self: AirBody, target: HookPose.AimTarget?) -> (),
+	-- Assume o corpo agora (estado `Physics`), mesmo com o personagem no chão.
+	takeOff: (self: AirBody) -> (),
 	beginMomentum: (self: AirBody) -> (),
 	cancelMomentum: (self: AirBody) -> (),
 	isMomentumOver: (self: AirBody) -> boolean,
@@ -72,8 +85,8 @@ function AirBody.new(
 	upright.Parent = root
 	trove:Add(upright)
 
-	-- Pose enquanto o corpo controla: no estado `Physics` o script Animate para, e o boneco ficaria duro.
-	-- Usa a animação de queda do próprio Animate do personagem (nada de asset novo).
+	-- Animação de queda do próprio Animate (nada de asset novo): no estado `Physics` o script Animate
+	-- para e o boneco ficaria duro. Localmente a `HookPose` a cobre; ela fica para os outros jogadores.
 	local poseTrack: AnimationTrack? = nil
 	local animator = humanoid:FindFirstChildOfClass("Animator")
 	local animate = character:FindFirstChild("Animate")
@@ -95,11 +108,23 @@ function AirBody.new(
 
 	-- true quando o corpo assumiu (Humanoid em `Physics`); false enquanto o personagem está no chão.
 	local airborne = false
+	local aimTarget: HookPose.AimTarget? = nil
+	local pose: HookPose.HookPose? = nil
+	trove:Add(function()
+		if pose then
+			pose:destroy() -- sai da pose suavemente, sozinha
+			pose = nil
+		end
+	end)
+
 	local function enterAir()
 		airborne = true
 		if poseTrack then
 			poseTrack:Play(0.1)
 		end
+		local newPose = HookPose.new(character, humanoid)
+		newPose:setTarget(aimTarget)
+		pose = newPose
 		facing = if root.CFrame.LookVector.X < 0 then -1 else 1
 		upright.CFrame = facingCFrame(facing)
 		upright.Enabled = true
@@ -156,14 +181,30 @@ function AirBody.new(
 			end
 		end
 
-		local limited = HookRules.clampSpeed(velocity, settings.MaxSwingSpeed)
-		if limited ~= velocity then
-			root.AssemblyLinearVelocity = limited
+		-- Limite só na horizontal: a queda continua livre (a gravidade não é cortada).
+		local horizontalVelocity = Vector3.new(velocity.X, 0, velocity.Z)
+		local limited = HookRules.clampSpeed(horizontalVelocity, settings.MaxSwingSpeed)
+		if limited ~= horizontalVelocity then
+			root.AssemblyLinearVelocity = Vector3.new(limited.X, velocity.Y, limited.Z)
+		end
+	end
+
+	function body.takeOff(_self: AirBody)
+		if not airborne then
+			enterAir() -- assume o corpo mesmo no chão (o puxão tira o personagem do chão)
+		end
+	end
+
+	function body.setAimPoint(_self: AirBody, target: HookPose.AimTarget?)
+		aimTarget = target
+		if pose then
+			pose:setTarget(target)
 		end
 	end
 
 	function body.beginMomentum(_self: AirBody)
 		momentumStart = os.clock()
+		body:setAimPoint(nil) -- soltou: sem corda, o braço volta para trás
 	end
 
 	function body.cancelMomentum(_self: AirBody)
@@ -181,7 +222,10 @@ function AirBody.new(
 		if os.clock() - start >= settings.MomentumMaxTime then
 			return true
 		end
-		-- No chão, o embalo termina quando o deslize chega à velocidade de andar.
+		if not isGrounded() then
+			return false -- no ar só o tempo encerra (num puxão quase vertical a velocidade X é ~0)
+		end
+		-- Pousou: o embalo termina quando o deslize chega à velocidade de andar.
 		return math.abs(root.AssemblyLinearVelocity.X) <= humanoid.WalkSpeed
 	end
 

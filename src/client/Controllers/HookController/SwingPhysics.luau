@@ -4,12 +4,12 @@
 	ponto atingido (a engine resolve o pêndulo). O controle do corpo (estado do Humanoid, A/D, ficar em
 	pé, limite de velocidade) fica no `AirBody`, que este módulo recebe pronto.
 
+	Desde o ADR 0042 não é o modo padrão (`Config.Hook.Mode = "Swing"` para usar): fica como referência.
+
 	W/S mudam o `Length` aos poucos (HookRules.nextRopeLength). Ao recolher, uma sonda do tamanho do
 	corpo, deslocada um pouco na direção da corda, procura obstáculos: se achar, a corda para de
 	encurtar. Medido em playtest: sem a sonda, recolher com uma plataforma no caminho arrastava o
 	personagem para dentro dela aos poucos (a corda vence o contato).
-
-	O plano B (puxão, tipo A) seria outro módulo com a mesma interface (`step`, `getLength`, `destroy`).
 ]]
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -18,26 +18,7 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local HookRules = require(ReplicatedStorage.Shared.Logic.HookRules)
 local Trove = require(ReplicatedStorage.Packages.Trove)
 
-local AirBody = require(script.Parent.AirBody)
-
-export type Input = {
-	horizontal: number, -- -1 (A) .. 1 (D)
-	reel: number, -- -1 recolhe (W), 1 solta (S)
-}
-
-export type Params = {
-	character: Model,
-	root: BasePart,
-	rootAttachment: Attachment,
-	anchor: Attachment,
-	body: AirBody.AirBody,
-}
-
-export type Physics = {
-	step: (self: Physics, dt: number, input: Input) -> (),
-	getLength: (self: Physics) -> number,
-	destroy: (self: Physics) -> (),
-}
+local HookPhysics = require(script.Parent.HookPhysics)
 
 local settings = Config.Hook
 
@@ -49,39 +30,9 @@ local LIMITS: HookRules.RopeLimits = {
 	maxLead = settings.ReelMaxLead,
 }
 
-local BOX_CORNERS = {
-	Vector3.new(-1, -1, -1),
-	Vector3.new(-1, -1, 1),
-	Vector3.new(-1, 1, -1),
-	Vector3.new(-1, 1, 1),
-	Vector3.new(1, -1, -1),
-	Vector3.new(1, -1, 1),
-	Vector3.new(1, 1, -1),
-	Vector3.new(1, 1, 1),
-}
-
 local SwingPhysics = {}
 
--- Caixa do corpo no espaço do root (centro e tamanho), a partir das peças diretas do personagem
--- (tronco, membros, cabeça; acessórios ficam de fora).
-local function measureBody(character: Model, root: BasePart): (Vector3, Vector3)
-	local minCorner = Vector3.one * math.huge
-	local maxCorner = -Vector3.one * math.huge
-	for _, child in character:GetChildren() do
-		if child:IsA("BasePart") then
-			local relative = root.CFrame:ToObjectSpace(child.CFrame)
-			local half = child.Size / 2
-			for _, corner in BOX_CORNERS do
-				local point = relative * (half * corner)
-				minCorner = minCorner:Min(point)
-				maxCorner = maxCorner:Max(point)
-			end
-		end
-	end
-	return (minCorner + maxCorner) / 2, maxCorner - minCorner
-end
-
-function SwingPhysics.new(params: Params): Physics
+function SwingPhysics.new(params: HookPhysics.Params): HookPhysics.Physics
 	local root = params.root
 	local anchor = params.anchor
 	local rootAttachment = params.rootAttachment
@@ -101,23 +52,21 @@ function SwingPhysics.new(params: Params): Physics
 	rope.Parent = root
 	trove:Add(rope)
 
-	local probeCenter, probeSize = measureBody(params.character, root)
-	probeSize -= Vector3.one * (2 * settings.ReelProbeInset)
-	local overlapParams = OverlapParams.new()
-	overlapParams.FilterType = Enum.RaycastFilterType.Exclude
-	overlapParams.FilterDescendantsInstances = { params.character }
-	overlapParams.RespectCanCollide = true
-
 	-- Algo colidível logo à frente do corpo, na direção da corda?
-	local function isPullBlocked(pullDirection: Vector3): boolean
-		local center = root.CFrame:PointToWorldSpace(probeCenter) + pullDirection * settings.ReelProbeDistance
-		local probe = CFrame.new(center) * root.CFrame.Rotation
-		return #workspace:GetPartBoundsInBox(probe, probeSize, overlapParams) > 0
-	end
+	local isPullBlocked = HookPhysics.createBodyProbe(
+		params.character,
+		root,
+		settings.ReelProbeInset,
+		settings.ReelProbeDistance
+	)
 
-	local physics = {} :: Physics
+	local physics = {} :: HookPhysics.Physics
 
-	function physics.step(_self: Physics, dt: number, input: Input)
+	function physics.step(
+		_self: HookPhysics.Physics,
+		dt: number,
+		input: HookPhysics.Input
+	): HookPhysics.StepResult
 		local toAnchor = anchor.WorldPosition - rootAttachment.WorldPosition
 		local distance = toAnchor.Magnitude
 		if input.reel < 0 and distance > 0 and isPullBlocked(toAnchor.Unit) then
@@ -127,17 +76,29 @@ function SwingPhysics.new(params: Params): Physics
 			rope.Length = HookRules.nextRopeLength(rope.Length, input.reel, dt, distance, LIMITS)
 		end
 		body:step(dt, input.horizontal)
+		return "Continue"
 	end
 
-	function physics.getLength(_self: Physics): number
+	function physics.getLength(_self: HookPhysics.Physics): number
 		return rope.Length
 	end
 
-	function physics.destroy(_self: Physics)
+	function physics.getPhase(_self: HookPhysics.Physics): string
+		return "Swing"
+	end
+
+	function physics.destroy(_self: HookPhysics.Physics)
 		trove:Destroy()
 	end
 
 	return physics
 end
+
+SwingPhysics.mode = table.freeze({
+	new = SwingPhysics.new,
+	releaseOnButtonUp = true,
+	retargetWhileAttached = false,
+	usesReel = true,
+}) :: HookPhysics.Mode
 
 return SwingPhysics

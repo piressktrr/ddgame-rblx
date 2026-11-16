@@ -34,17 +34,17 @@ local Config = {
 	},
 
 	Hook = {
-		-- "Swing" = balanço com RopeConstraint (ADR 0036). "Pull" (puxão) é o plano B: ainda não existe.
-		Mode = "Swing",
+		-- "Pull" = puxão direto ao alvo (ADR 0042, padrão). "Swing" = balanço com RopeConstraint
+		-- (ADR 0036), mantido como referência.
+		Mode = "Pull",
 		Range = 40, -- studs, contados do HumanoidRootPart (ADR 0039)
 		Cooldown = 0.25, -- segundos entre um prender e o próximo
-		PullStrength = 120, -- reservado para o modo "Pull" (plano B); o balanço não usa
 		AimAssistRadius = 3, -- studs; raio da esfera de ajuda de mira (ADR 0039)
 		SurfaceTolerance = 0.5, -- studs: folga para o ponto atingido contar como "na peça, no plano"
 		-- Peças com CanCollide = false (volumes de zona, enfeites) não prendem.
 		IgnoreNonCollidable = true,
 
-		-- Corda (RF-18)
+		-- Corda do balanço (RF-18; só modo "Swing")
 		MinRopeLength = 4, -- studs
 		MaxRopeLength = 45, -- studs; >= Range + AimAssistRadius, senão a corda dá um tranco ao prender
 		ReelInSpeed = 18, -- studs/s ao segurar W
@@ -57,9 +57,31 @@ local Config = {
 		LandingSlideDecel = 90, -- studs/s²: freio do deslize ao pousar com embalo
 		ReelProbeInset = 0.2, -- studs que a caixa encolhe de cada lado (não acusar o chão em que pisa)
 
+		-- Puxão (modo "Pull", ADR 0042)
+		PullSpeed = 58, -- studs/s de cruzeiro até o alvo (o balanço testado chegava a ~78)
+		PullAccel = 180, -- studs/s²: quão rápido a velocidade chega à de cruzeiro (e freia, se segurando)
+		-- Força máxima do puxão, em studs/s² (vezes a massa) além da gravidade: folga para seguir a
+		-- velocidade pedida sem empurrar demais contra o que estiver no caminho.
+		PullMaxForceAccel = 400,
+		ArriveDistance = 3, -- studs do ponto em que conta como "chegou"
+		-- Segurando o botão, o puxão freia para parar no ponto; esta é a velocidade mínima da frenagem
+		-- (sem ela, a aproximação final ficaria lenta demais).
+		PullArriveSpeed = 12, -- studs/s
+		-- Ao chegar sem o botão apertado, o gancho solta e sobra esta fração da velocidade (embalo).
+		ReleaseMomentumFraction = 0.45,
+		-- Prendeu no chão: pula para sair dele se o alvo não estiver muito para baixo (componente Y da
+		-- direção do puxão maior que isto; -1..1).
+		PullTakeOffMinUp = -0.3,
+		HoldGain = 10, -- 1/s: quão firme o personagem fica no ponto enquanto segura o botão
+		PullMaxTime = 1.5, -- segundos: se não chegar até lá (algo segurou), o gancho solta
+		-- Sonda contra atravessar paredes no puxão: como `ReelProbeDistance`, mas na direção do voo.
+		PullProbeDistance = 0.5, -- studs
+		-- Se a sonda bater a até esta distância do ponto, conta como chegou (teto/parede do próprio alvo).
+		PullBlockedArriveDistance = 6, -- studs
+
 		-- Balanço (RF-17)
-		SwingAcceleration = 50, -- studs/s² aplicados por A/D enquanto preso e no embalo
-		MaxSwingSpeed = 90, -- studs/s; limite de velocidade enquanto preso e no embalo
+		SwingAcceleration = 50, -- studs/s² aplicados por A/D enquanto preso (balanço) e no embalo
+		MaxSwingSpeed = 70, -- studs/s; limite de velocidade enquanto preso e no embalo
 		UprightResponsiveness = 40, -- quão rápido o personagem volta a ficar em pé enquanto preso
 		FaceFlipSpeed = 2, -- studs/s em X para o personagem virar para o lado do movimento
 		-- Embalo depois de soltar: o Humanoid continua sem controle próprio (senão freia no ar) até

@@ -59,3 +59,4 @@ Modelo:
 | [0039](0039-regras-do-plano-2-5d.md) | Regras do plano 2.5D: colisão, gancho, mira, W/S, altura da tela, estágios verticais, correção no servidor | Aceita |
 | [0040](0040-checkpoint-mvp-e-ordem-das-fases.md) | Meta de 10–15 min por corrida, nível do gancho no MVP, nova ordem das fases | Aceita |
 | [0041](0041-mapa-enrolado-e-tutorial.md) | Mapa enrolado, E1 difícil, tutorial do gancho no MVP, queda = checkpoint | Aceita |
+| [0042](0042-gancho-puxao-direto.md) | Gancho vira puxão direto ao alvo (um clique), segurar para ficar preso, sem W/S | Aceita |

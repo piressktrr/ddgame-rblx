@@ -1,16 +1,20 @@
 --!strict
 --[[
-	Gancho do jogador local, Fase 1: só em superfícies (RF-10..14, RF-17..19; ADR 0016, 0036, 0039).
+	Gancho do jogador local, Fase 1: só em superfícies (RF-10..14, RF-17..19; ADR 0016, 0036, 0039, 0042).
 
-	- Botão esquerdo do mouse: pressionar dispara, segurar mantém preso, soltar solta na hora.
+	- Botão esquerdo do mouse, modo "Pull" (padrão, ADR 0042): um clique prende e puxa o personagem
+	  até o ponto (`PullPhysics`). Segurando ao chegar, fica preso ali até soltar; já solto, o gancho
+	  solta ao chegar e sobra parte do embalo. Clicar em outro alvo durante o voo troca de alvo.
+	  Modo "Swing" (referência, ADR 0036): segurar mantém preso, soltar solta na hora (`SwingPhysics`).
 	  Pressionar durante a recarga (`Config.Hook.Cooldown`) dispara assim que ela acabar, se ainda segurado.
 	- Mira: o cursor vira um ponto do plano (raio da câmera ∩ plano Z); o gancho sai do HumanoidRootPart
 	  nessa direção, em 360°, até `Config.Hook.Range`. Primeiro um Raycast; se não achar alvo válido, um
 	  Spherecast com raio `AimAssistRadius` no mesmo caminho (esfera de ajuda, RF-10b).
 	- Só prende em peça na profundidade do plano; roxo (`NoHook`) nunca; verde (`HookOnce`) uma vez por vida
 	  ou checkpoint. O cliente decide na hora; o servidor (HookService) confere e pode recusar (`HookRejected`).
-	- Enquanto preso: A/D empurram o balanço, W recolhe e S solta corda (corda em `SwingPhysics`; controle
-	  do corpo e embalo depois de soltar em `AirBody`).
+	- No puxão, W/S não fazem nada no gancho (o `CharacterController` continua bloqueando a profundidade).
+	  No balanço: A/D empurram, W recolhe e S solta corda. Controle do corpo e embalo depois de soltar
+	  em `AirBody` (A/D dão controle no ar durante o embalo).
 	- Retículo em três estados (sem alvo, válido, proibido) em `Reticle`; corda visível só localmente
 	  (para os outros jogadores: Fase 4).
 ]]
@@ -30,6 +34,8 @@ local Trove = require(ReplicatedStorage.Packages.Trove)
 
 local AirBody = require(script.AirBody)
 local CharacterController = require(script.Parent.CharacterController)
+local HookPhysics = require(script.HookPhysics)
+local PullPhysics = require(script.PullPhysics)
 local Reticle = require(script.Reticle)
 local SwingPhysics = require(script.SwingPhysics)
 
@@ -52,15 +58,14 @@ type Attached = {
 	part: BasePart,
 	anchor: Attachment,
 	hookOnceKey: Instance?,
-	physics: SwingPhysics.Physics,
+	physics: HookPhysics.Physics,
 	trove: Trove.Trove,
 }
 
-type PhysicsFactory = (params: SwingPhysics.Params) -> SwingPhysics.Physics
-
--- Um módulo de física por tipo de gancho (ADR 0036). O puxão (tipo A) é o plano B e entraria aqui.
-local PHYSICS_BY_MODE: { [string]: PhysicsFactory } = {
-	Swing = SwingPhysics.new,
+-- Um módulo de física por tipo de gancho (ADR 0036, 0042).
+local MODES: { [string]: HookPhysics.Mode } = {
+	Pull = PullPhysics.mode,
+	Swing = SwingPhysics.mode,
 }
 
 local settings = Config.Hook
@@ -71,7 +76,7 @@ local NO_TARGET: Target = { state = "None" }
 
 local HookController = {}
 
-local createPhysics: PhysicsFactory? = PHYSICS_BY_MODE[settings.Mode]
+local mode: HookPhysics.Mode? = MODES[settings.Mode]
 local attachRemote: RemoteEvent? = nil
 local detachRemote: RemoteEvent? = nil
 local reticle: Reticle.Reticle? = nil
@@ -87,6 +92,7 @@ local airBody: AirBody.AirBody? = nil
 local attachCounter = 0
 local lastAttachTime = -math.huge
 local firePending = false -- botão pressionado esperando a recarga acabar
+local buttonHeld = false -- botão do gancho apertado agora
 local reelInHeld = false
 local reelOutHeld = false
 local usedHookOnce: { [Instance]: boolean } = {} -- espelho local; quem manda é o servidor
@@ -201,8 +207,8 @@ local function release(notifyServer: boolean)
 end
 
 local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
-	local factory = createPhysics
-	if not factory then
+	local currentMode = mode
+	if not currentMode then
 		return
 	end
 	attachCounter += 1
@@ -217,8 +223,9 @@ local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
 	local body = airBody or AirBody.new(ctx.character, ctx.humanoid, ctx.root, ctx.rootAttachment)
 	airBody = body
 	body:cancelMomentum()
+	body:setAimPoint(anchor) -- braço da pose de voo aponta para o ponto preso (beginMomentum tira)
 
-	local physics = factory({
+	local physics = currentMode.new({
 		character = ctx.character,
 		root = ctx.root,
 		rootAttachment = ctx.rootAttachment,
@@ -248,9 +255,13 @@ local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
 	end
 end
 
+local function canRetarget(): boolean
+	return mode ~= nil and mode.retargetWhileAttached
+end
+
 local function tryFire()
 	local ctx = context
-	if not ctx or attached or ctx.humanoid.Health <= 0 then
+	if not ctx or (attached and not canRetarget()) or ctx.humanoid.Health <= 0 then
 		lastResult = "Unavailable"
 		return
 	end
@@ -261,6 +272,9 @@ local function tryFire()
 	end
 	local target = findTarget(getOrigin(ctx), aimPoint)
 	if target.state == "Valid" and target.part and target.point then
+		-- Troca de alvo durante o voo: solta o atual (o corpo continua o mesmo) e prende no novo.
+		-- Alvo inválido não interrompe o puxão em andamento.
+		release(true)
 		attach(ctx, target.part, target.point)
 		lastResult = "Attached"
 	elseif target.state == "Forbidden" then
@@ -274,7 +288,7 @@ local function tryFire()
 end
 
 local function processPendingFire()
-	if not firePending or attached or not context then
+	if not firePending or (attached and not canRetarget()) or not context then
 		return
 	end
 	if not HookRules.cooldownReady(lastAttachTime, os.clock(), settings.Cooldown) then
@@ -285,22 +299,27 @@ local function processPendingFire()
 end
 
 local function pressFire()
+	buttonHeld = true
 	firePending = true
 	processPendingFire()
 end
 
 local function releaseFire()
+	buttonHeld = false
 	firePending = false
-	release(true)
+	-- No puxão, soltar o botão não solta o gancho: ele segue até o ponto (a física decide ao chegar).
+	if mode and mode.releaseOnButtonUp then
+		release(true)
+	end
 end
 
-local function getInput(ctx: CharacterContext): SwingPhysics.Input
+local function getInput(ctx: CharacterContext): HookPhysics.Input
 	local horizontal: number = if horizontalOverride ~= nil
 		then horizontalOverride
 		else math.clamp(ctx.humanoid.MoveDirection.X, -1, 1)
 	local keyboardReel = (if reelOutHeld then 1 else 0) - (if reelInHeld then 1 else 0)
 	local reel: number = if reelOverride ~= nil then reelOverride else keyboardReel
-	return { horizontal = horizontal, reel = reel }
+	return { horizontal = horizontal, reel = reel, held = buttonHeld }
 end
 
 local function onPreSimulation(dt: number)
@@ -315,7 +334,9 @@ local function onPreSimulation(dt: number)
 		if not current.anchor.Parent or not current.part:IsDescendantOf(workspace) then
 			release(true)
 		else
-			current.physics:step(dt, getInput(ctx))
+			if current.physics:step(dt, getInput(ctx)) == "Release" then
+				release(true) -- chegou, bateu em algo ou soltou o botão: segue no embalo
+			end
 			return
 		end
 	end
@@ -431,7 +452,7 @@ HookController.debug = {
 	setAim = function(aimPoint: Vector3?)
 		aimOverride = aimPoint
 	end,
-	-- horizontal: -1..1 (A/D); reel: -1 recolhe (W), 1 solta (S). nil volta ao teclado.
+	-- horizontal: -1..1 (A/D); reel: -1 recolhe (W), 1 solta (S), só no balanço. nil volta ao teclado.
 	setInput = function(horizontal: number?, reel: number?)
 		horizontalOverride = horizontal
 		reelOverride = reel
@@ -444,6 +465,9 @@ HookController.debug = {
 			momentum = current == nil and airBody ~= nil,
 			attachId = if current then current.id else nil,
 			partName = if current then current.part.Name else nil,
+			mode = settings.Mode,
+			phase = if current then current.physics:getPhase() else nil,
+			buttonHeld = buttonHeld,
 			ropeLength = if current then current.physics:getLength() else nil,
 			anchor = if current then current.anchor.WorldPosition else nil,
 			rootPosition = if ctx then ctx.root.Position else nil,
@@ -472,7 +496,8 @@ local function createDebugBindable()
 end
 
 function HookController.Start()
-	assert(createPhysics, `[Hook] Config.Hook.Mode desconhecido: {settings.Mode}`)
+	local currentMode = mode
+	assert(currentMode, `[Hook] Config.Hook.Mode desconhecido: {settings.Mode}`)
 
 	attachRemote = Net.get("HookAttach")
 	detachRemote = Net.get("HookDetach")
@@ -501,13 +526,16 @@ function HookController.Start()
 			releaseFire()
 		end
 	end)
-	ContextActionService:BindActionAtPriority(
-		"HookReel",
-		onReelAction,
-		false,
-		CharacterController.DepthKeysPriority + 1,
-		table.unpack(CharacterController.DepthKeys)
-	)
+	-- W/S só mexem no gancho no balanço; no puxão ficam só com o CharacterController (bloqueadas).
+	if currentMode.usesReel then
+		ContextActionService:BindActionAtPriority(
+			"HookReel",
+			onReelAction,
+			false,
+			CharacterController.DepthKeysPriority + 1,
+			table.unpack(CharacterController.DepthKeys)
+		)
+	end
 
 	RunService.PreSimulation:Connect(onPreSimulation)
 	RunService:BindToRenderStep("HookReticle", Enum.RenderPriority.Camera.Value + 2, onRender)
