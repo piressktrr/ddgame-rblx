@@ -1,0 +1,228 @@
+--!strict
+--[[
+	Validação do gancho no servidor (RF-12, RF-13, RNF-02, RNF-03; ADR 0016, 0039).
+
+	O cliente simula o gancho (é dono da física do próprio personagem) e avisa "prendi" / "soltei".
+	O servidor não confia: confere tipos, alcance (com folga para o atraso da rede), se o ponto está na
+	peça e no plano, a tag da peça e o intervalo entre um prender e outro. Se recusar, manda
+	`HookRejected` e o cliente solta.
+
+	Guarda o uso do verde (`HookOnce`) por jogador e zera ao renascer ou ao passar checkpoint (o atributo
+	`Checkpoint` do Player muda, ver CheckpointService). O cliente espelha esse uso e limpa o espelho
+	quando o atributo `HookOnceEpoch` do Player muda.
+
+	Fora desta fase (Fase 4): repassar a corda aos outros clientes e gancho em outro jogador.
+]]
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage.Shared.Config)
+local HookRules = require(ReplicatedStorage.Shared.Logic.HookRules)
+local HookSurface = require(ReplicatedStorage.Shared.Util.HookSurface)
+local Net = require(ReplicatedStorage.Shared.Net)
+local Trove = require(ReplicatedStorage.Packages.Trove)
+
+type PlayerState = {
+	trove: Trove.Trove,
+	usedHookOnce: { [Instance]: boolean },
+	lastAttachAt: number,
+	attachedId: number?,
+	attachedPart: BasePart?,
+	attachedPoint: Vector3?,
+	windowStart: number,
+	windowCount: number,
+}
+
+local settings = Config.Hook
+local EPOCH_ATTRIBUTE = Config.Attributes.HookOnceEpoch
+
+local HookService = {}
+
+local states: { [Player]: PlayerState } = {}
+local rejectedRemote: RemoteEvent? = nil
+
+local function clearAttached(state: PlayerState)
+	state.attachedId = nil
+	state.attachedPart = nil
+	state.attachedPoint = nil
+end
+
+local function resetHookOnce(player: Player, state: PlayerState)
+	table.clear(state.usedHookOnce)
+	local epoch = player:GetAttribute(EPOCH_ATTRIBUTE)
+	player:SetAttribute(EPOCH_ATTRIBUTE, (if typeof(epoch) == "number" then epoch else 0) + 1)
+end
+
+-- Limite simples de mensagens por segundo, por jogador (RNF-03).
+local function allowMessage(state: PlayerState): boolean
+	local now = os.clock()
+	if now - state.windowStart >= 1 then
+		state.windowStart = now
+		state.windowCount = 0
+	end
+	state.windowCount += 1
+	return state.windowCount <= settings.ServerMaxMessagesPerSecond
+end
+
+local function isPlayerCharacterPart(part: Instance): boolean
+	local model = part:FindFirstAncestorOfClass("Model")
+	while model do
+		if Players:GetPlayerFromCharacter(model) then
+			return true
+		end
+		model = model:FindFirstAncestorOfClass("Model")
+	end
+	return false
+end
+
+-- Converte os argumentos que vieram da rede. nil se algum tipo estiver errado.
+local function parseAttach(part: unknown, point: unknown): (BasePart?, Vector3?)
+	if typeof(part) ~= "Instance" or typeof(point) ~= "Vector3" then
+		return nil, nil
+	end
+	local instance = part :: Instance
+	local position = point :: Vector3
+	if not instance:IsA("BasePart") or not HookRules.isFiniteVector(position) then
+		return nil, nil
+	end
+	return instance :: BasePart, position
+end
+
+-- Confere o "prendi" do cliente. Devolve o motivo da recusa, ou nil se valeu.
+local function validateAttach(
+	player: Player,
+	state: PlayerState,
+	part: BasePart,
+	point: Vector3,
+	now: number
+): string?
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+	if not humanoid or humanoid.Health <= 0 or not root or not root:IsA("BasePart") then
+		return "NoCharacter"
+	end
+	if not part:IsDescendantOf(workspace) then
+		return "InvalidPart"
+	end
+	if isPlayerCharacterPart(part) then
+		return "PlayerTarget" -- gancho em jogador: Fase 4
+	end
+	if
+		not HookRules.cooldownReady(state.lastAttachAt, now, settings.Cooldown - settings.ServerCooldownSlack)
+	then
+		return "Cooldown"
+	end
+	local maxDistance = settings.Range + settings.AimAssistRadius + settings.ServerRangeTolerance
+	if not HookRules.isWithinRange(root.Position, point, maxDistance) then
+		return "OutOfRange"
+	end
+	if math.abs(point.Z - Config.Plane.Z) > settings.ServerSurfaceTolerance then
+		return "OffPlane"
+	end
+	if
+		not part:IsA("Terrain")
+		and not HookRules.pointOnPart(part.CFrame, part.Size, point, settings.ServerSurfaceTolerance)
+	then
+		return "NotOnPart"
+	end
+	local kind = HookSurface.getKind(part)
+	if kind == "NoHook" then
+		return "NoHook"
+	end
+	local key = HookSurface.getHookOnceKey(part)
+	if not HookRules.canAttach(kind, key ~= nil and state.usedHookOnce[key] == true) then
+		return "HookOnceUsed"
+	end
+	return nil
+end
+
+local function onAttach(player: Player, id: unknown, part: unknown, point: unknown)
+	local state = states[player]
+	if not state or not allowMessage(state) then
+		return
+	end
+	if typeof(id) ~= "number" or not HookRules.isFiniteNumber(id :: number) then
+		return -- sem um id válido não há como responder ao cliente
+	end
+	local attachId = id :: number
+
+	local now = os.clock()
+	local basePart, position = parseAttach(part, point)
+	local reason = if basePart and position
+		then validateAttach(player, state, basePart, position, now)
+		else "BadArguments"
+	if reason or not basePart or not position then
+		if rejectedRemote then
+			rejectedRemote:FireClient(player, attachId, reason or "BadArguments")
+		end
+		return
+	end
+
+	state.lastAttachAt = now
+	local key = HookSurface.getHookOnceKey(basePart)
+	if key then
+		state.usedHookOnce[key] = true
+	end
+	state.attachedId = attachId
+	state.attachedPart = basePart
+	state.attachedPoint = position
+end
+
+local function onDetach(player: Player, id: unknown)
+	local state = states[player]
+	if not state or not allowMessage(state) then
+		return
+	end
+	if typeof(id) == "number" and state.attachedId == id then
+		clearAttached(state)
+	end
+end
+
+local function onPlayerAdded(player: Player)
+	local trove = Trove.new()
+	local state: PlayerState = {
+		trove = trove,
+		usedHookOnce = {},
+		lastAttachAt = -math.huge,
+		attachedId = nil,
+		attachedPart = nil,
+		attachedPoint = nil,
+		windowStart = 0,
+		windowCount = 0,
+	}
+	states[player] = state
+	player:SetAttribute(EPOCH_ATTRIBUTE, 0)
+
+	-- Renascer (morte ou reset) e passar checkpoint devolvem o uso dos verdes (RF-13).
+	trove:Connect(player.CharacterAdded, function()
+		clearAttached(state)
+		resetHookOnce(player, state)
+	end)
+	trove:Connect(player:GetAttributeChangedSignal(Config.Attributes.Checkpoint), function()
+		resetHookOnce(player, state)
+	end)
+end
+
+local function onPlayerRemoving(player: Player)
+	local state = states[player]
+	if state then
+		state.trove:Destroy()
+		states[player] = nil
+	end
+end
+
+function HookService.Start()
+	rejectedRemote = Net.get("HookRejected")
+	Net.get("HookAttach").OnServerEvent:Connect(onAttach)
+	Net.get("HookDetach").OnServerEvent:Connect(onDetach)
+
+	for _, player in Players:GetPlayers() do
+		onPlayerAdded(player)
+	end
+	Players.PlayerAdded:Connect(onPlayerAdded)
+	Players.PlayerRemoving:Connect(onPlayerRemoving)
+end
+
+return HookService

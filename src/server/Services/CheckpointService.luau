@@ -17,7 +17,7 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 
 local ORDER_ATTRIBUTE = "Order" -- na peça do mapa
-local PLAYER_ATTRIBUTE = "Checkpoint" -- no Player: número do último checkpoint alcançado
+local PLAYER_ATTRIBUTE = Config.Attributes.Checkpoint -- no Player: número do último checkpoint alcançado
 
 local CheckpointService = {}
 

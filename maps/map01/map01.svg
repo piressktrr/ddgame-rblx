@@ -1,49 +1,187 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1194 396" font-family="sans-serif">
-<rect width="1194" height="396" fill="#1b1d24"/>
-<rect x="42" y="10" width="348" height="376" fill="none" stroke="#3a3f4f" stroke-dasharray="6 6"/>
-<text x="50" y="30" fill="#c9cbe0" font-size="16">S1 · Aquecimento</text>
-<rect x="390" y="10" width="267" height="376" fill="none" stroke="#3a3f4f" stroke-dasharray="6 6"/>
-<text x="398" y="30" fill="#c9cbe0" font-size="16">S2 · Bifurcação</text>
-<rect x="657" y="10" width="507" height="376" fill="none" stroke="#3a3f4f" stroke-dasharray="6 6"/>
-<text x="665" y="30" fill="#c9cbe0" font-size="16">S3 · Torre ou atalho</text>
-<rect x="30.0" y="70.0" width="12.0" height="222.0" fill="rgb(163,162,165)" fill-opacity="1"><title>WallLeft</title></rect>
-<rect x="42.0" y="280.0" width="180.0" height="12.0" fill="rgb(90,160,110)" fill-opacity="1"><title>StartFloor</title></rect>
-<rect x="42.0" y="220.0" width="180.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>StartCeiling</title></rect>
-<rect x="234.0" y="274.0" width="42.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S1_Step1</title></rect>
-<rect x="288.0" y="265.0" width="36.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S1_Step2</title></rect>
-<rect x="336.0" y="256.0" width="42.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S1_Step3</title></rect>
-<rect x="390.0" y="256.0" width="102.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Hub</title></rect>
-<rect x="498.0" y="244.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up1</title></rect>
-<rect x="525.0" y="235.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up2</title></rect>
-<rect x="558.0" y="235.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up3</title></rect>
-<rect x="591.0" y="235.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up4</title></rect>
-<rect x="624.0" y="235.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Up5</title></rect>
-<rect x="492.0" y="292.0" width="120.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_TunnelFloor</title></rect>
-<rect x="516.0" y="256.0" width="90.0" height="6.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_TunnelCeiling</title></rect>
-<rect x="546.0" y="283.0" width="9.0" height="9.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_TunnelBump1</title></rect>
-<rect x="579.0" y="283.0" width="9.0" height="9.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_TunnelBump2</title></rect>
-<rect x="612.0" y="280.0" width="15.0" height="24.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Stair1</title></rect>
-<rect x="627.0" y="271.0" width="15.0" height="33.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Stair2</title></rect>
-<rect x="642.0" y="262.0" width="15.0" height="42.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S2_Stair3</title></rect>
-<rect x="657.0" y="250.0" width="135.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Rejoin</title></rect>
-<rect x="699.0" y="248.8" width="18.0" height="2.0" fill="rgb(255,210,63)" fill-opacity="1"><title>CP1</title></rect>
-<rect x="801.0" y="241.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower1</title></rect>
-<rect x="828.0" y="232.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower2</title></rect>
-<rect x="855.0" y="223.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower3</title></rect>
-<rect x="882.0" y="214.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower4</title></rect>
-<rect x="909.0" y="205.0" width="18.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Tower5</title></rect>
-<rect x="936.0" y="196.0" width="126.0" height="3.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_TopWalk</title></rect>
-<rect x="792.0" y="274.0" width="36.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low1</title></rect>
-<rect x="843.0" y="274.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low2</title></rect>
-<rect x="876.0" y="274.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low3</title></rect>
-<rect x="909.0" y="274.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low4</title></rect>
-<rect x="942.0" y="274.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_Low5</title></rect>
-<rect x="972.0" y="265.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_LowStair1</title></rect>
-<rect x="999.0" y="256.0" width="18.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>S3_LowStair2</title></rect>
-<rect x="1026.0" y="250.0" width="126.0" height="12.0" fill="rgb(163,162,165)" fill-opacity="1"><title>FinishFloor</title></rect>
-<rect x="1107.0" y="248.8" width="18.0" height="2.0" fill="rgb(255,255,255)" fill-opacity="1"><title>Finish</title></rect>
-<rect x="1152.0" y="70.0" width="12.0" height="192.0" fill="rgb(163,162,165)" fill-opacity="1"><title>WallRight</title></rect>
-<rect x="42.0" y="340.0" width="1110.0" height="6.0" fill="rgb(224,38,43)" fill-opacity="0.45"><title>PitMarker</title></rect>
-<circle cx="72" cy="272" r="6" fill="#5ad07a"/>
-<text x="82" y="276" fill="#5ad07a" font-size="13">spawn</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3120 1375" font-family="Segoe UI, sans-serif">
+<rect width="3120" height="1375" fill="#6f717b"/>
+<text x="20" y="44" fill="#fff" font-size="30" font-weight="600">Race and Escape · rascunho v2 do mapa (vista lateral, studs; pulo ~9, gancho 40)</text>
+<polygon points="480.0,475.0 1170.0,475.0 1170.0,265.0 480.0,265.0" fill="#86a6c8"/>
+<polygon points="720.0,265.0 960.0,265.0 960.0,217.0 720.0,217.0" fill="#86a6c8"/>
+<polygon points="1110.0,625.0 1170.0,625.0 1170.0,475.0 1110.0,475.0" fill="#86a6c8"/>
+<polygon points="1110.0,775.0 2040.0,775.0 2040.0,625.0 1110.0,625.0" fill="#86a6c8"/>
+<polygon points="1980.0,955.0 2040.0,955.0 2040.0,775.0 1980.0,775.0" fill="#86a6c8"/>
+<polygon points="1260.0,1075.0 1380.0,1075.0 1500.0,1225.0 1620.0,1225.0 1740.0,1075.0 2040.0,1075.0 2040.0,955.0 1260.0,955.0" fill="#86a6c8"/>
+<polygon points="1188.0,1129.0 1260.0,1129.0 1260.0,955.0 1188.0,955.0" fill="#86a6c8"/>
+<polygon points="1068.0,1075.0 1188.0,1075.0 1188.0,925.0 1068.0,925.0" fill="#86a6c8"/>
+<polygon points="300.0,1225.0 1068.0,1225.0 1068.0,529.0 300.0,529.0" fill="#86a6c8"/>
+<polygon points="1068.0,1075.0 1080.0,1075.0 1080.0,955.0 1068.0,955.0" fill="#86a6c8"/>
+<polygon points="300.0,529.0 360.0,529.0 360.0,130.0 300.0,130.0" fill="#86a6c8"/>
+<polygon points="300.0,187.0 2280.0,187.0 2280.0,130.0 300.0,130.0" fill="#86a6c8"/>
+<polygon points="2160.0,445.0 2940.0,445.0 2940.0,157.0 2160.0,157.0" fill="#86a6c8"/>
+<polygon points="2940.0,1225.0 3066.0,1225.0 3066.0,157.0 2940.0,157.0" fill="#86a6c8"/>
+<polygon points="2280.0,1255.0 3066.0,1255.0 3066.0,1135.0 2280.0,1135.0" fill="#86a6c8"/>
+<polygon points="2280.0,1135.0 2430.0,1135.0 2430.0,655.0 2280.0,655.0" fill="#86a6c8"/>
+<polygon points="2430.0,805.0 2760.0,805.0 2760.0,625.0 2430.0,625.0" fill="#86a6c8"/>
+<polygon points="30.0,445.0 255.0,445.0 255.0,229.0 30.0,229.0" fill="#9db7a6"/>
+<polygon points="480.0,475.0 552.0,475.0 552.0,391.0 480.0,391.0" fill="#6f717b"/>
+<polygon points="642.0,475.0 678.0,475.0 678.0,325.0 642.0,325.0" fill="#6f717b"/>
+<polygon points="780.0,475.0 816.0,475.0 816.0,325.0 780.0,325.0" fill="#6f717b"/>
+<polygon points="918.0,475.0 954.0,475.0 954.0,325.0 918.0,325.0" fill="#6f717b"/>
+<polygon points="1056.0,475.0 1092.0,475.0 1092.0,325.0 1056.0,325.0" fill="#6f717b"/>
+<polygon points="1230.0,661.0 1254.0,661.0 1254.0,625.0 1230.0,625.0" fill="#6f717b"/>
+<polygon points="1350.0,661.0 1374.0,661.0 1374.0,625.0 1350.0,625.0" fill="#6f717b"/>
+<polygon points="1470.0,661.0 1494.0,661.0 1494.0,625.0 1470.0,625.0" fill="#6f717b"/>
+<polygon points="1710.0,661.0 1734.0,661.0 1734.0,625.0 1710.0,625.0" fill="#6f717b"/>
+<polygon points="1830.0,661.0 1854.0,661.0 1854.0,625.0 1830.0,625.0" fill="#6f717b"/>
+<polygon points="1950.0,661.0 1974.0,661.0 1974.0,625.0 1950.0,625.0" fill="#6f717b"/>
+<polygon points="1530.0,775.0 1596.0,775.0 1596.0,733.0 1530.0,733.0" fill="#6f717b"/>
+<polygon points="390.0,1120.0 1068.0,1120.0 1068.0,1108.0 390.0,1108.0" fill="#6f717b"/>
+<polygon points="300.0,1015.0 978.0,1015.0 978.0,1003.0 300.0,1003.0" fill="#6f717b"/>
+<polygon points="390.0,910.0 1068.0,910.0 1068.0,898.0 390.0,898.0" fill="#6f717b"/>
+<polygon points="300.0,805.0 978.0,805.0 978.0,793.0 300.0,793.0" fill="#6f717b"/>
+<polygon points="390.0,700.0 1068.0,700.0 1068.0,688.0 390.0,688.0" fill="#6f717b"/>
+<polygon points="300.0,610.0 978.0,610.0 978.0,598.0 300.0,598.0" fill="#6f717b"/>
+<polygon points="2220.0,307.0 2940.0,307.0 2940.0,295.0 2220.0,295.0" fill="#6f717b"/>
+<polygon points="2292.0,265.0 2304.0,265.0 2304.0,259.0 2292.0,259.0" fill="#6f717b"/>
+<polygon points="2364.0,265.0 2376.0,265.0 2376.0,259.0 2364.0,259.0" fill="#6f717b"/>
+<polygon points="2436.0,265.0 2448.0,265.0 2448.0,259.0 2436.0,259.0" fill="#6f717b"/>
+<polygon points="2508.0,265.0 2520.0,265.0 2520.0,259.0 2508.0,259.0" fill="#6f717b"/>
+<polygon points="2580.0,265.0 2592.0,265.0 2592.0,259.0 2580.0,259.0" fill="#6f717b"/>
+<polygon points="2652.0,265.0 2664.0,265.0 2664.0,259.0 2652.0,259.0" fill="#6f717b"/>
+<polygon points="2724.0,265.0 2736.0,265.0 2736.0,259.0 2724.0,259.0" fill="#6f717b"/>
+<polygon points="2796.0,265.0 2808.0,265.0 2808.0,259.0 2796.0,259.0" fill="#6f717b"/>
+<polygon points="2868.0,265.0 2880.0,265.0 2880.0,259.0 2868.0,259.0" fill="#6f717b"/>
+<polygon points="2328.0,229.0 2340.0,229.0 2340.0,223.0 2328.0,223.0" fill="#6f717b"/>
+<polygon points="2400.0,229.0 2412.0,229.0 2412.0,223.0 2400.0,223.0" fill="#6f717b"/>
+<polygon points="2472.0,229.0 2484.0,229.0 2484.0,223.0 2472.0,223.0" fill="#6f717b"/>
+<polygon points="2544.0,229.0 2556.0,229.0 2556.0,223.0 2544.0,223.0" fill="#6f717b"/>
+<polygon points="2616.0,229.0 2628.0,229.0 2628.0,223.0 2616.0,223.0" fill="#6f717b"/>
+<polygon points="2688.0,229.0 2700.0,229.0 2700.0,223.0 2688.0,223.0" fill="#6f717b"/>
+<polygon points="2760.0,229.0 2772.0,229.0 2772.0,223.0 2760.0,223.0" fill="#6f717b"/>
+<polygon points="2832.0,229.0 2844.0,229.0 2844.0,223.0 2832.0,223.0" fill="#6f717b"/>
+<polygon points="2292.0,193.0 2304.0,193.0 2304.0,187.0 2292.0,187.0" fill="#6f717b"/>
+<polygon points="2364.0,193.0 2376.0,193.0 2376.0,187.0 2364.0,187.0" fill="#6f717b"/>
+<polygon points="2436.0,193.0 2448.0,193.0 2448.0,187.0 2436.0,187.0" fill="#6f717b"/>
+<polygon points="2508.0,193.0 2520.0,193.0 2520.0,187.0 2508.0,187.0" fill="#6f717b"/>
+<polygon points="2580.0,193.0 2592.0,193.0 2592.0,187.0 2580.0,187.0" fill="#6f717b"/>
+<polygon points="2652.0,193.0 2664.0,193.0 2664.0,187.0 2652.0,187.0" fill="#6f717b"/>
+<polygon points="2724.0,193.0 2736.0,193.0 2736.0,187.0 2724.0,187.0" fill="#6f717b"/>
+<polygon points="2796.0,193.0 2808.0,193.0 2808.0,187.0 2796.0,187.0" fill="#6f717b"/>
+<polygon points="2868.0,193.0 2880.0,193.0 2880.0,187.0 2868.0,187.0" fill="#6f717b"/>
+<polygon points="2280.0,445.0 2289.0,445.0 2289.0,343.0 2280.0,343.0" fill="#6f717b"/>
+<polygon points="2340.0,445.0 2349.0,445.0 2349.0,343.0 2340.0,343.0" fill="#6f717b"/>
+<polygon points="2400.0,445.0 2409.0,445.0 2409.0,343.0 2400.0,343.0" fill="#6f717b"/>
+<polygon points="2460.0,445.0 2469.0,445.0 2469.0,343.0 2460.0,343.0" fill="#6f717b"/>
+<polygon points="2520.0,445.0 2529.0,445.0 2529.0,343.0 2520.0,343.0" fill="#6f717b"/>
+<polygon points="2580.0,445.0 2589.0,445.0 2589.0,343.0 2580.0,343.0" fill="#6f717b"/>
+<polygon points="2640.0,445.0 2649.0,445.0 2649.0,343.0 2640.0,343.0" fill="#6f717b"/>
+<polygon points="2700.0,445.0 2709.0,445.0 2709.0,343.0 2700.0,343.0" fill="#6f717b"/>
+<polygon points="2760.0,445.0 2769.0,445.0 2769.0,343.0 2760.0,343.0" fill="#6f717b"/>
+<polygon points="2820.0,445.0 2829.0,445.0 2829.0,343.0 2820.0,343.0" fill="#6f717b"/>
+<polygon points="2880.0,445.0 2889.0,445.0 2889.0,343.0 2880.0,343.0" fill="#6f717b"/>
+<polygon points="2310.0,409.0 2319.0,409.0 2319.0,307.0 2310.0,307.0" fill="#6f717b"/>
+<polygon points="2370.0,409.0 2379.0,409.0 2379.0,307.0 2370.0,307.0" fill="#6f717b"/>
+<polygon points="2430.0,409.0 2439.0,409.0 2439.0,307.0 2430.0,307.0" fill="#6f717b"/>
+<polygon points="2490.0,409.0 2499.0,409.0 2499.0,307.0 2490.0,307.0" fill="#6f717b"/>
+<polygon points="2550.0,409.0 2559.0,409.0 2559.0,307.0 2550.0,307.0" fill="#6f717b"/>
+<polygon points="2610.0,409.0 2619.0,409.0 2619.0,307.0 2610.0,307.0" fill="#6f717b"/>
+<polygon points="2670.0,409.0 2679.0,409.0 2679.0,307.0 2670.0,307.0" fill="#6f717b"/>
+<polygon points="2730.0,409.0 2739.0,409.0 2739.0,307.0 2730.0,307.0" fill="#6f717b"/>
+<polygon points="2790.0,409.0 2799.0,409.0 2799.0,307.0 2790.0,307.0" fill="#6f717b"/>
+<polygon points="2850.0,409.0 2859.0,409.0 2859.0,307.0 2850.0,307.0" fill="#6f717b"/>
+<polygon points="2940.0,289.0 3018.0,289.0 3018.0,277.0 2940.0,277.0" fill="#6f717b"/>
+<polygon points="2988.0,397.0 3066.0,397.0 3066.0,385.0 2988.0,385.0" fill="#6f717b"/>
+<polygon points="2940.0,505.0 3018.0,505.0 3018.0,493.0 2940.0,493.0" fill="#6f717b"/>
+<polygon points="2988.0,613.0 3066.0,613.0 3066.0,601.0 2988.0,601.0" fill="#6f717b"/>
+<polygon points="2940.0,721.0 3018.0,721.0 3018.0,709.0 2940.0,709.0" fill="#6f717b"/>
+<polygon points="2988.0,829.0 3066.0,829.0 3066.0,817.0 2988.0,817.0" fill="#6f717b"/>
+<polygon points="2940.0,937.0 3018.0,937.0 3018.0,925.0 2940.0,925.0" fill="#6f717b"/>
+<polygon points="2988.0,1045.0 3066.0,1045.0 3066.0,1033.0 2988.0,1033.0" fill="#6f717b"/>
+<polygon points="2280.0,1069.0 2364.0,1069.0 2364.0,1057.0 2280.0,1057.0" fill="#6f717b"/>
+<polygon points="2346.0,991.0 2430.0,991.0 2430.0,979.0 2346.0,979.0" fill="#6f717b"/>
+<polygon points="2280.0,913.0 2364.0,913.0 2364.0,901.0 2280.0,901.0" fill="#6f717b"/>
+<polygon points="2346.0,835.0 2430.0,835.0 2430.0,823.0 2346.0,823.0" fill="#6f717b"/>
+<polygon points="2280.0,757.0 2364.0,757.0 2364.0,745.0 2280.0,745.0" fill="#6f717b"/>
+<polygon points="918.0,325.0 954.0,325.0 954.0,319.0 918.0,319.0" fill="#c8ecff"/>
+<polygon points="1530.0,733.0 1566.0,733.0 1566.0,727.0 1530.0,727.0" fill="#c8ecff"/>
+<polygon points="1800.0,1075.0 1860.0,1075.0 1860.0,1069.0 1800.0,1069.0" fill="#c8ecff"/>
+<polygon points="660.0,898.0 732.0,898.0 732.0,892.0 660.0,892.0" fill="#c8ecff"/>
+<polygon points="2529.0,445.0 2559.0,445.0 2559.0,439.0 2529.0,439.0" fill="#c8ecff"/>
+<polygon points="2520.0,1249.0 2562.0,1249.0 2562.0,1243.0 2520.0,1243.0" fill="#c8ecff"/>
+<polygon points="2760.0,1249.0 2802.0,1249.0 2802.0,1243.0 2760.0,1243.0" fill="#c8ecff"/>
+<polygon points="1056.0,325.0 1092.0,325.0 1092.0,319.0 1056.0,319.0" fill="#FF8A1F"/>
+<polygon points="1566.0,733.0 1596.0,733.0 1596.0,727.0 1566.0,727.0" fill="#FF8A1F"/>
+<polygon points="330.0,793.0 366.0,793.0 366.0,787.0 330.0,787.0" fill="#FF8A1F"/>
+<polygon points="2649.0,445.0 2679.0,445.0 2679.0,439.0 2649.0,439.0" fill="#FF8A1F"/>
+<polygon points="2580.0,1249.0 2622.0,1249.0 2622.0,1243.0 2580.0,1243.0" fill="#FF8A1F"/>
+<polygon points="2820.0,1249.0 2862.0,1249.0 2862.0,1243.0 2820.0,1243.0" fill="#FF8A1F"/>
+<polygon points="552.0,475.0 1110.0,475.0 1110.0,469.0 552.0,469.0" fill="#d9434b"/>
+<polygon points="1170.0,775.0 1980.0,775.0 1980.0,769.0 1170.0,769.0" fill="#d9434b"/>
+<polygon points="1188.0,1129.0 1260.0,1129.0 1260.0,1123.0 1188.0,1123.0" fill="#d9434b"/>
+<polygon points="1446.0,1159.0 1500.0,1225.0 1509.0,1216.0 1455.0,1150.0" fill="#d9434b"/>
+<polygon points="1620.0,1225.0 1674.0,1159.0 1665.0,1150.0 1611.0,1216.0" fill="#d9434b"/>
+<polygon points="600.0,1003.0 780.0,1003.0 780.0,997.0 600.0,997.0" fill="#d9434b"/>
+<polygon points="600.0,793.0 780.0,793.0 780.0,787.0 600.0,787.0" fill="#d9434b"/>
+<polygon points="300.0,1225.0 1068.0,1225.0 1068.0,1219.0 300.0,1219.0" fill="#d9434b"/>
+<polygon points="2280.0,295.0 2880.0,295.0 2880.0,289.0 2280.0,289.0" fill="#d9434b"/>
+<polygon points="2940.0,277.0 3018.0,277.0 3018.0,271.0 2940.0,271.0" fill="#d9434b"/>
+<polygon points="2988.0,385.0 3066.0,385.0 3066.0,379.0 2988.0,379.0" fill="#d9434b"/>
+<polygon points="2940.0,493.0 3018.0,493.0 3018.0,487.0 2940.0,487.0" fill="#d9434b"/>
+<polygon points="2988.0,601.0 3066.0,601.0 3066.0,595.0 2988.0,595.0" fill="#d9434b"/>
+<polygon points="2940.0,709.0 3018.0,709.0 3018.0,703.0 2940.0,703.0" fill="#d9434b"/>
+<polygon points="2988.0,817.0 3066.0,817.0 3066.0,811.0 2988.0,811.0" fill="#d9434b"/>
+<polygon points="2940.0,925.0 3018.0,925.0 3018.0,919.0 2940.0,919.0" fill="#d9434b"/>
+<polygon points="2988.0,1033.0 3066.0,1033.0 3066.0,1027.0 2988.0,1027.0" fill="#d9434b"/>
+<polygon points="2430.0,1255.0 2910.0,1255.0 2910.0,1249.0 2430.0,1249.0" fill="#d9434b"/>
+<polygon points="1590.0,661.0 1614.0,661.0 1614.0,625.0 1590.0,625.0" fill="#8e5bd6"/>
+<polygon points="1470.0,631.0 1614.0,631.0 1614.0,625.0 1470.0,625.0" fill="#8e5bd6"/>
+<polygon points="390.0,1120.0 426.0,1120.0 426.0,1108.0 390.0,1108.0" fill="#8e5bd6"/>
+<polygon points="942.0,1015.0 978.0,1015.0 978.0,1003.0 942.0,1003.0" fill="#8e5bd6"/>
+<polygon points="390.0,910.0 426.0,910.0 426.0,898.0 390.0,898.0" fill="#8e5bd6"/>
+<polygon points="942.0,805.0 978.0,805.0 978.0,793.0 942.0,793.0" fill="#8e5bd6"/>
+<polygon points="390.0,700.0 426.0,700.0 426.0,688.0 390.0,688.0" fill="#8e5bd6"/>
+<polygon points="942.0,610.0 978.0,610.0 978.0,598.0 942.0,598.0" fill="#8e5bd6"/>
+<polygon points="2418.0,1015.0 2430.0,1015.0 2430.0,925.0 2418.0,925.0" fill="#5fbf6a"/>
+<polygon points="2280.0,865.0 2292.0,865.0 2292.0,775.0 2280.0,775.0" fill="#5fbf6a"/>
+<polygon points="1080.0,1075.0 1176.0,1075.0 1176.0,1069.0 1080.0,1069.0" fill="#ffd23f"/>
+<polygon points="60.0,445.0 120.0,445.0 120.0,439.0 60.0,439.0" fill="#5aa06e"/>
+<polygon points="492.0,391.0 540.0,391.0 540.0,385.0 492.0,385.0" fill="#5aa06e"/>
+<polygon points="2520.0,805.0 2700.0,805.0 2700.0,799.0 2520.0,799.0" fill="#ffffff"/>
+<polyline points="516.0,373.0 720.0,295.0 960.0,295.0 1125.0,385.0 1140.0,559.0 1140.0,700.0 1380.0,685.0 1560.0,715.0 1980.0,700.0 2010.0,895.0 1890.0,1030.0 1560.0,1165.0 1350.0,1030.0 1140.0,1045.0 1020.0,1060.0 420.0,1075.0 1020.0,970.0 420.0,865.0 1020.0,760.0 420.0,655.0 1020.0,565.0 330.0,559.0 330.0,157.0 2250.0,157.0 2280.0,235.0 2910.0,235.0 3000.0,205.0 2964.0,385.0 3030.0,565.0 2964.0,745.0 3030.0,925.0 3000.0,1195.0 2400.0,1195.0 2322.0,1105.0 2388.0,985.0 2322.0,835.0 2388.0,730.0 2580.0,775.0" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="10 8" stroke-opacity="0.8"/>
+<text x="30" y="169" fill="#fff" font-size="30">Tutorial</text>
+<text x="36" y="259" fill="#fff" font-size="20">gancho: mirar,</text>
+<text x="36" y="289" fill="#fff" font-size="20">segurar, balançar,</text>
+<text x="36" y="319" fill="#fff" font-size="20">W/S, roxo, verde</text>
+<text x="36" y="475" fill="#fff" font-size="20">portal → E1</text>
+<text x="480" y="205" fill="#fff" font-size="30">E1 · Salão dos pilares</text>
+<text x="564" y="289" fill="#fff" font-size="20">vãos de 30+: gancho no teto · cair = morte</text>
+<text x="564" y="313" fill="#fff" font-size="20">gelo no 3º pilar, laranja no 4º</text>
+<text x="1182" y="499" fill="#fff" font-size="20">respiro</text>
+<text x="1230" y="589" fill="#fff" font-size="30">E2 · Corredor dos dentes</text>
+<text x="1200" y="799" fill="#fff" font-size="20">chão mortal · plataforma do meio: metade gelo, metade laranja</text>
+<text x="1380" y="895" fill="#fff" font-size="30">E3 · Vale em V  ←</text>
+<text x="1380" y="1255" fill="#fff" font-size="20">gelo no caminho antes da descida</text>
+<text x="1056" y="907" fill="#fff" font-size="24">✦ Farol 1</text>
+<text x="315" y="511" fill="#fff" font-size="30">E4 · Serpentina ↑</text>
+<text x="312" y="1255" fill="#fff" font-size="20">sobe em zigue-zague · pontas roxas · faixas mortais · um andar com gelo</text>
+<text x="1230" y="160" fill="#fff" font-size="20">respiro</text>
+<text x="2310" y="103" fill="#fff" font-size="30">E5 · Campo flutuante (em cima) ou Labirinto (embaixo)</text>
+<text x="2250" y="475" fill="#fff" font-size="20">labirinto: lento e seguro, com 1 gelo</text>
+<text x="2484" y="667" fill="#fff" font-size="24">✦ Farol 2 (fim)</text>
+<text x="2490" y="865" fill="#fff" font-size="30">E6 · Poço ↓ e subida ↑</text>
+<text x="2490" y="895" fill="#fff" font-size="20">lâminas mortais no poço,</text>
+<text x="2490" y="925" fill="#fff" font-size="20">gelo no fundo, S com verde</text>
+<rect x="20" y="1330" width="26" height="26" fill="#c8ecff"/>
+<text x="54" y="1351" fill="#fff" font-size="22">gelo</text>
+<rect x="134" y="1330" width="26" height="26" fill="#FF8A1F"/>
+<text x="168" y="1351" fill="#fff" font-size="22">descongelar</text>
+<rect x="325" y="1330" width="26" height="26" fill="#d9434b"/>
+<text x="359" y="1351" fill="#fff" font-size="22">mortal (volta ao checkpoint)</text>
+<rect x="703" y="1330" width="26" height="26" fill="#8e5bd6"/>
+<text x="737" y="1351" fill="#fff" font-size="22">não gruda</text>
+<rect x="872" y="1330" width="26" height="26" fill="#5fbf6a"/>
+<text x="906" y="1351" fill="#fff" font-size="22">gruda 1 vez</text>
+<rect x="1063" y="1330" width="26" height="26" fill="#ffd23f"/>
+<text x="1097" y="1351" fill="#fff" font-size="22">checkpoint</text>
+<rect x="1243" y="1330" width="26" height="26" fill="#ffffff"/>
+<text x="1277" y="1351" fill="#fff" font-size="22">fim</text>
+<rect x="1346" y="1330" width="26" height="26" fill="#9db7a6"/>
+<text x="1380" y="1351" fill="#fff" font-size="22">tutorial</text>
+<text x="1524" y="1351" fill="#fff" font-size="22">- - - rota principal</text>
 </svg>

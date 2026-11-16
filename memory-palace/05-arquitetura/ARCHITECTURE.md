@@ -1,4 +1,4 @@
-# Arquitetura técnica (v0.2)
+# Arquitetura técnica (v0.3)
 
 ## 1. Toolchain
 
@@ -13,7 +13,7 @@
 | **Jest-Lua** | Testes unitários da lógica pura (substitui o TestEZ). |
 | **Git + GitHub** | Versionamento; CI com lint, format e testes em cada PR. |
 
-**Regra:** mapas e assets 3D ficam no place (Studio). **Código fica 100% em `src/`.**
+**Regra:** mapas e modelos ficam no place (Studio). **Código fica 100% em `src/`.**
 Nenhum `Script` escrito à mão dentro do Studio.
 
 ## 2. Estrutura de pastas
@@ -103,12 +103,13 @@ As versões exatas são fixadas no `wally.toml` quando fizermos o scaffold.
 | Marco | Entrega | Critério de pronto |
 |---|---|---|
 | M0 | Toolchain + scaffold | ✅ `rojo serve` sincroniza; lint/format passam |
-| M1 | Movimento solo: câmera 2.5D + gancho | Balançar e se puxar é gostoso no PC; `NoHook`/`HookOnce` funcionam |
-| M2 | Zonas + checkpoints + timer + Bouncer | Greybox jogável do início ao fim sozinho, com gelo/morte/respawn |
-| M3 | Interação entre jogadores | Gancho em jogador puxa os dois, lâmina e Bouncer empurram, resgate do gelo com ping de 150 ms |
-| M4 | Objetos mágicos solo + mapa(s) do MVP | Playtest sozinho e em grupo, tempos medidos |
-| M5 | Dados + rankings | Recordes persistem |
-| M6 | Polimento + lançamento | Retenção D1 medida no Analytics |
+| M1 | Plano + gancho solo (balanço, recolher corda, esfera de ajuda) | Balançar e se puxar é gostoso no PC; `NoHook`/`HookOnce` funcionam |
+| M2 | Mapa novo com o gancho | Greybox aprovado pelo dono |
+| M3 | Zonas + checkpoints + timer + lobby | Percurso jogável do início ao fim sozinho, com gelo/morte/respawn |
+| M4 | Interação entre jogadores + Bouncer + lâmina | Gancho em jogador puxa os dois, lâmina e Bouncer empurram, resgate do gelo com ping de 150 ms |
+| M5 | Objetos mágicos + nível do gancho | Playtest sozinho e em grupo, tempos medidos (meta 10–15 min) |
+| M6 | Dados + rankings | Recordes e nível persistem |
+| M7 | Polimento + lançamento | Retenção D1 medida no Analytics |
 
 ## 7. Checagem de viabilidade (v0.2, 2026-11-12)
 
@@ -122,5 +123,5 @@ As decisões 0013–0020 cabem na arquitetura sem mudar os princípios:
 - **Bouncer**: impulso no próprio personagem é local (sem lag); empurrão em outros passa pelo
   servidor, como o gancho em jogador. Munição é autoridade do servidor.
 - **Maior risco técnico:** puxar/empurrar **outro** jogador com boa sensação, porque depende da
-  latência. Por isso o M3 tem critério com ping de 150 ms e deve ser prototipado cedo.
+  latência. Por isso o M4 tem critério com ping de 150 ms e deve ser prototipado cedo.
 - **Plano 2.5D:** cada cliente trava o Z do próprio personagem; o servidor corrige se alguém sair do plano.

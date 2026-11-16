@@ -58,8 +58,8 @@ Sempre disponível, sem pegar em lugar nenhum.
 
 | Peça | Greybox (feito com Parts) | Versão final (depois) |
 |---|---|---|
-| Bouncer | Corpo de latão, cano curto e largo, anel de runa e **cristal magenta** brilhante | Malha 3D de pistola rúnica |
-| Lâmina | Cabo escuro + lâmina curta translúcida **branco-azulada** (Neon) | Malha 3D + trilha de partículas |
+| Bouncer | Corpo de latão, cano curto e largo, anel de runa e **cristal magenta** brilhante | Malha de pistola rúnica |
+| Lâmina | Cabo escuro + lâmina curta translúcida **branco-azulada** (Neon) | Malha + trilha de partículas |
 | Pedestal do Bouncer | Pedestal com o Bouncer flutuando | Altar rúnico |
 
 **Cor do Bouncer:** magenta não conflita com nenhuma cor do mapa (vermelho = morte, verde = gancho 1x,
@@ -75,7 +75,7 @@ Dá para fazer **greybox e protótipo só com Parts** (o que existe hoje). Para 
 | Opção | O que é | Precisa integrar? |
 |---|---|---|
 | **Geração de malha do Studio (via MCP)** | O MCP do Studio tem `generate_mesh` / `generate_procedural_model` (IA da própria Roblox) | Não: já está disponível; só testar a qualidade |
-| **Blender** + exportar `.fbx` → importar no Studio | Modelagem 3D completa e gratuita | Instalar o Blender; para eu controlar, um **MCP do Blender** (ex.: `blender-mcp`) |
+| **Blender** + exportar `.fbx` → importar no Studio | Modelagem completa e gratuita | Instalar o Blender; para eu controlar, um **MCP do Blender** (ex.: `blender-mcp`) |
 | **Toolbox / Creator Store** | Modelos prontos de terceiros | Não, mas cuidado com licença e originalidade (ADR 0001) |
 
 Recomendação: greybox com Parts agora; quando o tema for aplicado, testar a geração de malha do

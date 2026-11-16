@@ -44,9 +44,6 @@ local function update(dt: number)
 end
 
 function CameraController.Start()
-	if Config.Camera.Mode ~= "SideView" then
-		return -- 3ª pessoa: usa a câmera padrão do Roblox
-	end
 	player.CharacterAdded:Connect(function()
 		focus = nil -- ao renascer, pula direto para o personagem sem "voar" pelo mapa
 	end)
