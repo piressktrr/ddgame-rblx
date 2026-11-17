@@ -1,5 +1,6 @@
 # 0041 — Mapa enrolado, começo difícil, tutorial do gancho e queda = checkpoint
-- Status: Aceita (primeiras respostas da Q31; altera o escopo do GAME_DESIGN §8)
+- Status: Substituída em parte por 0047 (contagem de estágios e rota única) e por 0050 (nas rotas seguras, cair
+  não mata); primeiras respostas da Q31
 - Data: 2026-11-16
 ## Decisão
 - **Formato:** o mapa se enrola, subindo e descendo em blocos (não é uma faixa reta).

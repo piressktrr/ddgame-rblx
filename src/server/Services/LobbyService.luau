@@ -3,8 +3,8 @@
 	Lobby antes do mapa (ADR 0044).
 
 	- Todo jogador nasce no lobby (peça com a tag `LobbySpawn`, um SpawnLocation).
-	- Entrar no portal (`LobbyPortal`) começa uma corrida nova: zera o checkpoint, marca o atributo
-	  `InRace` no Player e leva o personagem ao `RaceStart`.
+	- Entrar no portal (`LobbyPortal`) começa uma corrida nova (`RaceService.beginRace`: zera o
+	  checkpoint, marca `InRace`, grava `RaceStartedAt`) e leva o personagem ao `RaceStart`.
 	- Morrer em corrida: renasce no último checkpoint (CheckpointService) ou, sem checkpoint, no
 	  `RaceStart` (aqui). Fora de corrida: renasce no lobby.
 
@@ -19,6 +19,7 @@ local RunService = game:GetService("RunService")
 
 local Config = require(ReplicatedStorage.Shared.Config)
 local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
+local RaceService = require(script.Parent.RaceService)
 
 local IN_RACE = Config.Attributes.InRace
 local CHECKPOINT = Config.Attributes.Checkpoint
@@ -92,9 +93,8 @@ local function startRace(player: Player, character: Model)
 		warn("[Lobby] Nenhuma peça com a tag RaceStart; o portal não leva a lugar nenhum")
 		return
 	end
-	player:SetAttribute(CHECKPOINT, 0)
-	player:SetAttribute(IN_RACE, true)
 	placeOn(character, start)
+	RaceService.beginRace(player)
 	print(`[Lobby] {player.Name} entrou no portal e começou a corrida`)
 end
 
@@ -103,7 +103,7 @@ local function checkPortals()
 	for _, player in Players:GetPlayers() do
 		local character = player.Character
 		local root = character and character:FindFirstChild("HumanoidRootPart")
-		if not character or not root or not root:IsA("BasePart") then
+		if not character or not root or not root:IsA("BasePart") or isInRace(player) then
 			continue
 		end
 		for _, portal in portals do

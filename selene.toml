@@ -1,2 +1,2 @@
-std = "roblox"
-exclude = ["Packages/**"]
+std = "roblox+testez"
+exclude = ["Packages/**", "DevPackages/**"]

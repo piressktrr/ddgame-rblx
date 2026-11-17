@@ -6,7 +6,7 @@
 ## 1. Pitch
 
 Plataforma de **fantasia em 2.5D** num servidor aberto. Cada mapa é um percurso visto de lado,
-que o dono vai reformular (Q31). Os jogadores usam um **gancho mágico** para se puxar
+com pelo menos 8 estágios, dificuldade média e vários caminhos até o fim (ADR 0047), atravessado quase todo com o gancho (ADR 0046). Os jogadores usam um **gancho mágico** para se puxar
 uns aos outros, desviam de **gelo mágico** e usam o **Bouncer**, uma pistola mágica de impulso, em
 trechos especiais. Qualquer um pode **salvar ou atrapalhar** qualquer outro.
 
@@ -79,7 +79,7 @@ aparecer só para quem não está em grupo.
 
 ## 4. Estrutura de mundo (MVP)
 
-- MVP: **um** mapa 2.5D, jogável sozinho e em grupo (ADR 0022); estrutura a ser reformulada pelo dono (Q31). Sem hub elaborado.
+- MVP: **um** mapa 2.5D, jogável sozinho e em grupo (ADR 0022); pelo menos 8 estágios, dificuldade média, vários caminhos (ADR 0047). Sem hub elaborado.
 - Meta de duração: **10 a 15 minutos** por corrida completa; checkpoint a cada 3 estágios (ADR 0034, 0040).
 - Depois do MVP: hub, tutorial, mapas por dificuldade.
 
@@ -135,8 +135,8 @@ para ajudar daltônicos.
 
 ## 7. Progressão e monetização
 
-**No MVP (ADR 0030, 0033, 0040):** o jogador ganha **níveis do gancho** jogando (alcance e raio da esfera de
-ajuda). Regra de ganho: Q23; persistência entre sessões: Q41. Velocidade como atributo fica para depois.
+**No MVP (ADR 0030, 0033, 0040):** o jogador ganha **níveis do gancho** jogando (direção do dono: alcance e força, ganhos por estágio e com moedas; nada fechado, Q23).
+O nível **fica salvo entre sessões** (ADR 0048). Velocidade como atributo fica para depois.
 
 **Depois do MVP (ADR 0025), e a monetização é essencial:**
 

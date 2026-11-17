@@ -103,6 +103,38 @@ ao abrir o projeto).
 | **Trove** (sleitnick) | 1.8.0 | "Lixeira" de conexões e objetos: limpa tudo de uma vez quando um personagem morre ou sai da equipe. Evita vazamento de memória. |
 | **Signal** (sleitnick) | 2.0.3 | Eventos internos entre módulos (ex.: "jogador congelou"), sem usar objetos do Roblox para isso. |
 
+### Só para desenvolvimento (`[dev-dependencies]` do Wally)
+
+Ficam em `DevPackages/` (fora do Git) e o Rojo põe em `ServerStorage.DevPackages`: **não vão
+para o cliente** e o jogo não usa.
+
+| Biblioteca | Versão | Para que serve |
+|---|---|---|
+| **TestEZ** (roblox) | 0.4.1 | Testes automáticos da lógica pura (RNF-04). Estilo `describe`/`it`/`expect` (parecido com JUnit + AssertJ). |
+
+#### Testes automáticos (TestEZ)
+
+- **Onde ficam:** pasta `tests/`, um arquivo por módulo (`Aim.spec.luau`, `HookRules.spec.luau`,
+  `DoubleJump.spec.luau`, `Zones.spec.luau`, `HookSurface.spec.luau`). O Rojo põe em
+  `ServerStorage.Tests` (fora do cliente).
+- **Runner:** `tests/Runner.luau` é um ModuleScript (não roda sozinho no jogo). Com o Studio em
+  **modo Edit** (sem play) e o Rojo conectado, rode na barra de comando ou pelo `execute_luau` do MCP:
+  ```lua
+  return require(game.ServerStorage.Tests.Runner)()
+  ```
+  Devolve (e imprime no Output) `X passaram, Y falharam, Z pulados` e o caminho de cada falha.
+- **Por que TestEZ e não Jest-Lua:** o Jest-Lua precisa de `debug.loadmodule`, que no Studio só
+  liga com uma FFlag em arquivo de configuração do Studio (`ClientAppSettings.json`). Testado em
+  2026-11-17: `debug.loadmodule is not enabled.` Para não mexer em configuração do Studio, usamos o
+  TestEZ, que roda com `require` normal.
+- **Specs com `--!nonstrict`:** `describe`, `it`, `expect`, `beforeEach` etc. são globais que o
+  TestEZ injeta no ambiente de cada spec; o modo strict acusaria "global desconhecida". O runner e o
+  código do jogo continuam `--!strict`.
+- **Selene:** `selene.toml` usa `std = "roblox+testez"`; as globais do TestEZ estão em
+  [`testez.yml`](../../testez.yml) (raiz). Rode `selene src tests` e `stylua --check src tests`.
+- **Cache do `require`:** se um módulo mudar e o resultado parecer antigo, rode de novo; se
+  persistir, o Studio guardou o módulo antigo na sessão (feche e abra o place).
+
 ### Planejadas (entram quando forem necessárias)
 
 | Biblioteca | Quando entra | Para que serve |
@@ -111,7 +143,7 @@ ao abrir o projeto).
 | Promise (evaera) | M5 | Fluxos assíncronos (DataStore, teleporte). |
 | Blink ou ByteNet | M3 | Rede tipada e compacta entre servidor e cliente. |
 | React-lua ou Fusion | M4/M6 | Interface (HUD, menus). |
-| Jest-Lua | quando houver lógica para testar | Testes automatizados. |
+| Jest-Lua | se um dia ligarmos `debug.loadmodule` | Substituto do TestEZ (ver acima por que não entrou). |
 
 ---
 
@@ -121,9 +153,11 @@ ao abrir o projeto).
 rokit install          # instala as ferramentas nas versões do projeto
 wally install          # baixa as bibliotecas
 rojo serve             # sincroniza com o Studio (deixar rodando)
-selene src             # lint
-stylua src             # formatar
+selene src tests       # lint
+stylua src tests       # formatar
 ```
+
+Testes (Studio em modo Edit, Rojo conectado): `return require(game.ServerStorage.Tests.Runner)()`.
 
 ## Histórico
 
@@ -132,3 +166,4 @@ stylua src             # formatar
 | 2026-11-11 | M0: Rokit 1.2.0, Rojo 7.7.1, Wally 0.3.2, Selene 0.32.0, StyLua 2.6.0, Trove 1.8.0, Signal 2.0.3 |
 | 2026-11-11 | Plugin do Rojo 7.7.1 instalado no Studio |
 | 2026-11-11 | MCP do Roblox Studio configurado no projeto (`.mcp.json`) |
+| 2026-11-17 | TestEZ 0.4.1 (dev-dependency), pasta `tests/`, `ServerStorage.Tests`/`DevPackages`, selene `roblox+testez` |

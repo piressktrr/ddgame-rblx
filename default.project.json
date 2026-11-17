@@ -9,6 +9,10 @@
     "ServerScriptService": {
       "Server": { "$path": "src/server" }
     },
+    "ServerStorage": {
+      "Tests": { "$path": "tests" },
+      "DevPackages": { "$path": "DevPackages" }
+    },
     "StarterPlayer": {
       "StarterPlayerScripts": {
         "Client": { "$path": "src/client" }

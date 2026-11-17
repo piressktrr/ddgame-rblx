@@ -46,7 +46,7 @@ Modelo:
 | [0026](0026-objetos-deuses-romanos.md) | Objetos mágicos com nomes de deuses romanos | Aceita |
 | [0027](0027-sem-pulo-duplo.md) | Sem pulo duplo: movimento é gancho + Bouncer | Substituída (0043) |
 | [0028](0028-ranking-separa-boost.md) | Ranking separa quem usou boost | Aceita |
-| [0029](0029-mapa-em-estagios.md) | Mapa em 6 estágios, ordem fixa, atalhos dentro dos estágios | Aceita |
+| [0029](0029-mapa-em-estagios.md) | Mapa em 6 estágios, ordem fixa, atalhos dentro dos estágios | Substituída em parte (0047) |
 | [0030](0030-progressao-de-atributo.md) | Progressão por ganho de atributo (estilo +1 Speed) | Aceita |
 | [0031](0031-experimento-de-camera.md) | Experimento de câmera (descartado) | Substituída por 0038 |
 | [0032](0032-rebirth-proposta.md) | Ciclo de rebirth | Proposta |
@@ -58,7 +58,14 @@ Modelo:
 | [0038](0038-camera-2-5d-definitiva.md) | O jogo é 2.5D (decisão da equipe) | Aceita |
 | [0039](0039-regras-do-plano-2-5d.md) | Regras do plano 2.5D: colisão, gancho, mira, W/S, altura da tela, estágios verticais, correção no servidor | Aceita |
 | [0040](0040-checkpoint-mvp-e-ordem-das-fases.md) | Meta de 10–15 min por corrida, nível do gancho no MVP, nova ordem das fases | Aceita |
-| [0041](0041-mapa-enrolado-e-tutorial.md) | Mapa enrolado, E1 difícil, tutorial do gancho no MVP, queda = checkpoint | Aceita |
+| [0041](0041-mapa-enrolado-e-tutorial.md) | Mapa enrolado, E1 difícil, tutorial do gancho no MVP, queda = checkpoint | Substituída em parte (0047, 0050) |
 | [0042](0042-gancho-puxao-direto.md) | Gancho vira puxão direto ao alvo (um clique), segurar para ficar preso, sem W/S | Aceita |
 | [0043](0043-pulo-duplo-e-velocidade.md) | Pulo duplo e velocidade de andar maior (substitui 0027) | Aceita |
 | [0044](0044-lobby-greybox.md) | Lobby antes do mapa, portal para o início da corrida | Aceita |
+| [0045](0045-gelo-fica-15s.md) | Gelo fica em 15 s (Q19) | Aceita |
+| [0046](0046-movimento-pelo-gancho.md) | Percurso quase todo com o gancho, em todos os estágios (Q30) | Aceita |
+| [0047](0047-mapa-8-estagios-varios-caminhos.md) | Mapa novo: 8+ estágios, dificuldade média, vários caminhos (Q31) | Aceita |
+| [0048](0048-nivel-do-gancho-salvo.md) | Nível do gancho salvo entre sessões (Q41) | Aceita |
+| [0049](0049-killzone-aceita-gancho.md) | A zona mortal aceita o gancho; `Kill` vira peça sólida (Q43) | Aceita |
+| [0050](0050-mapa-fase2-aprovado.md) | Mapa da Fase 2 aprovado: 9 estágios, 22 rotas, substitui o Map01 (Q44–Q55) | Aceita |
+| [0051](0051-ad-no-embalo-fica.md) | A/D continua empurrando no embalo depois do gancho (Q56) | Aceita |

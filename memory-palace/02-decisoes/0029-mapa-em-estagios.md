@@ -1,5 +1,5 @@
 # 0029 — Mapa em 6 estágios, ordem fixa, atalhos dentro de cada estágio
-- Status: Aceita (refina 0012 e 0022)
+- Status: Substituída em parte por 0047 (8+ estágios e vários caminhos); refina 0012 e 0022
 - Data: 2026-11-15
 ## Contexto
 Estudo em memory-palace/04-game-design/estudos/referencias-mapas.md (padrões do gênero + jogos lineares do Roblox).

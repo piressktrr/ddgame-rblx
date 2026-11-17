@@ -1,76 +1,120 @@
-# dddrace-roblox
+# Race and Escape
 
-> Nome provisório. O nome de verdade do jogo ainda vai ser escolhido.
+> Jogo original para o Roblox (nome definido no [ADR 0008](memory-palace/02-decisoes/0008-nome-race-and-escape.md)).
+> Gênero de corrida cooperativa, sem nada copiado de outros jogos. Foco no PC.
 
 ## Que jogo é esse?
 
-É um jogo de plataforma para o Roblox, passado num **mundo de fantasia**: ruínas flutuantes,
-florestas mágicas, cavernas de cristal, torres de magos. O objetivo é simples de explicar:
-**sair do começo do mapa e chegar até o fim**, passando por abismos, paredes, armadilhas e
-quebra-cabeças pelo caminho.
+Um jogo de plataforma em **2.5D** (visto de lado), passado num **mundo de fantasia**: ruínas flutuantes,
+florestas mágicas, cavernas de cristal, torres de magos. O objetivo é simples de explicar: **sair do começo
+do mapa e chegar ao fim** o mais rápido possível, passando por abismos, paredes e armadilhas.
 
-O que deixa o jogo diferente de um obby comum é **como você se move**. Além de andar e pular,
-você tem um **gancho mágico**. Ele é lançado na direção que você mira, prende numa superfície e te
-puxa até ela. Com ele dá para se balançar por cima de buracos, subir paredes e ganhar velocidade.
-Quanto mais você joga, mais truques descobre. É fácil de aprender e difícil de dominar.
+O que deixa o jogo diferente de um obby comum é **como você se move**. O percurso é feito quase todo com um
+**gancho mágico**: você mira com o mouse, **clica** e é puxado direto até o ponto. **Segurando** o botão, fica
+preso lá. Dá para trocar de alvo no meio do voo e encadear um gancho no outro. Andar e o **pulo duplo** servem
+para os ajustes finos e os pousos.
 
-## Sozinho ou com amigos
+## Todo mundo no mesmo mapa
 
-Dá para jogar das duas formas.
+O servidor é aberto: **todos interagem com todos**. Dá para salvar alguém no último segundo ou atrapalhar de
+brincadeira. Jogar junto ajuda, mas o mapa sempre dá para terminar **sozinho**: quem está só conta com
+**objetos mágicos** (com nomes de deuses romanos) que fazem o papel do colega. Tempo, checkpoint e ranking são
+sempre **pessoais**.
 
-- **Sozinho**: você atravessa os mapas por conta própria, no seu ritmo. Nos trechos feitos
-  para equipe, aparecem **objetos mágicos** que fazem o papel do colega: pedras que te puxam para
-  cima, orbes que te arremessam longe, cristais que quebram o gelo. Ninguém fica preso por não
-  ter com quem jogar.
-- **Em equipe**: você se junta com outros jogadores. Aí o gancho fica ainda mais interessante:
-  se você enganchar um colega, **os dois são puxados um em direção ao outro**. Assim um ajuda o
-  outro a subir, a atravessar vãos e a escapar de armadilhas.
+## Os perigos
 
-Ninguém de fora atrapalha: você só interage com quem está na sua equipe. Os outros jogadores do
-servidor passam por você como fantasmas. Assim ninguém consegue te empurrar de propósito para uma
-armadilha.
+- **Gelo mágico:** encostou, fica **congelado por 15 s**, sem andar nem usar o gancho. Se chegar a uma zona de
+  **descongelar** (laranja-brasa), volta ao normal. Se o tempo acabar, **morre** e volta ao último checkpoint.
+  Outro jogador pode te salvar.
+- **Zona mortal** (vermelha): mata na hora.
+- **Superfícies com regra:** **roxo** não prende o gancho; **verde** prende só uma vez (volta ao morrer ou ao
+  passar de checkpoint).
 
-## O gelo mágico
+## Como uma partida funciona
 
-O perigo mais comum no caminho é o **gelo mágico**. Se você encostar nele, fica congelado por
-alguns segundos e não consegue se mexer. Mas **você não perde o progresso**: depois de um tempo o
-gelo derrete sozinho, ou você passa por uma área que quebra o encanto. Em equipe, um colega pode
-te puxar com o gancho até um lugar seguro enquanto você está congelado.
-
-Ou seja: errar no jogo custa alguns segundos, não a fase inteira. A ideia é você querer tentar de
-novo, e não desistir de raiva.
-
-## Como o jogo é organizado
-
-- **A cidade central (Hub)**: o lugar onde todo mundo se encontra. Daqui saem os portais para os
-  mapas, tem os rankings com os melhores tempos e a loja de visuais.
-- **O tutorial**: uma fase curta que ensina tudo em poucos minutos, praticando, sem textões.
-- **Os mapas**: vários, separados por dificuldade, do iniciante ao extremo. Cada mapa tem
-  **checkpoints**, pontos onde seu progresso fica salvo.
+1. Você nasce no **lobby**. Ao lado dele fica a sala de **tutorial do gancho** (opcional).
+2. Entrou no **portal**, começa a corrida e o **cronômetro** dispara.
+3. O mapa tem **pelo menos 8 estágios**, dificuldade média e **vários caminhos** até o fim, com um checkpoint a
+   cada 3 estágios. Uma corrida completa leva de 10 a 15 minutos.
+4. Na chegada aparecem o seu tempo e o seu recorde, com as opções "De novo" e "Voltar ao lobby". O placar do
+   lobby mostra o melhor tempo de cada jogador do servidor.
 
 ## Por que voltar a jogar?
 
-- **Bater o próprio recorde** e subir nos rankings de cada mapa.
-- **Desbloquear mapas mais difíceis** conforme você evolui.
-- **Ganhar moedas e personalizar o visual**: rastros mágicos, aparência do gancho, efeitos de gelo,
-  títulos. Tudo isso é só visual. **Ninguém compra vantagem**, quem ganha é quem joga melhor.
-
-## Em resumo
-
-Um jogo de plataforma de fantasia com gancho mágico, que você joga sozinho ou em equipe. Errar é
-barato, aprender é rápido e dominar leva tempo.
+- **Bater o próprio recorde.**
+- **Evoluir o gancho:** o nível do gancho sobe jogando e **fica salvo** entre as sessões. Como ele evolui ainda
+  está em aberto (direção atual: alcance e força).
 
 ---
 
+## Em que pé está
+
+O jogo está em desenvolvimento, no **MVP**. Hoje já existem, em greybox: o gancho de puxão, o pulo duplo, o
+lobby, o mapa de teste (6 estágios), o tutorial e, ainda sem teste em jogo, as zonas (gelo e morte), o
+cronômetro e as telas da corrida. Bouncer, lâmina, objetos mágicos e o nível do gancho vêm nas próximas fases.
+
+- **Onde paramos agora:** [STATUS](memory-palace/01-status/STATUS.md)
+- **Tudo o que foi feito, dia a dia, desde o início:** [linha do tempo](memory-palace/01-status/LINHA_DO_TEMPO.md)
+
 ## Para quem vai desenvolver
 
-Toda a documentação técnica e de design fica no [palácio da memória](memory-palace/README.md). Os principais:
+**Comece por [`AGENTS.md`](AGENTS.md)**, que vale para pessoas e para IAs: regras, ordem de leitura, Git e
+ambiente. Depois leia a [linha do tempo](memory-palace/01-status/LINHA_DO_TEMPO.md) e o
+[STATUS](memory-palace/01-status/STATUS.md).
 
-- [Game Design](memory-palace/04-game-design/GAME_DESIGN.md): mecânicas, regras, design de fases, progressão.
-- [Arquitetura](memory-palace/05-arquitetura/ARCHITECTURE.md): estrutura do código, padrões de Luau, roadmap.
-- [Ferramentas](memory-palace/07-toolchain/TOOLS.md): cada ferramenta e biblioteca usada, para que serve e a versão.
-- [Desinstalação](memory-palace/07-toolchain/UNINSTALL.md): onde cada ferramenta está instalada no PC e como remover.
+Toda a documentação fica no [palácio da memória](memory-palace/README.md):
 
-## Para IAs e desenvolvedores
+| Documento | Para quê |
+|---|---|
+| [Linha do tempo](memory-palace/01-status/LINHA_DO_TEMPO.md) | O que foi criado e decidido em cada dia, com links |
+| [Decisões (ADRs)](memory-palace/02-decisoes/README.md) | Cada decisão numerada; o número é a ordem em que foram tomadas |
+| [Dúvidas em aberto](memory-palace/03-duvidas/OPEN_QUESTIONS.md) | O que ainda não foi decidido (não decida sozinho) |
+| [Game Design](memory-palace/04-game-design/GAME_DESIGN.md) | Mecânicas, regras, mapa, progressão |
+| [Requisitos](memory-palace/05-arquitetura/REQUIREMENTS.md) e [plano](memory-palace/05-arquitetura/IMPLEMENTATION_PLAN.md) | O que o MVP precisa ter e em que ordem construir |
+| [Arquitetura](memory-palace/05-arquitetura/ARCHITECTURE.md) | Estrutura do código e padrões de Luau |
+| [Ferramentas](memory-palace/07-toolchain/TOOLS.md) e [desinstalação](memory-palace/07-toolchain/UNINSTALL.md) | Cada ferramenta, versão, para que serve e como remover |
 
-Comece por [`AGENTS.md`](AGENTS.md): ele explica a ordem de leitura, as regras e onde o projeto parou ([`memory-palace/01-status/STATUS.md`](memory-palace/01-status/STATUS.md)).
+### Como rodar
+
+Ferramentas pelo [Rokit](https://github.com/rojo-rbx/rokit) (`rokit.toml`): Rojo, Wally, Selene, StyLua.
+
+```bash
+rokit install
+```
+
+```bash
+wally install
+```
+
+```bash
+rojo serve
+```
+
+Com o `rojo serve` rodando, abra `place/RaceAndEscape.rbxl` no Roblox Studio e conecte o plugin do Rojo.
+Antes de dar algo por pronto:
+
+```bash
+selene src tests
+```
+
+```bash
+stylua --check src tests
+```
+
+Os testes da lógica (TestEZ) rodam no Studio, em modo Edit: `require(game.ServerStorage.Tests.Runner)()`.
+
+### Pastas
+
+| Pasta | O que tem |
+|---|---|
+| `src/shared` | Config, rede (`Net`) e lógica pura (`Logic/`) → ReplicatedStorage.Shared |
+| `src/server` | Serviços do servidor (gancho, lobby, checkpoints, zonas, corrida) → ServerScriptService.Server |
+| `src/client` | Controllers do jogador (câmera, gancho, movimento, interface) → StarterPlayerScripts.Client |
+| `tests/` | Testes TestEZ da lógica pura → ServerStorage.Tests |
+| `maps/` | Dados dos mapas (map01, lobby, tutorial); ver [`maps/README.md`](maps/README.md) |
+| `tools/` | Scripts Python que geram o mapa e os rascunhos |
+| `place/` | O place do Studio |
+| `memory-palace/` | Toda a documentação |
+
+O código vive só em arquivos (o Rojo sincroniza). Nunca edite scripts dentro do Studio. Branches e commits
+seguem o [`AGENTS.md`](AGENTS.md) §4: nada vai direto para a `main`.

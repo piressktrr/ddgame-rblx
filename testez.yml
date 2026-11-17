@@ -1,0 +1,47 @@
+---
+# Globais que o TestEZ injeta nos specs de tests/ (usado pelo selene: std = "roblox+testez").
+base: roblox
+globals:
+  describe:
+    args:
+      - type: string
+      - type: function
+  describeFOCUS:
+    args:
+      - type: string
+      - type: function
+  describeSKIP:
+    args:
+      - type: string
+      - type: function
+  it:
+    args:
+      - type: string
+      - type: function
+  itFOCUS:
+    args:
+      - type: string
+      - type: function
+  itSKIP:
+    args:
+      - type: string
+      - type: function
+  FOCUS:
+    args: []
+  SKIP:
+    args: []
+  expect:
+    args:
+      - type: any
+  beforeAll:
+    args:
+      - type: function
+  afterAll:
+    args:
+      - type: function
+  beforeEach:
+    args:
+      - type: function
+  afterEach:
+    args:
+      - type: function
