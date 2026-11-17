@@ -2,20 +2,36 @@
 
 > Atualize este arquivo ao fim de toda sessão de trabalho (qualquer agente).
 
-## Onde estamos
+## Onde estamos (2026-11-17)
 
-- **Marco atual:** M0 ✅. Jogo em **2.5D** (ADR 0038). Próximo passo: **Fase 1, gancho solo** (ADR 0036 e
-  0039; plano em IMPLEMENTATION_PLAN) ou a reformulação do mapa pelo dono (Q31).
-- **Branch atual:** `feature/implement-the-map` (último commit `b3779b4`; push não feito).
-- **Código existente:** Loader, Config, Types; `CameraController` e `CharacterController` (2.5D, sempre
-  ativos); `CheckpointService` (mínimo) e `Logic/Zones`.
-- **Mapa:** greybox do rascunho v2 montado em `Workspace.Maps.Map01` (166 peças, Farol 1 = checkpoint 1,
-  Farol 2 = fim) e salvo no place. Fonte: `tools/map_layout.py` → `tools/map2d.py` → `maps/map01/`.
-  Ver `maps/README.md`. Ainda não jogado.
-- **Gancho (Fase 1, protótipo):** `HookController` (+ SwingPhysics, AirBody, Reticle), `HookService`,
-  `PlaneService`, `Net`, `Logic/Aim`, `Logic/HookRules`, `Util/HookSurface`. Lógica e física testadas em
-  memória pelo MCP; **o código real não rodou em playtest porque o Studio não estava conectado ao Rojo**.
-  Pista de teste `Workspace.Maps.TestHook` (X -704 a -400).
+- **Branch:** `feature/implement-the-map`. PR [#2](https://github.com/piressktrr/ddgame-rblx/pull/2) com merge na
+  `main` (`bd7a03c`); o trabalho abaixo vai num PR novo.
+- **Fase 1 (gancho solo):** puxão (ADR 0042), corda para todos (RF-16), pulo duplo e WalkSpeed 24 (ADR 0043). Falta o
+  dono aprovar o *feel* com mouse e teclado.
+- **Fase 3 (adiantada, código pronto, sem playtest):** `ZoneService` + `FreezeController` (KillZone, gelo 15 s,
+  descongelar, gancho/pulo negados congelado); `RaceService` + `UIController` (timer 0,01 s, tela de fim com
+  "De novo"/"Voltar ao lobby", botão Lobby, contagem do gelo, placar da sessão no lobby).
+- **Tutorial do gancho:** `Workspace.Tutorial` (X -1500..-1100), 6 lições, entrada pela parede oeste do lobby,
+  portal no fim. Montado e salvo no place; lição 1 e portal testados, lições 2–6 não.
+- **Testes:** TestEZ 0.4.1 (Jest-Lua precisa de FFlag do Studio), 90 casos em `tests/`; ainda não rodados.
+- **Bloqueio:** o plugin do Rojo no Studio está desconectado (o `rojo serve` travou e foi reiniciado). Ao voltar:
+  reconectar, rodar `require(game.ServerStorage.Tests.Runner)()` e o playtest de zonas, corrida e tutorial.
+- **Revisão da Fase 3 (2026-11-17):** feita só lendo o código. Corrigido: a chegada exige o checkpoint
+  anterior e personagem vivo e é conferida a cada frame; "De novo" só vale em corrida; checkpoint não conta no
+  intervalo do "De novo"; o contador do gelo some ao morrer; o painel de fim só some quando o servidor aceita;
+  quem sai some do placar. Novos testes de `Zones.pickEffect`/`isFrozen`. Ficou para o playtest: a caixa do
+  corpo no ZoneService é fixa para o avatar padrão (avatares maiores podem não tocar gelo/laranja). Q43 nova
+  (KillZone aceita o gancho?).
+- **Mapa da Fase 2 (greybox montado, sem playtest):** dono aprovou o [estudo](../04-game-design/estudos/mapa-fase2.md)
+  (ADR 0050). `tools/map_layout.py` v3 importa `tools/map_sketch_fase2.py` e soma os ajustes do greybox (portas
+  abertas, gelo tirado de pontos de parada, saltos de embalo do E7 com alvo ~12 mais alto); `tools/map2d.py` gera
+  `maps/map01` (525 peças, caixa 1.920 × 1.180). Montado no Studio no lugar do Map01 antigo; conferência por
+  script ok (tags, Order 1–3, `Kill` sólida pelo ADR 0049, ar livre, sem encostar no lobby/tutorial). O rascunho
+  SVG do estudo mostra o desenho de antes dos ajustes. Rota "corrente alta" no E3 com `RequiresHookLevel = 2`.
+- **Tutorial:** lição 7 (salto de embalo) montada; sala vai até X -1608, portal novo em (-1592, 191). Testada por
+  script com o código antigo do Studio: só passa soltando o gancho + pulo duplo.
+- **Próximo passo:** com o Rojo conectado, rodar os testes e jogar o mapa novo inteiro (pousos, mira, embalo,
+  tempo real da corrida). A/D no embalo fica como está (ADR 0051).
 
 ## Revisão para o 2.5D (2026-11-16)
 
@@ -77,3 +93,8 @@ Pendente por causa da revisão:
 | 2026-11-16 | Claude Code + 2 subagentes | ADR 0043 (pulo duplo, WalkSpeed 24; substitui 0027) e 0044 (lobby). MovementController + Logic/DoubleJump; LobbyService, Workspace.Lobby (maps/lobby/build.luau), E1_Spawn1 desligado, CheckpointService só em corrida. Teste integrado: nasce no lobby, anda até o portal e chega ao RaceStart. Q42 aberta. Place salvo |
 | 2026-11-16 | Claude Code | Q42 respondida (sim): pulo duplo vale no embalo depois do gancho e encerra o embalo (HookController.isInMomentum/endMomentum, MovementController). Lint e build ok; não testado em jogo (Studio fechado) |
 | 2026-11-17 | Claude Code | Q42 testada no Studio: pulo duplo no embalo funciona (vy 50, 3º pulo negado, negado com a corda presa). Ajuste: o pulo não encerra mais o embalo, para não perder o X. Lint ok |
+| 2026-11-17 | Claude Code + 4 subagentes | Q19/Q30/Q31/Q41 respondidas (ADR 0045–0048), Q22/24/26 adiadas, Q23 com direção. PR #2 aberto. Fase 3: ZoneService/FreezeController, RaceService/UIController; tutorial do gancho montado e salvo; TestEZ com 83 casos. Lint e rojo build ok; playtest pendente (Rojo desconectado, dono fora) |
+| 2026-11-17 | Claude Code | Docs organizados para quem chega: LINHA_DO_TEMPO.md (dia a dia, com links), diários reconstruídos de 11-11, 11-12 e 11-15 a partir deste Diário de bordo e do Git; AGENTS.md e README do palácio apontam para ela. Nenhum texto antigo alterado; 226 links ok |
+| 2026-11-17 | Claude Code | README da raiz reescrito para o estado atual (nome, 2.5D, gancho de puxão, servidor aberto, gelo que mata, lobby/tutorial, como rodar, pastas, links para a linha do tempo e o STATUS) |
+| 2026-11-17 | Claude Code + 2 subagentes | Revisão da Fase 3 (8 correções em RaceService, CheckpointService, UIController; testes de pickEffect/isFrozen) e estudo + rascunho do mapa da Fase 2 (9 estágios, 22 rotas; tools/map_sketch_fase2.py). Q43–Q55 novas. selene/stylua/rojo build ok; nada testado em jogo |
+| 2026-11-17 | Claude Code + 2 subagentes | Dono respondeu Q43–Q55 (ADR 0049 KillZone grudável e sólida; 0050 mapa da Fase 2 aprovado, substitui o Map01). Greybox do mapa novo montado no Studio (525 peças, conferência ok) e lição 7 do tutorial (salto de embalo, testada por script). Q56 nova (A/D no embalo). Place salvo; sem playtest do mapa |

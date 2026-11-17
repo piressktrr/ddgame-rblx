@@ -14,4 +14,4 @@
   gancho e acabamento.
 ## Consequências
 - GAME_DESIGN v0.4, REQUIREMENTS e IMPLEMENTATION_PLAN foram atualizados com isto.
-- Sem salvar dados no MVP, o nível do gancho não persiste entre sessões (Q41).
+- ~~Sem salvar dados no MVP, o nível do gancho não persiste entre sessões (Q41).~~ Mudou no 0048: o nível fica salvo.

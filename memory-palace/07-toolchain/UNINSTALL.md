@@ -14,6 +14,7 @@ pasta do projeto, e como remover cada item. Ele é atualizado sempre que algo no
 | Cache do Wally (índice de pacotes) | `C:\Users\Usuario\AppData\Local\wally\` | ~16 MB |
 | Cache do Selene (definições da API do Roblox) | `C:\Users\Usuario\AppData\Local\selene\` | ~0,8 MB |
 | Bibliotecas baixadas (dentro do projeto) | `D:\Projetos\dddrace-roblox\Packages\` | < 1 MB |
+| Bibliotecas só de desenvolvimento: TestEZ (dentro do projeto) | `D:\Projetos\dddrace-roblox\DevPackages\` | ~0,5 MB |
 | Arquivo de jogo de teste (dentro do projeto) | `D:\Projetos\dddrace-roblox\build\` | < 1 MB |
 | Plugin do Rojo no Roblox Studio | `C:\Users\Usuario\AppData\Local\Roblox\Plugins\RojoManagedPlugin.rbxm` | ~0,5 MB |
 
@@ -76,8 +77,12 @@ São só caches: se as ferramentas continuarem instaladas, elas baixam de novo q
 
 ### 3. Arquivos dentro do projeto
 
-As pastas `Packages\` e `build\` são geradas e já estão fora do Git. Pode apagar quando quiser;
-`wally install` e `rojo build` recriam.
+As pastas `Packages\`, `DevPackages\` e `build\` são geradas e já estão fora do Git. Pode apagar
+quando quiser; `wally install` e `rojo build` recriam.
+
+Para tirar o **TestEZ** de vez: apague a seção `[dev-dependencies]` do `wally.toml`, a pasta
+`DevPackages\`, a entrada `ServerStorage` do `default.project.json`, o arquivo `testez.yml` da raiz e
+volte o `selene.toml` para `std = "roblox"`. A pasta `tests\` é código do projeto (não é instalação).
 
 ### 4. Plugin do Rojo no Studio
 
@@ -120,3 +125,4 @@ Se todos os `Test-Path` mostrarem `False` e o último comando não mostrar nada,
 | 2026-11-11 | Rokit 1.2.0 + Rojo, Wally, Selene, StyLua; caches do Wally e do Selene |
 | 2026-11-11 | Plugin do Rojo no Studio (`RojoManagedPlugin.rbxm`) |
 | 2026-11-11 | MCP do Roblox Studio configurado (`.mcp.json` no projeto; nada instalado no PC) |
+| 2026-11-17 | TestEZ 0.4.1 via Wally em `DevPackages\` (só dentro do projeto; nada instalado no PC) |

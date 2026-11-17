@@ -56,7 +56,7 @@ Requisitos: RF-01..05, RF-10..14, RF-17..19, RNF-01..06. Decisões: ADR 0036 e 0
 8. Pronto quando: puxão fluido no playtest com mouse, selene/stylua ok, dono aprova o *feel*.
 
 ### Fase 2 — `feat/m2-mapa` (mapa novo com o gancho)
-Requisitos: RF-70, RF-71, RF-73, RF-74. A estrutura do mapa é definida pelo dono (Q31).
+Requisitos: RF-70, RF-71, RF-73, RF-74. Estrutura: 8+ estágios, dificuldade média, vários caminhos, quase tudo com o gancho (ADR 0046, 0047).
 
 1. Refazer o `Workspace.Maps.Map01` do place a partir do que o dono definir, com checkpoints e trechos de gancho.
 2. Greybox → playtest → iterar (GAME_DESIGN §5.1). O dono aprova o mapa antes da Fase 4.
@@ -64,18 +64,18 @@ Requisitos: RF-70, RF-71, RF-73, RF-74. A estrutura do mapa é definida pelo don
 ### Fase 3 — `feat/m3-zonas-corrida` (zonas, morte, checkpoints, timer, lobby)
 Requisitos: RF-20..27, RF-60..63, RF-13 (reset).
 
-1. `ZoneService`: a cada `Heartbeat` (ou 10 Hz), `GetPartBoundsInBox` em cada personagem com
+1. ✅ código (sem playtest) — `ZoneService`: a cada `Heartbeat` (ou 10 Hz), `GetPartBoundsInBox` em cada personagem com
    `OverlapParams` filtrando peças de zona. Tabela tag → efeito.
 2. Estado do jogador em atributos do personagem: `FrozenUntil` (tempo do servidor), `Checkpoint`.
 3. Gelo: seta `FrozenUntil = agora + 15`; cliente lê e trava controles + mostra HUD;
    servidor mata quando o tempo acaba.
-4. `RaceService`: checkpoints por ordem (`Order`; um a cada 3 estágios, ADR 0034), respawn no último,
+4. ✅ código (sem playtest) — `RaceService`: checkpoints por ordem (`Order`; um a cada 3 estágios, ADR 0034), respawn no último,
    timer pessoal com `workspace:GetServerTimeNow()`, tela de fim. (Parte já existe em `CheckpointService`.)
 5. Lobby: spawn no `Lobby`, `LobbyPortal` teleporta para `RaceStart`; placar da sessão
    (`SessionLeaderboard` em memória).
    **Adiantado (ADR 0044):** lobby greybox (`maps/lobby/build.luau`), `LobbyService` (nasce no lobby,
-   portal → `RaceStart`, atributo `InRace`). Placar da sessão continua pendente.
-6. `UIController` mínimo: timer, contador do gelo, tela de fim. (Roblox UI direto; React/Fusion
+   portal → `RaceStart`, atributo `InRace`). Placar da sessão e tutorial do gancho (`maps/tutorial`) em código, sem playtest completo.
+6. ✅ código (sem playtest) — `UIController` mínimo: timer, contador do gelo, tela de fim. (Roblox UI direto; React/Fusion
    só se a UI crescer.)
 
 ### Fase 4 — `feat/m4-interacao` (gancho em jogador, Bouncer, lâmina)
@@ -95,11 +95,11 @@ Requisitos: RF-50..54, RF-80..81.
 
 1. Objetos Júpiter, Mercúrio, Vulcano, Saturno como prefabs com tag; comportamento nos
    Controllers/Services existentes (são "superfícies especiais" do gancho). `PressButton` + porta para o Saturno.
-2. Nível do gancho (RF-80/81): regra de ganho (Q23) e persistência (Q41); modificadores em `Config` por nível.
+2. Nível do gancho (RF-80/81): regra de ganho (Q23) e persistência com `PlayerDataService` (ProfileStore, ADR 0048); modificadores em `Config` por nível.
 3. Revisão final do mapa com todas as mecânicas (ensinar → testar → torcer).
 
 ### Depois do MVP
-Dados (ProfileStore), ranking persistente separado por boost (ADR 0028), Bond (ADR 0023),
+Dados além do nível do gancho, ranking persistente separado por boost (ADR 0028), Bond (ADR 0023),
 rebirth (ADR 0032), boosts e loja (ADR 0025; a monetização é essencial), arte e iluminação.
 
 ## 4. Riscos e como reduzir

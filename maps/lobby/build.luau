@@ -1,7 +1,8 @@
 --!strict
 -- Monta Workspace.Lobby (greybox 2.5D, plano Z = 0, X horizontal, Y altura, studs). ADR 0044.
 -- Rodar no Studio em modo Edit (MCP execute_luau ou barra de comandos). Apaga o Lobby antigo antes.
--- Sala fechada em X -1100..-900, Y 100..160, longe do Map01 e do TestHook.
+-- Sala fechada em X -1100..-900, Y 100..160, longe do Map01 e do TestHook. Na parede oeste, uma
+-- abertura (Y 104..116) leva ao Tutorial (maps/tutorial/build.luau), colado à esquerda.
 -- Mesmas cores e convenções do Map01 (tools/map2d.py, KINDS).
 type Kind = {
 	color: Color3,
@@ -66,7 +67,7 @@ end
 
 p("Floor", "Rock", -1000, 102, 200, 4) -- topo em Y = 104
 p("Ceiling", "Rock", -1000, 158, 200, 4)
-p("WallLeft", "Rock", -1098, 130, 4, 52)
+p("WallLeft", "Rock", -1098, 136, 4, 40) -- Y 116..156: abertura Y 104..116 para o Tutorial (oeste)
 p("WallRight", "Rock", -902, 130, 4, 52)
 p("Spawn", "Spawn", -1060, 105, 12, 2)
 local portal = p("Portal", "Portal", -940, 111, 6, 14)

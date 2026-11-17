@@ -29,6 +29,7 @@ local Aim = require(ReplicatedStorage.Shared.Logic.Aim)
 local Config = require(ReplicatedStorage.Shared.Config)
 local HookRules = require(ReplicatedStorage.Shared.Logic.HookRules)
 local HookSurface = require(ReplicatedStorage.Shared.Util.HookSurface)
+local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 local Net = require(ReplicatedStorage.Shared.Net)
 local Trove = require(ReplicatedStorage.Packages.Trove)
 
@@ -267,6 +268,11 @@ local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
 	end
 end
 
+-- Congelado (atributo do ZoneService, RF-20) não usa o gancho.
+local function isFrozen(ctx: CharacterContext): boolean
+	return Zones.isFrozen(ctx.character:GetAttribute(Config.Attributes.FrozenUntil))
+end
+
 local function canRetarget(): boolean
 	return mode ~= nil and mode.retargetWhileAttached
 end
@@ -275,6 +281,10 @@ local function tryFire()
 	local ctx = context
 	if not ctx or (attached and not canRetarget()) or ctx.humanoid.Health <= 0 then
 		lastResult = "Unavailable"
+		return
+	end
+	if isFrozen(ctx) then
+		lastResult = "Frozen"
 		return
 	end
 	local aimPoint = getAimPoint()
@@ -434,6 +444,15 @@ local function onCharacterAdded(character: Model)
 	trove:Connect(humanoid.Died, function()
 		release(true)
 		endAirBody()
+	end)
+	-- Congelou: solta a corda e acaba o embalo (sem A/D no ar); o Humanoid volta a controlar o corpo.
+	trove:Connect(character:GetAttributeChangedSignal(Config.Attributes.FrozenUntil), function()
+		local ctx = context
+		if ctx and ctx.character == character and isFrozen(ctx) then
+			firePending = false
+			release(true)
+			endAirBody()
+		end
 	end)
 end
 

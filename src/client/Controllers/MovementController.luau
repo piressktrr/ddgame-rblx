@@ -20,6 +20,7 @@ local UserInputService = game:GetService("UserInputService")
 
 local Config = require(ReplicatedStorage.Shared.Config)
 local DoubleJump = require(ReplicatedStorage.Shared.Logic.DoubleJump)
+local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 local HookController = require(script.Parent.HookController)
 
 local settings = Config.Movement
@@ -94,6 +95,10 @@ local function onJumpRequest()
 	if not ctx or ctx.humanoid.Health <= 0 then
 		return
 	end
+	-- Congelado (RF-20) não pula: nem o pulo normal (FreezeController) nem o duplo.
+	if Zones.isFrozen(ctx.character:GetAttribute(Config.Attributes.FrozenUntil)) then
+		return
+	end
 	-- Atualiza antes de decidir: o pedido pode chegar antes do passo deste quadro.
 	DoubleJump.setGrounded(jumpState, isGrounded(ctx.humanoid), os.clock())
 	-- No embalo (corda já solta) o pulo duplo vale (Q42). Com a corda presa, não.
@@ -159,6 +164,9 @@ MovementController.debug = {
 			airborne = jumpState.airborneSince ~= nil,
 			doubleJumpCount = doubleJumpCount,
 			hookActive = if ctx then isHookActive(ctx) else nil,
+			frozen = if ctx
+				then Zones.isFrozen(ctx.character:GetAttribute(Config.Attributes.FrozenUntil))
+				else nil,
 			walkSpeed = if ctx then ctx.humanoid.WalkSpeed else nil,
 			humanoidState = if ctx then ctx.humanoid:GetState().Name else nil,
 			rootPosition = if ctx then ctx.root.Position else nil,

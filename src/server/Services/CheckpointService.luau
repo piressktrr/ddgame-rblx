@@ -74,7 +74,14 @@ local function step()
 	for _, player in Players:GetPlayers() do
 		local character = player.Character
 		local root = character and character:FindFirstChild("HumanoidRootPart")
-		if not root or not root:IsA("BasePart") then
+		-- Fora de corrida (no lobby) checkpoint não conta. Sem `RaceStartedAt` também não: é o intervalo
+		-- do "De novo", em que o personagem antigo ainda pode estar sobre um checkpoint.
+		if
+			not root
+			or not root:IsA("BasePart")
+			or player:GetAttribute(Config.Attributes.InRace) ~= true
+			or typeof(player:GetAttribute(Config.Attributes.RaceStartedAt)) ~= "number"
+		then
 			continue
 		end
 		local reached = getReached(player)

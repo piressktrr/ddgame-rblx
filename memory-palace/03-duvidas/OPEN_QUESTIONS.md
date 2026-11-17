@@ -3,11 +3,6 @@
 > Quando resolvido: vira decisão em [`02-decisoes/`](../02-decisoes/README.md) e sai daqui.
 | # | Dúvida | Contexto / opções | Bloqueia |
 |---|---|---|---|
-| Q19 | Tempo de gelo (15 s) | Revisar depois, com playtest e monetização | Playtest |
-| Q22 | Quais boosts e perks vender | Decidir conforme o jogo amadurece | Pós-MVP |
-| Q23 | O que exatamente evolui no gancho (alcance, força, recarga)? Ganha por estágio, por rebirth, por compra? | Gancho é o centro (ADR 0033); velocidade fica para depois | Fase 5 |
-| Q24 | Visual / tema de cada estágio | Ideia: um deus romano por região | Arte |
-| Q26 | Rebirth: entra? Como funciona? | Proposta em ADR 0032 | Pós-MVP |
-| Q30 | Onde entram os trechos de gancho no mapa de 6 estágios? | Hoje todo estágio se passa só andando e pulando; o gancho ainda não existe | Fase 1 |
-| Q31 | Mapa novo em 2.5D: quantos estágios, comprimento e altura de cada um, e que nível de dificuldade? | `maps/map01` atual: 3 seções, 374 studs, sem gancho; o ADR 0035 pediu mais comprido e mais difícil | Mapa |
-| Q41 | O nível do gancho persiste entre sessões? | Salvar dados está fora do MVP; sem isso o nível zera ao sair. Como o nível é ganho: Q23 | Fase 5 |
+| Q22 | Quais boosts e perks vender | Adiada pelo dono (2026-11-17): não discutir agora | Pós-MVP |
+| Q23 | O que exatamente evolui no gancho e como se ganha? | Direção do dono (2026-11-17, nada fechado): **alcance e força**, ganhos **por estágio e com moedas**. Falta: quanto cada nível dá, quantos níveis, preço em moedas, de onde vêm as moedas. O nível fica salvo (ADR 0048). Ligado: a rota "corrente alta" do E3 (`RequiresHookLevel = 2`, ADR 0050) só barra de verdade quando o gancho ler esse atributo; hoje o embalo com A/D já cobre os vãos de ~45 | Fase 5 || Q24 | Visual / tema de cada estágio | Adiada pelo dono (2026-11-17). Ideia anotada: um deus romano por região | Arte |
+| Q26 | Rebirth: entra? Como funciona? | Adiada pelo dono (2026-11-17). Proposta em ADR 0032 | Pós-MVP |

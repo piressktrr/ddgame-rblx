@@ -44,6 +44,9 @@ local Config = {
 
 	Race = {
 		RespawnTime = 1, -- segundos entre morrer e renascer
+		-- Altura acima da peça RaceFinish em que a chegada ainda conta (como Checkpoint.ZoneHeight).
+		FinishZoneHeight = 10, -- studs
+		ActionCooldown = 1, -- segundos mínimos entre dois pedidos "Again"/"Lobby" do mesmo jogador
 	},
 
 	-- Lobby antes do mapa (ADR 0044).
@@ -131,10 +134,64 @@ local Config = {
 		Checkpoint = "Checkpoint", -- no Player: número do último checkpoint alcançado
 		HookOnceEpoch = "HookOnceEpoch", -- no Player: muda quando o uso dos verdes zera
 		InRace = "InRace", -- no Player: true depois de entrar no portal do lobby (ADR 0044)
+		-- No personagem: tempo do servidor (workspace:GetServerTimeNow()) em que o gelo mata; nil = não congelado.
+		FrozenUntil = "FrozenUntil",
+		-- No Player: tempo do servidor em que a corrida atual começou; nil = sem corrida contando.
+		RaceStartedAt = "RaceStartedAt",
+		-- No Player: tempo (s) da última corrida terminada; nil = ainda não terminou nesta corrida.
+		RaceFinishTime = "RaceFinishTime",
+		-- No Player: melhor tempo (s) nesta sessão do servidor (placar RF-63); nil = nunca terminou.
+		BestTime = "BestTime",
 	},
 
+	-- Zonas: morte e gelo (RF-20..25). Dono: subagente de zonas.
 	Freeze = {
-		Duration = 15, -- segundos congelado até morrer (ADR 0014)
+		Duration = 15, -- segundos congelado até morrer (ADR 0014, 0045)
+		HighlightColor = Color3.fromRGB(150, 220, 255), -- visual local do congelado (FreezeController)
+		HighlightFillTransparency = 0.45,
+	},
+	Zones = {
+		CheckInterval = 0.1, -- segundos entre as conferências das zonas no servidor
+		-- Caixa do corpo usada na conferência, no espaço do HumanoidRootPart (R15 padrão: pés ~3 studs
+		-- abaixo do centro do root, topo da cabeça ~2,5 acima).
+		CharacterBoxSize = Vector3.new(2, 5.5, 1), -- studs
+		CharacterBoxOffsetY = -0.25, -- studs: centro da caixa em relação ao centro do root
+		-- Folga em volta da caixa: gelo e descongelar são sólidos, então "tocar" = encostar nesta folga.
+		TouchMargin = 0.25, -- studs
+	},
+
+	-- Corrida, HUD e placar (RF-60..63). Dono: subagente de corrida.
+	RaceUi = {
+		Font = Enum.Font.GothamBold,
+		TextColor = Color3.fromRGB(255, 255, 255),
+		StrokeColor = Color3.fromRGB(0, 0, 0),
+		PanelColor = Color3.fromRGB(20, 24, 32),
+		PanelTransparency = 0.25,
+		CornerRadius = 8, -- pixels
+
+		TimerTextSize = 36, -- pixels
+		TimerTopOffset = 12, -- pixels do topo da tela
+
+		FreezeTextSize = 48, -- pixels
+		FreezeColor = Color3.fromRGB(140, 220, 255),
+		FreezeUrgentTime = 5, -- segundos restantes a partir dos quais o contador fica vermelho
+		FreezeUrgentColor = Color3.fromRGB(255, 90, 90),
+
+		LobbyButtonSize = Vector2.new(90, 34), -- pixels
+		LobbyButtonColor = Color3.fromRGB(70, 80, 100),
+
+		EndPanelSize = Vector2.new(360, 230), -- pixels
+		EndTitleTextSize = 30,
+		EndTextSize = 24,
+		EndButtonSize = Vector2.new(150, 44), -- pixels
+		AgainButtonColor = Color3.fromRGB(60, 170, 90),
+		BackButtonColor = Color3.fromRGB(70, 110, 190),
+		NewBestColor = Color3.fromRGB(255, 215, 80),
+
+		BoardWidth = 260, -- pixels
+		BoardRowHeight = 24, -- pixels
+		BoardTextSize = 18,
+		BoardMaxRows = 10, -- jogadores mostrados no placar
 	},
 
 	Tags = {

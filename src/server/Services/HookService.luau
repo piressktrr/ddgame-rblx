@@ -23,6 +23,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
 local HookRules = require(ReplicatedStorage.Shared.Logic.HookRules)
 local HookSurface = require(ReplicatedStorage.Shared.Util.HookSurface)
+local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 local Net = require(ReplicatedStorage.Shared.Net)
 local Trove = require(ReplicatedStorage.Packages.Trove)
 
@@ -124,6 +125,10 @@ local function validateAttach(
 	local root = character and character:FindFirstChild("HumanoidRootPart")
 	if not humanoid or humanoid.Health <= 0 or not root or not root:IsA("BasePart") then
 		return "NoCharacter"
+	end
+	-- Congelado (ZoneService, RF-20) não usa o gancho.
+	if character and Zones.isFrozen(character:GetAttribute(Config.Attributes.FrozenUntil)) then
+		return "Frozen"
 	end
 	if not part:IsDescendantOf(workspace) then
 		return "InvalidPart"

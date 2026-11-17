@@ -9,14 +9,25 @@
 	  HookRejected servidor -> cliente   (attachId: number, reason: string)
   HookRope     servidor -> clientes  (player: Player, part: BasePart?, localPoint: Vector3?)
                corda de outro jogador (RF-16); part nil = soltou. O ponto vem no espaço da peça.
+
+	Corrida (Fase 3):
+	  RaceFinished servidor -> cliente   (time: number, best: number) ao cruzar o RaceFinish
+	  RaceAction   cliente -> servidor   (action: "Again" | "Lobby") botões da tela de fim / reset
 ]]
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
-export type RemoteName = "HookAttach" | "HookDetach" | "HookRejected" | "HookRope"
+export type RemoteName =
+	"HookAttach"
+	| "HookDetach"
+	| "HookRejected"
+	| "HookRope"
+	| "RaceFinished"
+	| "RaceAction"
 
-local REMOTE_NAMES: { RemoteName } = { "HookAttach", "HookDetach", "HookRejected", "HookRope" }
+local REMOTE_NAMES: { RemoteName } =
+	{ "HookAttach", "HookDetach", "HookRejected", "HookRope", "RaceFinished", "RaceAction" }
 local FOLDER_NAME = "Remotes"
 
 local Net = {}

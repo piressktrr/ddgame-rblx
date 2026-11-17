@@ -6,7 +6,8 @@ números é a ordem de leitura sugerida. Regras gerais e protocolo de trabalho: 
 | Sala | Conteúdo | Quando ler |
 |---|---|---|
 | [01-status](01-status/STATUS.md) | Onde paramos, próximo passo, diário de bordo | **Sempre**, no início e no fim de cada sessão |
-| ↳ [diario/](01-status/diario/) | Um log por dia de trabalho (`AAAA-MM-DD.md`) | Para ver o que aconteceu num dia |
+| ↳ [LINHA_DO_TEMPO](01-status/LINHA_DO_TEMPO.md) | Tudo o que foi criado e decidido, dia a dia, desde o início, com links | **Primeira leitura** de quem chega no projeto |
+| ↳ [diario/](01-status/diario/) | Um log por dia de trabalho (`AAAA-MM-DD.md`), desde 2026-11-11 | Para ver o que aconteceu num dia |
 | [02-decisoes](02-decisoes/README.md) | Decisões numeradas (ADRs) e o índice delas | Antes de mudar algo estrutural |
 | [03-duvidas](03-duvidas/OPEN_QUESTIONS.md) | O que ainda não foi decidido | Antes de assumir qualquer coisa |
 | [04-game-design](04-game-design/GAME_DESIGN.md) | Documento de game design | Ao mexer em mecânica, mapa ou progressão |
@@ -22,7 +23,7 @@ números é a ordem de leitura sugerida. Regras gerais e protocolo de trabalho: 
 
 | Tipo de conteúdo | Sala |
 |---|---|
-| Log detalhado do dia | `01-status/diario/AAAA-MM-DD.md` |
+| Log detalhado do dia | `01-status/diario/AAAA-MM-DD.md` (dia novo → também uma seção em `01-status/LINHA_DO_TEMPO.md`) |
 | Decisão tomada com o dono | `02-decisoes/NNNN-titulo.md` + linha no índice |
 | Pergunta sem resposta | `03-duvidas/OPEN_QUESTIONS.md` |
 | Regra de mecânica, mapa, progressão, monetização | `04-game-design/GAME_DESIGN.md` |

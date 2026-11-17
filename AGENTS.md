@@ -8,8 +8,10 @@ glossário, ferramentas) fica numa única pasta: **[`memory-palace/`](memory-pal
 
 1. Este arquivo (regras).
 2. [`memory-palace/README.md`](memory-palace/README.md): o mapa do palácio, sala por sala.
-3. [`memory-palace/01-status/STATUS.md`](memory-palace/01-status/STATUS.md): onde paramos e o próximo passo.
-4. As outras salas conforme a tarefa (o mapa diz quando ler cada uma).
+3. [`memory-palace/01-status/LINHA_DO_TEMPO.md`](memory-palace/01-status/LINHA_DO_TEMPO.md): tudo o que foi
+   feito, dia a dia, desde o início (obrigatória para quem é novo no projeto).
+4. [`memory-palace/01-status/STATUS.md`](memory-palace/01-status/STATUS.md): onde paramos e o próximo passo.
+5. As outras salas conforme a tarefa (o mapa diz quando ler cada uma).
 
 ## 2. Regras invioláveis
 
@@ -35,7 +37,9 @@ glossário, ferramentas) fica numa única pasta: **[`memory-palace/`](memory-pal
 3. Faça o trabalho em passos pequenos e verificáveis.
 4. Ao terminar (ou ao parar no meio), **atualize o STATUS**:
    - o que mudou, o que foi verificado e como, o que ficou pendente;
-   - adicione uma linha no "Diário de bordo" com data, agente e resumo.
+   - adicione uma linha no "Diário de bordo" com data, agente e resumo;
+   - registre no diário do dia (`01-status/diario/AAAA-MM-DD.md`) e, se o dia for novo, abra a seção dele na
+     `01-status/LINHA_DO_TEMPO.md`.
 5. Decisão nova tomada com o dono → novo arquivo em `memory-palace/02-decisoes/` (próximo número) e
    uma linha no índice dessa pasta.
 6. Dúvida nova → entra em `memory-palace/03-duvidas/OPEN_QUESTIONS.md`.
@@ -55,7 +59,8 @@ glossário, ferramentas) fica numa única pasta: **[`memory-palace/`](memory-pal
 
 - Windows 11, projeto em `D:\Projetos\dddrace-roblox`. Remoto no GitHub (`origin`).
 - Ferramentas via Rokit (`rokit.toml`): Rojo 7.7.1, Wally 0.3.2, Selene 0.32.0, StyLua 2.6.0.
-- Comandos: `wally install`, `rojo serve`, `rojo build -o build/jogo.rbxl`, `selene src`, `stylua src`.
+- Comandos: `wally install`, `rojo serve`, `rojo build -o build/jogo.rbxl`, `selene src tests`,
+  `stylua src tests`. Testes (Studio em modo Edit): `return require(game.ServerStorage.Tests.Runner)()`.
 - Mapa de pastas do código: `src/shared` → ReplicatedStorage.Shared · `src/server` →
   ServerScriptService.Server · `src/client` → StarterPlayerScripts.Client · `Packages` →
   ReplicatedStorage.Packages.

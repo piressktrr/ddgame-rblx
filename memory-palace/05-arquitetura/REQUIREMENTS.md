@@ -10,7 +10,7 @@
 gelo/descongelar, zona mortal, checkpoints, timer pessoal, Bouncer, lâmina, objetos mágicos
 (sempre ativos), interação entre todos os jogadores.
 
-**Fora do MVP:** Bond, salvar dados entre sessões, ranking persistente, loja, boosts, tutorial
+**Fora do MVP:** Bond, salvar dados além do nível do gancho (ADR 0048), ranking persistente, loja, boosts, tutorial
 guiado, celular/console.
 
 ## 2. Requisitos funcionais
@@ -85,13 +85,13 @@ guiado, celular/console.
 ### Progressão do gancho (ADR 0030, 0033, 0040)
 | ID | Requisito | Critério de aceite |
 |---|---|---|
-| RF-80 | Nível do gancho ganho jogando; aumenta alcance e raio da esfera de ajuda | Valores vêm de `Config`, por nível; regra de ganho em Q23 |
-| RF-81 | Servidor guarda o nível e aplica os modificadores | Cliente não consegue mudar o próprio nível |
+| RF-80 | Nível do gancho ganho jogando; direção: aumenta alcance e força, ganho por estágio e com moedas (Q23, não fechado) | Valores vêm de `Config`, por nível |
+| RF-81 | Servidor guarda o nível, salva entre sessões (ADR 0048) e aplica os modificadores | Cliente não consegue mudar o próprio nível; o nível volta ao entrar de novo |
 
 ### Mapa
 | ID | Requisito | Critério de aceite |
 |---|---|---|
-| RF-70 | Um mapa 2.5D (ADR 0022). A estrutura será reformulada pelo dono (Q31) | A definir |
+| RF-70 | Um mapa 2.5D (ADR 0022) com pelo menos 8 estágios, dificuldade média e vários caminhos até o fim (ADR 0047), quase todo feito com o gancho (ADR 0046) | Conferido no greybox e no playtest |
 | RF-71 | Checkpoint a cada 3 estágios (ADR 0034) | Conferido no mapa |
 | RF-74 | Meta: corrida completa em 10 a 15 min para um jogador médio (ADR 0040) | Medido em playtest |
 | RF-72 | Completável sozinho e em grupo | Playtest dos dois jeitos |

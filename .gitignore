@@ -1,6 +1,7 @@
 # Pacotes do Wally (baixados com `wally install`)
 Packages/
 ServerPackages/
+DevPackages/
 wally.lock
 
 # Arquivos gerados pelo Rojo
