@@ -12,5 +12,8 @@
 | **Objetos mágicos** | Itens que substituem o parceiro no solo (nomes provisórios, ver Q4). |
 | **Tags** | Etiquetas do CollectionService que dão comportamento às peças do mapa (lista em `Config.Tags`). |
 | **Service / Controller** | Módulo do servidor / do cliente carregado pelo Loader (`Init` e `Start`). |
-| **Marco (M0–M6)** | Etapas do roadmap em ARCHITECTURE.md. |
+| **Marco (M0–M7)** | Etapas do roadmap em ARCHITECTURE.md. |
 | **ADR** | Registro de decisão em `memory-palace/02-decisoes/`. |
+| **Plano 2.5D** | Plano Z = 0 onde todo o jogo acontece; o personagem é preso a ele (ADR 0038, 0039). |
+| **Esfera de ajuda** | Ajuda de mira do gancho: se o raio não acerta, uma esfera lançada pega o alvo "quase na mira" (raio inicial 3 studs). |
+| **Nível do gancho** | Progressão do MVP: alcance e raio da esfera crescem jogando (ADR 0040). |

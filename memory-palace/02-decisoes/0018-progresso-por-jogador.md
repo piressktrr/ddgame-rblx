@@ -1,5 +1,5 @@
 # 0018 — Progresso por jogador e checkpoints espaçados
-- Status: Aceita
+- Status: Aceita (a regra de ~3 min foi refinada pelos ADRs 0034 e 0040)
 - Data: 2026-11-12
 ## Decisão
 - Checkpoint, tempo e ranking são **de cada jogador**, inclusive jogando em grupo.

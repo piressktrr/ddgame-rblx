@@ -1,12 +1,12 @@
 # Requisitos do MVP — Race and Escape
 
-> Fonte: GAME_DESIGN v0.3 e ADRs 0001–0028. Cada requisito tem um ID estável (`RF-xx` funcional,
+> Fonte: GAME_DESIGN v0.4 e ADRs 0001–0040. Cada requisito tem um ID estável (`RF-xx` funcional,
 > `RNF-xx` não funcional) e um critério de aceite verificável. Ao implementar, cite o ID no commit.
 > Valores numéricos são **padrões iniciais** em `Config` (ajustáveis em playtest e por boosts, ADR 0025).
 
 ## 1. Escopo
 
-**Dentro do MVP:** lobby simples, um mapa labirinto 2.5D com várias rotas, câmera 2.5D, gancho,
+**Dentro do MVP:** lobby simples, um mapa 2.5D, câmera 2.5D, gancho (com nível),
 gelo/descongelar, zona mortal, checkpoints, timer pessoal, Bouncer, lâmina, objetos mágicos
 (sempre ativos), interação entre todos os jogadores.
 
@@ -18,20 +18,26 @@ guiado, celular/console.
 ### Personagem e câmera
 | ID | Requisito | Critério de aceite |
 |---|---|---|
-| RF-01 | Câmera lateral 2.5D segue o personagem | Personagem sempre visível e centralizado com leve folga; sem tremor ao balançar |
-| RF-02 | Personagem preso ao plano do mapa (eixo Z fixo) | Após 5 min de jogo, desvio em Z < 0,1 stud, mesmo sendo puxado/empurrado |
-| RF-03 | Movimento base = padrão do Roblox (andar, pular). Sem pulo duplo (ADR 0027) | A/D anda, Espaço pula; W/S não tiram do plano |
+| RF-01 | Câmera lateral 2.5D segue o personagem | Personagem sempre visível e centralizado com leve folga; sem tremor durante o puxão |
+| RF-02 | Personagem preso ao plano do mapa (eixo Z fixo), corrigido no cliente e no servidor (ADR 0039) | Após 5 min de jogo, desvio em Z < 0,1 stud, mesmo sendo puxado/empurrado |
+| RF-03 | Movimento base: andar mais rápido que o padrão (`Config.Movement.WalkSpeed` = 24) e pulo duplo, uma vez até tocar o chão ou prender o gancho; não dispara com o gancho ativo (preso ou embalo). Sem pulo de parede (ADR 0043) | A/D anda, Espaço pula e pula de novo no ar; terceiro pulo no ar não acontece; W/S não tiram do plano |
+| RF-04 | Jogadores colidem entre si no plano (ADR 0039) | Dois jogadores se bloqueiam e um pode ficar em cima do outro, sem sair do plano |
+| RF-05 | Câmera com altura visível fixa (ADR 0039) | Em 16:9 e em tela larga, a mesma altura de mundo aparece |
 
 ### Gancho (ADR 0003, 0016)
 | ID | Requisito | Critério de aceite |
 |---|---|---|
-| RF-10 | Mira com o mouse no plano 2.5D | O gancho sai na direção do cursor |
-| RF-11 | **Segurar** o botão do mouse = preso; soltar = solta | Soltar a qualquer momento libera na hora |
-| RF-12 | Gruda em qualquer superfície, exceto `NoHook` (roxo) | Acerto em `NoHook` não prende e mostra feedback visual |
+| RF-10 | Mira com o mouse no plano 2.5D, 360°; cursor além do alcance é limitado ao alcance | O gancho sai na direção do cursor |
+| RF-10b | Esfera de ajuda de mira (raio inicial 3 studs, `Config.Hook.AimAssistRadius`) quando o raio não acerta | Alvo "quase na mira" é pego; sem alvo, nada prende |
+| RF-11 | **Um clique** no alvo prende e puxa até lá; **segurar** o botão ao chegar = fica preso no ponto (ADR 0042) | Clique simples: chega e solta com parte do embalo; segurando: fica parado no ponto até soltar |
+| RF-12 | Gruda em qualquer peça **na profundidade do plano**, exceto `NoHook` (roxo) | Acerto em `NoHook` não prende e mostra feedback visual; cenário fora do plano não prende |
 | RF-13 | `HookOnce` (verde): 1 uso por jogador; volta ao morrer ou passar checkpoint | 2ª tentativa falha; após morrer/checkpoint funciona de novo |
 | RF-14 | Alcance máximo e força de puxão configuráveis (`Config.Hook`) | Mudar o Config muda o comportamento sem tocar no código |
-| RF-15 | Enganchar outro jogador puxa os dois | Ambos se aproximam; funciona com ping de 150 ms |
+| RF-15 | Enganchar outro jogador puxa os dois (caminho A, ADR 0037). Só entra depois do mapa aprovado | Ambos se aproximam; funciona com ping de 150 ms |
 | RF-16 | Corda visível para todos os jogadores | Outros clientes veem a corda em até 200 ms |
+| RF-17 | Preso, o personagem é puxado em linha reta até o ponto, com aceleração suave e velocidade limitada (ADR 0042) | Sem teleporte; para ou solta ao bater numa parede, sem atravessar; clicar em outro alvo durante o voo troca de alvo |
+| RF-18 | ~~W recolhe e S solta corda~~ Removido pelo ADR 0042: W/S não fazem nada no gancho | W/S não mexem no gancho nem tiram do plano |
+| RF-19 | Gancho usável no ar e em sequência | Soltar e prender de novo sem tocar o chão |
 
 ### Gelo, morte e checkpoints (ADR 0014, 0018, 0021)
 | ID | Requisito | Critério de aceite |
@@ -76,11 +82,18 @@ guiado, celular/console.
 | RF-62 | Ao terminar: tela com tempo e opção "de novo" / "voltar ao lobby" | — |
 | RF-63 | Placar da sessão (melhor tempo de cada jogador no servidor) | Visível no lobby; zera quando o servidor fecha |
 
+### Progressão do gancho (ADR 0030, 0033, 0040)
+| ID | Requisito | Critério de aceite |
+|---|---|---|
+| RF-80 | Nível do gancho ganho jogando; aumenta alcance e raio da esfera de ajuda | Valores vêm de `Config`, por nível; regra de ganho em Q23 |
+| RF-81 | Servidor guarda o nível e aplica os modificadores | Cliente não consegue mudar o próprio nível |
+
 ### Mapa
 | ID | Requisito | Critério de aceite |
 |---|---|---|
-| RF-70 | Um mapa labirinto 2.5D com várias rotas (ADR 0012, 0022) | Cada seção tem ≥ 1 rota segura e ≥ 1 rota rápida |
-| RF-71 | Checkpoints a cada ~3 min para um jogador médio | Medido em playtest |
+| RF-70 | Um mapa 2.5D (ADR 0022). A estrutura será reformulada pelo dono (Q31) | A definir |
+| RF-71 | Checkpoint a cada 3 estágios (ADR 0034) | Conferido no mapa |
+| RF-74 | Meta: corrida completa em 10 a 15 min para um jogador médio (ADR 0040) | Medido em playtest |
 | RF-72 | Completável sozinho e em grupo | Playtest dos dois jeitos |
 | RF-73 | Todas as mecânicas usadas, ensinadas antes de combinadas | Revisão de level design |
 

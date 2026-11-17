@@ -17,7 +17,7 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 
 local ORDER_ATTRIBUTE = "Order" -- na peça do mapa
-local PLAYER_ATTRIBUTE = "Checkpoint" -- no Player: número do último checkpoint alcançado
+local PLAYER_ATTRIBUTE = Config.Attributes.Checkpoint -- no Player: número do último checkpoint alcançado
 
 local CheckpointService = {}
 
@@ -50,8 +50,9 @@ end
 
 local function placeAtCheckpoint(player: Player, character: Model)
 	local part = checkpoints[getReached(player)]
-	if not part then
-		return -- ainda sem checkpoint: nasce no spawn normal do mapa
+	-- Fora de corrida, ou ainda sem checkpoint: quem posiciona é o LobbyService (lobby ou RaceStart).
+	if not part or player:GetAttribute(Config.Attributes.InRace) ~= true then
+		return
 	end
 	-- O Roblox posiciona o personagem no spawn depois do CharacterAdded; esperamos isso acabar.
 	if not character:IsDescendantOf(workspace) then

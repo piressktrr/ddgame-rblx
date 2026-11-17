@@ -13,4 +13,13 @@ function Zones.isAbove(cframe: CFrame, size: Vector3, height: number, point: Vec
 		and localPoint.Y <= size.Y / 2 + height
 end
 
+-- Diz se `point` está dentro da caixa descrita por `cframe` e `size`, com `margin` studs de folga
+-- em cada lado.
+function Zones.isInside(cframe: CFrame, size: Vector3, margin: number, point: Vector3): boolean
+	local localPoint = cframe:PointToObjectSpace(point)
+	return math.abs(localPoint.X) <= size.X / 2 + margin
+		and math.abs(localPoint.Y) <= size.Y / 2 + margin
+		and math.abs(localPoint.Z) <= size.Z / 2 + margin
+end
+
 return Zones

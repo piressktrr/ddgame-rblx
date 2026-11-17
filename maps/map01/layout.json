@@ -1,463 +1,2769 @@
 {
-  "name": "Map01",
-  "description": "Mapa 01 (greybox). Visto de lado: X = horizontal, Y = altura, em studs. Tudo no plano Z = 0. Cada bloco: [x1, x2, y1, y2].",
-  "depth": 12,
-  "killHeight": -30,
-  "kinds": {
-    "solid": {
-      "color": [
-        163,
-        162,
-        165
-      ],
-      "label": "Chão / parede"
-    },
-    "kill": {
-      "color": [
-        224,
-        38,
-        43
-      ],
-      "label": "Zona mortal (marcador)"
-    },
-    "checkpoint": {
-      "color": [
-        255,
-        210,
-        63
-      ],
-      "label": "Checkpoint"
-    },
-    "start": {
-      "color": [
-        90,
-        160,
-        110
-      ],
-      "label": "Início"
-    },
-    "finish": {
-      "color": [
-        255,
-        255,
-        255
-      ],
-      "label": "Fim"
-    }
+ "name": "Map01",
+ "source": "tools/map_layout.py (rascunho v2), gerado por tools/map2d.py. Não editar à mão.",
+ "description": "Greybox 2.5D. X = horizontal, Y = altura, em studs; tudo no plano Z = 0. center e size em studs (size = largura X, altura Y, profundidade Z). rotZ em graus. WedgePart: size em X/Y do plano; slopeFaces diz para que lado a rampa olha.",
+ "depth": 12,
+ "bounds": {
+  "x1": -70,
+  "y1": 20,
+  "x2": 872,
+  "y2": 415
+ },
+ "fallenPartsDestroyHeight": 0,
+ "kinds": {
+  "Rock": {
+   "color": "#6f717b",
+   "tags": [],
+   "label": "rocha e sólidos (gancho gruda)"
   },
-  "sections": [
-    {
-      "id": "S1",
-      "name": "Aquecimento",
-      "x1": 0,
-      "x2": 116,
-      "note": "Andar e pular degraus sobre o abismo"
-    },
-    {
-      "id": "S2",
-      "name": "Bifurcação",
-      "x1": 116,
-      "x2": 205,
-      "note": "Rota de cima (rápida, pulos; quem cai vai para o túnel) x túnel de baixo (seguro)"
-    },
-    {
-      "id": "S3",
-      "name": "Torre ou atalho",
-      "x1": 205,
-      "x2": 374,
-      "note": "Subir a torre de degraus (segura, mais longa) x descer e pular o abismo (rápida, arriscada)"
-    }
-  ],
-  "blocks": [
-    {
-      "name": "WallLeft",
-      "kind": "solid",
-      "box": [
-        -4,
-        0,
-        -4,
-        70
-      ]
-    },
-    {
-      "name": "StartFloor",
-      "kind": "start",
-      "box": [
-        0,
-        60,
-        -4,
-        0
-      ]
-    },
-    {
-      "name": "StartCeiling",
-      "kind": "solid",
-      "box": [
-        0,
-        60,
-        16,
-        20
-      ]
-    },
-    {
-      "name": "S1_Step1",
-      "kind": "solid",
-      "box": [
-        64,
-        78,
-        -2,
-        2
-      ]
-    },
-    {
-      "name": "S1_Step2",
-      "kind": "solid",
-      "box": [
-        82,
-        94,
-        1,
-        5
-      ]
-    },
-    {
-      "name": "S1_Step3",
-      "kind": "solid",
-      "box": [
-        98,
-        112,
-        4,
-        8
-      ]
-    },
-    {
-      "name": "S2_Hub",
-      "kind": "solid",
-      "box": [
-        116,
-        150,
-        4,
-        8
-      ]
-    },
-    {
-      "name": "S2_Up1",
-      "kind": "solid",
-      "box": [
-        152,
-        158,
-        11,
-        12
-      ]
-    },
-    {
-      "name": "S2_Up2",
-      "kind": "solid",
-      "box": [
-        161,
-        167,
-        14,
-        15
-      ]
-    },
-    {
-      "name": "S2_Up3",
-      "kind": "solid",
-      "box": [
-        172,
-        178,
-        14,
-        15
-      ]
-    },
-    {
-      "name": "S2_Up4",
-      "kind": "solid",
-      "box": [
-        183,
-        189,
-        14,
-        15
-      ]
-    },
-    {
-      "name": "S2_Up5",
-      "kind": "solid",
-      "box": [
-        194,
-        200,
-        14,
-        15
-      ]
-    },
-    {
-      "name": "S2_TunnelFloor",
-      "kind": "solid",
-      "box": [
-        150,
-        190,
-        -8,
-        -4
-      ]
-    },
-    {
-      "name": "S2_TunnelCeiling",
-      "kind": "solid",
-      "box": [
-        158,
-        188,
-        6,
-        8
-      ]
-    },
-    {
-      "name": "S2_TunnelBump1",
-      "kind": "solid",
-      "box": [
-        168,
-        171,
-        -4,
-        -1
-      ]
-    },
-    {
-      "name": "S2_TunnelBump2",
-      "kind": "solid",
-      "box": [
-        179,
-        182,
-        -4,
-        -1
-      ]
-    },
-    {
-      "name": "S2_Stair1",
-      "kind": "solid",
-      "box": [
-        190,
-        195,
-        -8,
-        0
-      ]
-    },
-    {
-      "name": "S2_Stair2",
-      "kind": "solid",
-      "box": [
-        195,
-        200,
-        -8,
-        3
-      ]
-    },
-    {
-      "name": "S2_Stair3",
-      "kind": "solid",
-      "box": [
-        200,
-        205,
-        -8,
-        6
-      ]
-    },
-    {
-      "name": "S3_Rejoin",
-      "kind": "solid",
-      "box": [
-        205,
-        250,
-        6,
-        10
-      ]
-    },
-    {
-      "name": "CP1",
-      "kind": "checkpoint",
-      "box": [
-        219,
-        225,
-        10,
-        10.4
-      ]
-    },
-    {
-      "name": "S3_Tower1",
-      "kind": "solid",
-      "box": [
-        253,
-        259,
-        12,
-        13
-      ]
-    },
-    {
-      "name": "S3_Tower2",
-      "kind": "solid",
-      "box": [
-        262,
-        268,
-        15,
-        16
-      ]
-    },
-    {
-      "name": "S3_Tower3",
-      "kind": "solid",
-      "box": [
-        271,
-        277,
-        18,
-        19
-      ]
-    },
-    {
-      "name": "S3_Tower4",
-      "kind": "solid",
-      "box": [
-        280,
-        286,
-        21,
-        22
-      ]
-    },
-    {
-      "name": "S3_Tower5",
-      "kind": "solid",
-      "box": [
-        289,
-        295,
-        24,
-        25
-      ]
-    },
-    {
-      "name": "S3_TopWalk",
-      "kind": "solid",
-      "box": [
-        298,
-        340,
-        27,
-        28
-      ]
-    },
-    {
-      "name": "S3_Low1",
-      "kind": "solid",
-      "box": [
-        250,
-        262,
-        -2,
-        2
-      ]
-    },
-    {
-      "name": "S3_Low2",
-      "kind": "solid",
-      "box": [
-        267,
-        273,
-        -2,
-        2
-      ]
-    },
-    {
-      "name": "S3_Low3",
-      "kind": "solid",
-      "box": [
-        278,
-        284,
-        -2,
-        2
-      ]
-    },
-    {
-      "name": "S3_Low4",
-      "kind": "solid",
-      "box": [
-        289,
-        295,
-        -2,
-        2
-      ]
-    },
-    {
-      "name": "S3_Low5",
-      "kind": "solid",
-      "box": [
-        300,
-        306,
-        -2,
-        2
-      ]
-    },
-    {
-      "name": "S3_LowStair1",
-      "kind": "solid",
-      "box": [
-        310,
-        316,
-        1,
-        5
-      ]
-    },
-    {
-      "name": "S3_LowStair2",
-      "kind": "solid",
-      "box": [
-        319,
-        325,
-        4,
-        8
-      ]
-    },
-    {
-      "name": "FinishFloor",
-      "kind": "solid",
-      "box": [
-        328,
-        370,
-        6,
-        10
-      ]
-    },
-    {
-      "name": "Finish",
-      "kind": "finish",
-      "box": [
-        355,
-        361,
-        10,
-        10.4
-      ]
-    },
-    {
-      "name": "WallRight",
-      "kind": "solid",
-      "box": [
-        370,
-        374,
-        6,
-        70
-      ]
-    },
-    {
-      "name": "PitMarker",
-      "kind": "kill",
-      "box": [
-        0,
-        370,
-        -22,
-        -20
-      ]
-    }
-  ],
-  "spawn": [
-    10,
+  "SlopeR": {
+   "color": "#6f717b",
+   "tags": [],
+   "label": "rampa de rocha, sobe para a esquerda"
+  },
+  "SlopeL": {
+   "color": "#6f717b",
+   "tags": [],
+   "label": "rampa de rocha, sobe para a direita"
+  },
+  "Kill": {
+   "color": "#d9434b",
+   "tags": [
+    "KillZone"
+   ],
+   "label": "mortal (sem colisão, grudável)"
+  },
+  "Ice": {
+   "color": "#c8ecff",
+   "tags": [
+    "FreezeZone"
+   ],
+   "label": "gelo"
+  },
+  "Unfreeze": {
+   "color": "#FF8A1F",
+   "tags": [
+    "UnfreezeZone"
+   ],
+   "label": "descongelar"
+  },
+  "NoHook": {
+   "color": "#8e5bd6",
+   "tags": [
+    "NoHook"
+   ],
+   "label": "não gruda"
+  },
+  "HookOnce": {
+   "color": "#5fbf6a",
+   "tags": [
+    "HookOnce"
+   ],
+   "label": "gruda 1 vez"
+  },
+  "Checkpoint": {
+   "color": "#ffd23f",
+   "tags": [
+    "Checkpoint"
+   ],
+   "label": "checkpoint (atributo Order)"
+  },
+  "Finish": {
+   "color": "#ffffff",
+   "tags": [
+    "RaceFinish",
+    "Checkpoint"
+   ],
+   "label": "fim (também o último checkpoint)"
+  },
+  "Spawn": {
+   "color": "#5aa06e",
+   "tags": [
+    "RaceStart"
+   ],
+   "label": "início da corrida (SpawnLocation desligado; nasce-se no lobby, ADR 0044)"
+  },
+  "Backdrop": {
+   "color": "#23252c",
+   "tags": [],
+   "label": "fundo, não gruda"
+  }
+ },
+ "parts": [
+  {
+   "name": "Rock001",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    -65.0,
+    217.5,
     0
-  ],
-  "notes": [
-    "Pulo padrão do Roblox (JumpPower 50, gravidade 196,2): ~6,4 studs de altura e ~8 studs de distância no total.",
-    "Regras usadas: vão <= 5 no mesmo nível; subida de 3 com vão <= 4; subida de 4 só com vão <= 2.",
-    "Cair abaixo de killHeight mata e renasce no início (sem checkpoints funcionais ainda).",
-    "Marcadores 'kill' são só visuais (sem colisão) até o ZoneService existir."
-  ]
+   ],
+   "size": [
+    10,
+    395,
+    12
+   ]
+  },
+  {
+   "name": "Rock002",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    270.0,
+    30.0,
+    0
+   ],
+   "size": [
+    660,
+    20,
+    12
+   ]
+  },
+  {
+   "name": "Rock003",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    47.0,
+    112.0,
+    0
+   ],
+   "size": [
+    214,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock004",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    47.0,
+    182.0,
+    0
+   ],
+   "size": [
+    214,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock005",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    47.0,
+    247.0,
+    0
+   ],
+   "size": [
+    214,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock006",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    406.0,
+    410.0,
+    0
+   ],
+   "size": [
+    932,
+    10,
+    12
+   ]
+  },
+  {
+   "name": "Rock007",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    -20.0,
+    329.0,
+    0
+   ],
+   "size": [
+    40,
+    114,
+    12
+   ]
+  },
+  {
+   "name": "Rock008",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    109.0,
+    77.0,
+    0
+   ],
+   "size": [
+    254,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock009",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    241.0,
+    147.0,
+    0
+   ],
+   "size": [
+    518,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock010",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    96.0,
+    217.0,
+    0
+   ],
+   "size": [
+    228,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock011",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    12.0,
+    295.0,
+    0
+   ],
+   "size": [
+    24,
+    46,
+    12
+   ]
+  },
+  {
+   "name": "Rock012",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    40.0,
+    373.0,
+    0
+   ],
+   "size": [
+    80,
+    26,
+    12
+   ]
+  },
+  {
+   "name": "Rock013",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    117.0,
+    281.0,
+    0
+   ],
+   "size": [
+    186,
+    18,
+    12
+   ]
+  },
+  {
+   "name": "Rock014",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    60.0,
+    315.0,
+    0
+   ],
+   "size": [
+    12,
+    50,
+    12
+   ]
+  },
+  {
+   "name": "Rock015",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    320.0,
+    381.0,
+    0
+   ],
+   "size": [
+    480,
+    10,
+    12
+   ]
+  },
+  {
+   "name": "Rock016",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    106.0,
+    315.0,
+    0
+   ],
+   "size": [
+    12,
+    50,
+    12
+   ]
+  },
+  {
+   "name": "Rock017",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    152.0,
+    315.0,
+    0
+   ],
+   "size": [
+    12,
+    50,
+    12
+   ]
+  },
+  {
+   "name": "Rock018",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    360.0,
+    368.0,
+    0
+   ],
+   "size": [
+    400,
+    16,
+    12
+   ]
+  },
+  {
+   "name": "Rock019",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    198.0,
+    315.0,
+    0
+   ],
+   "size": [
+    12,
+    50,
+    12
+   ]
+  },
+  {
+   "name": "Rock020",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    216.0,
+    57.5,
+    0
+   ],
+   "size": [
+    40,
+    35,
+    12
+   ]
+  },
+  {
+   "name": "Rock021",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    216.0,
+    84.5,
+    0
+   ],
+   "size": [
+    40,
+    11,
+    12
+   ]
+  },
+  {
+   "name": "Rock022",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    348.0,
+    142.5,
+    0
+   ],
+   "size": [
+    304,
+    5,
+    12
+   ]
+  },
+  {
+   "name": "Rock023",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    203.0,
+    182.0,
+    0
+   ],
+   "size": [
+    14,
+    66,
+    12
+   ]
+  },
+  {
+   "name": "Rock024",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    203.0,
+    245.5,
+    0
+   ],
+   "size": [
+    14,
+    53,
+    12
+   ]
+  },
+  {
+   "name": "Rock025",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    355.0,
+    169.5,
+    0
+   ],
+   "size": [
+    290,
+    41,
+    12
+   ]
+  },
+  {
+   "name": "Rock026",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    395.0,
+    300.0,
+    0
+   ],
+   "size": [
+    330,
+    120,
+    12
+   ]
+  },
+  {
+   "name": "Rock027",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    268.0,
+    56.0,
+    0
+   ],
+   "size": [
+    64,
+    32,
+    12
+   ]
+  },
+  {
+   "name": "Rock028",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    368.0,
+    135.0,
+    0
+   ],
+   "size": [
+    264,
+    10,
+    12
+   ]
+  },
+  {
+   "name": "Rock029",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    254.0,
+    234.0,
+    0
+   ],
+   "size": [
+    8,
+    12,
+    12
+   ]
+  },
+  {
+   "name": "Rock030",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    280.0,
+    81.0,
+    0
+   ],
+   "size": [
+    40,
+    18,
+    12
+   ]
+  },
+  {
+   "name": "Rock031",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    294.0,
+    234.0,
+    0
+   ],
+   "size": [
+    8,
+    12,
+    12
+   ]
+  },
+  {
+   "name": "Rock032",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    334.0,
+    233.0,
+    0
+   ],
+   "size": [
+    8,
+    10,
+    12
+   ]
+  },
+  {
+   "name": "Rock033",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    361.0,
+    197.0,
+    0
+   ],
+   "size": [
+    22,
+    14,
+    12
+   ]
+  },
+  {
+   "name": "Rock034",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    414.0,
+    234.0,
+    0
+   ],
+   "size": [
+    8,
+    12,
+    12
+   ]
+  },
+  {
+   "name": "Rock035",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    510.0,
+    65.0,
+    0
+   ],
+   "size": [
+    180,
+    50,
+    12
+   ]
+  },
+  {
+   "name": "Rock036",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    454.0,
+    234.0,
+    0
+   ],
+   "size": [
+    8,
+    12,
+    12
+   ]
+  },
+  {
+   "name": "Rock037",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    494.0,
+    234.0,
+    0
+   ],
+   "size": [
+    8,
+    12,
+    12
+   ]
+  },
+  {
+   "name": "Rock038",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    560.0,
+    165.0,
+    0
+   ],
+   "size": [
+    80,
+    150,
+    12
+   ]
+  },
+  {
+   "name": "Rock039",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    690.0,
+    270.0,
+    0
+   ],
+   "size": [
+    260,
+    60,
+    12
+   ]
+  },
+  {
+   "name": "Rock040",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    700.0,
+    348.0,
+    0
+   ],
+   "size": [
+    240,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock041",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    736.0,
+    25.0,
+    0
+   ],
+   "size": [
+    272,
+    10,
+    12
+   ]
+  },
+  {
+   "name": "Rock042",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    614.0,
+    94.0,
+    0
+   ],
+   "size": [
+    28,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock043",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    614.0,
+    146.0,
+    0
+   ],
+   "size": [
+    28,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock044",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    614.0,
+    198.0,
+    0
+   ],
+   "size": [
+    28,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock045",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    625.0,
+    235.0,
+    0
+   ],
+   "size": [
+    50,
+    10,
+    12
+   ]
+  },
+  {
+   "name": "Rock046",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    601.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock047",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    736.0,
+    400.5,
+    0
+   ],
+   "size": [
+    272,
+    9,
+    12
+   ]
+  },
+  {
+   "name": "Rock048",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    606.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock049",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    606.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock050",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    611.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock051",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    618.0,
+    373.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock052",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    621.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock053",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    634.0,
+    120.0,
+    0
+   ],
+   "size": [
+    24,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock054",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    721.0,
+    172.0,
+    0
+   ],
+   "size": [
+    198,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock055",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    630.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock056",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    630.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock057",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    631.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock058",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    641.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock059",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    642.0,
+    373.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock060",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    735.0,
+    120.0,
+    0
+   ],
+   "size": [
+    170,
+    100,
+    12
+   ]
+  },
+  {
+   "name": "Rock061",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    735.0,
+    177.0,
+    0
+   ],
+   "size": [
+    170,
+    6,
+    12
+   ]
+  },
+  {
+   "name": "Rock062",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    651.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock063",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    654.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock064",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    654.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock065",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    661.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock066",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    666.0,
+    373.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock067",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    671.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock068",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    678.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock069",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    678.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock070",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    681.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock071",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    690.0,
+    373.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock072",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    691.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock073",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    701.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock074",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    702.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock075",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    702.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock076",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    711.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock077",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    714.0,
+    373.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock078",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    721.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock079",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    726.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock080",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    726.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock081",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    731.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock082",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    738.0,
+    373.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock083",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    741.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock084",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    750.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock085",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    750.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock086",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    751.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock087",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    790.0,
+    210.0,
+    0
+   ],
+   "size": [
+    60,
+    60,
+    12
+   ]
+  },
+  {
+   "name": "Rock088",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    761.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock089",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    762.0,
+    373.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock090",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    771.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock091",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    774.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock092",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    774.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock093",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    781.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock094",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    786.0,
+    373.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock095",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    791.5,
+    329.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock096",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    798.0,
+    361.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock097",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    798.0,
+    385.0,
+    0
+   ],
+   "size": [
+    4,
+    2,
+    12
+   ]
+  },
+  {
+   "name": "Rock098",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    801.5,
+    317.0,
+    0
+   ],
+   "size": [
+    3,
+    34,
+    12
+   ]
+  },
+  {
+   "name": "Rock099",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    833.0,
+    138.0,
+    0
+   ],
+   "size": [
+    26,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock100",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    833.0,
+    210.0,
+    0
+   ],
+   "size": [
+    26,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock101",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    833.0,
+    282.0,
+    0
+   ],
+   "size": [
+    26,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock102",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    833.0,
+    354.0,
+    0
+   ],
+   "size": [
+    26,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock103",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    854.0,
+    102.0,
+    0
+   ],
+   "size": [
+    36,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock104",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    854.0,
+    174.0,
+    0
+   ],
+   "size": [
+    36,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock105",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    854.0,
+    246.0,
+    0
+   ],
+   "size": [
+    36,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock106",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    854.0,
+    318.0,
+    0
+   ],
+   "size": [
+    36,
+    4,
+    12
+   ]
+  },
+  {
+   "name": "Rock107",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    867.0,
+    65.0,
+    0
+   ],
+   "size": [
+    10,
+    70,
+    12
+   ]
+  },
+  {
+   "name": "Rock108",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    867.0,
+    138.0,
+    0
+   ],
+   "size": [
+    10,
+    68,
+    12
+   ]
+  },
+  {
+   "name": "Rock109",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    867.0,
+    210.0,
+    0
+   ],
+   "size": [
+    10,
+    68,
+    12
+   ]
+  },
+  {
+   "name": "Rock110",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    867.0,
+    282.0,
+    0
+   ],
+   "size": [
+    10,
+    68,
+    12
+   ]
+  },
+  {
+   "name": "Rock111",
+   "kind": "Rock",
+   "class": "Part",
+   "center": [
+    867.0,
+    358.0,
+    0
+   ],
+   "size": [
+    10,
+    76,
+    12
+   ]
+  },
+  {
+   "name": "E3_Slope1",
+   "kind": "SlopeR",
+   "class": "WedgePart",
+   "center": [
+    320.0,
+    65.0,
+    0
+   ],
+   "size": [
+    40,
+    50,
+    12
+   ],
+   "slopeFaces": "+X"
+  },
+  {
+   "name": "E3_Slope2",
+   "kind": "SlopeL",
+   "class": "WedgePart",
+   "center": [
+    400.0,
+    65.0,
+    0
+   ],
+   "size": [
+    40,
+    50,
+    12
+   ],
+   "slopeFaces": "-X"
+  },
+  {
+   "name": "E1_Kill1",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    39.0,
+    291.0,
+    0
+   ],
+   "size": [
+    30,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E1_Kill2",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    83.0,
+    291.0,
+    0
+   ],
+   "size": [
+    34,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E1_Kill3",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    129.0,
+    291.0,
+    0
+   ],
+   "size": [
+    34,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E1_Kill4",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    175.0,
+    291.0,
+    0
+   ],
+   "size": [
+    34,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E1_Kill5",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    207.0,
+    291.0,
+    0
+   ],
+   "size": [
+    6,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E2_Kill1",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    290.0,
+    191.0,
+    0
+   ],
+   "size": [
+    120,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E2_Kill2",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    436.0,
+    191.0,
+    0
+   ],
+   "size": [
+    128,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E3_Kill1",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    248.0,
+    73.0,
+    0
+   ],
+   "size": [
+    24,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E4_Kill1",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    70.0,
+    115.0,
+    0
+   ],
+   "size": [
+    60,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E4_Kill2",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    70.0,
+    185.0,
+    0
+   ],
+   "size": [
+    60,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E4_Kill3",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    68.0,
+    41.0,
+    0
+   ],
+   "size": [
+    256,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E5_Kill1",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    700.0,
+    351.0,
+    0
+   ],
+   "size": [
+    200,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill1",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    833.0,
+    357.0,
+    0
+   ],
+   "size": [
+    26,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill2",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    849.0,
+    321.0,
+    0
+   ],
+   "size": [
+    26,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill3",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    833.0,
+    285.0,
+    0
+   ],
+   "size": [
+    26,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill4",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    849.0,
+    249.0,
+    0
+   ],
+   "size": [
+    26,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill5",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    833.0,
+    213.0,
+    0
+   ],
+   "size": [
+    26,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill6",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    849.0,
+    177.0,
+    0
+   ],
+   "size": [
+    26,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill7",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    833.0,
+    141.0,
+    0
+   ],
+   "size": [
+    26,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill8",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    849.0,
+    105.0,
+    0
+   ],
+   "size": [
+    26,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill9",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    665.0,
+    31.0,
+    0
+   ],
+   "size": [
+    30,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill10",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    697.0,
+    31.0,
+    0
+   ],
+   "size": [
+    6,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill11",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    737.0,
+    31.0,
+    0
+   ],
+   "size": [
+    46,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill12",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    777.0,
+    31.0,
+    0
+   ],
+   "size": [
+    6,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E6_Kill13",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    802.0,
+    31.0,
+    0
+   ],
+   "size": [
+    16,
+    2,
+    12
+   ],
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E3_Kill2",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    332.5,
+    52.5,
+    0
+   ],
+   "size": [
+    28.847,
+    4.222,
+    12
+   ],
+   "rotZ": -50.711,
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E3_Kill3",
+   "kind": "Kill",
+   "class": "Part",
+   "center": [
+    387.5,
+    52.5,
+    0
+   ],
+   "size": [
+    28.847,
+    4.222,
+    12
+   ],
+   "rotZ": 50.711,
+   "tags": [
+    "KillZone"
+   ]
+  },
+  {
+   "name": "E1_Ice1",
+   "kind": "Ice",
+   "class": "Part",
+   "center": [
+    152.0,
+    341.0,
+    0
+   ],
+   "size": [
+    12,
+    2,
+    12
+   ],
+   "tags": [
+    "FreezeZone"
+   ]
+  },
+  {
+   "name": "E2_Ice1",
+   "kind": "Ice",
+   "class": "Part",
+   "center": [
+    356.0,
+    205.0,
+    0
+   ],
+   "size": [
+    12,
+    2,
+    12
+   ],
+   "tags": [
+    "FreezeZone"
+   ]
+  },
+  {
+   "name": "E3_Ice1",
+   "kind": "Ice",
+   "class": "Part",
+   "center": [
+    450.0,
+    91.0,
+    0
+   ],
+   "size": [
+    20,
+    2,
+    12
+   ],
+   "tags": [
+    "FreezeZone"
+   ]
+  },
+  {
+   "name": "E4_Ice1",
+   "kind": "Ice",
+   "class": "Part",
+   "center": [
+    72.0,
+    150.0,
+    0
+   ],
+   "size": [
+    24,
+    2,
+    12
+   ],
+   "tags": [
+    "FreezeZone"
+   ]
+  },
+  {
+   "name": "E5_Ice1",
+   "kind": "Ice",
+   "class": "Part",
+   "center": [
+    688.0,
+    301.0,
+    0
+   ],
+   "size": [
+    10,
+    2,
+    12
+   ],
+   "tags": [
+    "FreezeZone"
+   ]
+  },
+  {
+   "name": "E6_Ice1",
+   "kind": "Ice",
+   "class": "Part",
+   "center": [
+    687.0,
+    32.0,
+    0
+   ],
+   "size": [
+    14,
+    4,
+    12
+   ],
+   "tags": [
+    "FreezeZone"
+   ]
+  },
+  {
+   "name": "E6_Ice2",
+   "kind": "Ice",
+   "class": "Part",
+   "center": [
+    767.0,
+    32.0,
+    0
+   ],
+   "size": [
+    14,
+    4,
+    12
+   ],
+   "tags": [
+    "FreezeZone"
+   ]
+  },
+  {
+   "name": "E1_Unfreeze1",
+   "kind": "Unfreeze",
+   "class": "Part",
+   "center": [
+    198.0,
+    341.0,
+    0
+   ],
+   "size": [
+    12,
+    2,
+    12
+   ],
+   "tags": [
+    "UnfreezeZone"
+   ]
+  },
+  {
+   "name": "E2_Unfreeze1",
+   "kind": "Unfreeze",
+   "class": "Part",
+   "center": [
+    367.0,
+    205.0,
+    0
+   ],
+   "size": [
+    10,
+    2,
+    12
+   ],
+   "tags": [
+    "UnfreezeZone"
+   ]
+  },
+  {
+   "name": "E4_Unfreeze1",
+   "kind": "Unfreeze",
+   "class": "Part",
+   "center": [
+    -44.0,
+    185.0,
+    0
+   ],
+   "size": [
+    12,
+    2,
+    12
+   ],
+   "tags": [
+    "UnfreezeZone"
+   ]
+  },
+  {
+   "name": "E5_Unfreeze1",
+   "kind": "Unfreeze",
+   "class": "Part",
+   "center": [
+    728.0,
+    301.0,
+    0
+   ],
+   "size": [
+    10,
+    2,
+    12
+   ],
+   "tags": [
+    "UnfreezeZone"
+   ]
+  },
+  {
+   "name": "E6_Unfreeze1",
+   "kind": "Unfreeze",
+   "class": "Part",
+   "center": [
+    707.0,
+    32.0,
+    0
+   ],
+   "size": [
+    14,
+    4,
+    12
+   ],
+   "tags": [
+    "UnfreezeZone"
+   ]
+  },
+  {
+   "name": "E6_Unfreeze2",
+   "kind": "Unfreeze",
+   "class": "Part",
+   "center": [
+    787.0,
+    32.0,
+    0
+   ],
+   "size": [
+    14,
+    4,
+    12
+   ],
+   "tags": [
+    "UnfreezeZone"
+   ]
+  },
+  {
+   "name": "Farol1_Checkpoint1",
+   "kind": "Checkpoint",
+   "class": "Part",
+   "center": [
+    216.0,
+    91.0,
+    0
+   ],
+   "size": [
+    32,
+    2,
+    12
+   ],
+   "tags": [
+    "Checkpoint"
+   ],
+   "attributes": {
+    "Order": 1
+   }
+  },
+  {
+   "name": "E1_Spawn1",
+   "kind": "Spawn",
+   "class": "SpawnLocation",
+   "center": [
+    12.0,
+    319.0,
+    0
+   ],
+   "size": [
+    16,
+    2,
+    1
+   ],
+   "tags": [
+    "RaceStart"
+   ]
+  },
+  {
+   "name": "Farol2_Finish1",
+   "kind": "Finish",
+   "class": "Part",
+   "center": [
+    710.0,
+    181.0,
+    0
+   ],
+   "size": [
+    60,
+    2,
+    12
+   ],
+   "tags": [
+    "RaceFinish",
+    "Checkpoint"
+   ],
+   "attributes": {
+    "Order": 2
+   }
+  },
+  {
+   "name": "E2_NoHook1",
+   "kind": "NoHook",
+   "class": "Part",
+   "center": [
+    374.0,
+    233.0,
+    0
+   ],
+   "size": [
+    8,
+    10,
+    12
+   ],
+   "tags": [
+    "NoHook"
+   ]
+  },
+  {
+   "name": "E2_NoHook2",
+   "kind": "NoHook",
+   "class": "Part",
+   "center": [
+    354.0,
+    239.0,
+    0
+   ],
+   "size": [
+    48,
+    2,
+    12
+   ],
+   "tags": [
+    "NoHook"
+   ]
+  },
+  {
+   "name": "E4_NoHook1",
+   "kind": "NoHook",
+   "class": "Part",
+   "center": [
+    -24.0,
+    77.0,
+    0
+   ],
+   "size": [
+    12,
+    4,
+    12
+   ],
+   "tags": [
+    "NoHook"
+   ]
+  },
+  {
+   "name": "E4_NoHook2",
+   "kind": "NoHook",
+   "class": "Part",
+   "center": [
+    160.0,
+    112.0,
+    0
+   ],
+   "size": [
+    12,
+    4,
+    12
+   ],
+   "tags": [
+    "NoHook"
+   ]
+  },
+  {
+   "name": "E4_NoHook3",
+   "kind": "NoHook",
+   "class": "Part",
+   "center": [
+    -24.0,
+    147.0,
+    0
+   ],
+   "size": [
+    12,
+    4,
+    12
+   ],
+   "tags": [
+    "NoHook"
+   ]
+  },
+  {
+   "name": "E4_NoHook4",
+   "kind": "NoHook",
+   "class": "Part",
+   "center": [
+    160.0,
+    182.0,
+    0
+   ],
+   "size": [
+    12,
+    4,
+    12
+   ],
+   "tags": [
+    "NoHook"
+   ]
+  },
+  {
+   "name": "E4_NoHook5",
+   "kind": "NoHook",
+   "class": "Part",
+   "center": [
+    -24.0,
+    217.0,
+    0
+   ],
+   "size": [
+    12,
+    4,
+    12
+   ],
+   "tags": [
+    "NoHook"
+   ]
+  },
+  {
+   "name": "E4_NoHook6",
+   "kind": "NoHook",
+   "class": "Part",
+   "center": [
+    160.0,
+    247.0,
+    0
+   ],
+   "size": [
+    12,
+    4,
+    12
+   ],
+   "tags": [
+    "NoHook"
+   ]
+  },
+  {
+   "name": "E6_HookOnce1",
+   "kind": "HookOnce",
+   "class": "Part",
+   "center": [
+    648.0,
+    125.0,
+    0
+   ],
+   "size": [
+    4,
+    30,
+    12
+   ],
+   "tags": [
+    "HookOnce"
+   ]
+  },
+  {
+   "name": "E6_HookOnce2",
+   "kind": "HookOnce",
+   "class": "Part",
+   "center": [
+    602.0,
+    175.0,
+    0
+   ],
+   "size": [
+    4,
+    30,
+    12
+   ],
+   "tags": [
+    "HookOnce"
+   ]
+  },
+  {
+   "name": "Backdrop",
+   "kind": "Backdrop",
+   "class": "Part",
+   "center": [
+    401.0,
+    217.5,
+    -10
+   ],
+   "size": [
+    942,
+    395,
+    1
+   ]
+  }
+ ]
 }

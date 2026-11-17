@@ -3,42 +3,63 @@
 Cada mapa é **dado**, não script: um gerador em `tools/` produz o layout e o código que monta o mapa
 no Studio. Nenhum script fica dentro do mapa; o comportamento vem de **tags** (CollectionService).
 
-## Mapa atual: `map01-3d` (experimento 3D, ADR 0029 e 0031)
+## Mapa atual: `map01` (greybox 2.5D do rascunho v2, ADR 0038, 0039 e 0041)
 
 ```
-tools/stages3d.py        define os 6 estágios (uma função por estágio) e gera os arquivos abaixo
-tools/check_map.py       confere por cálculo se cada salto das rotas cabe no pulo padrão
-maps/map01-3d/
-  layout.json            todas as peças (centro, tamanho, rotação, tipo, tags)
+tools/map_layout.py      layout do rascunho v2: ar, sólidos e zonas em studs (fonte única)
+tools/map_sketch.py      desenha o rascunho (memory-palace/04-game-design/estudos/mapa-2-5d/)
+tools/map2d.py           gera os três arquivos abaixo a partir do layout
+maps/map01/
+  layout.json            peças: nome, tipo, classe, centro, tamanho, rotZ, tags e atributos
   build.luau             monta Workspace.Maps.Map01 no Studio (apaga e recria)
-  map01-3d.svg           vista de cima + perfil de altura
+  map01.svg              o desenho v2 (vista lateral)
 ```
 
-Fluxo:
+Fluxo: editar `tools/map_layout.py` → `python tools/map_sketch.py` e `python tools/map2d.py` → rodar
+o `build.luau` no Studio (MCP `execute_luau`, modo Edit) → jogar → salvar o place
+(`place/RaceAndEscape.rbxl`). `python tools/map2d.py --check arquivo.luau` grava também um script
+que confere o mapa montado (contagens por tag, Order, spawn, ar livre, rampas).
 
-1. Edite a função do estágio em `tools/stages3d.py`.
-2. `python tools/stages3d.py` e depois `python tools/check_map.py` (tem de dar 0 problemas; se o
-   estágio ganhou peças novas na rota, atualize `ROUTES` no `check_map.py`).
-3. Rode o `build.luau` no Studio (MCP `execute_luau`, modo Edit, ou barra de comandos).
-4. Jogue o estágio e salve o place (`place/RaceAndEscape.rbxl`).
+Convenções:
 
-Convenções de um estágio ("prefab"):
+- Visto de lado: X horizontal, Y altura. Todo o percurso jogável no plano **Z = 0**; as peças do plano
+  têm 12 studs de profundidade (Z de -6 a 6). Atrás, em Z = -10, um fundo escuro sem colisão,
+  consulta nem toque (não gruda).
+- "Ar" é onde se joga; o resto da caixa do mapa (ar + 10 studs de margem) é **rocha**, juntada em
+  poucos retângulos. Bordas inclinadas do ar viram `WedgePart`.
+- Tipos de peça (atributo `Kind`) e tags: `Rock` cinza (gruda); `SlopeR`/`SlopeL` rampas de rocha;
+  `Kill` vermelho, `KillZone`, sem colisão; `Ice` `FreezeZone`; `Unfreeze` laranja `UnfreezeZone`;
+  `NoHook` roxo; `HookOnce` verde; `Checkpoint` dourado, `Checkpoint` + atributo `Order`; `Finish`
+  branco, `RaceFinish` + `Checkpoint` (último `Order`); `Spawn` = `SpawnLocation` (Neutral,
+  Duration 0, **`Enabled = false`**, tag `RaceStart`): é só o ponto de início; ninguém nasce nele
+  (ADR 0044, o nascimento é no lobby).
+- Zonas só ocupam ar (a faixa mortal não passa por baixo de pilares); uma zona apoiada em faixa
+  mortal desce até o chão (vira ilha). O tutorial do desenho fica de fora (sala separada).
+- `tools/mapgen.py` era do map01 antigo (3 seções, blocos `[x1, x2, y1, y2]`) e ficou obsoleto.
 
-- 96 studs de comprimento no eixo **+X**; entrada em `x = 0`, saída em `x = 96`; largura 24 (Z de -12 a 12).
-- Plataforma de entrada e de saída com 12 de comprimento. A saída pode ficar mais alta que a entrada.
-- Tipos de peça (`Kind`): `solid` cinza, `shortcut` azul (atalho), `checkpoint` dourado (tag
-  `Checkpoint` + atributo `Order`), `finish` branco (tag `RaceFinish`), `start` verde (lobby).
-- O jogador renasce em cima do checkpoint olhando para o +X da peça.
+## Lobby: `lobby` (greybox 2.5D, ADR 0044)
+
+```
+maps/lobby/build.luau    monta Workspace.Lobby no Studio (apaga e recria); escrito à mão
+```
+
+Sala fechada em X -1100..-900, Y 100..160 (chão com topo em Y = 104), no plano Z = 0, mesmas cores
+e convenções do Map01 (profundidade 12, fundo escuro em Z = -10). Peças:
+
+- `Spawn`: `SpawnLocation` ligado (Neutral, Duration 0, profundidade 1), tag `LobbySpawn`. Único
+  spawn ligado do place: todo jogador nasce aqui.
+- `Portal`: peça turquesa sem colisão, tag `LobbyPortal`, texto "Corrida" (BillboardGui). Entrar
+  nele (conferência por zona no `LobbyService`) leva ao `RaceStart` do mapa.
+
+Fluxo: editar `maps/lobby/build.luau` → rodar no Studio (MCP `execute_luau`, modo Edit) → salvar o
+place.
 
 ## Regras de medida (pulo padrão: JumpHeight 7,2 e WalkSpeed 16)
 
-- Alcance de um pulo: ~8,6 studs no mesmo nível, ~7,6 subindo 3.
+- Alcance de um pulo: ~8,8 studs no mesmo nível, ~7,6 subindo 3 (medido em jogo, 2026-11-15).
 - Usado no mapa: vão de até **5** no mesmo nível; subida de **3** com vão de até **4,5**.
 - Passagem por baixo de algo: pelo menos **7** de altura e **4** de largura.
-- Cair abaixo de `killHeight` mata; o jogador volta ao último checkpoint.
-- Estas medidas valem para a velocidade padrão. Se o atributo de velocidade entrar (Q28), mudam.
-
-## Mapa antigo: `map01` (2.5D)
-
-`maps/map01/` + `tools/mapgen.py`: greybox lateral da fase 2.5D (ADR 0011). Só serve com
-`Config.Camera.Mode = "SideView"`. Ver Q29.
+- Cair abaixo de `workspace.FallenPartsDestroyHeight` (no map01, até 0; o mapa é fechado em rocha)
+  mata; o jogador volta ao último checkpoint.
+- Gancho: alcance de **40** a partir do `HumanoidRootPart`; personagem com ~5 de altura.
+- Estas medidas valem para a velocidade padrão. Se um atributo de velocidade entrar, mudam.

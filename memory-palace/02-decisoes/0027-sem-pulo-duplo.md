@@ -1,5 +1,5 @@
 # 0027 — Sem pulo duplo: o movimento é gancho + Bouncer
-- Status: Aceita
+- Status: Substituída por 0043
 - Data: 2026-11-12
 ## Decisão
 Movimento base é o padrão do Roblox (andar e pular). Sem pulo duplo nem pulo de parede.

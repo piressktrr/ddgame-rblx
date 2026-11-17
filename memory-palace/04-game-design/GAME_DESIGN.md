@@ -1,12 +1,12 @@
-# Game Design Document — Race and Escape (v0.3)
+# Game Design Document — Race and Escape (v0.4)
 
 > Jogo original no gênero de corrida cooperativa. Nada de arte, nomes ou mapas copiados.
 > Visão simples: [README](../../README.md). Decisões numeradas: [02-decisoes/](../02-decisoes/README.md).
 
 ## 1. Pitch
 
-Plataforma de **fantasia em 2.5D** num servidor aberto. Cada mapa é um labirinto visto de lado,
-com **várias rotas até o final**. Os jogadores usam um **gancho mágico** para se balançar e puxar
+Plataforma de **fantasia em 2.5D** num servidor aberto. Cada mapa é um percurso visto de lado,
+que o dono vai reformular (Q31). Os jogadores usam um **gancho mágico** para se puxar
 uns aos outros, desviam de **gelo mágico** e usam o **Bouncer**, uma pistola mágica de impulso, em
 trechos especiais. Qualquer um pode **salvar ou atrapalhar** qualquer outro.
 
@@ -18,7 +18,7 @@ trechos especiais. Qualquer um pode **salvar ou atrapalhar** qualquer outro.
    brincadeira. Jogar junto é mais rápido, mas sozinho sempre dá.
 2. **Movimento com skill:** gancho, Bouncer e lâmina têm teto de habilidade alto (momentum, timing).
 3. **Ritmo rápido:** nada de ficar esperando. Congelar é um relógio de 15 s, não uma espera parada.
-4. **Conquista que se sente:** checkpoints espaçados (~3 min) tornam cada um uma vitória.
+4. **Conquista que se sente:** checkpoints espaçados (a cada 3 estágios, ADR 0034) tornam cada um uma vitória.
 5. **Legibilidade:** a cor de uma superfície diz o que ela faz (§6).
 
 ## 2. Core loop
@@ -32,13 +32,13 @@ Entra no mapa → corre entre checkpoints (sozinho ou ajudando/atrapalhando outr
 
 | Mecânica | Como funciona | Decisão |
 |---|---|---|
-| **Gancho** | Mira com o mouse. **Segura** o botão para ficar preso, solta para soltar. Gruda em **qualquer superfície**, exceto as não-grudáveis. Superfícies **roxas** não grudam. Em superfície **verde**, cada jogador gruda **só uma vez** (volta ao morrer ou passar de checkpoint). Se acertar outro jogador, **puxa os dois**. | 0003, 0016 |
+| **Gancho** | Ver §3.3. Mira com o mouse no plano; um **clique** puxa o personagem direto ao alvo; **segurar** o botão o deixa preso no ponto. Gruda em qualquer peça do plano, exceto **roxas**; em **verde**, uma vez por jogador (volta ao morrer ou passar de checkpoint). Em outro jogador, **puxa os dois** (só depois do mapa aprovado). | 0003, 0016, 0036, 0037, 0039, 0042 |
 | **Gelo** | Tocar no gelo congela por **15 s**: não anda nem usa ferramentas, mas pode ser puxado/empurrado. Se chegar a uma zona de descongelar, volta ao normal. Se o tempo acabar, **morre**. | 0014 |
 | **Descongelar** | Zona **laranja-brasa** que tira o congelamento na hora. Fica perto do gelo para que outro jogador possa salvar. | 0014, 0021 |
 | **Zona mortal** | Vermelha. Mata na hora → volta ao último checkpoint. O gancho gruda nela. | 0015, 0021 |
 | **Bouncer** | Pistola mágica pega num ponto do mapa e usada num trecho. Cada tiro empurra o próprio jogador para o lado oposto da mira; empurra **um pouco** quem for atingido. Munição que recarrega sozinha. Some ao sair do trecho. | 0017, 0024 |
 | **Lâmina mágica** | É o empurrão: golpe corpo a corpo que empurra e **descongela** quem acerta. Sem dano. | 0019, 0024 |
-| **Checkpoints** | **Por jogador**. Um a cada ~3 min de jogo. | 0018 |
+| **Checkpoints** | **Por jogador**. Um a cada 3 estágios. A corrida completa tem meta de 10 a 15 min. | 0018, 0034, 0040 |
 | **Objetos mágicos (solo)** | Ajudam quem está sozinho no lugar de um parceiro (§3.2). | 0004, 0020 |
 
 ### 3.1 Interação entre jogadores (MVP: sem Bond)
@@ -50,6 +50,17 @@ Entra no mapa → corre entre checkpoints (sozinho ou ajudando/atrapalhando outr
   continuam podendo se atrapalhar (ADR 0023).
 - Risco de troll aceito nos testes. Toda regra de "posso afetar esse jogador?" fica num único
   módulo (`InteractionPolicy`), para religar alguma proteção no futuro.
+
+### 3.3 Gancho em detalhe
+
+- **Tipo:** puxão direto ao alvo (ADR 0042, substitui o balanço do ADR 0036). Um clique prende e puxa em linha reta,
+  com aceleração suave, a ~58 studs/s; ao chegar, solta com parte do embalo. Segurando o botão, fica preso no ponto.
+- **Mira:** cursor no plano; se o raio não acerta, uma esfera de ajuda (raio inicial 3 studs, `Config.Hook.AimAssistRadius`) pega o alvo "quase na mira". Alcance inicial 40 studs, contado do centro do personagem.
+- **Uso:** funciona no ar e em sequência; clicar em outro alvo durante o voo troca de alvo. Bater numa parede no caminho solta.
+- **Voo:** pose de voo durante o puxão (braço para o alvo, corpo inclinado); ao pousar com embalo, desliza e freia.
+- **Superfícies:** só peças na profundidade do plano de jogo (ADR 0039).
+- **Em outro jogador:** o servidor valida e cada cliente se puxa em direção ao outro (caminho A). O caminho C (dar ao atacante a física do alvo) é o plano B (ADR 0037).
+- **Evolução:** alcance e raio da esfera crescem com o nível do gancho (§7).
 
 ### 3.2 Jogo solo com objetos mágicos
 
@@ -68,8 +79,8 @@ aparecer só para quem não está em grupo.
 
 ## 4. Estrutura de mundo (MVP)
 
-- MVP: **um** mapa labirinto 2.5D com várias rotas, jogável sozinho e em grupo (ADR 0012, 0022). Sem hub elaborado.
-- Cada mapa: seções entre checkpoints de ~3 min, cada seção com uma ideia central.
+- MVP: **um** mapa 2.5D, jogável sozinho e em grupo (ADR 0022); estrutura a ser reformulada pelo dono (Q31). Sem hub elaborado.
+- Meta de duração: **10 a 15 minutos** por corrida completa; checkpoint a cada 3 estágios (ADR 0034, 0040).
 - Depois do MVP: hub, tutorial, mapas por dificuldade.
 
 ## 5. Princípios de design de fases
@@ -77,7 +88,7 @@ aparecer só para quem não está em grupo.
 1. **Ensinar → Testar → Torcer.** Cada mecânica aparece primeiro num lugar seguro, depois sob
    pressão e depois combinada com outra.
 2. **Os primeiros 60 segundos decidem a retenção.** Enganchar algo nos primeiros 10 s.
-3. **Tensão e alívio** em "dentes de serra". Com checkpoints de 3 min, cada seção precisa ter
+3. **Tensão e alívio** em "dentes de serra". Com checkpoints espaçados, cada trecho precisa ter
    pequenas vitórias no meio (atalhos, vistas, rotas descobertas) para a morte não frustrar.
 4. **Várias rotas:** toda seção tem pelo menos uma rota segura e uma rápida/arriscada. Bouncer e
    superfícies verdes são ótimas chaves de atalho.
@@ -96,7 +107,14 @@ aparecer só para quem não está em grupo.
 
 ### 5.2 Câmera: 2.5D lateral (ADR 0011)
 
-O personagem anda num plano (esquerda/direita + pulo). A profundidade é só visual.
+Todo o jogo acontece num plano (Z = 0); a profundidade é só visual (ADR 0038, 0039).
+
+- Câmera lateral com **altura visível fixa**; telas largas veem mais nas laterais.
+- A/D andam (mais rápido que o padrão do Roblox), Espaço pula; Espaço de novo no ar dá o **pulo duplo**
+  (uma vez até tocar o chão; prender o gancho devolve; não vale com o gancho ativo). ADR 0043.
+  W/S não tiram do plano e não mexem no gancho.
+- Jogadores **colidem** entre si. Desvio de Z é corrigido no cliente e no servidor.
+- Estágios podem ter trechos verticais, não só avanço para a direita.
 
 ## 6. Linguagem visual
 
@@ -115,7 +133,12 @@ O personagem anda num plano (esquerda/direita + pulo). A profundidade é só vis
 Além da cor, cada zona tem **forma** própria (cristais no gelo, chamas/runas no descongelar etc.)
 para ajudar daltônicos.
 
-## 7. Progressão e monetização (pós-MVP, ADR 0025)
+## 7. Progressão e monetização
+
+**No MVP (ADR 0030, 0033, 0040):** o jogador ganha **níveis do gancho** jogando (alcance e raio da esfera de
+ajuda). Regra de ganho: Q23; persistência entre sessões: Q41. Velocidade como atributo fica para depois.
+
+**Depois do MVP (ADR 0025), e a monetização é essencial:**
 
 - XP e moedas por mapa concluído; bônus por recorde pessoal.
 - Cosméticos (trilha, skin do gancho/Bouncer/lâmina, efeito de gelo).
@@ -125,6 +148,6 @@ para ajudar daltônicos.
 
 ## 8. Escopo do MVP
 
-Gancho, gelo/descongelar, zona mortal, checkpoints por jogador, timer pessoal, Bouncer, lâmina,
-objetos mágicos do solo, um mapa labirinto 2.5D. Fora do MVP: Bond, hub, tutorial, loja, boosts,
-salvar recordes entre sessões.
+Gancho (com nível), gelo/descongelar, zona mortal, checkpoints por jogador, timer pessoal, Bouncer,
+lâmina, objetos mágicos do solo, tutorial do gancho (ADR 0041), um mapa 2.5D. Fora do MVP: Bond, rebirth, hub, loja,
+boosts, salvar recordes entre sessões. Ordem de construção: ver o plano de implementação (ADR 0040).

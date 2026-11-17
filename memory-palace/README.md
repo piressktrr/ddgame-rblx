@@ -6,10 +6,11 @@ números é a ordem de leitura sugerida. Regras gerais e protocolo de trabalho: 
 | Sala | Conteúdo | Quando ler |
 |---|---|---|
 | [01-status](01-status/STATUS.md) | Onde paramos, próximo passo, diário de bordo | **Sempre**, no início e no fim de cada sessão |
+| ↳ [diario/](01-status/diario/) | Um log por dia de trabalho (`AAAA-MM-DD.md`) | Para ver o que aconteceu num dia |
 | [02-decisoes](02-decisoes/README.md) | Decisões numeradas (ADRs) e o índice delas | Antes de mudar algo estrutural |
 | [03-duvidas](03-duvidas/OPEN_QUESTIONS.md) | O que ainda não foi decidido | Antes de assumir qualquer coisa |
 | [04-game-design](04-game-design/GAME_DESIGN.md) | Documento de game design | Ao mexer em mecânica, mapa ou progressão |
-| ↳ [estudos/](04-game-design/estudos/) | Análises e rascunhos: referências de mapa, câmera 2.5D x 3D, Bouncer e lâmina | Quando o assunto da tarefa tiver um estudo |
+| ↳ [estudos/](04-game-design/estudos/) | Análises e rascunhos: referências de mapa, Bouncer e lâmina, gancho | Quando o assunto da tarefa tiver um estudo |
 | ↳ [referencias/](04-game-design/referencias/) | Material de apoio: paleta de cores, imagens de referência (só local) | Quando o estudo citar |
 | [05-arquitetura](05-arquitetura/ARCHITECTURE.md) | Arquitetura técnica | Ao escrever código |
 | ↳ [REQUIREMENTS](05-arquitetura/REQUIREMENTS.md) | Requisitos com IDs (RF/RNF) | Antes de implementar |
@@ -21,6 +22,7 @@ números é a ordem de leitura sugerida. Regras gerais e protocolo de trabalho: 
 
 | Tipo de conteúdo | Sala |
 |---|---|
+| Log detalhado do dia | `01-status/diario/AAAA-MM-DD.md` |
 | Decisão tomada com o dono | `02-decisoes/NNNN-titulo.md` + linha no índice |
 | Pergunta sem resposta | `03-duvidas/OPEN_QUESTIONS.md` |
 | Regra de mecânica, mapa, progressão, monetização | `04-game-design/GAME_DESIGN.md` |
