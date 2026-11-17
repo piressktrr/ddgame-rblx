@@ -69,7 +69,7 @@ KINDS = {
     "Checkpoint": {"color": L.COL["checkpoint"], "tags": ["Checkpoint"], "label": "checkpoint (atributo Order)"},
     "Finish": {"color": L.COL["finish"], "tags": ["RaceFinish", "Checkpoint"], "label": "fim (também o último checkpoint)"},
     "Spawn": {"color": L.COL["start"], "tags": ["RaceStart"], "class": "SpawnLocation", "depth": 1,
-              "label": "nascimento (Neutral, Duration 0)"},
+              "label": "início da corrida (SpawnLocation desligado; nasce-se no lobby, ADR 0044)"},
     "Backdrop": {"color": "#23252c", "tags": [], "collide": False, "ghost": True, "z": BACKDROP_Z, "depth": 1,
                  "label": "fundo, não gruda"},
 }
@@ -467,6 +467,8 @@ local function p(
 		part.CastShadow = false
 	end
 	if part:IsA("SpawnLocation") then
+		-- Desligado: o jogador nasce no lobby (ADR 0044); a tag RaceStart marca o início.
+		part.Enabled = false
 		part.Neutral = true
 		part.Duration = 0
 	end

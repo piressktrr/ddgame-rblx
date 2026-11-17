@@ -182,12 +182,22 @@ local function findTarget(origin: Vector3, aimPoint: Vector3): Target
 	return sphereTarget
 end
 
+-- Atributo local no personagem: true enquanto o gancho controla o corpo (preso ou embalo).
+-- O MovementController lê para travar e recarregar o pulo duplo (ADR 0043).
+local function publishHookActive()
+	local ctx = context
+	if ctx then
+		ctx.character:SetAttribute(Config.Movement.HookActiveAttribute, attached ~= nil or airBody ~= nil)
+	end
+end
+
 local function endAirBody()
 	local body = airBody
 	airBody = nil
 	if body then
 		body:destroy()
 	end
+	publishHookActive()
 end
 
 -- Solta a corda. O corpo continua no embalo (AirBody) até pousar ou perder velocidade.
@@ -204,6 +214,7 @@ local function release(notifyServer: boolean)
 	if notifyServer and detachRemote then
 		detachRemote:FireServer(current.id)
 	end
+	publishHookActive()
 end
 
 local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
@@ -250,6 +261,7 @@ local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
 		physics = physics,
 		trove = trove,
 	}
+	publishHookActive()
 	if attachRemote then
 		attachRemote:FireServer(attachCounter, part, point)
 	end
@@ -493,6 +505,11 @@ local function createDebugBindable()
 		return fn(...)
 	end
 	bindable.Parent = script
+end
+
+-- Embalo = corda já solta, mas o AirBody ainda controla o corpo.
+function HookController.isInMomentum(): boolean
+	return attached == nil and airBody ~= nil
 end
 
 function HookController.Start()

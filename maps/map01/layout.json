@@ -81,7 +81,7 @@
    "tags": [
     "RaceStart"
    ],
-   "label": "nascimento (Neutral, Duration 0)"
+   "label": "início da corrida (SpawnLocation desligado; nasce-se no lobby, ADR 0044)"
   },
   "Backdrop": {
    "color": "#23252c",

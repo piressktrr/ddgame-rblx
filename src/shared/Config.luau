@@ -24,6 +24,19 @@ local Config = {
 		ServerCheckInterval = 0.1, -- segundos entre as conferências
 	},
 
+	-- Movimento base do jogador (ADR 0043, RF-03; MovementController).
+	Movement = {
+		WalkSpeed = 24, -- studs/s (padrão do Roblox: 16)
+		-- Pulo normal fica no padrão do Roblox (JumpHeight 7.2, ~50 studs/s de saída).
+		DoubleJumpVelocity = 50, -- studs/s para cima no pulo duplo (a queda é zerada antes)
+		-- Tempo mínimo no ar antes do pulo duplo valer (não dispara junto com o primeiro pulo).
+		DoubleJumpMinAirTime = 0.12, -- segundos
+		-- Pedidos de pulo mais próximos que isto contam como o mesmo aperto (tecla segurada repete).
+		JumpRequestRepeatGap = 0.1, -- segundos
+		-- Atributo (só local) no personagem: true enquanto o gancho controla o corpo (preso ou embalo).
+		HookActiveAttribute = "HookActive",
+	},
+
 	Checkpoint = {
 		ZoneHeight = 10, -- studs acima da peça em que o checkpoint ainda conta
 		SpawnHeight = 4, -- studs acima da peça onde o jogador renasce
@@ -31,6 +44,12 @@ local Config = {
 
 	Race = {
 		RespawnTime = 1, -- segundos entre morrer e renascer
+	},
+
+	-- Lobby antes do mapa (ADR 0044).
+	Lobby = {
+		PortalMargin = 1, -- studs de folga em volta do portal em que entrar ainda conta
+		CheckInterval = 0.1, -- segundos entre as conferências do portal
 	},
 
 	Hook = {
@@ -111,6 +130,7 @@ local Config = {
 	Attributes = {
 		Checkpoint = "Checkpoint", -- no Player: número do último checkpoint alcançado
 		HookOnceEpoch = "HookOnceEpoch", -- no Player: muda quando o uso dos verdes zera
+		InRace = "InRace", -- no Player: true depois de entrar no portal do lobby (ADR 0044)
 	},
 
 	Freeze = {
@@ -128,6 +148,8 @@ local Config = {
 		RaceFinish = "RaceFinish",
 		BouncerPickup = "BouncerPickup",
 		BouncerZone = "BouncerZone",
+		LobbySpawn = "LobbySpawn",
+		LobbyPortal = "LobbyPortal",
 	},
 }
 

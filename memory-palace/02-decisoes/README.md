@@ -44,7 +44,7 @@ Modelo:
 | [0024](0024-detalhes-ferramentas.md) | Bouncer some ao sair do trecho; lâmina descongela; verde volta | Aceita |
 | [0025](0025-monetizacao-com-vantagens.md) | Monetização pode dar vantagens | Aceita |
 | [0026](0026-objetos-deuses-romanos.md) | Objetos mágicos com nomes de deuses romanos | Aceita |
-| [0027](0027-sem-pulo-duplo.md) | Sem pulo duplo: movimento é gancho + Bouncer | Aceita |
+| [0027](0027-sem-pulo-duplo.md) | Sem pulo duplo: movimento é gancho + Bouncer | Substituída (0043) |
 | [0028](0028-ranking-separa-boost.md) | Ranking separa quem usou boost | Aceita |
 | [0029](0029-mapa-em-estagios.md) | Mapa em 6 estágios, ordem fixa, atalhos dentro dos estágios | Aceita |
 | [0030](0030-progressao-de-atributo.md) | Progressão por ganho de atributo (estilo +1 Speed) | Aceita |
@@ -60,3 +60,5 @@ Modelo:
 | [0040](0040-checkpoint-mvp-e-ordem-das-fases.md) | Meta de 10–15 min por corrida, nível do gancho no MVP, nova ordem das fases | Aceita |
 | [0041](0041-mapa-enrolado-e-tutorial.md) | Mapa enrolado, E1 difícil, tutorial do gancho no MVP, queda = checkpoint | Aceita |
 | [0042](0042-gancho-puxao-direto.md) | Gancho vira puxão direto ao alvo (um clique), segurar para ficar preso, sem W/S | Aceita |
+| [0043](0043-pulo-duplo-e-velocidade.md) | Pulo duplo e velocidade de andar maior (substitui 0027) | Aceita |
+| [0044](0044-lobby-greybox.md) | Lobby antes do mapa, portal para o início da corrida | Aceita |

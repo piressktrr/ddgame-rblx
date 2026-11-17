@@ -20,7 +20,7 @@ guiado, celular/console.
 |---|---|---|
 | RF-01 | Câmera lateral 2.5D segue o personagem | Personagem sempre visível e centralizado com leve folga; sem tremor durante o puxão |
 | RF-02 | Personagem preso ao plano do mapa (eixo Z fixo), corrigido no cliente e no servidor (ADR 0039) | Após 5 min de jogo, desvio em Z < 0,1 stud, mesmo sendo puxado/empurrado |
-| RF-03 | Movimento base = padrão do Roblox (andar, pular). Sem pulo duplo (ADR 0027) | A/D anda, Espaço pula; W/S não tiram do plano |
+| RF-03 | Movimento base: andar mais rápido que o padrão (`Config.Movement.WalkSpeed` = 24) e pulo duplo, uma vez até tocar o chão ou prender o gancho; não dispara com o gancho ativo (preso ou embalo). Sem pulo de parede (ADR 0043) | A/D anda, Espaço pula e pula de novo no ar; terceiro pulo no ar não acontece; W/S não tiram do plano |
 | RF-04 | Jogadores colidem entre si no plano (ADR 0039) | Dois jogadores se bloqueiam e um pode ficar em cima do outro, sem sair do plano |
 | RF-05 | Câmera com altura visível fixa (ADR 0039) | Em 16:9 e em tela larga, a mesma altura de mundo aparece |
 

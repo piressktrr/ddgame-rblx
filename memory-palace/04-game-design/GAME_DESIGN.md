@@ -110,7 +110,9 @@ aparecer só para quem não está em grupo.
 Todo o jogo acontece num plano (Z = 0); a profundidade é só visual (ADR 0038, 0039).
 
 - Câmera lateral com **altura visível fixa**; telas largas veem mais nas laterais.
-- A/D andam, Espaço pula; W/S não tiram do plano e não mexem no gancho.
+- A/D andam (mais rápido que o padrão do Roblox), Espaço pula; Espaço de novo no ar dá o **pulo duplo**
+  (uma vez até tocar o chão; prender o gancho devolve; não vale com o gancho ativo). ADR 0043.
+  W/S não tiram do plano e não mexem no gancho.
 - Jogadores **colidem** entre si. Desvio de Z é corrigido no cliente e no servidor.
 - Estágios podem ter trechos verticais, não só avanço para a direita.
 

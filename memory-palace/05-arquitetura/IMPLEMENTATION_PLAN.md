@@ -73,6 +73,8 @@ Requisitos: RF-20..27, RF-60..63, RF-13 (reset).
    timer pessoal com `workspace:GetServerTimeNow()`, tela de fim. (Parte já existe em `CheckpointService`.)
 5. Lobby: spawn no `Lobby`, `LobbyPortal` teleporta para `RaceStart`; placar da sessão
    (`SessionLeaderboard` em memória).
+   **Adiantado (ADR 0044):** lobby greybox (`maps/lobby/build.luau`), `LobbyService` (nasce no lobby,
+   portal → `RaceStart`, atributo `InRace`). Placar da sessão continua pendente.
 6. `UIController` mínimo: timer, contador do gelo, tela de fim. (Roblox UI direto; React/Fusion
    só se a UI crescer.)
 

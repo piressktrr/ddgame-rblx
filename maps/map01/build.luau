@@ -23,7 +23,7 @@ local KINDS: { [string]: Kind } = {
 	HookOnce = { color = Color3.fromHex("5fbf6a"), tags = { "HookOnce" } }, -- gruda 1 vez
 	Checkpoint = { color = Color3.fromHex("ffd23f"), tags = { "Checkpoint" } }, -- checkpoint (atributo Order)
 	Finish = { color = Color3.fromHex("ffffff"), tags = { "RaceFinish", "Checkpoint" } }, -- fim (também o último checkpoint)
-	Spawn = { color = Color3.fromHex("5aa06e"), tags = { "RaceStart" }, class = "SpawnLocation", depth = 1 }, -- nascimento (Neutral, Duration 0)
+	Spawn = { color = Color3.fromHex("5aa06e"), tags = { "RaceStart" }, class = "SpawnLocation", depth = 1 }, -- início da corrida (SpawnLocation desligado; nasce-se no lobby, ADR 0044)
 	Backdrop = { color = Color3.fromHex("23252c"), collide = false, ghost = true, z = -10, depth = 1 }, -- fundo, não gruda
 }
 
@@ -71,6 +71,8 @@ local function p(
 		part.CastShadow = false
 	end
 	if part:IsA("SpawnLocation") then
+		-- Desligado: o jogador nasce no lobby (ADR 0044); a tag RaceStart marca o início.
+		part.Enabled = false
 		part.Neutral = true
 		part.Duration = 0
 	end

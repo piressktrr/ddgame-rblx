@@ -31,10 +31,28 @@ Convenções:
   `Kill` vermelho, `KillZone`, sem colisão; `Ice` `FreezeZone`; `Unfreeze` laranja `UnfreezeZone`;
   `NoHook` roxo; `HookOnce` verde; `Checkpoint` dourado, `Checkpoint` + atributo `Order`; `Finish`
   branco, `RaceFinish` + `Checkpoint` (último `Order`); `Spawn` = `SpawnLocation` (Neutral,
-  Duration 0, tag `RaceStart`).
+  Duration 0, **`Enabled = false`**, tag `RaceStart`): é só o ponto de início; ninguém nasce nele
+  (ADR 0044, o nascimento é no lobby).
 - Zonas só ocupam ar (a faixa mortal não passa por baixo de pilares); uma zona apoiada em faixa
   mortal desce até o chão (vira ilha). O tutorial do desenho fica de fora (sala separada).
 - `tools/mapgen.py` era do map01 antigo (3 seções, blocos `[x1, x2, y1, y2]`) e ficou obsoleto.
+
+## Lobby: `lobby` (greybox 2.5D, ADR 0044)
+
+```
+maps/lobby/build.luau    monta Workspace.Lobby no Studio (apaga e recria); escrito à mão
+```
+
+Sala fechada em X -1100..-900, Y 100..160 (chão com topo em Y = 104), no plano Z = 0, mesmas cores
+e convenções do Map01 (profundidade 12, fundo escuro em Z = -10). Peças:
+
+- `Spawn`: `SpawnLocation` ligado (Neutral, Duration 0, profundidade 1), tag `LobbySpawn`. Único
+  spawn ligado do place: todo jogador nasce aqui.
+- `Portal`: peça turquesa sem colisão, tag `LobbyPortal`, texto "Corrida" (BillboardGui). Entrar
+  nele (conferência por zona no `LobbyService`) leva ao `RaceStart` do mapa.
+
+Fluxo: editar `maps/lobby/build.luau` → rodar no Studio (MCP `execute_luau`, modo Edit) → salvar o
+place.
 
 ## Regras de medida (pulo padrão: JumpHeight 7,2 e WalkSpeed 16)
 
