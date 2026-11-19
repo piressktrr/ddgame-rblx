@@ -131,13 +131,12 @@ local function addArrows(part: BasePart, direction: string)
 	label.Parent = gui
 end
 
-local function createBlock(model: Model, element, center: Vector3)
-	local grid = state.grid
+-- Peça de um elemento (aparência, tag e atributos), sem posição nem pai.
+local function buildPart(element, grid: number, direction: string): Part
 	local part = Instance.new("Part")
 	part.Name = element.id
 	part.Anchored = true
 	part.Size = Vector3.new(grid, grid, settings.BlockDepth)
-	part.CFrame = CFrame.new(center)
 	part.Color = element.color
 	part.Material = element.material
 	part.Transparency = element.transparency
@@ -146,14 +145,20 @@ local function createBlock(model: Model, element, center: Vector3)
 	part.TopSurface = Enum.SurfaceType.Smooth
 	part.BottomSurface = Enum.SurfaceType.Smooth
 	part:SetAttribute("Element", element.id)
-	part:SetAttribute("Cell", cellKey(center, grid))
 	if element.tag then
 		CollectionService:AddTag(part, element.tag)
 	end
 	if element.usesDirection then
-		part:SetAttribute(settings.DirectionAttribute, state.direction)
-		addArrows(part, state.direction)
+		part:SetAttribute(settings.DirectionAttribute, direction)
+		addArrows(part, direction)
 	end
+	return part
+end
+
+local function createBlock(model: Model, element, center: Vector3)
+	local part = buildPart(element, state.grid, state.direction)
+	part.CFrame = CFrame.new(center)
+	part:SetAttribute("Cell", cellKey(center, state.grid))
 	part.Parent = model
 end
 
@@ -280,11 +285,62 @@ local function selectTool(id: string)
 	refreshUi()
 end
 
-for _, element in MapElements.list do
-	local opaque = element.color:Lerp(Color3.fromRGB(35, 35, 40), element.transparency * 0.6)
-	local button = makeButton(root, element.label, opaque, 30)
-	buttons[element.id] = button
-	button.Activated:Connect(function()
+-- Cartões com miniatura 3D de cada bloco (como a grade da Caixa de ferramentas).
+local cards = Instance.new("Frame")
+cards.Size = UDim2.fromScale(1, 0)
+cards.AutomaticSize = Enum.AutomaticSize.Y
+cards.BackgroundTransparency = 1
+cards.LayoutOrder = nextOrder()
+cards.Parent = root
+local grid = Instance.new("UIGridLayout")
+grid.CellSize = UDim2.new(0.5, -3, 0, 104)
+grid.CellPadding = UDim2.fromOffset(6, 6)
+grid.SortOrder = Enum.SortOrder.LayoutOrder
+grid.Parent = cards
+
+for index, element in MapElements.list do
+	local card = Instance.new("TextButton")
+	card.Text = ""
+	card.AutoButtonColor = true
+	card.BackgroundColor3 = Color3.fromRGB(52, 52, 60)
+	card.BorderColor3 = Color3.fromRGB(90, 160, 255)
+	card.BorderMode = Enum.BorderMode.Inset
+	card.BorderSizePixel = 0
+	card.LayoutOrder = index
+	card.Parent = cards
+
+	local viewport = Instance.new("ViewportFrame")
+	viewport.Size = UDim2.new(1, -8, 0, 74)
+	viewport.Position = UDim2.fromOffset(4, 4)
+	viewport.BackgroundColor3 = Color3.fromRGB(120, 160, 210)
+	viewport.Ambient = Color3.fromRGB(200, 200, 200)
+	viewport.LightColor = Color3.fromRGB(255, 255, 255)
+	viewport.LightDirection = Vector3.new(-1, -2, -1)
+	viewport.Active = false
+	viewport.Parent = card
+	local preview = buildPart(element, 4, "Up")
+	preview.CFrame = CFrame.new()
+	preview.Size = Vector3.new(4, 4, 4)
+	preview.Parent = viewport
+	local camera = Instance.new("Camera")
+	camera.FieldOfView = 40
+	camera.CFrame = CFrame.lookAt(Vector3.new(5, 4.5, 8), Vector3.zero)
+	camera.Parent = viewport
+	viewport.CurrentCamera = camera
+
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(1, -4, 0, 22)
+	label.Position = UDim2.new(0, 2, 1, -24)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.GothamBold
+	label.TextSize = 13
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.TextTruncate = Enum.TextTruncate.AtEnd
+	label.Text = element.label
+	label.Parent = card
+
+	buttons[element.id] = card
+	card.Activated:Connect(function()
 		selectTool(element.id)
 	end)
 end
@@ -369,7 +425,8 @@ for _, size in { 2, 4, 8 } do
 end
 
 local cameraButton = makeButton(root, "Câmera 2D na área", Color3.fromRGB(60, 60, 70), 26)
-cameraButton.Activated:Connect(function()
+-- Câmera de frente para o plano do jogo (vista 2D), centrada na área do editor.
+local function focusCamera2D()
 	local model = getModel()
 	local center = if #model:GetChildren() > 0
 		then model:GetBoundingBox().Position
@@ -377,7 +434,9 @@ cameraButton.Activated:Connect(function()
 	local camera = workspace.CurrentCamera
 	camera.CFrame =
 		CFrame.lookAt(Vector3.new(center.X, center.Y, planeZ + 90), Vector3.new(center.X, center.Y, planeZ))
-end)
+	camera.Focus = CFrame.new(center.X, center.Y, planeZ)
+end
+cameraButton.Activated:Connect(focusCamera2D)
 
 statusLabel = Instance.new("TextLabel")
 statusLabel.Size = UDim2.new(1, 0, 0, 60)
@@ -476,6 +535,7 @@ local function setOpen(open: boolean)
 	if open then
 		plugin:Activate(true) -- o mouse do viewport passa a pintar
 		refreshTestToggle()
+		focusCamera2D()
 	else
 		plugin:Deactivate()
 		if ghost then
