@@ -158,6 +158,21 @@ function HookRules.hookDrag(
 	return velocity
 end
 
+-- `SaturatedAdd` do DDNet: soma `modifier` sem passar dos limites, mas não corta um valor que já
+-- está além do limite no sentido da soma (o embalo acima do controle normal é preservado).
+function HookRules.saturatedAdd(min: number, max: number, current: number, modifier: number): number
+	if modifier < 0 then
+		if current < min then
+			return current
+		end
+		return math.max(current + modifier, min)
+	end
+	if current > max then
+		return current
+	end
+	return math.min(current + modifier, max)
+end
+
 function HookRules.isFiniteNumber(value: number): boolean
 	return value == value and math.abs(value) ~= math.huge
 end

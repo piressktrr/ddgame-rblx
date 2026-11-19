@@ -64,12 +64,12 @@ local Config = {
 		-- Esfera de ajuda de mira (ADR 0039). 0 = desligada: o gancho segue exatamente a linha da mira.
 		AimAssistRadius = 0, -- studs
 
-		-- Modo "DDNet". Valores do DDNet (tuning padrão) convertidos para manter as proporções com a
-		-- gravidade do Roblox (196,2) e o alcance acima (380 unidades = 40 studs): 1 tick ≈ 1/61 s.
-		TickRate = 61, -- ticks/s da simulação do gancho (fixo, independente do FPS)
-		FireSpeed = 514, -- studs/s do gancho voando (80 unidades/tick)
-		DragAccel = 1177, -- studs/s² do puxão (3,0 unidades/tick², 6x a gravidade)
-		DragSpeed = 96, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
+		-- Modo "DDNet". Tuning padrão do DDNet (50 ticks/s) com velocidades na escala do pulo deste jogo:
+		-- 1 unidade/tick = 3,8 studs/s (pulo do DDNet 13,2 un/tick = pulo daqui, ~50 studs/s).
+		TickRate = 50, -- ticks/s da simulação do gancho e do controle no ar (fixo, independente do FPS)
+		FireSpeed = 300, -- studs/s do gancho voando (mesma proporção do DDNet: 80/15 do DragSpeed)
+		DragAccel = 570, -- studs/s² do puxão (3,0 unidades/tick²)
+		DragSpeed = 57, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
 		DragMinDistance = 4.8, -- studs: mais perto do ponto que isso não puxa (46 unidades)
 		DragDownFactor = 0.3, -- puxão para baixo vale 30% (fica mais fácil subir numa plataforma)
 		DragAssistFactor = 0.95, -- X do puxão com A/D no mesmo sentido
@@ -88,7 +88,6 @@ local Config = {
 		-- Sonda contra atravessar paredes ao recolher: a caixa do corpo, deslocada estes studs na
 		-- direção da corda; se tocar algo colidível, a corda para de encurtar.
 		ReelProbeDistance = 0.5, -- studs
-		LandingSlideDecel = 90, -- studs/s²: freio do deslize ao pousar com embalo
 		ReelProbeInset = 0.2, -- studs que a caixa encolhe de cada lado (não acusar o chão em que pisa)
 
 		-- Puxão (modo "Pull", ADR 0042)
@@ -114,7 +113,13 @@ local Config = {
 		PullBlockedArriveDistance = 6, -- studs
 
 		-- Balanço (RF-17)
-		SwingAcceleration = 50, -- studs/s² aplicados por A/D enquanto preso (balanço) e no embalo
+		-- Controle horizontal enquanto o gancho controla o corpo (preso e no embalo), como no DDNet.
+		-- A/D aceleram até o limite sem cortar velocidade acima dele; sem A/D, o atrito freia por tick.
+		AirControlAccel = 285, -- studs/s² (1,5 unidades/tick²)
+		AirControlSpeed = 19, -- studs/s (5 unidades/tick)
+		AirFriction = 0.95, -- fração do X mantida por tick no ar sem A/D
+		GroundControlAccel = 380, -- studs/s² (2 unidades/tick²); limite = WalkSpeed do Humanoid
+		GroundFriction = 0.5, -- fração do X mantida por tick no chão sem A/D (para firme)
 		-- studs/s; limite horizontal enquanto preso e no embalo. Acima de DragSpeed para o embalo acumular.
 		MaxSwingSpeed = 150,
 		UprightResponsiveness = 40, -- quão rápido o personagem volta a ficar em pé enquanto preso

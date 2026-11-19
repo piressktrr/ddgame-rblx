@@ -242,6 +242,23 @@ return function()
 		end)
 	end)
 
+	describe("saturatedAdd (DDNet)", function()
+		it("soma dentro dos limites e para no limite", function()
+			expect(HookRules.saturatedAdd(-10, 10, 0, 4)).to.equal(4)
+			expect(HookRules.saturatedAdd(-10, 10, 8, 4)).to.equal(10)
+			expect(HookRules.saturatedAdd(-10, 10, -8, -4)).to.equal(-10)
+		end)
+
+		it("não corta valor já acima do limite no sentido da soma (embalo preservado)", function()
+			expect(HookRules.saturatedAdd(-10, 10, 30, 4)).to.equal(30)
+			expect(HookRules.saturatedAdd(-10, 10, -30, -4)).to.equal(-30)
+		end)
+
+		it("contra o embalo, freia normalmente", function()
+			expect(HookRules.saturatedAdd(-10, 10, 30, -4)).to.equal(26)
+		end)
+	end)
+
 	describe("isFiniteNumber / isFiniteVector", function()
 		it("aceita números comuns", function()
 			expect(HookRules.isFiniteNumber(0)).to.equal(true)
