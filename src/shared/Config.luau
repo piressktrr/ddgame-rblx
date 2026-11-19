@@ -56,12 +56,24 @@ local Config = {
 	},
 
 	Hook = {
-		-- "Pull" = puxão direto ao alvo (ADR 0042, padrão). "Swing" = balanço com RopeConstraint
-		-- (ADR 0036), mantido como referência.
-		Mode = "Pull",
+		-- "DDNet" = física do gancho do DDNet (padrão). "Pull" = puxão direto (ADR 0042) e "Swing" =
+		-- RopeConstraint (ADR 0036), mantidos como referência.
+		Mode = "DDNet",
 		Range = 40, -- studs, contados do HumanoidRootPart (ADR 0039)
-		Cooldown = 0.25, -- segundos entre um prender e o próximo
-		AimAssistRadius = 3, -- studs; raio da esfera de ajuda de mira (ADR 0039)
+		Cooldown = 0.1, -- segundos entre um prender e o próximo
+		-- Esfera de ajuda de mira (ADR 0039). 0 = desligada: o gancho segue exatamente a linha da mira.
+		AimAssistRadius = 0, -- studs
+
+		-- Modo "DDNet". Valores do DDNet (tuning padrão) convertidos para manter as proporções com a
+		-- gravidade do Roblox (196,2) e o alcance acima (380 unidades = 40 studs): 1 tick ≈ 1/61 s.
+		TickRate = 61, -- ticks/s da simulação do gancho (fixo, independente do FPS)
+		FireSpeed = 514, -- studs/s do gancho voando (80 unidades/tick)
+		DragAccel = 1177, -- studs/s² do puxão (3,0 unidades/tick², 6x a gravidade)
+		DragSpeed = 96, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
+		DragMinDistance = 4.8, -- studs: mais perto do ponto que isso não puxa (46 unidades)
+		DragDownFactor = 0.3, -- puxão para baixo vale 30% (fica mais fácil subir numa plataforma)
+		DragAssistFactor = 0.95, -- X do puxão com A/D no mesmo sentido
+		DragResistFactor = 0.75, -- X do puxão sem A/D ou contra
 		SurfaceTolerance = 0.5, -- studs: folga para o ponto atingido contar como "na peça, no plano"
 		-- Peças com CanCollide = false (volumes de zona, enfeites) não prendem.
 		IgnoreNonCollidable = true,
@@ -103,7 +115,8 @@ local Config = {
 
 		-- Balanço (RF-17)
 		SwingAcceleration = 50, -- studs/s² aplicados por A/D enquanto preso (balanço) e no embalo
-		MaxSwingSpeed = 70, -- studs/s; limite de velocidade enquanto preso e no embalo
+		-- studs/s; limite horizontal enquanto preso e no embalo. Acima de DragSpeed para o embalo acumular.
+		MaxSwingSpeed = 150,
 		UprightResponsiveness = 40, -- quão rápido o personagem volta a ficar em pé enquanto preso
 		FaceFlipSpeed = 2, -- studs/s em X para o personagem virar para o lado do movimento
 		-- Embalo depois de soltar: o Humanoid continua sem controle próprio (senão freia no ar) até

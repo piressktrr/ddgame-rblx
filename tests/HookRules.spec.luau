@@ -195,6 +195,53 @@ return function()
 		end)
 	end)
 
+	describe("hookDrag (DDNet)", function()
+		local DRAG: HookRules.DragSettings = {
+			accelPerTick = 10,
+			maxSpeed = 50,
+			minDistance = 2,
+			downFactor = 0.3,
+			assistFactor = 0.95,
+			resistFactor = 0.75,
+		}
+		local function near(actual: Vector3, x: number, y: number, z: number)
+			expect(actual.X).to.be.near(x, 1e-6)
+			expect(actual.Y).to.be.near(y, 1e-6)
+			expect(actual.Z).to.be.near(z, 1e-6)
+		end
+
+		it("soma o puxão à velocidade atual, sem substituir (tangencial fica)", function()
+			near(HookRules.hookDrag(Vector3.new(20, 0, 0), Vector3.new(0, 10, 0), 0, DRAG), 20, 10, 0)
+		end)
+
+		it("para baixo puxa só downFactor", function()
+			near(HookRules.hookDrag(Vector3.zero, Vector3.new(0, -10, 0), 0, DRAG), 0, -3, 0)
+		end)
+
+		it("A/D no sentido do puxão reforçam o X; contra ou parado, amortecem", function()
+			near(HookRules.hookDrag(Vector3.zero, Vector3.new(10, 0, 0), 1, DRAG), 9.5, 0, 0)
+			near(HookRules.hookDrag(Vector3.zero, Vector3.new(10, 0, 0), -1, DRAG), 7.5, 0, 0)
+			near(HookRules.hookDrag(Vector3.zero, Vector3.new(10, 0, 0), 0, DRAG), 7.5, 0, 0)
+		end)
+
+		it("perto do ponto não puxa", function()
+			near(HookRules.hookDrag(Vector3.new(1, 2, 0), Vector3.new(1, 1, 0), 0, DRAG), 1, 2, 0)
+		end)
+
+		it("não acelera além de maxSpeed, mas a velocidade acima dele é preservada", function()
+			near(HookRules.hookDrag(Vector3.new(0, 45, 0), Vector3.new(0, 10, 0), 0, DRAG), 0, 45, 0)
+			near(HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(10, 0, 0), 0, DRAG), 80, 0, 0)
+		end)
+
+		it("acima de maxSpeed ainda pode frear ou desviar", function()
+			near(HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(-10, 0, 0), 0, DRAG), 72.5, 0, 0)
+		end)
+
+		it("ignora o Z da distância e mantém o Z da velocidade", function()
+			near(HookRules.hookDrag(Vector3.new(0, 0, 1), Vector3.new(0, 10, 99), 0, DRAG), 0, 10, 1)
+		end)
+	end)
+
 	describe("isFiniteNumber / isFiniteVector", function()
 		it("aceita números comuns", function()
 			expect(HookRules.isFiniteNumber(0)).to.equal(true)

@@ -2,7 +2,11 @@
 --[[
 	Gancho do jogador local, Fase 1: só em superfícies (RF-10..14, RF-17..19; ADR 0016, 0036, 0039, 0042).
 
-	- Botão esquerdo do mouse, modo "Pull" (padrão, ADR 0042): um clique prende e puxa o personagem
+	- Disparo: o gancho voa (`Config.Hook.FireSpeed`) na direção da mira, a partir da posição do disparo;
+	  prende no primeiro alvo válido, ou volta ao personagem (proibido, alcance esgotado ou botão solto).
+	  Estados: Idle, Flying, Attached, Retracting.
+	- Modo "DDNet" (padrão): segurar mantém preso e o puxão segue a física do DDNet (`DDNetPhysics`).
+	- Modo "Pull" (referência, ADR 0042): um clique prende e puxa o personagem
 	  até o ponto (`PullPhysics`). Segurando ao chegar, fica preso ali até soltar; já solto, o gancho
 	  solta ao chegar e sobra parte do embalo. Clicar em outro alvo durante o voo troca de alvo.
 	  Modo "Swing" (referência, ADR 0036): segurar mantém preso, soltar solta na hora (`SwingPhysics`).
@@ -35,6 +39,7 @@ local Trove = require(ReplicatedStorage.Packages.Trove)
 
 local AirBody = require(script.AirBody)
 local CharacterController = require(script.Parent.CharacterController)
+local DDNetPhysics = require(script.DDNetPhysics)
 local HookPhysics = require(script.HookPhysics)
 local PullPhysics = require(script.PullPhysics)
 local Reticle = require(script.Reticle)
@@ -63,11 +68,25 @@ type Attached = {
 	trove: Trove.Trove,
 }
 
+-- Gancho no ar: "Flying" indo na direção da mira, "Retracting" voltando ao personagem sem prender.
+type Flight = {
+	state: "Flying" | "Retracting",
+	position: Vector3,
+	direction: Vector3,
+	traveled: number,
+	tip: Attachment,
+	trove: Trove.Trove,
+}
+
 -- Um módulo de física por tipo de gancho (ADR 0036, 0042).
 local MODES: { [string]: HookPhysics.Mode } = {
+	DDNet = DDNetPhysics.mode,
 	Pull = PullPhysics.mode,
 	Swing = SwingPhysics.mode,
 }
+
+local MAX_CAST_STEPS = 8 -- peças fora do plano atravessadas num mesmo trecho do voo
+local CAST_SKIP = 0.05 -- studs para continuar o raio depois de uma peça fora do plano
 
 local settings = Config.Hook
 local planeZ = Config.Plane.Z
@@ -88,6 +107,7 @@ raycastParams.RespectCanCollide = settings.IgnoreNonCollidable
 
 local context: CharacterContext? = nil
 local attached: Attached? = nil
+local flight: Flight? = nil
 -- Corpo sem controle do Humanoid: existe enquanto preso e durante o embalo depois de soltar.
 local airBody: AirBody.AirBody? = nil
 local attachCounter = 0
@@ -161,6 +181,34 @@ local function evaluateHit(result: RaycastResult?): Target
 	return { state = state, part = part, point = point }
 end
 
+-- Raio no plano de `origin` ao longo de `castVector`. Peças fora da profundidade do plano (cenário de
+-- fundo) não param o gancho: o raio continua depois delas.
+local function castSegment(origin: Vector3, castVector: Vector3): Target
+	local remaining = castVector.Magnitude
+	if remaining <= 0 then
+		return NO_TARGET
+	end
+	local direction = castVector / remaining
+	local from = origin
+	for _ = 1, MAX_CAST_STEPS do
+		local result = workspace:Raycast(from, direction * remaining, raycastParams)
+		if not result then
+			return NO_TARGET
+		end
+		local target = evaluateHit(result)
+		if target.state ~= "None" then
+			return target
+		end
+		local advanced = (result.Position - from):Dot(direction) + CAST_SKIP
+		remaining -= advanced
+		if remaining <= 0 then
+			return NO_TARGET
+		end
+		from += direction * advanced
+	end
+	return NO_TARGET
+end
+
 local function findTarget(origin: Vector3, aimPoint: Vector3): Target
 	local castVector = Aim.castVector(origin, aimPoint, settings.Range)
 	if not castVector then
@@ -168,8 +216,8 @@ local function findTarget(origin: Vector3, aimPoint: Vector3): Target
 	end
 	refreshFilter()
 
-	local rayTarget = evaluateHit(workspace:Raycast(origin, castVector, raycastParams))
-	if rayTarget.state == "Valid" then
+	local rayTarget = castSegment(origin, castVector)
+	if rayTarget.state == "Valid" or settings.AimAssistRadius <= 0 then
 		return rayTarget
 	end
 	local sphereTarget =
@@ -268,6 +316,90 @@ local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
 	end
 end
 
+local function endFlight()
+	local current = flight
+	flight = nil
+	if current then
+		current.trove:Destroy()
+	end
+end
+
+local function startRetract()
+	local current = flight
+	if current then
+		current.state = "Retracting"
+	end
+end
+
+local function startFlight(ctx: CharacterContext, direction: Vector3)
+	endFlight()
+	local trove = Trove.new()
+	local origin = getOrigin(ctx)
+	local tip = Instance.new("Attachment")
+	tip.Name = "HookTip"
+	tip.WorldPosition = origin
+	tip.Parent = workspace.Terrain
+	trove:Add(tip)
+	trove:Add(HookPhysics.createRope(ctx.rootAttachment, tip, ctx.root))
+	flight = {
+		state = "Flying",
+		position = origin,
+		direction = direction,
+		traveled = 0,
+		tip = tip,
+		trove = trove,
+	}
+end
+
+-- Avança o gancho no ar. Voando: anda `FireSpeed` na direção do disparo (independente de onde o
+-- personagem vai) e prende no primeiro alvo válido; superfície proibida ou alcance esgotado o fazem
+-- voltar. Voltando: segue o personagem até chegar nele.
+local function stepFlight(ctx: CharacterContext, dt: number)
+	local current = flight
+	if not current then
+		return
+	end
+	local step = settings.FireSpeed * dt
+	if current.state == "Retracting" then
+		local toOrigin = getOrigin(ctx) - current.position
+		if toOrigin.Magnitude <= step then
+			endFlight()
+			return
+		end
+		current.position += toOrigin.Unit * step
+		current.tip.WorldPosition = current.position
+		return
+	end
+
+	step = math.min(step, settings.Range - current.traveled)
+	refreshFilter()
+	local target = castSegment(current.position, current.direction * step)
+	if target.state == "Valid" and target.part and target.point then
+		endFlight()
+		release(true) -- troca de alvo (modos que permitem): o corpo continua o mesmo
+		attach(ctx, target.part, target.point)
+		lastResult = "Attached"
+		return
+	end
+	if target.state == "Forbidden" and target.point then
+		current.position = target.point
+		current.tip.WorldPosition = current.position
+		lastResult = "Forbidden"
+		if reticle then
+			reticle:flashForbidden()
+		end
+		startRetract()
+		return
+	end
+	current.position += current.direction * step
+	current.traveled += step
+	current.tip.WorldPosition = current.position
+	if current.traveled >= settings.Range then
+		lastResult = "NoTarget"
+		startRetract()
+	end
+end
+
 -- Congelado (atributo do ZoneService, RF-20) não usa o gancho.
 local function isFrozen(ctx: CharacterContext): boolean
 	return Zones.isFrozen(ctx.character:GetAttribute(Config.Attributes.FrozenUntil))
@@ -287,26 +419,21 @@ local function tryFire()
 		lastResult = "Frozen"
 		return
 	end
+	if flight then
+		lastResult = "Unavailable" -- gancho ainda no ar
+		return
+	end
 	local aimPoint = getAimPoint()
-	if not aimPoint then
+	local origin = getOrigin(ctx)
+	local direction = aimPoint and Aim.planarDirection(origin, aimPoint)
+	if not direction then
 		lastResult = "NoAim"
 		return
 	end
-	local target = findTarget(getOrigin(ctx), aimPoint)
-	if target.state == "Valid" and target.part and target.point then
-		-- Troca de alvo durante o voo: solta o atual (o corpo continua o mesmo) e prende no novo.
-		-- Alvo inválido não interrompe o puxão em andamento.
-		release(true)
-		attach(ctx, target.part, target.point)
-		lastResult = "Attached"
-	elseif target.state == "Forbidden" then
-		lastResult = "Forbidden"
-		if reticle then
-			reticle:flashForbidden()
-		end
-	else
-		lastResult = "NoTarget"
-	end
+	-- O gancho sai voando; quem prende (ou volta) é o `stepFlight`. Alvo inválido não interrompe o
+	-- gancho já preso nos modos que trocam de alvo.
+	startFlight(ctx, direction)
+	lastResult = "Flying"
 end
 
 local function processPendingFire()
@@ -331,6 +458,7 @@ local function releaseFire()
 	firePending = false
 	-- No puxão, soltar o botão não solta o gancho: ele segue até o ponto (a física decide ao chegar).
 	if mode and mode.releaseOnButtonUp then
+		startRetract() -- soltou com o gancho ainda voando: ele volta
 		release(true)
 	end
 end
@@ -350,6 +478,7 @@ local function onPreSimulation(dt: number)
 	if not ctx then
 		return
 	end
+	stepFlight(ctx, dt)
 	local current = attached
 	if current then
 		-- A peça sumiu (destruída ou saiu do streaming): solta.
@@ -411,6 +540,7 @@ local function onReelAction(
 end
 
 local function cleanupCharacter()
+	endFlight()
 	release(true)
 	endAirBody()
 	local ctx = context
@@ -442,6 +572,7 @@ local function onCharacterAdded(character: Model)
 		trove = trove,
 	}
 	trove:Connect(humanoid.Died, function()
+		endFlight()
 		release(true)
 		endAirBody()
 	end)
@@ -450,6 +581,7 @@ local function onCharacterAdded(character: Model)
 		local ctx = context
 		if ctx and ctx.character == character and isFrozen(ctx) then
 			firePending = false
+			endFlight()
 			release(true)
 			endAirBody()
 		end
@@ -493,6 +625,8 @@ HookController.debug = {
 		local current = attached
 		return {
 			attached = current ~= nil,
+			hookState = if current then "Attached" elseif flight then flight.state else "Idle",
+			hookPosition = if flight then flight.position else nil,
 			momentum = current == nil and airBody ~= nil,
 			attachId = if current then current.id else nil,
 			partName = if current then current.part.Name else nil,

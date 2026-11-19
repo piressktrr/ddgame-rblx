@@ -41,19 +41,7 @@ function PullPhysics.new(params: HookPhysics.Params): HookPhysics.Physics
 	local body = params.body
 	local trove = Trove.new()
 
-	local rope = Instance.new("Beam")
-	rope.Name = "HookRope"
-	rope.Attachment0 = rootAttachment
-	rope.Attachment1 = anchor
-	rope.Width0 = settings.RopeThickness
-	rope.Width1 = settings.RopeThickness
-	rope.FaceCamera = true
-	rope.Segments = 1
-	rope.LightInfluence = 0
-	rope.Color = ColorSequence.new(settings.RopeColor)
-	rope.Transparency = NumberSequence.new(0)
-	rope.Parent = root
-	trove:Add(rope)
+	trove:Add(HookPhysics.createRope(rootAttachment, anchor, root))
 
 	-- Velocidade pedida: começa na atual (sem tranco) e muda aos poucos.
 	local command = inPlane(root.AssemblyLinearVelocity)

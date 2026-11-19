@@ -121,6 +121,43 @@ function HookRules.moveToward(current: Vector3, target: Vector3, maxDelta: numbe
 	return current + delta * (maxDelta / size)
 end
 
+export type DragSettings = {
+	accelPerTick: number, -- studs/s somados à velocidade a cada tick
+	maxSpeed: number, -- studs/s: acima disso o puxão só pode desviar ou frear
+	minDistance: number, -- studs: mais perto que isso não puxa
+	downFactor: number, -- multiplica o puxão para baixo (para cima puxa mais)
+	assistFactor: number, -- multiplica o X do puxão quando A/D vão no mesmo sentido
+	resistFactor: number, -- multiplica o X do puxão nos outros casos
+}
+
+-- Um tick do gancho preso, como o HOOK_GRABBED do CCharacterCore do DDNet/Teeworlds. Só soma uma
+-- aceleração à velocidade atual (no plano): gravidade, velocidade tangencial e embalo continuam.
+-- A soma vale se a nova velocidade ficar abaixo de `maxSpeed` ou não aumentar a velocidade.
+-- `moveDirection`: -1 (A), 0, 1 (D).
+function HookRules.hookDrag(
+	velocity: Vector3,
+	toHook: Vector3,
+	moveDirection: number,
+	settings: DragSettings
+): Vector3
+	local planar = Vector3.new(toHook.X, toHook.Y, 0)
+	local distance = planar.Magnitude
+	if distance <= settings.minDistance then
+		return velocity
+	end
+	local pull = planar * (settings.accelPerTick / distance)
+	local pullY = if pull.Y < 0 then pull.Y * settings.downFactor else pull.Y
+	local assisted = (pull.X < 0 and moveDirection < 0) or (pull.X > 0 and moveDirection > 0)
+	local pullX = pull.X * (if assisted then settings.assistFactor else settings.resistFactor)
+
+	local current = Vector3.new(velocity.X, velocity.Y, 0)
+	local nextVelocity = current + Vector3.new(pullX, pullY, 0)
+	if nextVelocity.Magnitude < settings.maxSpeed or nextVelocity.Magnitude < current.Magnitude then
+		return Vector3.new(nextVelocity.X, nextVelocity.Y, velocity.Z)
+	end
+	return velocity
+end
+
 function HookRules.isFiniteNumber(value: number): boolean
 	return value == value and math.abs(value) ~= math.huge
 end
