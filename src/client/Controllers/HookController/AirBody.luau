@@ -17,8 +17,11 @@
 	(`FloorMaterial` vira `Air`) ou quando alguém chama `takeOff()`, e daí em diante não devolve até o
 	fim (troca de mão única, sem piscar).
 
-	Depois de soltar vem o "embalo": termina ao tocar o chão (pouso firme, como no DDNet, sem deslizar)
-	ou ao passar `Config.Hook.MomentumMaxTime`. Aí o Humanoid volta a `Freefall` e retoma o controle.
+	Depois de soltar vem o "embalo": no ar dura até `Config.Hook.MomentumMaxTime`; no chão, enquanto a
+	velocidade horizontal estiver acima da de andar. Sem A/D o atrito do chão do DDNet para firme; com
+	A/D no sentido do movimento a velocidade se mantém (é o que deixa encadear ganchos ganhando
+	velocidade). Aí o Humanoid volta a `Freefall` e retoma o controle. Enquanto o corpo controla, as
+	peças do personagem ficam sem atrito nem quique: só a regra do DDNet freia.
 
 	Pose: enquanto o corpo controla (no ar), `HookPose` põe uma pose procedural de voo (braço para o ponto
 	do gancho, corpo inclinado, pernas para trás), entrando e saindo em ~0,15 s. Quem prende chama
@@ -50,6 +53,7 @@ export type AirBody = {
 
 local settings = Config.Hook
 local INPUT_DEADZONE = 0.1 -- |A/D| abaixo disso conta como sem direção
+local OVERRIDE_WEIGHT = 100 -- peso do atrito/elasticidade 0 contra o do chão (o nosso vence)
 
 local AirBody = {}
 
@@ -121,6 +125,20 @@ function AirBody.new(
 		upright.CFrame = facingCFrame(facing)
 		upright.Enabled = true
 		humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+		-- Sem atrito nem quique do motor de física: quem freia é só a regra do DDNet (`step`).
+		for _, child in character:GetChildren() do
+			if child:IsA("BasePart") then
+				local previous = child.CustomPhysicalProperties
+				local base = previous or PhysicalProperties.new(child.Material)
+				child.CustomPhysicalProperties =
+					PhysicalProperties.new(base.Density, 0, 0, OVERRIDE_WEIGHT, OVERRIDE_WEIGHT)
+				trove:Add(function()
+					if child.Parent then
+						child.CustomPhysicalProperties = previous
+					end
+				end)
+			end
+		end
 	end
 	if humanoid.FloorMaterial == Enum.Material.Air then
 		enterAir()
@@ -217,8 +235,12 @@ function AirBody.new(
 		if not airborne then
 			return true -- soltou sem ter saído do chão: não há embalo
 		end
-		-- Pousou: termina na hora (pouso firme, o Humanoid assume). No ar, só o tempo encerra.
-		return isGrounded() or os.clock() - start >= settings.MomentumMaxTime
+		if os.clock() - start >= settings.MomentumMaxTime and not isGrounded() then
+			return true
+		end
+		-- No chão o embalo vale enquanto estiver acima da velocidade de andar: segurando A/D no mesmo
+		-- sentido ele se mantém (DDNet); sem A/D, o atrito do chão para firme em poucos ticks.
+		return isGrounded() and math.abs(root.AssemblyLinearVelocity.X) <= humanoid.WalkSpeed
 	end
 
 	function body.destroy(_self: AirBody)
