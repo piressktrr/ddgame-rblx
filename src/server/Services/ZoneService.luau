@@ -2,11 +2,11 @@
 --[[
 	Zonas do mapa: morte e gelo (RF-20, RF-22, RF-24, RF-25; ADR 0014, 0045).
 
-	A cada `Config.Zones.CheckInterval`, para cada personagem vivo:
-	- toca peça `KillZone` → morre na hora;
+	A cada `Config.Zones.CheckInterval`, para cada personagem vivo (regras do DDNet):
+	- toca peça `KillZone` → volta na hora ao checkpoint (`LobbyService.respawnInPlace`, sem morrer);
 	- toca `UnfreezeZone` congelado → descongela (apaga `FrozenUntil`);
-	- congelado e o tempo acabou → morre;
-	- toca `FreezeZone` e não está congelado → `FrozenUntil = agora + Config.Freeze.Duration`.
+	- dentro do `FreezeZone` → congela e renova `FrozenUntil = agora + Config.Freeze.ReleaseDelay`;
+	- fora do gelo e o tempo passou → descongela.
 	A decisão fica em `Shared.Logic.Zones.pickEffect` (pura).
 
 	O estado é o atributo `Config.Attributes.FrozenUntil` no PERSONAGEM, em tempo do servidor
@@ -15,9 +15,8 @@
 
 	Conferência por `GetPartBoundsInBox` com `OverlapParams` incluindo só as peças com tag de zona
 	(e não por Touched, que falha com peças sem colisão e personagens movidos por física/teleporte).
-	Escolhido no lugar de `Zones.isInside` no centro do root porque: o gelo e o descongelar são peças
-	SÓLIDAS (o jogador encosta, nunca fica "dentro"), e matar no toque (RF-25) pede o corpo todo, não
-	um ponto; a consulta do motor é espacial (não percorre todas as zonas do mapa por jogador) e
+	Escolhido no lugar de `Zones.isInside` no centro do root porque: as zonas podem ser sólidas (mapas
+	antigos: o jogador encosta) ou atravessáveis (MapBuilder), e o toque pede o corpo todo, não um ponto; a consulta do motor é espacial (não percorre todas as zonas do mapa por jogador) e
 	trata peças giradas. A caixa do corpo vem de `Config.Zones` com a folga `TouchMargin`.
 	Requisito: a peça de zona precisa de `CanQuery = true` (avisamos no Output se não tiver).
 ]]
@@ -29,6 +28,7 @@ local RunService = game:GetService("RunService")
 
 local Config = require(ReplicatedStorage.Shared.Config)
 local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
+local LobbyService = require(script.Parent.LobbyService)
 
 local FROZEN_UNTIL = Config.Attributes.FrozenUntil
 local ZONE_TAGS = { Config.Tags.KillZone, Config.Tags.FreezeZone, Config.Tags.UnfreezeZone }
@@ -39,6 +39,8 @@ local boxSize = settings.CharacterBoxSize + Vector3.new(margin, margin, margin) 
 local boxOffset = CFrame.new(0, settings.CharacterBoxOffsetY, 0)
 
 local ZoneService = {}
+
+local lastPosition: { [Model]: Vector3 } = setmetatable({}, { __mode = "k" }) :: any
 
 local overlapParams = OverlapParams.new()
 overlapParams.FilterType = Enum.RaycastFilterType.Include
@@ -64,11 +66,6 @@ local function onZoneTagged(instance: Instance)
 	end
 end
 
-local function kill(player: Player, humanoid: Humanoid, reason: string)
-	humanoid.Health = 0
-	print(`[Zones] {player.Name} morreu ({reason})`)
-end
-
 local function checkCharacter(player: Player, character: Model, now: number)
 	local humanoid = character:FindFirstChildOfClass("Humanoid")
 	local root = character:FindFirstChild("HumanoidRootPart")
@@ -76,8 +73,20 @@ local function checkCharacter(player: Player, character: Model, now: number)
 		return
 	end
 
+	-- Caixa varrida: cobre o caminho desde a última conferência (zona fina atravessada rápido conta).
+	local current = (root.CFrame * boxOffset).Position
+	local previous = lastPosition[character] or current
+	lastPosition[character] = current
+	local delta = current - previous
+	local sweptSize = boxSize + Vector3.new(math.abs(delta.X), math.abs(delta.Y), math.abs(delta.Z))
+	if delta.Magnitude > settings.MaxSweep then
+		sweptSize = boxSize -- teleporte (checkpoint, lobby): não varre o caminho
+		previous = current
+	end
 	local inKill, inFreeze, inUnfreeze = false, false, false
-	for _, part in workspace:GetPartBoundsInBox(root.CFrame * boxOffset, boxSize, overlapParams) do
+	for _, part in
+		workspace:GetPartBoundsInBox(CFrame.new((current + previous) / 2), sweptSize, overlapParams)
+	do
 		if part:HasTag(Config.Tags.KillZone) then
 			inKill = true
 		elseif part:HasTag(Config.Tags.UnfreezeZone) then
@@ -87,17 +96,18 @@ local function checkCharacter(player: Player, character: Model, now: number)
 		end
 	end
 
-	local effect = Zones.pickEffect(inKill, inUnfreeze, inFreeze, character:GetAttribute(FROZEN_UNTIL), now)
+	local frozenUntil = character:GetAttribute(FROZEN_UNTIL)
+	local effect = Zones.pickEffect(inKill, inUnfreeze, inFreeze, frozenUntil, now)
 	if effect == "Kill" then
-		kill(player, humanoid, "KillZone")
-	elseif effect == "Expire" then
-		kill(player, humanoid, "gelo")
-	elseif effect == "Unfreeze" then
+		LobbyService.respawnInPlace(player)
+	elseif effect == "Unfreeze" or effect == "Thaw" then
 		character:SetAttribute(FROZEN_UNTIL, nil)
-		print(`[Zones] {player.Name} descongelou`)
 	elseif effect == "Freeze" then
-		character:SetAttribute(FROZEN_UNTIL, now + Config.Freeze.Duration)
-		print(`[Zones] {player.Name} congelou por {Config.Freeze.Duration} s`)
+		-- Renova só quando precisa (evita replicar o atributo a cada conferência).
+		local releaseDelay = Config.Freeze.ReleaseDelay
+		if typeof(frozenUntil) ~= "number" or frozenUntil - now < releaseDelay / 2 then
+			character:SetAttribute(FROZEN_UNTIL, now + releaseDelay)
+		end
 	end
 end
 

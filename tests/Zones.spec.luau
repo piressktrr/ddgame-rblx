@@ -71,17 +71,17 @@ return function()
 			expect(Zones.pickEffect(false, true, true, 5, 10)).to.equal("Unfreeze")
 		end)
 
-		it("congelado com o tempo vencido morre", function()
-			expect(Zones.pickEffect(false, false, false, 10, 10)).to.equal("Expire")
-			expect(Zones.pickEffect(false, false, true, 5, 10)).to.equal("Expire")
+		it("fora do gelo, descongela quando o tempo de soltar passa", function()
+			expect(Zones.pickEffect(false, false, false, 10, 10)).to.equal("Thaw")
+			expect(Zones.pickEffect(false, false, false, 20, 10)).to.equal(nil)
 		end)
 
-		it("congelado no gelo não renova o tempo", function()
-			expect(Zones.pickEffect(false, false, true, 20, 10)).to.equal(nil)
-		end)
-
-		it("gelo congela, mas não se também estiver na zona de descongelar", function()
+		it("dentro do gelo congela e renova, mesmo já congelado", function()
 			expect(Zones.pickEffect(false, false, true, nil, 10)).to.equal("Freeze")
+			expect(Zones.pickEffect(false, false, true, 5, 10)).to.equal("Freeze")
+		end)
+
+		it("na zona de descongelar não congela", function()
 			expect(Zones.pickEffect(false, true, true, nil, 10)).to.equal(nil)
 		end)
 

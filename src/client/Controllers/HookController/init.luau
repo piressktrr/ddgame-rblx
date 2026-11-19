@@ -165,6 +165,10 @@ local function evaluateHit(result: RaycastResult?): Target
 	if not part:IsA("BasePart") then
 		return NO_TARGET
 	end
+	-- Hookthrough e mão única: o gancho atravessa (o raio continua depois deles).
+	if part:HasTag(Config.Tags.HookThrough) or part:HasTag(Config.Tags.OneWay) then
+		return NO_TARGET
+	end
 	local point = Aim.toPlane(result.Position, planeZ)
 	-- Só vale peça na profundidade do plano: o ponto levado ao plano tem de continuar na peça.
 	-- (O raio já corre no plano; a esfera alcança alguns studs para fora dele.)
@@ -674,6 +678,18 @@ function HookController.Start()
 	Net.get("HookRejected").OnClientEvent:Connect(onRejected)
 
 	reticle = Reticle.new(player:WaitForChild("PlayerGui"))
+
+	-- Volta instantânea pela zona de morte: solta tudo e para o corpo, como ao renascer.
+	player:GetAttributeChangedSignal(Config.Attributes.Respawns):Connect(function()
+		firePending = false
+		endFlight()
+		release(false)
+		endAirBody()
+		local ctx = context
+		if ctx then
+			ctx.root.AssemblyLinearVelocity = Vector3.zero
+		end
+	end)
 
 	-- O servidor muda este atributo quando o uso dos verdes zera (renascer ou checkpoint).
 	player:GetAttributeChangedSignal(Config.Attributes.HookOnceEpoch):Connect(function()

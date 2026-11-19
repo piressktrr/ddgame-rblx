@@ -166,16 +166,23 @@ local Config = {
 		RaceFinishTime = "RaceFinishTime",
 		-- No Player: melhor tempo (s) nesta sessão do servidor (placar RF-63); nil = nunca terminou.
 		BestTime = "BestTime",
+		-- No Player: muda a cada volta instantânea ao checkpoint (zona de morte). Cliente e HookService
+		-- soltam o gancho e devolvem os verdes, como ao renascer.
+		Respawns = "Respawns",
 	},
 
 	-- Zonas: morte e gelo (RF-20..25). Dono: subagente de zonas.
 	Freeze = {
-		Duration = 15, -- segundos congelado até morrer (ADR 0014, 0045)
+		-- Como no DDNet: congelado enquanto toca o freeze; depois de sair, descongela após este tempo
+		-- (ou na hora, num unfreeze). Não mata: preso sozinho, o jogador usa o botão de recomeçar.
+		ReleaseDelay = 1, -- segundos
 		HighlightColor = Color3.fromRGB(150, 220, 255), -- visual local do congelado (FreezeController)
 		HighlightFillTransparency = 0.45,
 	},
 	Zones = {
-		CheckInterval = 0.1, -- segundos entre as conferências das zonas no servidor
+		CheckInterval = 0, -- segundos entre as conferências das zonas no servidor (0 = todo quadro)
+		-- Deslocamento (studs) entre conferências acima do qual é teleporte, não movimento: não varre.
+		MaxSweep = 30,
 		-- Caixa do corpo usada na conferência, no espaço do HumanoidRootPart (R15 padrão: pés ~3 studs
 		-- abaixo do centro do root, topo da cabeça ~2,5 acima).
 		CharacterBoxSize = Vector3.new(2, 5.5, 1), -- studs
@@ -231,6 +238,20 @@ local Config = {
 		BouncerZone = "BouncerZone",
 		LobbySpawn = "LobbySpawn",
 		LobbyPortal = "LobbyPortal",
+		OneWay = "OneWay", -- mão única (atributo `Config.MapElements.DirectionAttribute`)
+		HookThrough = "HookThrough", -- sólido para o jogador, o gancho atravessa
+		EditorSpawn = "EditorSpawn", -- no Studio, renasce aqui se `Enabled` (área do MapBuilder)
+	},
+
+	-- Elementos de mapa do MapBuilder (Shared.MapElements).
+	MapElements = {
+		DirectionAttribute = "Direction", -- "Up" | "Down" | "Left" | "Right": sentido em que se passa
+		-- Folga (studs) para a mão única considerar o personagem do lado sólido.
+		OneWayTolerance = 0.6,
+		OneWayCheckRadius = 40, -- studs: só confere mãos únicas perto do personagem
+		BlockDepth = 12, -- studs: profundidade (Z) dos blocos pintados, como os mapas existentes
+		DefaultGrid = 4, -- studs: lado do bloco no MapBuilder
+		EditorModelName = "Editor", -- Workspace.Maps.<nome>: onde o MapBuilder pinta
 	},
 }
 

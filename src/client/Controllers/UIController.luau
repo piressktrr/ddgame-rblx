@@ -293,10 +293,10 @@ local function update()
 	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
 	-- Morto (o gelo venceu ou caiu na zona mortal): o contador some enquanto renasce.
 	if frozenUntil and humanoid and humanoid.Health > 0 then
-		local left = math.max(frozenUntil - now, 0)
+		-- Sem contagem: o gelo dura enquanto estiver no freeze (DDNet).
 		freezeLabel.Visible = true
-		freezeLabel.Text = `Congelado! {string.format("%.1f", left)}`
-		freezeLabel.TextColor3 = if left <= ui.FreezeUrgentTime then ui.FreezeUrgentColor else ui.FreezeColor
+		freezeLabel.Text = "Congelado!"
+		freezeLabel.TextColor3 = ui.FreezeColor
 	else
 		freezeLabel.Visible = false
 	end
