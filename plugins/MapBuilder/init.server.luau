@@ -131,6 +131,26 @@ local function addArrows(part: BasePart, direction: string)
 	label.Parent = gui
 end
 
+-- Quadriculado das linhas de largada/chegada (na face que a câmera do jogo vê).
+local function addChecker(part: BasePart, first: Color3, second: Color3)
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "Checker"
+	gui.Face = Enum.NormalId.Back
+	gui.LightInfluence = 0
+	gui.Parent = part
+	local cells = MapElements.CHECKER_CELLS
+	for row = 0, cells - 1 do
+		for column = 0, cells - 1 do
+			local square = Instance.new("Frame")
+			square.BorderSizePixel = 0
+			square.Size = UDim2.fromScale(1 / cells, 1 / cells)
+			square.Position = UDim2.fromScale(column / cells, row / cells)
+			square.BackgroundColor3 = if (row + column) % 2 == 0 then first else second
+			square.Parent = gui
+		end
+	end
+end
+
 -- Peça de um elemento (aparência, tag e atributos), sem posição nem pai.
 local function buildPart(element, grid: number, direction: string): Part
 	local part = Instance.new("Part")
@@ -151,6 +171,9 @@ local function buildPart(element, grid: number, direction: string): Part
 	if element.usesDirection then
 		part:SetAttribute(settings.DirectionAttribute, direction)
 		addArrows(part, direction)
+	end
+	if element.checker then
+		addChecker(part, element.color, element.checker)
 	end
 	return part
 end

@@ -6,7 +6,9 @@
 	- toca peça `KillZone` → volta na hora ao checkpoint (`LobbyService.respawnInPlace`, sem morrer);
 	- toca `UnfreezeZone` congelado → descongela (apaga `FrozenUntil`);
 	- dentro do `FreezeZone` → congela e renova `FrozenUntil = agora + Config.Freeze.ReleaseDelay`;
-	- fora do gelo e o tempo passou → descongela.
+	- fora do gelo e o tempo passou → descongela;
+	- entra na `StartLine` → começa/recomeça a run (`RaceService.beginRace`);
+	- entra na `FinishLine` com a run valendo → salva o tempo (`RaceService.finishRun`).
 	A decisão fica em `Shared.Logic.Zones.pickEffect` (pura).
 
 	O estado é o atributo `Config.Attributes.FrozenUntil` no PERSONAGEM, em tempo do servidor
@@ -29,9 +31,16 @@ local RunService = game:GetService("RunService")
 local Config = require(ReplicatedStorage.Shared.Config)
 local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 local LobbyService = require(script.Parent.LobbyService)
+local RaceService = require(script.Parent.RaceService)
 
 local FROZEN_UNTIL = Config.Attributes.FrozenUntil
-local ZONE_TAGS = { Config.Tags.KillZone, Config.Tags.FreezeZone, Config.Tags.UnfreezeZone }
+local ZONE_TAGS = {
+	Config.Tags.KillZone,
+	Config.Tags.FreezeZone,
+	Config.Tags.UnfreezeZone,
+	Config.Tags.StartLine,
+	Config.Tags.FinishLine,
+}
 
 local settings = Config.Zones
 local margin = settings.TouchMargin
@@ -41,6 +50,9 @@ local boxOffset = CFrame.new(0, settings.CharacterBoxOffsetY, 0)
 local ZoneService = {}
 
 local lastPosition: { [Model]: Vector3 } = setmetatable({}, { __mode = "k" }) :: any
+-- Linhas que o personagem tocava na conferência anterior: a linha age só ao ENTRAR nela.
+local touchingStart: { [Model]: boolean } = setmetatable({}, { __mode = "k" }) :: any
+local touchingFinish: { [Model]: boolean } = setmetatable({}, { __mode = "k" }) :: any
 
 local overlapParams = OverlapParams.new()
 overlapParams.FilterType = Enum.RaycastFilterType.Include
@@ -83,7 +95,7 @@ local function checkCharacter(player: Player, character: Model, now: number)
 		sweptSize = boxSize -- teleporte (checkpoint, lobby): não varre o caminho
 		previous = current
 	end
-	local inKill, inFreeze, inUnfreeze = false, false, false
+	local inKill, inFreeze, inUnfreeze, inStart, inFinish = false, false, false, false, false
 	for _, part in
 		workspace:GetPartBoundsInBox(CFrame.new((current + previous) / 2), sweptSize, overlapParams)
 	do
@@ -93,8 +105,22 @@ local function checkCharacter(player: Player, character: Model, now: number)
 			inUnfreeze = true
 		elseif part:HasTag(Config.Tags.FreezeZone) then
 			inFreeze = true
+		elseif part:HasTag(Config.Tags.FinishLine) then
+			inFinish = true
+		elseif part:HasTag(Config.Tags.StartLine) then
+			inStart = true
 		end
 	end
+
+	-- Linhas da run: agem ao entrar. Chegada salva o tempo; largada começa/recomeça a run.
+	if inFinish and not touchingFinish[character] then
+		RaceService.finishRun(player)
+	end
+	if inStart and not touchingStart[character] then
+		RaceService.beginRace(player)
+	end
+	touchingFinish[character] = inFinish
+	touchingStart[character] = inStart
 
 	local frozenUntil = character:GetAttribute(FROZEN_UNTIL)
 	local effect = Zones.pickEffect(inKill, inUnfreeze, inFreeze, frozenUntil, now)

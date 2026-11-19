@@ -23,6 +23,7 @@ export type Element = {
 	material: Enum.Material,
 	canCollide: boolean,
 	usesDirection: boolean, -- mão única: guarda `Config.MapElements.DirectionAttribute`
+	checker: Color3?, -- segunda cor do quadriculado (linhas de largada/chegada); nil = sem desenho
 }
 
 local Tags = Config.Tags
@@ -118,7 +119,34 @@ MapElements.list = table.freeze({
 		canCollide = true,
 		usesDirection = false,
 	},
+	{
+		id = "StartLine",
+		label = "Largada",
+		description = "Atravessável; ao passar começa (ou recomeça) o tempo da run",
+		tag = Tags.StartLine,
+		color = Color3.fromRGB(240, 240, 245),
+		transparency = 0.3,
+		material = Enum.Material.SmoothPlastic,
+		canCollide = false,
+		usesDirection = false,
+		checker = Color3.fromRGB(60, 110, 200),
+	},
+	{
+		id = "FinishLine",
+		label = "Chegada",
+		description = "Atravessável; ao passar com a run valendo, salva o tempo",
+		tag = Tags.FinishLine,
+		color = Color3.fromRGB(240, 240, 245),
+		transparency = 0.3,
+		material = Enum.Material.SmoothPlastic,
+		canCollide = false,
+		usesDirection = false,
+		checker = Color3.fromRGB(25, 25, 30),
+	},
 } :: { Element })
+
+-- Quadrados do quadriculado por lado de um bloco (só visual).
+MapElements.CHECKER_CELLS = 2
 
 MapElements.byId = {} :: { [string]: Element }
 for _, element in MapElements.list do
