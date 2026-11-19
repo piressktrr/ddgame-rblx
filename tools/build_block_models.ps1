@@ -11,7 +11,7 @@ New-Item -ItemType Directory -Force $tmp | Out-Null
 $elements = @(
     @{ id = "Block";       name = "DD Bloco";        tag = $null;          color = @(150,151,108); t = 0;    collide = $true },
     @{ id = "Unhookable";  name = "DD Unhookable";   tag = "NoHook";       color = @(103,128,154); t = 0;    collide = $true },
-    @{ id = "HookThrough"; name = "DD Hookthrough";  tag = "HookThrough";  color = @(85,93,103);   t = 0;    collide = $true },
+    @{ id = "HookThrough"; name = "DD Hookthrough";  tag = "HookThrough";  color = @(45,45,52);    t = 0.25; collide = $true },
     @{ id = "Freeze";      name = "DD Freeze";       tag = "FreezeZone";   color = @(70,75,90);    t = 0.45; collide = $false },
     @{ id = "Unfreeze";    name = "DD Unfreeze";     tag = "UnfreezeZone"; color = @(255,215,70);  t = 0.45; collide = $false },
     @{ id = "OneWay";      name = "DD Mao unica";    tag = "OneWay";       color = @(174,194,211); t = 0.3;  collide = $false },
