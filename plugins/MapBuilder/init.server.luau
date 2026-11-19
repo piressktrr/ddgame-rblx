@@ -35,13 +35,15 @@ local function loadShared()
 	local shared = ReplicatedStorage:FindFirstChild("Shared")
 	local configModule = shared and shared:FindFirstChild("Config")
 	local elementsModule = shared and shared:FindFirstChild("MapElements")
-	if not configModule or not elementsModule then
-		return nil, nil
+	local logic = shared and shared:FindFirstChild("Logic")
+	local mergeModule = logic and logic:FindFirstChild("GridMerge")
+	if not configModule or not elementsModule or not mergeModule then
+		return nil, nil, nil
 	end
-	return require(configModule), require(elementsModule)
+	return require(configModule), require(elementsModule), require(mergeModule)
 end
 
-local Config, MapElements = loadShared()
+local Config, MapElements, GridMerge = loadShared()
 if not Config then
 	warn(
 		"[MapBuilder] ReplicatedStorage.Shared.MapElements não encontrado: abra o place com o Rojo conectado"
@@ -94,88 +96,91 @@ local function cellUnderMouse(mouse: PluginMouse): Vector3?
 	return Vector3.new(cx, cy, planeZ)
 end
 
-local function cellKey(center: Vector3, grid: number): string
-	return string.format("%g,%g,%g", center.X, center.Y, grid)
+--[[
+	Blocos contínuos: cada traço pinta células de UNIT studs e, ao soltar o mouse, `mergeModel` junta
+	células vizinhas iguais (mesmo elemento e direção) em retângulos de uma peça só. Assim blocos
+	translúcidos lado a lado não mostram as "paredinhas" entre eles. Apagar (ou pintar) dentro de uma
+	peça unida a divide de volta em células antes.
+]]
+local UNIT = 2 -- studs: menor célula (= menor grade); blocos maiores são vários UNITs
+local DECOR_TILE = 4 -- studs: setas e textos se repetem a cada bloco deste tamanho
+
+local function cellKey(ix: number, iy: number): string
+	return `{ix},{iy}`
 end
 
-local function findAt(model: Model, center: Vector3): BasePart?
-	-- Qualquer bloco do modelo que cubra o centro da célula (pode ter outro tamanho de grade).
-	for _, child in model:GetChildren() do
-		if child:IsA("BasePart") then
-			local localPoint = child.CFrame:PointToObjectSpace(center)
-			local half = child.Size / 2
-			if math.abs(localPoint.X) < half.X and math.abs(localPoint.Y) < half.Y then
-				return child
-			end
-		end
-	end
-	return nil
+local function isElementPart(instance: Instance): boolean
+	return instance:IsA("BasePart") and typeof(instance:GetAttribute("Element")) == "string"
 end
 
-local function addArrows(part: BasePart, direction: string)
+-- Células (índices) cobertas por uma peça alinhada à grade.
+local function coveredCells(part: BasePart): (number, number, number, number)
+	local ix = math.round((part.Position.X - part.Size.X / 2) / UNIT)
+	local iy = math.round((part.Position.Y - part.Size.Y / 2) / UNIT)
+	return ix, iy, math.max(1, math.round(part.Size.X / UNIT)), math.max(1, math.round(part.Size.Y / UNIT))
+end
+
+local function newSurface(part: BasePart, name: string): SurfaceGui
 	local gui = Instance.new("SurfaceGui")
-	gui.Name = "Arrows"
+	gui.Name = name
 	gui.Face = Enum.NormalId.Back -- a câmera do jogo olha o plano a partir de +Z
 	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
 	gui.PixelsPerStud = 25
 	gui.LightInfluence = 0
 	gui.Parent = part
-	local label = Instance.new("TextLabel")
-	label.BackgroundTransparency = 1
-	label.Size = UDim2.fromScale(1, 1)
-	label.Text = MapElements.ARROW_TEXT
-	label.TextScaled = true
-	label.Font = Enum.Font.GothamBold
-	label.TextColor3 = Color3.fromRGB(110, 125, 160)
-	label.Rotation = MapElements.ARROW_ROTATION[direction] or 0
-	label.Parent = gui
+	return gui
 end
 
--- Quadriculado das linhas de largada/chegada (na face que a câmera do jogo vê).
-local function addChecker(part: BasePart, first: Color3, second: Color3)
-	local gui = Instance.new("SurfaceGui")
-	gui.Name = "Checker"
-	gui.Face = Enum.NormalId.Back
-	gui.LightInfluence = 0
-	gui.Parent = part
-	local cells = MapElements.CHECKER_CELLS
-	for row = 0, cells - 1 do
-		for column = 0, cells - 1 do
-			local square = Instance.new("Frame")
-			square.BorderSizePixel = 0
-			square.Size = UDim2.fromScale(1 / cells, 1 / cells)
-			square.Position = UDim2.fromScale(column / cells, row / cells)
-			square.BackgroundColor3 = if (row + column) % 2 == 0 then first else second
-			square.Parent = gui
+-- Desenhos na face, repetidos ao longo da peça (que pode ser vários blocos unidos).
+local function decorate(part: BasePart, element, direction: string)
+	local size = part.Size
+	if element.checker then
+		local gui = newSurface(part, "Checker")
+		local columns = math.max(1, math.round(size.X / UNIT))
+		local rows = math.max(1, math.round(size.Y / UNIT))
+		for row = 0, rows - 1 do
+			for column = 0, columns - 1 do
+				local square = Instance.new("Frame")
+				square.BorderSizePixel = 0
+				square.Size = UDim2.fromScale(1 / columns, 1 / rows)
+				square.Position = UDim2.fromScale(column / columns, row / rows)
+				square.BackgroundColor3 = if (row + column) % 2 == 0 then element.color else element.checker
+				square.Parent = gui
+			end
+		end
+	end
+	local text = if element.usesDirection then MapElements.ARROW_TEXT else element.text
+	if text then
+		local gui = newSurface(part, "Label")
+		local columns = math.max(1, math.floor(size.X / DECOR_TILE))
+		local rows = math.max(1, math.floor(size.Y / DECOR_TILE))
+		for row = 0, rows - 1 do
+			for column = 0, columns - 1 do
+				local label = Instance.new("TextLabel")
+				label.BackgroundTransparency = 1
+				label.Size = UDim2.fromScale(1 / columns, 1 / rows)
+				label.Position = UDim2.fromScale(column / columns, row / rows)
+				label.Text = text
+				label.TextScaled = true
+				label.Font = Enum.Font.GothamBold
+				label.TextColor3 = if element.usesDirection
+					then Color3.fromRGB(110, 125, 160)
+					else Color3.fromRGB(70, 75, 90)
+				label.Rotation = if element.usesDirection
+					then MapElements.ARROW_ROTATION[direction] or 0
+					else 0
+				label.Parent = gui
+			end
 		end
 	end
 end
 
--- Texto na face que a câmera do jogo vê (ex.: "SOLO").
-local function addLabel(part: BasePart, text: string)
-	local gui = Instance.new("SurfaceGui")
-	gui.Name = "Label"
-	gui.Face = Enum.NormalId.Back
-	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-	gui.PixelsPerStud = 25
-	gui.LightInfluence = 0
-	gui.Parent = part
-	local label = Instance.new("TextLabel")
-	label.BackgroundTransparency = 1
-	label.Size = UDim2.fromScale(1, 1)
-	label.Text = text
-	label.TextScaled = true
-	label.Font = Enum.Font.GothamBold
-	label.TextColor3 = Color3.fromRGB(70, 75, 90)
-	label.Parent = gui
-end
-
 -- Peça de um elemento (aparência, tag e atributos), sem posição nem pai.
-local function buildPart(element, grid: number, direction: string): Part
+local function buildPart(element, sizeX: number, sizeY: number, direction: string): Part
 	local part = Instance.new("Part")
 	part.Name = element.id
 	part.Anchored = true
-	part.Size = Vector3.new(grid, grid, settings.BlockDepth)
+	part.Size = Vector3.new(sizeX, sizeY, settings.BlockDepth)
 	part.Color = element.color
 	part.Material = element.material
 	part.Transparency = element.transparency
@@ -189,22 +194,113 @@ local function buildPart(element, grid: number, direction: string): Part
 	end
 	if element.usesDirection then
 		part:SetAttribute(settings.DirectionAttribute, direction)
-		addArrows(part, direction)
 	end
-	if element.checker then
-		addChecker(part, element.color, element.checker)
-	end
-	if element.text then
-		addLabel(part, element.text)
-	end
+	decorate(part, element, direction)
 	return part
 end
 
-local function createBlock(model: Model, element, center: Vector3)
-	local part = buildPart(element, state.grid, state.direction)
-	part.CFrame = CFrame.new(center)
-	part:SetAttribute("Cell", cellKey(center, state.grid))
+-- Peça retangular de células [ix, ix+w) x [iy, iy+h).
+local function placeRect(
+	model: Model,
+	elementId: string,
+	direction: string,
+	ix: number,
+	iy: number,
+	w: number,
+	h: number
+): BasePart?
+	local element = MapElements.byId[elementId]
+	if not element then
+		return nil
+	end
+	local part = buildPart(element, w * UNIT, h * UNIT, direction)
+	part.CFrame = CFrame.new((ix + w / 2) * UNIT, (iy + h / 2) * UNIT, planeZ)
 	part.Parent = model
+	return part
+end
+
+local function partDirection(part: BasePart): string
+	local direction = part:GetAttribute(settings.DirectionAttribute)
+	return if typeof(direction) == "string" then direction else "Up"
+end
+
+-- Índice célula -> peça durante um traço (peças unidas aparecem em várias células).
+local cellIndex: { [string]: BasePart } = {}
+
+local function indexModel(model: Model)
+	table.clear(cellIndex)
+	for _, child in model:GetChildren() do
+		if isElementPart(child) then
+			local ix, iy, w, h = coveredCells(child :: BasePart)
+			for x = ix, ix + w - 1 do
+				for y = iy, iy + h - 1 do
+					cellIndex[cellKey(x, y)] = child :: BasePart
+				end
+			end
+		end
+	end
+end
+
+-- Divide uma peça unida em peças de uma célula (para apagar/trocar só parte dela).
+local function explode(model: Model, part: BasePart)
+	local elementId = part:GetAttribute("Element") :: string
+	local direction = partDirection(part)
+	local ix, iy, w, h = coveredCells(part)
+	part:Destroy()
+	for x = ix, ix + w - 1 do
+		for y = iy, iy + h - 1 do
+			local key = cellKey(x, y)
+			cellIndex[key] = placeRect(model, elementId, direction, x, y, 1, 1)
+		end
+	end
+end
+
+local function paintCell(model: Model, x: number, y: number, element)
+	local key = cellKey(x, y)
+	local existing = cellIndex[key]
+	if existing and not existing.Parent then
+		existing = nil
+	end
+	if existing and (existing.Size.X > UNIT + 0.01 or existing.Size.Y > UNIT + 0.01) then
+		explode(model, existing)
+		existing = cellIndex[key]
+	end
+	if existing then
+		local same = element ~= nil
+			and existing:GetAttribute("Element") == element.id
+			and (not element.usesDirection or partDirection(existing) == state.direction)
+		if same then
+			return
+		end
+		existing:Destroy()
+		cellIndex[key] = nil
+	end
+	if element then
+		cellIndex[key] = placeRect(model, element.id, state.direction, x, y, 1, 1)
+	end
+end
+
+-- Junta células vizinhas iguais (mesmo elemento e direção) em peças retangulares (Shared.Logic.GridMerge).
+local function mergeModel(model: Model)
+	local cells = {}
+	for _, child in model:GetChildren() do
+		if isElementPart(child) then
+			local part = child :: BasePart
+			local kind = `{part:GetAttribute("Element")}|{partDirection(part)}`
+			local ix, iy, w, h = coveredCells(part)
+			for x = ix, ix + w - 1 do
+				for y = iy, iy + h - 1 do
+					table.insert(cells, { x = x, y = y, kind = kind })
+				end
+			end
+			part:Destroy()
+		end
+	end
+	for _, rect in GridMerge.merge(cells) do
+		local elementId, direction = string.match(rect.kind, "^(.-)|(.*)$")
+		placeRect(model, elementId :: string, direction :: string, rect.x, rect.y, rect.w, rect.h)
+	end
+	table.clear(cellIndex)
 end
 
 local function placeSpawn(model: Model, center: Vector3)
@@ -224,36 +320,26 @@ local function placeSpawn(model: Model, center: Vector3)
 	part.Parent = model
 end
 
+-- Pinta (ou apaga) todas as células do pincel (grade atual) em volta de `center`.
 local function paintAt(center: Vector3)
 	local model = getModel()
-	local existing = findAt(model, center)
-	if state.tool == "Erase" then
-		if existing then
-			existing:Destroy()
-		end
-		return
-	end
 	if state.tool == "Spawn" then
 		placeSpawn(model, center)
 		return
 	end
 	local element = MapElements.byId[state.tool]
-	if not element then
+	if not element and state.tool ~= "Erase" then
 		return
 	end
-	if existing then
-		local same = existing:GetAttribute("Element") == element.id
-			and existing:GetAttribute("Cell") == cellKey(center, state.grid)
-			and (
-				not element.usesDirection
-				or existing:GetAttribute(settings.DirectionAttribute) == state.direction
-			)
-		if same then
-			return
+	local half = state.grid / 2
+	local x0 = math.round((center.X - half) / UNIT)
+	local y0 = math.round((center.Y - half) / UNIT)
+	local count = math.max(1, math.round(state.grid / UNIT))
+	for x = x0, x0 + count - 1 do
+		for y = y0, y0 + count - 1 do
+			paintCell(model, x, y, element)
 		end
-		existing:Destroy()
 	end
-	createBlock(model, element, center)
 end
 
 -- UI -----------------------------------------------------------------------------------------------
@@ -363,7 +449,7 @@ for index, element in MapElements.list do
 	viewport.LightDirection = Vector3.new(-1, -2, -1)
 	viewport.Active = false
 	viewport.Parent = card
-	local preview = buildPart(element, 4, "Up")
+	local preview = buildPart(element, 4, 4, "Up")
 	preview.CFrame = CFrame.new()
 	preview.Size = Vector3.new(4, 4, 4)
 	preview.Parent = viewport
@@ -469,6 +555,15 @@ for _, size in { 2, 4, 8 } do
 	end)
 end
 
+local mergeButton = makeButton(root, "Unir blocos iguais agora", Color3.fromRGB(60, 60, 70), 26)
+mergeButton.Activated:Connect(function()
+	local recording = ChangeHistoryService:TryBeginRecording("MapBuilder", "Unir blocos")
+	mergeModel(getModel())
+	if recording then
+		ChangeHistoryService:FinishRecording(recording, Enum.FinishRecordingOperation.Commit)
+	end
+end)
+
 local cameraButton = makeButton(root, "Câmera 2D na área", Color3.fromRGB(60, 60, 70), 26)
 -- Câmera de frente para o plano do jogo (vista 2D), centrada na área do editor.
 local function focusCamera2D()
@@ -536,7 +631,7 @@ local function paintUnderMouse()
 	if not center then
 		return
 	end
-	local key = cellKey(center, state.grid) .. state.tool
+	local key = `{center.X},{center.Y},{state.grid},{state.tool}`
 	if key == lastKey then
 		return
 	end
@@ -551,6 +646,7 @@ mouse.Button1Down:Connect(function()
 	state.painting = true
 	lastKey = nil
 	state.recording = ChangeHistoryService:TryBeginRecording("MapBuilder", "Pintar blocos")
+	indexModel(getModel())
 	paintUnderMouse()
 end)
 
@@ -559,6 +655,7 @@ mouse.Button1Up:Connect(function()
 		return
 	end
 	state.painting = false
+	mergeModel(getModel()) -- junta os blocos iguais vizinhos (design contínuo)
 	if state.recording then
 		ChangeHistoryService:FinishRecording(state.recording, Enum.FinishRecordingOperation.Commit)
 		state.recording = nil
