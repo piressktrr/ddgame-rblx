@@ -151,6 +151,25 @@ local function addChecker(part: BasePart, first: Color3, second: Color3)
 	end
 end
 
+-- Texto na face que a câmera do jogo vê (ex.: "SOLO").
+local function addLabel(part: BasePart, text: string)
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "Label"
+	gui.Face = Enum.NormalId.Back
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	gui.PixelsPerStud = 25
+	gui.LightInfluence = 0
+	gui.Parent = part
+	local label = Instance.new("TextLabel")
+	label.BackgroundTransparency = 1
+	label.Size = UDim2.fromScale(1, 1)
+	label.Text = text
+	label.TextScaled = true
+	label.Font = Enum.Font.GothamBold
+	label.TextColor3 = Color3.fromRGB(70, 75, 90)
+	label.Parent = gui
+end
+
 -- Peça de um elemento (aparência, tag e atributos), sem posição nem pai.
 local function buildPart(element, grid: number, direction: string): Part
 	local part = Instance.new("Part")
@@ -174,6 +193,9 @@ local function buildPart(element, grid: number, direction: string): Part
 	end
 	if element.checker then
 		addChecker(part, element.color, element.checker)
+	end
+	if element.text then
+		addLabel(part, element.text)
 	end
 	return part
 end

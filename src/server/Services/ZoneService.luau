@@ -8,7 +8,8 @@
 	- dentro do `FreezeZone` → congela e renova `FrozenUntil = agora + Config.Freeze.ReleaseDelay`;
 	- fora do gelo e o tempo passou → descongela;
 	- entra na `StartLine` → começa/recomeça a run (`RaceService.beginRace`);
-	- entra na `FinishLine` com a run valendo → salva o tempo (`RaceService.finishRun`).
+	- entra na `FinishLine` com a run valendo → salva o tempo (`RaceService.finishRun`);
+	- entra na `SoloStart`/`SoloEnd` → liga/desliga o modo solo (`SoloService.setSolo`).
 	A decisão fica em `Shared.Logic.Zones.pickEffect` (pura).
 
 	O estado é o atributo `Config.Attributes.FrozenUntil` no PERSONAGEM, em tempo do servidor
@@ -32,6 +33,7 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 local LobbyService = require(script.Parent.LobbyService)
 local RaceService = require(script.Parent.RaceService)
+local SoloService = require(script.Parent.SoloService)
 
 local FROZEN_UNTIL = Config.Attributes.FrozenUntil
 local ZONE_TAGS = {
@@ -40,6 +42,8 @@ local ZONE_TAGS = {
 	Config.Tags.UnfreezeZone,
 	Config.Tags.StartLine,
 	Config.Tags.FinishLine,
+	Config.Tags.SoloStart,
+	Config.Tags.SoloEnd,
 }
 
 local settings = Config.Zones
@@ -96,6 +100,7 @@ local function checkCharacter(player: Player, character: Model, now: number)
 		previous = current
 	end
 	local inKill, inFreeze, inUnfreeze, inStart, inFinish = false, false, false, false, false
+	local inSoloStart, inSoloEnd = false, false
 	for _, part in
 		workspace:GetPartBoundsInBox(CFrame.new((current + previous) / 2), sweptSize, overlapParams)
 	do
@@ -109,7 +114,18 @@ local function checkCharacter(player: Player, character: Model, now: number)
 			inFinish = true
 		elseif part:HasTag(Config.Tags.StartLine) then
 			inStart = true
+		elseif part:HasTag(Config.Tags.SoloStart) then
+			inSoloStart = true
+		elseif part:HasTag(Config.Tags.SoloEnd) then
+			inSoloEnd = true
 		end
+	end
+
+	-- Linhas do solo: entrar liga/desliga o modo fantasma (o SoloService ignora se já está assim).
+	if inSoloEnd then
+		SoloService.setSolo(player, false)
+	elseif inSoloStart then
+		SoloService.setSolo(player, true)
 	end
 
 	-- Linhas da run: agem ao entrar. Chegada salva o tempo; largada começa/recomeça a run.

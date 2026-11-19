@@ -24,6 +24,7 @@ export type Element = {
 	canCollide: boolean,
 	usesDirection: boolean, -- mão única: guarda `Config.MapElements.DirectionAttribute`
 	checker: Color3?, -- segunda cor do quadriculado (linhas de largada/chegada); nil = sem desenho
+	text: string?, -- texto desenhado na face (ex.: linhas do solo)
 }
 
 local Tags = Config.Tags
@@ -142,6 +143,30 @@ MapElements.list = table.freeze({
 		canCollide = false,
 		usesDirection = false,
 		checker = Color3.fromRGB(25, 25, 30),
+	},
+	{
+		id = "SoloStart",
+		label = "Entrar solo",
+		description = "Atravessável; ao passar vira fantasma (sem colisão com outros jogadores)",
+		tag = Tags.SoloStart,
+		color = Color3.fromRGB(150, 155, 168),
+		transparency = 0.5,
+		material = Enum.Material.SmoothPlastic,
+		canCollide = false,
+		usesDirection = false,
+		text = "SOLO",
+	},
+	{
+		id = "SoloEnd",
+		label = "Sair solo",
+		description = "Atravessável; ao passar volta a colidir com os outros jogadores",
+		tag = Tags.SoloEnd,
+		color = Color3.fromRGB(205, 208, 216),
+		transparency = 0.5,
+		material = Enum.Material.SmoothPlastic,
+		canCollide = false,
+		usesDirection = false,
+		text = "FIM",
 	},
 } :: { Element })
 
