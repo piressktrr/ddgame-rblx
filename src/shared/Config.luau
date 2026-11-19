@@ -10,6 +10,7 @@ local Config = {
 		Distance = 64, -- distância da câmera até o plano; com FOV 50 mostra ~60 studs de altura
 		Height = 6, -- quanto a câmera fica acima do personagem
 		LookAhead = 6, -- studs que a câmera adianta na direção em que o personagem anda
+		LookAheadSpeed = 24, -- studs/s em X a partir dos quais o adiantamento é total (velocidade de andar)
 		FieldOfView = 50,
 		Smoothing = 10, -- maior = segue mais rápido
 	},
@@ -125,8 +126,10 @@ local Config = {
 		GroundFriction = 0.5, -- fração do X mantida por tick no chão sem A/D (para firme)
 		-- studs/s; limite horizontal enquanto preso e no embalo. Acima de DragSpeed para o embalo acumular.
 		MaxSwingSpeed = 180,
-		UprightResponsiveness = 40, -- quão rápido o personagem volta a ficar em pé enquanto preso
-		FaceFlipSpeed = 2, -- studs/s em X para o personagem virar para o lado do movimento
+		-- Quão rápido o personagem gira para ficar em pé / virar de lado enquanto preso (mais baixo = giro
+		-- mais suave ao inverter o balanço).
+		UprightResponsiveness = 20,
+		FaceFlipSpeed = 6, -- studs/s em X para o personagem virar (evita virar a cada inversão lenta)
 		-- Embalo depois de soltar: o Humanoid continua sem controle próprio (senão freia no ar) até
 		-- tocar o chão, a velocidade horizontal cair até a de andar, ou passar este tempo.
 		MomentumMaxTime = 3, -- segundos
