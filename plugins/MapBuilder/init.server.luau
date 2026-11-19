@@ -224,6 +224,12 @@ local function partDirection(part: BasePart): string
 	return if typeof(direction) == "string" then direction else "Up"
 end
 
+-- Tira a peça do mapa SEM `Destroy()`: o Ctrl+Z (ChangeHistoryService) não consegue desfazer um
+-- `Destroy()`, então desfazer um traço removia as peças novas sem trazer as antigas de volta.
+local function remove(instance: Instance)
+	instance.Parent = nil
+end
+
 -- Índice célula -> peça durante um traço (peças unidas aparecem em várias células).
 local cellIndex: { [string]: BasePart } = {}
 
@@ -246,7 +252,7 @@ local function explode(model: Model, part: BasePart)
 	local elementId = part:GetAttribute("Element") :: string
 	local direction = partDirection(part)
 	local ix, iy, w, h = coveredCells(part)
-	part:Destroy()
+	remove(part)
 	for x = ix, ix + w - 1 do
 		for y = iy, iy + h - 1 do
 			local key = cellKey(x, y)
@@ -272,7 +278,7 @@ local function paintCell(model: Model, x: number, y: number, element)
 		if same then
 			return
 		end
-		existing:Destroy()
+		remove(existing)
 		cellIndex[key] = nil
 	end
 	if element then
@@ -293,7 +299,7 @@ local function mergeModel(model: Model)
 					table.insert(cells, { x = x, y = y, kind = kind })
 				end
 			end
-			part:Destroy()
+			remove(part)
 		end
 	end
 	for _, rect in GridMerge.merge(cells) do
@@ -305,7 +311,7 @@ end
 
 local function placeSpawn(model: Model, center: Vector3)
 	for _, existing in CollectionService:GetTagged(Config.Tags.EditorSpawn) do
-		existing:Destroy()
+		remove(existing)
 	end
 	local part = Instance.new("Part")
 	part.Name = "EditorSpawn"
@@ -332,6 +338,20 @@ local function paintAt(center: Vector3)
 		return
 	end
 	local half = state.grid / 2
+	if state.tool == "Erase" then
+		-- O spawn de teste não é bloco de elemento: apaga se o pincel encostar nele.
+		for _, spawn in CollectionService:GetTagged(Config.Tags.EditorSpawn) do
+			if spawn:IsA("BasePart") then
+				local offset = spawn.Position - center
+				if
+					math.abs(offset.X) < spawn.Size.X / 2 + half
+					and math.abs(offset.Y) < spawn.Size.Y / 2 + half
+				then
+					remove(spawn)
+				end
+			end
+		end
+	end
 	local x0 = math.round((center.X - half) / UNIT)
 	local y0 = math.round((center.Y - half) / UNIT)
 	local count = math.max(1, math.round(state.grid / UNIT))
