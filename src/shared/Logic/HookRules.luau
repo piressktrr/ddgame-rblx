@@ -174,6 +174,40 @@ function HookRules.hookDrag(
 	return Vector3.new(nextVelocity.X, nextVelocity.Y, velocity.Z)
 end
 
+export type PlayerPullSettings = {
+	accelPerTick: number, -- studs/s por tick no alcance máximo (DragAccel do gancho)
+	range: number, -- studs: alcance do gancho (o puxão cresce com a distância / alcance)
+	maxSpeed: number, -- studs/s: limite por eixo (SaturatedAdd), como o DragSpeed
+	minDistance: number, -- studs: mais perto que isso não puxa (o puxado não chega ao centro)
+}
+
+-- Gancho em jogador, como o DDNet (CCharacterCore, `m_HookedPlayer`): a cada tick, quem é puxado
+-- recebe `factor` 1,5 e quem puxa 0,25 da aceleração, cada um na direção do outro. A aceleração
+-- cresce com a distância (distância / alcance) e cada eixo usa o SaturatedAdd (não corta embalo).
+-- `velocity` é de quem recebe; `from` a posição dele; `to` a posição do outro.
+function HookRules.playerPull(
+	velocity: Vector3,
+	from: Vector3,
+	to: Vector3,
+	factor: number,
+	settings: PlayerPullSettings,
+	ticks: number?
+): Vector3
+	local delta = Vector3.new(to.X - from.X, to.Y - from.Y, 0)
+	local distance = delta.Magnitude
+	if distance <= settings.minDistance then
+		return velocity
+	end
+	local direction = delta / distance
+	local accel = settings.accelPerTick * (ticks or 1) * (distance / settings.range) * factor
+	local limit = settings.maxSpeed
+	return Vector3.new(
+		HookRules.saturatedAdd(-limit, limit, velocity.X, accel * direction.X),
+		HookRules.saturatedAdd(-limit, limit, velocity.Y, accel * direction.Y),
+		velocity.Z
+	)
+end
+
 -- `SaturatedAdd` do DDNet: soma `modifier` sem passar dos limites, mas não corta um valor que já
 -- está além do limite no sentido da soma (o embalo acima do controle normal é preservado).
 function HookRules.saturatedAdd(min: number, max: number, current: number, modifier: number): number

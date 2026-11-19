@@ -41,6 +41,7 @@ local AirBody = require(script.AirBody)
 local CharacterController = require(script.Parent.CharacterController)
 local DDNetPhysics = require(script.DDNetPhysics)
 local HookPhysics = require(script.HookPhysics)
+local PlayerHookPhysics = require(script.PlayerHookPhysics)
 local PullPhysics = require(script.PullPhysics)
 local Reticle = require(script.Reticle)
 local SwingPhysics = require(script.SwingPhysics)
@@ -49,6 +50,7 @@ type Target = {
 	state: HookRules.TargetState,
 	part: BasePart?,
 	point: Vector3?, -- ponto no plano onde o gancho prenderia
+	player: Player?, -- gancho em outro jogador: o alvo (part = root dele)
 }
 
 type CharacterContext = {
@@ -125,12 +127,18 @@ local aimOverride: Vector3? = nil
 local horizontalOverride: number? = nil
 local reelOverride: number? = nil
 
--- Ignora todos os personagens: gancho em jogador fica para a Fase 4.
+local function isSolo(character: Model?): boolean
+	return character ~= nil and character:GetAttribute(Config.Attributes.Solo) == true
+end
+
+-- O gancho acerta outros jogadores (DDNet). Ignora o próprio personagem e quem está em solo; em solo,
+-- ignora todos (modo fantasma).
 local function refreshFilter()
 	local exclude: { Instance } = {}
+	local selfSolo = isSolo(player.Character)
 	for _, other in Players:GetPlayers() do
 		local character = other.Character
-		if character then
+		if character and (other == player or selfSolo or isSolo(character)) then
 			table.insert(exclude, character)
 		end
 	end
@@ -164,6 +172,23 @@ local function evaluateHit(result: RaycastResult?): Target
 	local part = result.Instance
 	if not part:IsA("BasePart") then
 		return NO_TARGET
+	end
+	-- Corpo de outro jogador: prende nele (o ponto é o root, que acompanha o jogador).
+	local owner = PlayerHookPhysics.playerFromPart(part)
+	if owner then
+		local character = owner.Character
+		local ownerRoot = character and character:FindFirstChild("HumanoidRootPart")
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+		if
+			owner == player
+			or not ownerRoot
+			or not ownerRoot:IsA("BasePart")
+			or not humanoid
+			or humanoid.Health <= 0
+		then
+			return NO_TARGET
+		end
+		return { state = "Valid", part = ownerRoot, point = ownerRoot.Position, player = owner }
 	end
 	-- Hookthrough e mão única: o gancho atravessa (o raio continua depois deles).
 	if part:HasTag(Config.Tags.HookThrough) or part:HasTag(Config.Tags.OneWay) then
@@ -270,7 +295,7 @@ local function release(notifyServer: boolean)
 	publishHookActive()
 end
 
-local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
+local function attach(ctx: CharacterContext, part: BasePart, point: Vector3, targetPlayer: Player?)
 	local currentMode = mode
 	if not currentMode then
 		return
@@ -289,13 +314,23 @@ local function attach(ctx: CharacterContext, part: BasePart, point: Vector3)
 	body:cancelMomentum()
 	body:setAimPoint(anchor) -- braço da pose de voo aponta para o ponto preso (beginMomentum tira)
 
-	local physics = currentMode.new({
+	local params = {
 		character = ctx.character,
 		root = ctx.root,
 		rootAttachment = ctx.rootAttachment,
 		anchor = anchor,
 		body = body,
-	})
+	}
+	local physics = if targetPlayer
+		then PlayerHookPhysics.new({
+			character = params.character,
+			root = params.root,
+			rootAttachment = params.rootAttachment,
+			anchor = params.anchor,
+			body = params.body,
+			target = targetPlayer,
+		})
+		else currentMode.new(params)
 	trove:Add(function()
 		physics:destroy()
 	end)
@@ -381,8 +416,8 @@ local function stepFlight(ctx: CharacterContext, dt: number)
 	if target.state == "Valid" and target.part and target.point then
 		endFlight()
 		release(true) -- troca de alvo (modos que permitem): o corpo continua o mesmo
-		attach(ctx, target.part, target.point)
-		lastResult = "Attached"
+		attach(ctx, target.part, target.point, target.player)
+		lastResult = if target.player then "AttachedPlayer" else "Attached"
 		return
 	end
 	if target.state == "Forbidden" and target.point then
@@ -476,6 +511,58 @@ local function getInput(ctx: CharacterContext): HookPhysics.Input
 	return { horizontal = horizontal, reel = reel, held = buttonHeld }
 end
 
+-- Puxões que outros jogadores aplicam em mim (DDNet: quem é puxado recebe 1,5x, na direção de quem
+-- puxa). O servidor marca `HookTarget` no personagem de quem puxa; cada cliente simula o próprio corpo,
+-- então o puxão é aplicado aqui. Enquanto puxado, o AirBody controla o corpo (senão o Humanoid freia).
+local beingPulled = false
+local INCOMING_TICK = 1 / settings.TickRate
+
+local function applyIncomingPulls(ctx: CharacterContext, dt: number)
+	local pulled = false
+	if not isSolo(ctx.character) and ctx.humanoid.Health > 0 then
+		local velocity = ctx.root.AssemblyLinearVelocity
+		local ticks = math.min(dt / INCOMING_TICK, 4)
+		for _, other in Players:GetPlayers() do
+			local character = other.Character
+			if
+				other ~= player
+				and character
+				and character:GetAttribute(Config.Attributes.HookTarget) == player.UserId
+			then
+				local otherRoot = character:FindFirstChild("HumanoidRootPart")
+				if otherRoot and otherRoot:IsA("BasePart") then
+					local distance = (otherRoot.Position - ctx.root.Position).Magnitude
+					if distance > settings.PlayerPullMinDistance then
+						pulled = true
+					end
+					velocity = HookRules.playerPull(
+						velocity,
+						ctx.root.Position,
+						otherRoot.Position,
+						settings.PlayerPullHookedFactor,
+						PlayerHookPhysics.PULL,
+						ticks
+					)
+				end
+			end
+		end
+		if pulled then
+			if not airBody then
+				airBody = AirBody.new(ctx.character, ctx.humanoid, ctx.root, ctx.rootAttachment)
+				publishHookActive()
+			end
+			local body = airBody :: AirBody.AirBody
+			body:takeOff() -- no chão o Humanoid anularia o puxão
+			body:cancelMomentum()
+			ctx.root.AssemblyLinearVelocity = velocity
+		end
+	end
+	if beingPulled and not pulled and airBody and not attached then
+		airBody:beginMomentum() -- soltou: segue no embalo até pousar
+	end
+	beingPulled = pulled
+end
+
 local function onPreSimulation(dt: number)
 	processPendingFire()
 	local ctx = context
@@ -483,6 +570,7 @@ local function onPreSimulation(dt: number)
 		return
 	end
 	stepFlight(ctx, dt)
+	applyIncomingPulls(ctx, dt)
 	local current = attached
 	if current then
 		-- A peça sumiu (destruída ou saiu do streaming): solta.
@@ -544,6 +632,7 @@ local function onReelAction(
 end
 
 local function cleanupCharacter()
+	beingPulled = false
 	endFlight()
 	release(true)
 	endAirBody()
@@ -587,7 +676,9 @@ local function onCharacterAdded(character: Model)
 			firePending = false
 			endFlight()
 			release(true)
-			endAirBody()
+			if not beingPulled then
+				endAirBody() -- sendo resgatado por outro jogador, o corpo continua no puxão
+			end
 		end
 	end)
 end
