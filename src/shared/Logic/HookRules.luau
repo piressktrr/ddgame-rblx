@@ -121,6 +121,74 @@ function HookRules.moveToward(current: Vector3, target: Vector3, maxDelta: numbe
 	return current + delta * (maxDelta / size)
 end
 
+export type DragSettings = {
+	accelPerTick: number, -- studs/s somados à velocidade a cada tick
+	maxSpeed: number, -- studs/s: acima disso o puxão só pode desviar ou frear
+	minDistance: number, -- studs: mais perto que isso não puxa
+	downFactor: number, -- multiplica o puxão para baixo (para cima puxa mais)
+	assistFactor: number, -- multiplica o X do puxão quando A/D vão no mesmo sentido
+	resistFactor: number, -- multiplica o X do puxão nos outros casos
+}
+
+-- Puxão do gancho preso, como o HOOK_GRABBED do CCharacterCore do DDNet/Teeworlds. Só soma uma
+-- aceleração à velocidade atual (no plano): gravidade, velocidade tangencial e embalo continuam.
+-- `ticks`: quantos ticks do DDNet aplicar (fração = um quadro; padrão 1).
+-- Regra do DDNet: o puxão vale se a nova velocidade ficar abaixo de `maxSpeed` ou for menor que a
+-- atual; senão é descartado (acima do limite o gancho só freia, não curva). Única diferença: se o
+-- puxão inteiro passaria do limite vindo de baixo, aplica só a parte que chega nele (o descarte do
+-- tick inteiro ligava e desligava o puxão a cada quadro e dava trancos).
+-- `moveDirection`: -1 (A), 0, 1 (D).
+function HookRules.hookDrag(
+	velocity: Vector3,
+	toHook: Vector3,
+	moveDirection: number,
+	settings: DragSettings,
+	ticks: number?
+): Vector3
+	local planar = Vector3.new(toHook.X, toHook.Y, 0)
+	local distance = planar.Magnitude
+	if distance <= settings.minDistance then
+		return velocity
+	end
+	local current = Vector3.new(velocity.X, velocity.Y, 0)
+	local speed = current.Magnitude
+	local pull = planar * (settings.accelPerTick * (ticks or 1) / distance)
+	local pullY = if pull.Y < 0 then pull.Y * settings.downFactor else pull.Y
+	local assisted = (pull.X < 0 and moveDirection < 0) or (pull.X > 0 and moveDirection > 0)
+	pull = Vector3.new(pull.X * (if assisted then settings.assistFactor else settings.resistFactor), pullY, 0)
+
+	local nextVelocity = current + pull
+	local nextSpeed = nextVelocity.Magnitude
+	if nextSpeed > settings.maxSpeed and nextSpeed >= speed then
+		if speed >= settings.maxSpeed then
+			return velocity -- acima do limite e o puxão aceleraria: descartado (DDNet)
+		end
+		-- Vindo de baixo: só a fração t do puxão que leva a velocidade exatamente ao limite
+		-- (|current + t * pull| = maxSpeed).
+		local a = pull:Dot(pull)
+		local b = 2 * current:Dot(pull)
+		local c = speed * speed - settings.maxSpeed * settings.maxSpeed
+		local t = (-b + math.sqrt(b * b - 4 * a * c)) / (2 * a)
+		nextVelocity = current + pull * math.clamp(t, 0, 1)
+	end
+	return Vector3.new(nextVelocity.X, nextVelocity.Y, velocity.Z)
+end
+
+-- `SaturatedAdd` do DDNet: soma `modifier` sem passar dos limites, mas não corta um valor que já
+-- está além do limite no sentido da soma (o embalo acima do controle normal é preservado).
+function HookRules.saturatedAdd(min: number, max: number, current: number, modifier: number): number
+	if modifier < 0 then
+		if current < min then
+			return current
+		end
+		return math.max(current + modifier, min)
+	end
+	if current > max then
+		return current
+	end
+	return math.min(current + modifier, max)
+end
+
 function HookRules.isFiniteNumber(value: number): boolean
 	return value == value and math.abs(value) ~= math.huge
 end

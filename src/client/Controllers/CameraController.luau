@@ -28,9 +28,10 @@ local function update(dt: number)
 		return
 	end
 
-	-- Adianta a câmera para o lado em que o personagem está indo.
+	-- Adianta a câmera para o lado em que o personagem está indo, proporcional à velocidade (sem saltar
+	-- de um lado para o outro quando o balanço do gancho inverte).
 	local vx = root.AssemblyLinearVelocity.X
-	local targetAhead = if math.abs(vx) > 1 then math.sign(vx) * settings.LookAhead else lookAhead
+	local targetAhead = math.clamp(vx / settings.LookAheadSpeed, -1, 1) * settings.LookAhead
 	local alpha = 1 - math.exp(-settings.Smoothing * dt)
 	lookAhead += (targetAhead - lookAhead) * alpha * 0.5
 

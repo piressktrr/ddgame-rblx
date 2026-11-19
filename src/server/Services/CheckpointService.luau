@@ -48,6 +48,14 @@ local function getReached(player: Player): number
 	return if typeof(value) == "number" then value else 0
 end
 
+-- Peça do último checkpoint alcançado, se o jogador está em corrida e já passou por algum.
+function CheckpointService.getCheckpointPart(player: Player): BasePart?
+	if player:GetAttribute(Config.Attributes.InRace) ~= true then
+		return nil
+	end
+	return checkpoints[getReached(player)]
+end
+
 local function placeAtCheckpoint(player: Player, character: Model)
 	local part = checkpoints[getReached(player)]
 	-- Fora de corrida, ou ainda sem checkpoint: quem posiciona é o LobbyService (lobby ou RaceStart).

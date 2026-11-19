@@ -6,7 +6,10 @@
 	apertada, ele freia a velocidade horizontal (76 -> 31 studs/s em 0,3 s), o que mataria o impulso do
 	balanço ao soltar. Por isso, enquanto este corpo existe, o Humanoid fica no estado `Physics` (sem
 	controle próprio) e:
-	  - um `VectorForce` horizontal aplica A/D (dirige o balanço e dá controle no ar);
+	  - A/D seguem o controle do DDNet: aceleram até `AirControlSpeed` (no chão, até o WalkSpeed) sem
+	    cortar velocidade acima disso; sem A/D, o atrito do DDNet freia o X a cada tick (no ar 0,95, no
+	    chão 0,5). Ticks fixos de `Config.Hook.TickRate`;
+	  - um `VectorForce` deixa a gravidade igual à do DDNet (`Config.Hook.HookGravity`);
 	  - um `AlignOrientation` mantém o personagem em pé, virado para ±X;
 	  - a velocidade horizontal tem limite (`Config.Hook.MaxSwingSpeed`); a queda não.
 
@@ -15,10 +18,11 @@
 	(`FloorMaterial` vira `Air`) ou quando alguém chama `takeOff()`, e daí em diante não devolve até o
 	fim (troca de mão única, sem piscar).
 
-	Depois de soltar vem o "embalo": no ar, só termina ao passar `Config.Hook.MomentumMaxTime`; ao pousar
-	com embalo, desliza e freia com `Config.Hook.LandingSlideDecel` e termina quando a velocidade
-	horizontal cai até a de andar (`Humanoid.WalkSpeed`).
-	Aí o Humanoid volta a `Freefall` e retoma o controle normal.
+	Depois de soltar vem o "embalo": no ar dura até `Config.Hook.MomentumMaxTime`; no chão, enquanto a
+	velocidade horizontal estiver acima da de andar. Sem A/D o atrito do chão do DDNet para firme; com
+	A/D no sentido do movimento a velocidade se mantém (é o que deixa encadear ganchos ganhando
+	velocidade). Aí o Humanoid volta a `Freefall` e retoma o controle. Enquanto o corpo controla, as
+	peças do personagem ficam sem atrito nem quique: só a regra do DDNet freia.
 
 	Pose: enquanto o corpo controla (no ar), `HookPose` põe uma pose procedural de voo (braço para o ponto
 	do gancho, corpo inclinado, pernas para trás), entrando e saindo em ~0,15 s. Quem prende chama
@@ -49,6 +53,8 @@ export type AirBody = {
 }
 
 local settings = Config.Hook
+local INPUT_DEADZONE = 0.1 -- |A/D| abaixo disso conta como sem direção
+local OVERRIDE_WEIGHT = 100 -- peso do atrito/elasticidade 0 contra o do chão (o nosso vence)
 
 local AirBody = {}
 
@@ -64,14 +70,15 @@ function AirBody.new(
 ): AirBody
 	local trove = Trove.new()
 
-	local force = Instance.new("VectorForce")
-	force.Name = "HookAirForce"
-	force.Attachment0 = rootAttachment
-	force.RelativeTo = Enum.ActuatorRelativeTo.World
-	force.ApplyAtCenterOfMass = true
-	force.Force = Vector3.zero
-	force.Parent = root
-	trove:Add(force)
+	-- Gravidade do DDNet enquanto o corpo controla: compensa a diferença para a do Roblox.
+	local lift = Instance.new("VectorForce")
+	lift.Name = "HookGravity"
+	lift.Attachment0 = rootAttachment
+	lift.RelativeTo = Enum.ActuatorRelativeTo.World
+	lift.ApplyAtCenterOfMass = true
+	lift.Enabled = false
+	lift.Parent = root
+	trove:Add(lift)
 
 	local facing = if root.CFrame.LookVector.X < 0 then -1 else 1
 	local upright = Instance.new("AlignOrientation")
@@ -128,7 +135,23 @@ function AirBody.new(
 		facing = if root.CFrame.LookVector.X < 0 then -1 else 1
 		upright.CFrame = facingCFrame(facing)
 		upright.Enabled = true
+		lift.Force = Vector3.new(0, root.AssemblyMass * (workspace.Gravity - settings.HookGravity), 0)
+		lift.Enabled = true
 		humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+		-- Sem atrito nem quique do motor de física: quem freia é só a regra do DDNet (`step`).
+		for _, child in character:GetChildren() do
+			if child:IsA("BasePart") then
+				local previous = child.CustomPhysicalProperties
+				local base = previous or PhysicalProperties.new(child.Material)
+				child.CustomPhysicalProperties =
+					PhysicalProperties.new(base.Density, 0, 0, OVERRIDE_WEIGHT, OVERRIDE_WEIGHT)
+				trove:Add(function()
+					if child.Parent then
+						child.CustomPhysicalProperties = previous
+					end
+				end)
+			end
+		end
 	end
 	if humanoid.FloorMaterial == Enum.Material.Air then
 		enterAir()
@@ -158,7 +181,7 @@ function AirBody.new(
 
 	local body = {} :: AirBody
 
-	function body.step(_self: AirBody, _dt: number, horizontal: number)
+	function body.step(_self: AirBody, dt: number, horizontal: number)
 		if not airborne then
 			if humanoid.FloorMaterial ~= Enum.Material.Air then
 				return -- ainda no chão: o Humanoid anda e pula normalmente, a corda só limita a distância
@@ -167,25 +190,31 @@ function AirBody.new(
 		end
 
 		local velocity = root.AssemblyLinearVelocity
-		local push = horizontal * settings.SwingAcceleration
-		if momentumStart and isGrounded() and math.abs(velocity.X) > 0.5 then
-			-- Pousou com embalo: desliza e freia aos poucos, em vez de parar seco.
-			push -= math.sign(velocity.X) * settings.LandingSlideDecel
+		local grounded = isGrounded()
+		local vx = velocity.X
+		local direction = if horizontal > INPUT_DEADZONE
+			then 1
+			elseif horizontal < -INPUT_DEADZONE then -1
+			else 0
+		if direction == 0 then
+			local friction = if grounded then settings.GroundFriction else settings.AirFriction
+			vx *= friction ^ (dt * settings.TickRate)
+		else
+			local accel = if grounded then settings.GroundControlAccel else settings.AirControlAccel
+			local maxSpeed = if grounded then humanoid.WalkSpeed else settings.AirControlSpeed
+			vx = HookRules.saturatedAdd(-maxSpeed, maxSpeed, vx, direction * accel * dt)
 		end
-		force.Force = Vector3.new(push * root.AssemblyMass, 0, 0)
-		if math.abs(velocity.X) > settings.FaceFlipSpeed then
-			local newFacing = if velocity.X < 0 then -1 else 1
+		-- Limite só na horizontal: a queda continua livre (a gravidade não é cortada).
+		vx = math.clamp(vx, -settings.MaxSwingSpeed, settings.MaxSwingSpeed)
+		if vx ~= velocity.X then
+			root.AssemblyLinearVelocity = Vector3.new(vx, velocity.Y, velocity.Z)
+		end
+		if math.abs(vx) > settings.FaceFlipSpeed then
+			local newFacing = if vx < 0 then -1 else 1
 			if newFacing ~= facing then
 				facing = newFacing
 				upright.CFrame = facingCFrame(facing)
 			end
-		end
-
-		-- Limite só na horizontal: a queda continua livre (a gravidade não é cortada).
-		local horizontalVelocity = Vector3.new(velocity.X, 0, velocity.Z)
-		local limited = HookRules.clampSpeed(horizontalVelocity, settings.MaxSwingSpeed)
-		if limited ~= horizontalVelocity then
-			root.AssemblyLinearVelocity = Vector3.new(limited.X, velocity.Y, limited.Z)
 		end
 	end
 
@@ -219,14 +248,12 @@ function AirBody.new(
 		if not airborne then
 			return true -- soltou sem ter saído do chão: não há embalo
 		end
-		if os.clock() - start >= settings.MomentumMaxTime then
+		if os.clock() - start >= settings.MomentumMaxTime and not isGrounded() then
 			return true
 		end
-		if not isGrounded() then
-			return false -- no ar só o tempo encerra (num puxão quase vertical a velocidade X é ~0)
-		end
-		-- Pousou: o embalo termina quando o deslize chega à velocidade de andar.
-		return math.abs(root.AssemblyLinearVelocity.X) <= humanoid.WalkSpeed
+		-- No chão o embalo vale enquanto estiver acima da velocidade de andar: segurando A/D no mesmo
+		-- sentido ele se mantém (DDNet); sem A/D, o atrito do chão para firme em poucos ticks.
+		return isGrounded() and math.abs(root.AssemblyLinearVelocity.X) <= humanoid.WalkSpeed
 	end
 
 	function body.destroy(_self: AirBody)

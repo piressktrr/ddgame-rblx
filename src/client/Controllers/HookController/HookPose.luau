@@ -29,8 +29,9 @@ export type HookPose = {
 }
 
 -- Ajustes da pose (só visual, por isso ficam aqui e não no Config).
-local FADE_TIME = 0.15 -- segundos para entrar/sair da pose
-local POSE_SHARPNESS = 22 -- 1/s: quão rápido cada junta segue a pose (mola exponencial)
+local FADE_TIME = 0.2 -- segundos para entrar/sair da pose
+local POSE_SHARPNESS = 14 -- 1/s: quão rápido cada junta segue a pose (mola exponencial)
+local VELOCITY_SHARPNESS = 8 -- 1/s: filtro da velocidade que guia inclinação e pernas
 local MIN_SPEED = 1 -- studs/s: abaixo disso não inclina
 local FULL_SPEED = 50 -- studs/s: velocidade em que a inclinação e o balanço das pernas chegam ao máximo
 local LEAN_MAX_ANGLE = math.rad(50)
@@ -282,6 +283,7 @@ function HookPose.new(character: Model, humanoid: Humanoid): HookPose
 	local goalAlpha = 1
 	local phase = 0
 	local elapsed = 0
+	local smoothedVelocity: Vector3? = nil
 	local connection: RBXScriptConnection? = nil
 
 	local function stop()
@@ -337,7 +339,9 @@ function HookPose.new(character: Model, humanoid: Humanoid): HookPose
 		if sine < 1e-3 then
 			return CFrame.identity -- subindo ou caindo reto: fica em pé
 		end
-		local angle = math.min(math.atan2(sine, direction.Y), LEAN_MAX_ANGLE)
+		-- Inclina pela parte horizontal do movimento: vai a 0 aos poucos perto da vertical (subindo ou
+		-- caindo), sem o salto de 50° para 0° de quando a queda ficava exatamente reta.
+		local angle = math.min(math.asin(math.min(sine, 1)), LEAN_MAX_ANGLE)
 		return CFrame.fromAxisAngle(axis / sine, angle * math.clamp(speed / FULL_SPEED, 0, 1))
 	end
 
@@ -378,7 +382,12 @@ function HookPose.new(character: Model, humanoid: Humanoid): HookPose
 		elapsed += dt
 
 		local rootCFrame = root.CFrame
-		local velocity = root.AssemblyLinearVelocity
+		-- Velocidade filtrada: a pose acompanha a tendência do movimento, não cada puxão do gancho.
+		local rawVelocity = root.AssemblyLinearVelocity
+		smoothedVelocity = if smoothedVelocity
+			then smoothedVelocity:Lerp(rawVelocity, 1 - math.exp(-VELOCITY_SHARPNESS * dt))
+			else rawVelocity
+		local velocity = smoothedVelocity :: Vector3
 		local localVelocity = rootCFrame:VectorToObjectSpace(velocity)
 		local speed = localVelocity.Magnitude
 		local speedFactor = math.clamp(speed / FULL_SPEED, 0, 1)

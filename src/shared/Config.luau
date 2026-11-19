@@ -10,6 +10,7 @@ local Config = {
 		Distance = 64, -- distância da câmera até o plano; com FOV 50 mostra ~60 studs de altura
 		Height = 6, -- quanto a câmera fica acima do personagem
 		LookAhead = 6, -- studs que a câmera adianta na direção em que o personagem anda
+		LookAheadSpeed = 24, -- studs/s em X a partir dos quais o adiantamento é total (velocidade de andar)
 		FieldOfView = 50,
 		Smoothing = 10, -- maior = segue mais rápido
 	},
@@ -56,12 +57,27 @@ local Config = {
 	},
 
 	Hook = {
-		-- "Pull" = puxão direto ao alvo (ADR 0042, padrão). "Swing" = balanço com RopeConstraint
-		-- (ADR 0036), mantido como referência.
-		Mode = "Pull",
+		-- "DDNet" = física do gancho do DDNet (padrão). "Pull" = puxão direto (ADR 0042) e "Swing" =
+		-- RopeConstraint (ADR 0036), mantidos como referência.
+		Mode = "DDNet",
 		Range = 40, -- studs, contados do HumanoidRootPart (ADR 0039)
-		Cooldown = 0.25, -- segundos entre um prender e o próximo
-		AimAssistRadius = 3, -- studs; raio da esfera de ajuda de mira (ADR 0039)
+		Cooldown = 0.1, -- segundos entre um prender e o próximo
+		-- Esfera de ajuda de mira (ADR 0039). 0 = desligada: o gancho segue exatamente a linha da mira.
+		AimAssistRadius = 0, -- studs
+
+		-- Modo "DDNet". Tuning padrão do DDNet (50 ticks/s) com 1 unidade/tick = 4,5 studs/s (um pouco
+		-- acima da escala do pulo deste jogo, 3,8, para o gancho ficar mais rápido como no DDNet).
+		TickRate = 50, -- ticks/s de referência do gancho e do controle no ar
+		FireSpeed = 360, -- studs/s do gancho voando (80 unidades/tick)
+		DragAccel = 675, -- studs/s² do puxão (3,0 unidades/tick²)
+		-- Gravidade do DDNet (0,5 unidade/tick²) enquanto o gancho controla o corpo (preso e embalo).
+		-- A do Roblox (196,2) é 1,74x mais forte nesta escala e encurtava a parábola.
+		HookGravity = 112.5, -- studs/s²
+		DragSpeed = 68, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
+		DragMinDistance = 4.8, -- studs: mais perto do ponto que isso não puxa (46 unidades)
+		DragDownFactor = 0.3, -- puxão para baixo vale 30% (fica mais fácil subir numa plataforma)
+		DragAssistFactor = 0.95, -- X do puxão com A/D no mesmo sentido
+		DragResistFactor = 0.75, -- X do puxão sem A/D ou contra
 		SurfaceTolerance = 0.5, -- studs: folga para o ponto atingido contar como "na peça, no plano"
 		-- Peças com CanCollide = false (volumes de zona, enfeites) não prendem.
 		IgnoreNonCollidable = true,
@@ -76,7 +92,6 @@ local Config = {
 		-- Sonda contra atravessar paredes ao recolher: a caixa do corpo, deslocada estes studs na
 		-- direção da corda; se tocar algo colidível, a corda para de encurtar.
 		ReelProbeDistance = 0.5, -- studs
-		LandingSlideDecel = 90, -- studs/s²: freio do deslize ao pousar com embalo
 		ReelProbeInset = 0.2, -- studs que a caixa encolhe de cada lado (não acusar o chão em que pisa)
 
 		-- Puxão (modo "Pull", ADR 0042)
@@ -102,10 +117,19 @@ local Config = {
 		PullBlockedArriveDistance = 6, -- studs
 
 		-- Balanço (RF-17)
-		SwingAcceleration = 50, -- studs/s² aplicados por A/D enquanto preso (balanço) e no embalo
-		MaxSwingSpeed = 70, -- studs/s; limite de velocidade enquanto preso e no embalo
-		UprightResponsiveness = 40, -- quão rápido o personagem volta a ficar em pé enquanto preso
-		FaceFlipSpeed = 2, -- studs/s em X para o personagem virar para o lado do movimento
+		-- Controle horizontal enquanto o gancho controla o corpo (preso e no embalo), como no DDNet.
+		-- A/D aceleram até o limite sem cortar velocidade acima dele; sem A/D, o atrito freia por tick.
+		AirControlAccel = 340, -- studs/s² (1,5 unidades/tick²)
+		AirControlSpeed = 22, -- studs/s (5 unidades/tick)
+		AirFriction = 0.95, -- fração do X mantida por tick no ar sem A/D
+		GroundControlAccel = 450, -- studs/s² (2 unidades/tick²); limite = WalkSpeed do Humanoid
+		GroundFriction = 0.5, -- fração do X mantida por tick no chão sem A/D (para firme)
+		-- studs/s; limite horizontal enquanto preso e no embalo. Acima de DragSpeed para o embalo acumular.
+		MaxSwingSpeed = 180,
+		-- Quão rápido o personagem gira para ficar em pé / virar de lado enquanto preso (mais baixo = giro
+		-- mais suave ao inverter o balanço).
+		UprightResponsiveness = 20,
+		FaceFlipSpeed = 6, -- studs/s em X para o personagem virar (evita virar a cada inversão lenta)
 		-- Embalo depois de soltar: o Humanoid continua sem controle próprio (senão freia no ar) até
 		-- tocar o chão, a velocidade horizontal cair até a de andar, ou passar este tempo.
 		MomentumMaxTime = 3, -- segundos
@@ -142,16 +166,23 @@ local Config = {
 		RaceFinishTime = "RaceFinishTime",
 		-- No Player: melhor tempo (s) nesta sessão do servidor (placar RF-63); nil = nunca terminou.
 		BestTime = "BestTime",
+		-- No Player: muda a cada volta instantânea ao checkpoint (zona de morte). Cliente e HookService
+		-- soltam o gancho e devolvem os verdes, como ao renascer.
+		Respawns = "Respawns",
 	},
 
 	-- Zonas: morte e gelo (RF-20..25). Dono: subagente de zonas.
 	Freeze = {
-		Duration = 15, -- segundos congelado até morrer (ADR 0014, 0045)
+		-- Como no DDNet: congelado enquanto toca o freeze; depois de sair, descongela após este tempo
+		-- (ou na hora, num unfreeze). Não mata: preso sozinho, o jogador usa o botão de recomeçar.
+		ReleaseDelay = 1, -- segundos
 		HighlightColor = Color3.fromRGB(150, 220, 255), -- visual local do congelado (FreezeController)
 		HighlightFillTransparency = 0.45,
 	},
 	Zones = {
-		CheckInterval = 0.1, -- segundos entre as conferências das zonas no servidor
+		CheckInterval = 0, -- segundos entre as conferências das zonas no servidor (0 = todo quadro)
+		-- Deslocamento (studs) entre conferências acima do qual é teleporte, não movimento: não varre.
+		MaxSweep = 30,
 		-- Caixa do corpo usada na conferência, no espaço do HumanoidRootPart (R15 padrão: pés ~3 studs
 		-- abaixo do centro do root, topo da cabeça ~2,5 acima).
 		CharacterBoxSize = Vector3.new(2, 5.5, 1), -- studs
@@ -207,6 +238,20 @@ local Config = {
 		BouncerZone = "BouncerZone",
 		LobbySpawn = "LobbySpawn",
 		LobbyPortal = "LobbyPortal",
+		OneWay = "OneWay", -- mão única (atributo `Config.MapElements.DirectionAttribute`)
+		HookThrough = "HookThrough", -- sólido para o jogador, o gancho atravessa
+		EditorSpawn = "EditorSpawn", -- no Studio, renasce aqui se `Enabled` (área do MapBuilder)
+	},
+
+	-- Elementos de mapa do MapBuilder (Shared.MapElements).
+	MapElements = {
+		DirectionAttribute = "Direction", -- "Up" | "Down" | "Left" | "Right": sentido em que se passa
+		-- Folga (studs) para a mão única considerar o personagem do lado sólido.
+		OneWayTolerance = 0.6,
+		OneWayCheckRadius = 40, -- studs: só confere mãos únicas perto do personagem
+		BlockDepth = 12, -- studs: profundidade (Z) dos blocos pintados, como os mapas existentes
+		DefaultGrid = 4, -- studs: lado do bloco no MapBuilder
+		EditorModelName = "Editor", -- Workspace.Maps.<nome>: onde o MapBuilder pinta
 	},
 }
 
