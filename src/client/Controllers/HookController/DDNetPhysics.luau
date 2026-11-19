@@ -2,7 +2,7 @@
 --[[
 	Física do gancho tipo C, DDNet (padrão): o HOOK_GRABBED do CCharacterCore do DDNet/Teeworlds.
 
-	- Em ticks fixos (`Config.Hook.TickRate`, independente do FPS) soma à velocidade do root uma
+	- A cada quadro, proporcional ao tempo (em ticks de `Config.Hook.TickRate`), soma à velocidade do root uma
 	  aceleração na direção do ponto (`HookRules.hookDrag`). Não há corda rígida nem velocidade imposta:
 	  a gravidade do Roblox continua agindo, a velocidade tangencial fica e o embalo se acumula.
 	- O puxão só acelera até `DragSpeed`; acima disso só pode desviar ou frear. É isso que dá o balanço
@@ -54,7 +54,6 @@ function DDNetPhysics.new(params: HookPhysics.Params): HookPhysics.Physics
 		body:takeOff()
 	end
 
-	local accumulator = 0
 	local physics = {} :: HookPhysics.Physics
 
 	function physics.step(
@@ -65,13 +64,11 @@ function DDNetPhysics.new(params: HookPhysics.Params): HookPhysics.Physics
 		if not input.held then
 			return "Release"
 		end
-		accumulator = math.min(accumulator + dt, TICK * MAX_TICKS_PER_FRAME)
+		-- Contínuo: a fração de tick deste quadro (puxão em degraus de 50/s a 60 FPS dava trancos).
+		local ticks = math.min(dt / TICK, MAX_TICKS_PER_FRAME)
 		local velocity = root.AssemblyLinearVelocity
-		local pulled = velocity
-		while accumulator >= TICK do
-			accumulator -= TICK
-			pulled = HookRules.hookDrag(pulled, anchor.WorldPosition - root.Position, input.horizontal, DRAG)
-		end
+		local pulled =
+			HookRules.hookDrag(velocity, anchor.WorldPosition - root.Position, input.horizontal, DRAG, ticks)
 		if pulled ~= velocity then
 			root.AssemblyLinearVelocity = pulled
 		end

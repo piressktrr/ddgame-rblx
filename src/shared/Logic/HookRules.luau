@@ -130,32 +130,37 @@ export type DragSettings = {
 	resistFactor: number, -- multiplica o X do puxão nos outros casos
 }
 
--- Um tick do gancho preso, como o HOOK_GRABBED do CCharacterCore do DDNet/Teeworlds. Só soma uma
+-- Puxão do gancho preso, como o HOOK_GRABBED do CCharacterCore do DDNet/Teeworlds. Só soma uma
 -- aceleração à velocidade atual (no plano): gravidade, velocidade tangencial e embalo continuam.
--- A soma vale se a nova velocidade ficar abaixo de `maxSpeed` ou não aumentar a velocidade.
+-- `ticks`: quantos ticks do DDNet aplicar (fração = um quadro; padrão 1).
+-- O puxão não leva a velocidade além de max(`maxSpeed`, velocidade atual): acima do limite ele só
+-- curva a trajetória ou freia. (O DDNet descarta o tick inteiro nesse caso; aqui o módulo é limitado
+-- para o puxão não ligar e desligar a cada quadro, o que dava trancos no balanço.)
 -- `moveDirection`: -1 (A), 0, 1 (D).
 function HookRules.hookDrag(
 	velocity: Vector3,
 	toHook: Vector3,
 	moveDirection: number,
-	settings: DragSettings
+	settings: DragSettings,
+	ticks: number?
 ): Vector3
 	local planar = Vector3.new(toHook.X, toHook.Y, 0)
 	local distance = planar.Magnitude
 	if distance <= settings.minDistance then
 		return velocity
 	end
-	local pull = planar * (settings.accelPerTick / distance)
+	local pull = planar * (settings.accelPerTick * (ticks or 1) / distance)
 	local pullY = if pull.Y < 0 then pull.Y * settings.downFactor else pull.Y
 	local assisted = (pull.X < 0 and moveDirection < 0) or (pull.X > 0 and moveDirection > 0)
 	local pullX = pull.X * (if assisted then settings.assistFactor else settings.resistFactor)
 
 	local current = Vector3.new(velocity.X, velocity.Y, 0)
 	local nextVelocity = current + Vector3.new(pullX, pullY, 0)
-	if nextVelocity.Magnitude < settings.maxSpeed or nextVelocity.Magnitude < current.Magnitude then
-		return Vector3.new(nextVelocity.X, nextVelocity.Y, velocity.Z)
+	local limit = math.max(settings.maxSpeed, current.Magnitude)
+	if nextVelocity.Magnitude > limit then
+		nextVelocity = nextVelocity.Unit * limit
 	end
-	return velocity
+	return Vector3.new(nextVelocity.X, nextVelocity.Y, velocity.Z)
 end
 
 -- `SaturatedAdd` do DDNet: soma `modifier` sem passar dos limites, mas não corta um valor que já

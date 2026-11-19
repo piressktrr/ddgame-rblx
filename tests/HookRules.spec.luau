@@ -204,10 +204,11 @@ return function()
 			assistFactor = 0.95,
 			resistFactor = 0.75,
 		}
+		-- Vector3 guarda float32: 1e-4 de folga.
 		local function near(actual: Vector3, x: number, y: number, z: number)
-			expect(actual.X).to.be.near(x, 1e-6)
-			expect(actual.Y).to.be.near(y, 1e-6)
-			expect(actual.Z).to.be.near(z, 1e-6)
+			expect(actual.X).to.be.near(x, 1e-4)
+			expect(actual.Y).to.be.near(y, 1e-4)
+			expect(actual.Z).to.be.near(z, 1e-4)
 		end
 
 		it("soma o puxão à velocidade atual, sem substituir (tangencial fica)", function()
@@ -229,8 +230,18 @@ return function()
 		end)
 
 		it("não acelera além de maxSpeed, mas a velocidade acima dele é preservada", function()
-			near(HookRules.hookDrag(Vector3.new(0, 45, 0), Vector3.new(0, 10, 0), 0, DRAG), 0, 45, 0)
+			near(HookRules.hookDrag(Vector3.new(0, 45, 0), Vector3.new(0, 10, 0), 0, DRAG), 0, 50, 0)
 			near(HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(10, 0, 0), 0, DRAG), 80, 0, 0)
+		end)
+
+		it("acima de maxSpeed curva a trajetória sem mudar o módulo", function()
+			local result = HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(0, 10, 0), 0, DRAG)
+			expect(result.Magnitude).to.be.near(80, 1e-4)
+			expect(result.Y > 0).to.equal(true)
+		end)
+
+		it("fração de tick aplica a fração do puxão", function()
+			near(HookRules.hookDrag(Vector3.zero, Vector3.new(0, 10, 0), 0, DRAG, 0.5), 0, 5, 0)
 		end)
 
 		it("acima de maxSpeed ainda pode frear ou desviar", function()

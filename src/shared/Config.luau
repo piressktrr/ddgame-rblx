@@ -64,12 +64,12 @@ local Config = {
 		-- Esfera de ajuda de mira (ADR 0039). 0 = desligada: o gancho segue exatamente a linha da mira.
 		AimAssistRadius = 0, -- studs
 
-		-- Modo "DDNet". Tuning padrão do DDNet (50 ticks/s) com velocidades na escala do pulo deste jogo:
-		-- 1 unidade/tick = 3,8 studs/s (pulo do DDNet 13,2 un/tick = pulo daqui, ~50 studs/s).
-		TickRate = 50, -- ticks/s da simulação do gancho e do controle no ar (fixo, independente do FPS)
-		FireSpeed = 300, -- studs/s do gancho voando (mesma proporção do DDNet: 80/15 do DragSpeed)
-		DragAccel = 570, -- studs/s² do puxão (3,0 unidades/tick²)
-		DragSpeed = 57, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
+		-- Modo "DDNet". Tuning padrão do DDNet (50 ticks/s) com 1 unidade/tick = 4,5 studs/s (um pouco
+		-- acima da escala do pulo deste jogo, 3,8, para o gancho ficar mais rápido como no DDNet).
+		TickRate = 50, -- ticks/s de referência do gancho e do controle no ar
+		FireSpeed = 360, -- studs/s do gancho voando (80 unidades/tick)
+		DragAccel = 675, -- studs/s² do puxão (3,0 unidades/tick²)
+		DragSpeed = 68, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
 		DragMinDistance = 4.8, -- studs: mais perto do ponto que isso não puxa (46 unidades)
 		DragDownFactor = 0.3, -- puxão para baixo vale 30% (fica mais fácil subir numa plataforma)
 		DragAssistFactor = 0.95, -- X do puxão com A/D no mesmo sentido
@@ -115,13 +115,13 @@ local Config = {
 		-- Balanço (RF-17)
 		-- Controle horizontal enquanto o gancho controla o corpo (preso e no embalo), como no DDNet.
 		-- A/D aceleram até o limite sem cortar velocidade acima dele; sem A/D, o atrito freia por tick.
-		AirControlAccel = 285, -- studs/s² (1,5 unidades/tick²)
-		AirControlSpeed = 19, -- studs/s (5 unidades/tick)
+		AirControlAccel = 340, -- studs/s² (1,5 unidades/tick²)
+		AirControlSpeed = 22, -- studs/s (5 unidades/tick)
 		AirFriction = 0.95, -- fração do X mantida por tick no ar sem A/D
-		GroundControlAccel = 380, -- studs/s² (2 unidades/tick²); limite = WalkSpeed do Humanoid
+		GroundControlAccel = 450, -- studs/s² (2 unidades/tick²); limite = WalkSpeed do Humanoid
 		GroundFriction = 0.5, -- fração do X mantida por tick no chão sem A/D (para firme)
 		-- studs/s; limite horizontal enquanto preso e no embalo. Acima de DragSpeed para o embalo acumular.
-		MaxSwingSpeed = 150,
+		MaxSwingSpeed = 180,
 		UprightResponsiveness = 40, -- quão rápido o personagem volta a ficar em pé enquanto preso
 		FaceFlipSpeed = 2, -- studs/s em X para o personagem virar para o lado do movimento
 		-- Embalo depois de soltar: o Humanoid continua sem controle próprio (senão freia no ar) até
