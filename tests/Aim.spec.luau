@@ -4,15 +4,16 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Aim = require(ReplicatedStorage.Shared.Logic.Aim)
 
-local function expectVector(actual: Vector3?, expected: Vector3)
-	expect(actual).to.be.ok()
-	local v = actual :: Vector3
-	expect(v.X).to.be.near(expected.X, 1e-6)
-	expect(v.Y).to.be.near(expected.Y, 1e-6)
-	expect(v.Z).to.be.near(expected.Z, 1e-6)
-end
-
 return function()
+	-- Dentro da função: o TestEZ só injeta `expect` no ambiente dela.
+	local function expectVector(actual: Vector3?, expected: Vector3)
+		expect(actual).to.be.ok()
+		local v = actual :: Vector3
+		expect(v.X).to.be.near(expected.X, 1e-6)
+		expect(v.Y).to.be.near(expected.Y, 1e-6)
+		expect(v.Z).to.be.near(expected.Z, 1e-6)
+	end
+
 	describe("toPlane", function()
 		it("mantém X e Y e troca o Z pelo do plano", function()
 			expectVector(Aim.toPlane(Vector3.new(1, 2, 3), 5), Vector3.new(1, 2, 5))

@@ -12,13 +12,14 @@ local LIMITS: HookRules.RopeLimits = {
 	maxLead = 1,
 }
 
-local function expectVector(actual: Vector3, expected: Vector3)
-	expect(actual.X).to.be.near(expected.X, 1e-6)
-	expect(actual.Y).to.be.near(expected.Y, 1e-6)
-	expect(actual.Z).to.be.near(expected.Z, 1e-6)
-end
-
 return function()
+	-- Dentro da função: o TestEZ só injeta `expect` no ambiente dela.
+	local function expectVector(actual: Vector3, expected: Vector3)
+		expect(actual.X).to.be.near(expected.X, 1e-6)
+		expect(actual.Y).to.be.near(expected.Y, 1e-6)
+		expect(actual.Z).to.be.near(expected.Z, 1e-6)
+	end
+
 	describe("surfaceKind", function()
 		it("sem tags é Normal", function()
 			expect(HookRules.surfaceKind(false, false)).to.equal("Normal")
