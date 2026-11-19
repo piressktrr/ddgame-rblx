@@ -9,6 +9,7 @@
 	  - A/D seguem o controle do DDNet: aceleram até `AirControlSpeed` (no chão, até o WalkSpeed) sem
 	    cortar velocidade acima disso; sem A/D, o atrito do DDNet freia o X a cada tick (no ar 0,95, no
 	    chão 0,5). Ticks fixos de `Config.Hook.TickRate`;
+	  - um `VectorForce` deixa a gravidade igual à do DDNet (`Config.Hook.HookGravity`);
 	  - um `AlignOrientation` mantém o personagem em pé, virado para ±X;
 	  - a velocidade horizontal tem limite (`Config.Hook.MaxSwingSpeed`); a queda não.
 
@@ -69,6 +70,16 @@ function AirBody.new(
 ): AirBody
 	local trove = Trove.new()
 
+	-- Gravidade do DDNet enquanto o corpo controla: compensa a diferença para a do Roblox.
+	local lift = Instance.new("VectorForce")
+	lift.Name = "HookGravity"
+	lift.Attachment0 = rootAttachment
+	lift.RelativeTo = Enum.ActuatorRelativeTo.World
+	lift.ApplyAtCenterOfMass = true
+	lift.Enabled = false
+	lift.Parent = root
+	trove:Add(lift)
+
 	local facing = if root.CFrame.LookVector.X < 0 then -1 else 1
 	local upright = Instance.new("AlignOrientation")
 	upright.Name = "HookUpright"
@@ -124,6 +135,8 @@ function AirBody.new(
 		facing = if root.CFrame.LookVector.X < 0 then -1 else 1
 		upright.CFrame = facingCFrame(facing)
 		upright.Enabled = true
+		lift.Force = Vector3.new(0, root.AssemblyMass * (workspace.Gravity - settings.HookGravity), 0)
+		lift.Enabled = true
 		humanoid:ChangeState(Enum.HumanoidStateType.Physics)
 		-- Sem atrito nem quique do motor de física: quem freia é só a regra do DDNet (`step`).
 		for _, child in character:GetChildren() do

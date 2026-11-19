@@ -133,9 +133,10 @@ export type DragSettings = {
 -- Puxão do gancho preso, como o HOOK_GRABBED do CCharacterCore do DDNet/Teeworlds. Só soma uma
 -- aceleração à velocidade atual (no plano): gravidade, velocidade tangencial e embalo continuam.
 -- `ticks`: quantos ticks do DDNet aplicar (fração = um quadro; padrão 1).
--- O puxão não leva a velocidade além de max(`maxSpeed`, velocidade atual): acima do limite ele só
--- curva a trajetória ou freia. (O DDNet descarta o tick inteiro nesse caso; aqui o módulo é limitado
--- para o puxão não ligar e desligar a cada quadro, o que dava trancos no balanço.)
+-- Regra do DDNet: o puxão vale se a nova velocidade ficar abaixo de `maxSpeed` ou for menor que a
+-- atual; senão é descartado (acima do limite o gancho só freia, não curva). Única diferença: se o
+-- puxão inteiro passaria do limite vindo de baixo, aplica só a parte que chega nele (o descarte do
+-- tick inteiro ligava e desligava o puxão a cada quadro e dava trancos).
 -- `moveDirection`: -1 (A), 0, 1 (D).
 function HookRules.hookDrag(
 	velocity: Vector3,
@@ -151,20 +152,24 @@ function HookRules.hookDrag(
 	end
 	local current = Vector3.new(velocity.X, velocity.Y, 0)
 	local speed = current.Magnitude
-	local strength = settings.accelPerTick * (ticks or 1)
-	if speed > settings.maxSpeed then
-		-- Acima do limite o gancho curva cada vez menos (no DDNet quase não curva): parábola aberta.
-		strength *= (settings.maxSpeed / speed) ^ 2
-	end
-	local pull = planar * (strength / distance)
+	local pull = planar * (settings.accelPerTick * (ticks or 1) / distance)
 	local pullY = if pull.Y < 0 then pull.Y * settings.downFactor else pull.Y
 	local assisted = (pull.X < 0 and moveDirection < 0) or (pull.X > 0 and moveDirection > 0)
-	local pullX = pull.X * (if assisted then settings.assistFactor else settings.resistFactor)
+	pull = Vector3.new(pull.X * (if assisted then settings.assistFactor else settings.resistFactor), pullY, 0)
 
-	local nextVelocity = current + Vector3.new(pullX, pullY, 0)
-	local limit = math.max(settings.maxSpeed, speed)
-	if nextVelocity.Magnitude > limit then
-		nextVelocity = nextVelocity.Unit * limit
+	local nextVelocity = current + pull
+	local nextSpeed = nextVelocity.Magnitude
+	if nextSpeed > settings.maxSpeed and nextSpeed >= speed then
+		if speed >= settings.maxSpeed then
+			return velocity -- acima do limite e o puxão aceleraria: descartado (DDNet)
+		end
+		-- Vindo de baixo: só a fração t do puxão que leva a velocidade exatamente ao limite
+		-- (|current + t * pull| = maxSpeed).
+		local a = pull:Dot(pull)
+		local b = 2 * current:Dot(pull)
+		local c = speed * speed - settings.maxSpeed * settings.maxSpeed
+		local t = (-b + math.sqrt(b * b - 4 * a * c)) / (2 * a)
+		nextVelocity = current + pull * math.clamp(t, 0, 1)
 	end
 	return Vector3.new(nextVelocity.X, nextVelocity.Y, velocity.Z)
 end

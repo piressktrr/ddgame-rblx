@@ -234,23 +234,16 @@ return function()
 			near(HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(10, 0, 0), 0, DRAG), 80, 0, 0)
 		end)
 
-		it("acima de maxSpeed curva a trajetória sem mudar o módulo", function()
-			local result = HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(0, 10, 0), 0, DRAG)
-			expect(result.Magnitude).to.be.near(80, 1e-4)
-			expect(result.Y > 0).to.equal(true)
+		it("acima de maxSpeed, puxão que aumentaria a velocidade é descartado (não curva)", function()
+			near(HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(0, 10, 0), 0, DRAG), 80, 0, 0)
 		end)
 
 		it("fração de tick aplica a fração do puxão", function()
 			near(HookRules.hookDrag(Vector3.zero, Vector3.new(0, 10, 0), 0, DRAG, 0.5), 0, 5, 0)
 		end)
 
-		it("acima de maxSpeed ainda freia, com o puxão enfraquecido por (maxSpeed/velocidade)²", function()
-			near(
-				HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(-10, 0, 0), 0, DRAG),
-				80 - 7.5 * (50 / 80) ^ 2,
-				0,
-				0
-			)
+		it("acima de maxSpeed ainda freia", function()
+			near(HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(-10, 0, 0), 0, DRAG), 72.5, 0, 0)
 		end)
 
 		it("ignora o Z da distância e mantém o Z da velocidade", function()

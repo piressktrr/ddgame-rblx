@@ -68,7 +68,10 @@ local Config = {
 		-- acima da escala do pulo deste jogo, 3,8, para o gancho ficar mais rápido como no DDNet).
 		TickRate = 50, -- ticks/s de referência do gancho e do controle no ar
 		FireSpeed = 360, -- studs/s do gancho voando (80 unidades/tick)
-		DragAccel = 575, -- studs/s² do puxão (~2,55 unidades/tick²; um pouco abaixo do DDNet para abrir a parábola)
+		DragAccel = 675, -- studs/s² do puxão (3,0 unidades/tick²)
+		-- Gravidade do DDNet (0,5 unidade/tick²) enquanto o gancho controla o corpo (preso e embalo).
+		-- A do Roblox (196,2) é 1,74x mais forte nesta escala e encurtava a parábola.
+		HookGravity = 112.5, -- studs/s²
 		DragSpeed = 68, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
 		DragMinDistance = 4.8, -- studs: mais perto do ponto que isso não puxa (46 unidades)
 		DragDownFactor = 0.3, -- puxão para baixo vale 30% (fica mais fácil subir numa plataforma)
