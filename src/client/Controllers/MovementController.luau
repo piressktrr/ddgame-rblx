@@ -131,6 +131,8 @@ local function onCharacterAdded(character: Model)
 	end
 
 	humanoid.WalkSpeed = settings.WalkSpeed
+	humanoid.UseJumpPower = true
+	humanoid.JumpPower = settings.JumpPower
 	jumpState = DoubleJump.new()
 
 	local ctx: CharacterContext = {
