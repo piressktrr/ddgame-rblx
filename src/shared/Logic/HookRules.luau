@@ -149,14 +149,20 @@ function HookRules.hookDrag(
 	if distance <= settings.minDistance then
 		return velocity
 	end
-	local pull = planar * (settings.accelPerTick * (ticks or 1) / distance)
+	local current = Vector3.new(velocity.X, velocity.Y, 0)
+	local speed = current.Magnitude
+	local strength = settings.accelPerTick * (ticks or 1)
+	if speed > settings.maxSpeed then
+		-- Acima do limite o gancho curva cada vez menos (no DDNet quase não curva): parábola aberta.
+		strength *= (settings.maxSpeed / speed) ^ 2
+	end
+	local pull = planar * (strength / distance)
 	local pullY = if pull.Y < 0 then pull.Y * settings.downFactor else pull.Y
 	local assisted = (pull.X < 0 and moveDirection < 0) or (pull.X > 0 and moveDirection > 0)
 	local pullX = pull.X * (if assisted then settings.assistFactor else settings.resistFactor)
 
-	local current = Vector3.new(velocity.X, velocity.Y, 0)
 	local nextVelocity = current + Vector3.new(pullX, pullY, 0)
-	local limit = math.max(settings.maxSpeed, current.Magnitude)
+	local limit = math.max(settings.maxSpeed, speed)
 	if nextVelocity.Magnitude > limit then
 		nextVelocity = nextVelocity.Unit * limit
 	end

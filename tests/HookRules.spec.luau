@@ -244,8 +244,13 @@ return function()
 			near(HookRules.hookDrag(Vector3.zero, Vector3.new(0, 10, 0), 0, DRAG, 0.5), 0, 5, 0)
 		end)
 
-		it("acima de maxSpeed ainda pode frear ou desviar", function()
-			near(HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(-10, 0, 0), 0, DRAG), 72.5, 0, 0)
+		it("acima de maxSpeed ainda freia, com o puxão enfraquecido por (maxSpeed/velocidade)²", function()
+			near(
+				HookRules.hookDrag(Vector3.new(80, 0, 0), Vector3.new(-10, 0, 0), 0, DRAG),
+				80 - 7.5 * (50 / 80) ^ 2,
+				0,
+				0
+			)
 		end)
 
 		it("ignora o Z da distância e mantém o Z da velocidade", function()
