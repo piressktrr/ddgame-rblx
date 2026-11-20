@@ -80,10 +80,13 @@ local Config = {
 		-- Gancho em outro jogador (DDNet: m_HookedPlayer). Puxão = DragAccel * distância/Range * fator.
 		PlayerHookDuration = 1.2, -- segundos até soltar sozinho (DDNet: 1 s + 1/5 s)
 		PlayerPullHookedFactor = 1.5, -- quem é puxado recebe 1,5x, na direção de quem puxa
-		PlayerPullHookerFactor = 0.25, -- quem puxa recebe 0,25x, na direção do puxado
-		-- studs: mais perto que isso não puxa (DDNet: 1,5 corpo, no tamanho do avatar). Colado em quem
-		-- puxa, uma martelada não é anulada pelo puxão na hora.
-		PlayerPullMinDistance = 7,
+		-- quem puxa recebe isso, na direção do puxado (DDNet: 0,25; mais aqui, com o atrito do chão do
+		-- avatar o arrasto pelo peso do outro ficava quase imperceptível)
+		PlayerPullHookerFactor = 0.6,
+		PlayerPullMinDistance = 3.5, -- studs: mais perto que isso não puxa (corpos praticamente colados)
+		-- studs: de perto a força não cai com a distância (conta como se estivesse a isso): puxar alguém
+		-- colado ainda mexe os dois.
+		PlayerPullCloseDistance = 12,
 		-- studs: comprimento do gancho do DDNet (380 unidades) na escala da física, usado no puxão entre
 		-- jogadores (aceleração = DragAccel * distância / isto). Com o Range (40) o puxão ficava ~15% fraco.
 		-- Mais curto que o do DDNet (~30% mais forte) e limite maior: o avatar é bem maior que o tee e o
