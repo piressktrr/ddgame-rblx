@@ -569,6 +569,7 @@ local INCOMING_TICK = 1 / settings.TickRate
 
 local function applyIncomingPulls(ctx: CharacterContext, dt: number)
 	local pulled = false
+	local puller: Attachment? = nil
 	if not isSolo(ctx.character) and ctx.humanoid.Health > 0 then
 		local velocity = ctx.root.AssemblyLinearVelocity
 		local ticks = math.min(dt / INCOMING_TICK, 4)
@@ -582,8 +583,12 @@ local function applyIncomingPulls(ctx: CharacterContext, dt: number)
 				local otherRoot = character:FindFirstChild("HumanoidRootPart")
 				if otherRoot and otherRoot:IsA("BasePart") then
 					local distance = (otherRoot.Position - ctx.root.Position).Magnitude
-					if distance > settings.PlayerPullMinDistance then
+					-- Começa a puxar fora da distância mínima; já sendo puxado, continua até soltar (sem
+					-- ligar/desligar o corpo e a pose a cada quadro quando chega perto de quem puxa).
+					if beingPulled or distance > settings.PlayerPullMinDistance then
 						pulled = true
+						local attachment = otherRoot:FindFirstChild("RootAttachment")
+						puller = if attachment and attachment:IsA("Attachment") then attachment else puller
 					end
 					velocity = HookRules.playerPull(
 						velocity,
@@ -604,6 +609,9 @@ local function applyIncomingPulls(ctx: CharacterContext, dt: number)
 			local body = airBody :: AirBody.AirBody
 			body:takeOff() -- no chão o Humanoid anularia o puxão
 			body:cancelMomentum()
+			if not attached then
+				body:setAimPoint(puller) -- pose de voo como no gancho próprio, braço para quem puxa
+			end
 			ctx.root.AssemblyLinearVelocity = velocity
 		end
 	end

@@ -195,9 +195,10 @@ function AirBody.new(
 			then 1
 			elseif horizontal < -INPUT_DEADZONE then -1
 			else 0
-		if grounded and math.abs(vx) > humanoid.WalkSpeed then
-			-- Pousou rápido: perde quase toda a velocidade do ar em poucos ticks, com ou sem A/D (não sai
-			-- "voando" pelo chão); abaixo da velocidade de andar o controle normal assume.
+		if grounded and momentumStart and math.abs(vx) > humanoid.WalkSpeed then
+			-- Pousou rápido depois de soltar: perde quase toda a velocidade do ar em poucos ticks, com ou
+			-- sem A/D (não sai "voando" pelo chão); abaixo da velocidade de andar o controle normal assume.
+			-- Enquanto um gancho puxa (preso ou sendo puxado), não freia: o arrasto pelo chão segue liso.
 			vx *= settings.LandingFriction ^ (dt * settings.TickRate)
 			if math.abs(vx) < humanoid.WalkSpeed then
 				vx = math.sign(vx) * humanoid.WalkSpeed
@@ -231,6 +232,9 @@ function AirBody.new(
 	end
 
 	function body.setAimPoint(_self: AirBody, target: HookPose.AimTarget?)
+		if target == aimTarget then
+			return -- mesmo alvo (chamado a cada quadro no puxão): não reescolhe o braço
+		end
 		aimTarget = target
 		if pose then
 			pose:setTarget(target)
