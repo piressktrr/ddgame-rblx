@@ -29,6 +29,7 @@ local PULL: HookRules.PlayerPullSettings = table.freeze({
 	range = settings.PlayerPullLength,
 	maxSpeed = settings.PlayerPullSpeed,
 	minDistance = settings.PlayerPullMinDistance,
+	closeDistance = settings.PlayerPullCloseDistance,
 })
 
 local PlayerHookPhysics = {}
