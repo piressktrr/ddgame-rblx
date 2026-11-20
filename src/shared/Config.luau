@@ -169,6 +169,16 @@ local Config = {
 		-- No Player: muda a cada volta instantânea ao checkpoint (zona de morte). Cliente e HookService
 		-- soltam o gancho e devolvem os verdes, como ao renascer.
 		Respawns = "Respawns",
+		-- No personagem: true no modo solo (SoloService). Mecânicas entre jogadores (gancho em jogador,
+		-- empurrar) devem ignorar quem está em solo.
+		Solo = "Solo",
+	},
+
+	-- Modo solo (SoloService): no lugar do "servidor vazio" do DDNet, o jogador vira fantasma para os
+	-- outros (sem colisão entre personagens) entre as linhas SoloStart e SoloEnd.
+	Solo = {
+		PlayersGroup = "Players", -- grupo de colisão de todo personagem
+		SoloGroup = "SoloPlayers", -- personagem em solo: não colide com nenhum outro personagem
 	},
 
 	-- Zonas: morte e gelo (RF-20..25). Dono: subagente de zonas.
@@ -243,6 +253,8 @@ local Config = {
 		EditorSpawn = "EditorSpawn", -- no Studio, renasce aqui se `Enabled` (área do MapBuilder)
 		StartLine = "StartLine", -- linha de largada: ao entrar, começa/recomeça o tempo da run
 		FinishLine = "FinishLine", -- linha de chegada: ao entrar com a run valendo, salva o tempo
+		SoloStart = "SoloStart", -- ao entrar: modo solo (fantasma para os outros jogadores)
+		SoloEnd = "SoloEnd", -- ao entrar: sai do modo solo
 	},
 
 	-- Elementos de mapa do MapBuilder (Shared.MapElements).

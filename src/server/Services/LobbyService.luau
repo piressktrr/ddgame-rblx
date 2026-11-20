@@ -21,6 +21,7 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 local CheckpointService = require(script.Parent.CheckpointService)
 local RaceService = require(script.Parent.RaceService)
+local SoloService = require(script.Parent.SoloService)
 
 local IN_RACE = Config.Attributes.InRace
 local CHECKPOINT = Config.Attributes.Checkpoint
@@ -80,6 +81,7 @@ function LobbyService.respawnInPlace(player: Player)
 		return
 	end
 	character:SetAttribute(Config.Attributes.FrozenUntil, nil)
+	SoloService.setSolo(player, false) -- voltou ao checkpoint: fora do trecho solo
 	placeOn(character, target)
 	local count = player:GetAttribute(Config.Attributes.Respawns)
 	player:SetAttribute(Config.Attributes.Respawns, (if typeof(count) == "number" then count else 0) + 1)
