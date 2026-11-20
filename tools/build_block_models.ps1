@@ -9,14 +9,14 @@ $tmp = Join-Path $out "projects"
 New-Item -ItemType Directory -Force $tmp | Out-Null
 
 $elements = @(
-    @{ id = "Block";       name = "DD Bloco";        tag = $null;          color = @(176,152,104); t = 0;    collide = $true },
-    @{ id = "Unhookable";  name = "DD Unhookable";   tag = "NoHook";       color = @(142,91,214);  t = 0;    collide = $true },
-    @{ id = "HookThrough"; name = "DD Hookthrough";  tag = "HookThrough";  color = @(45,45,52);    t = 0;    collide = $true },
+    @{ id = "Block";       name = "DD Bloco";        tag = $null;          color = @(150,151,108); t = 0;    collide = $true },
+    @{ id = "Unhookable";  name = "DD Unhookable";   tag = "NoHook";       color = @(103,128,154); t = 0;    collide = $true },
+    @{ id = "HookThrough"; name = "DD Hookthrough";  tag = "HookThrough";  color = @(45,45,52);    t = 0.25; collide = $true },
     @{ id = "Freeze";      name = "DD Freeze";       tag = "FreezeZone";   color = @(70,75,90);    t = 0.45; collide = $false },
     @{ id = "Unfreeze";    name = "DD Unfreeze";     tag = "UnfreezeZone"; color = @(255,215,70);  t = 0.45; collide = $false },
-    @{ id = "OneWay";      name = "DD Mao unica";    tag = "OneWay";       color = @(235,242,255); t = 0.5;  collide = $false },
-    @{ id = "Kill";        name = "DD Morte";        tag = "KillZone";     color = @(220,60,70);   t = 0.45; collide = $false },
-    @{ id = "HookOnce";    name = "DD Gancho unico"; tag = "HookOnce";     color = @(95,191,106);  t = 0;    collide = $true },
+    @{ id = "OneWay";      name = "DD Mao unica";    tag = "OneWay";       color = @(174,194,211); t = 0.3;  collide = $false },
+    @{ id = "Kill";        name = "DD Morte";        tag = "KillZone";     color = @(183,74,84);   t = 0.3;  collide = $false },
+    @{ id = "HookOnce";    name = "DD Gancho unico"; tag = "HookOnce";     color = @(113,163,119); t = 0;    collide = $true },
     @{ id = "StartLine";   name = "DD Largada";      tag = "StartLine";    color = @(60,110,200);  t = 0.3;  collide = $false },
     @{ id = "FinishLine";  name = "DD Chegada";      tag = "FinishLine";   color = @(25,25,30);    t = 0.3;  collide = $false },
     @{ id = "SoloStart";   name = "DD Entrar solo";  tag = "SoloStart";    color = @(150,155,168); t = 0.5;  collide = $false },
