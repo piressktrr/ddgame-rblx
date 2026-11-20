@@ -67,8 +67,17 @@ function DDNetPhysics.new(params: HookPhysics.Params): HookPhysics.Physics
 		-- Contínuo: a fração de tick deste quadro (puxão em degraus de 50/s a 60 FPS dava trancos).
 		local ticks = math.min(dt / TICK, MAX_TICKS_PER_FRAME)
 		local velocity = root.AssemblyLinearVelocity
-		local pulled =
-			HookRules.hookDrag(velocity, anchor.WorldPosition - root.Position, input.horizontal, DRAG, ticks)
+		local toPoint = anchor.WorldPosition - root.Position
+		local pulled = HookRules.hookDrag(velocity, toPoint, input.horizontal, DRAG, ticks)
+		-- Pendurado perto do ponto: amortece só o vaivém na direção da corda (no DDNet o arredondamento
+		-- da velocidade a cada tick faz isso; sem ele o boneco quicava contra o teto sem parar).
+		local planar = Vector3.new(toPoint.X, toPoint.Y, 0)
+		local distance = planar.Magnitude
+		if distance > 0 and distance <= settings.DragMinDistance + settings.HangDampingMargin then
+			local radial = planar / distance
+			local along = pulled:Dot(radial)
+			pulled -= radial * along * (1 - settings.HangDamping ^ ticks)
+		end
 		if pulled ~= velocity then
 			root.AssemblyLinearVelocity = pulled
 		end

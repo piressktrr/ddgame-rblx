@@ -133,16 +133,27 @@ end
 
 -- O gancho acerta outros jogadores (DDNet). Ignora o próprio personagem e quem está em solo; em solo,
 -- ignora todos (modo fantasma).
+local playerParams = RaycastParams.new()
+playerParams.FilterType = Enum.RaycastFilterType.Include
+playerParams.RespectCanCollide = false
+local playerTargets: { Instance } = {}
+
 local function refreshFilter()
 	local exclude: { Instance } = {}
+	table.clear(playerTargets)
 	local selfSolo = isSolo(player.Character)
 	for _, other in Players:GetPlayers() do
 		local character = other.Character
-		if character and (other == player or selfSolo or isSolo(character)) then
+		if character then
+			-- O raio do mundo nunca acerta personagens; os que valem vão para o raio de jogadores.
 			table.insert(exclude, character)
+			if other ~= player and not selfSolo and not isSolo(character) then
+				table.insert(playerTargets, character)
+			end
 		end
 	end
 	raycastParams.FilterDescendantsInstances = exclude
+	playerParams.FilterDescendantsInstances = playerTargets
 end
 
 local function getOrigin(ctx: CharacterContext): Vector3
@@ -212,7 +223,7 @@ end
 
 -- Raio no plano de `origin` ao longo de `castVector`. Peças fora da profundidade do plano (cenário de
 -- fundo) não param o gancho: o raio continua depois delas.
-local function castSegment(origin: Vector3, castVector: Vector3): Target
+local function castWorld(origin: Vector3, castVector: Vector3): Target
 	local remaining = castVector.Magnitude
 	if remaining <= 0 then
 		return NO_TARGET
@@ -236,6 +247,21 @@ local function castSegment(origin: Vector3, castVector: Vector3): Target
 		from += direction * advanced
 	end
 	return NO_TARGET
+end
+
+-- Jogadores num raio à parte, que não depende de colisão: pendurado no gancho (estado Physics) o corpo
+-- do outro fica sem colisão e o raio do mundo o atravessava. Vale o que vier primeiro no caminho.
+local function castSegment(origin: Vector3, castVector: Vector3): Target
+	local playerHit = if #playerTargets > 0 then workspace:Raycast(origin, castVector, playerParams) else nil
+	if not playerHit then
+		return castWorld(origin, castVector)
+	end
+	local playerDistance = (playerHit.Position - origin).Magnitude
+	local worldTarget = castWorld(origin, castVector.Unit * playerDistance)
+	if worldTarget.state ~= "None" then
+		return worldTarget -- parede/bloco antes do jogador
+	end
+	return evaluateHit(playerHit)
 end
 
 local function findTarget(origin: Vector3, aimPoint: Vector3): Target

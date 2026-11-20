@@ -82,9 +82,18 @@ local Config = {
 		PlayerPullHookedFactor = 1.5, -- quem é puxado recebe 1,5x, na direção de quem puxa
 		PlayerPullHookerFactor = 0.25, -- quem puxa recebe 0,25x, na direção do puxado
 		PlayerPullMinDistance = 4.8, -- studs: mais perto que isso não puxa (DDNet: 1,5 corpo)
+		-- studs: comprimento do gancho do DDNet (380 unidades) na escala da física, usado no puxão entre
+		-- jogadores (aceleração = DragAccel * distância / isto). Com o Range (40) o puxão ficava ~15% fraco.
+		PlayerPullLength = 34,
 		PlayerHookServerSlack = 0.3, -- segundos de folga no servidor antes de forçar a soltura
 		DragSpeed = 68, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
-		DragMinDistance = 4.8, -- studs: mais perto do ponto que isso não puxa (46 unidades)
+		-- studs: mais perto do ponto que isso não puxa. No DDNet são 46 unidades ≈ 3x o raio do tee; com o
+		-- boneco daqui (~2,75 de meia altura) 4,8 deixava a cabeça bater no teto e quicar (pendurado tremia).
+		DragMinDistance = 6,
+		-- Pendurado perto do ponto (até DragMinDistance + margem): fração do vaivém na direção da corda
+		-- mantida por tick. Amortece o quique; o balanço de lado não é afetado.
+		HangDamping = 0.8,
+		HangDampingMargin = 1.5, -- studs
 		DragDownFactor = 0.3, -- puxão para baixo vale 30% (fica mais fácil subir numa plataforma)
 		DragAssistFactor = 0.95, -- X do puxão com A/D no mesmo sentido
 		DragResistFactor = 0.75, -- X do puxão sem A/D ou contra
