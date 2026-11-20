@@ -10,6 +10,11 @@
   HookRope     servidor -> clientes  (player: Player, part: BasePart?, localPoint: Vector3?)
                corda de outro jogador (RF-16); part nil = soltou. O ponto vem no espaço da peça.
 
+	Martelo:
+	  HammerSwing  cliente -> servidor   (aimDirection: Vector3, targets: { Player }) quem o cliente viu acertar
+	  HammerHit    servidor -> alvo      (push: Vector3) velocidade a somar no próprio corpo
+	  HammerFx     servidor -> clientes  (attacker: Player, aimDirection: Vector3, hits: { Vector3 }) visual
+
 	Corrida (Fase 3):
 	  RaceFinished servidor -> cliente   (time: number, best: number) ao cruzar o RaceFinish
 	  RaceAction   cliente -> servidor   (action: "Again" | "Lobby") botões da tela de fim / reset
@@ -23,11 +28,23 @@ export type RemoteName =
 	| "HookDetach"
 	| "HookRejected"
 	| "HookRope"
+	| "HammerSwing"
+	| "HammerHit"
+	| "HammerFx"
 	| "RaceFinished"
 	| "RaceAction"
 
-local REMOTE_NAMES: { RemoteName } =
-	{ "HookAttach", "HookDetach", "HookRejected", "HookRope", "RaceFinished", "RaceAction" }
+local REMOTE_NAMES: { RemoteName } = {
+	"HookAttach",
+	"HookDetach",
+	"HookRejected",
+	"HookRope",
+	"HammerSwing",
+	"HammerHit",
+	"HammerFx",
+	"RaceFinished",
+	"RaceAction",
+}
 local FOLDER_NAME = "Remotes"
 
 local Net = {}
