@@ -5,11 +5,8 @@
 	contra atravessar paredes, usada pelos dois.
 ]]
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local Config = require(ReplicatedStorage.Shared.Config)
-
 local AirBody = require(script.Parent.AirBody)
+local HookChain = require(script.Parent.HookChain)
 
 export type Input = {
 	horizontal: number, -- -1 (A) .. 1 (D)
@@ -55,21 +52,10 @@ local BOX_CORNERS = {
 
 local HookPhysics = {}
 
--- Corda visível (só visual, sem física) entre dois Attachments.
-function HookPhysics.createRope(from: Attachment, to: Attachment, parent: Instance): Beam
-	local rope = Instance.new("Beam")
-	rope.Name = "HookRope"
-	rope.Attachment0 = from
-	rope.Attachment1 = to
-	rope.Width0 = Config.Hook.RopeThickness
-	rope.Width1 = Config.Hook.RopeThickness
-	rope.FaceCamera = true
-	rope.Segments = 1
-	rope.LightInfluence = 0
-	rope.Color = ColorSequence.new(Config.Hook.RopeColor)
-	rope.Transparency = NumberSequence.new(0)
-	rope.Parent = parent
-	return rope
+-- Corrente visível do gancho (só visual, sem física) entre dois Attachments: elos + garra (HookChain).
+-- `_parent` fica por compatibilidade; a corrente vive na câmera (local).
+function HookPhysics.createRope(from: Attachment, to: Attachment, _parent: Instance?): Model
+	return HookChain.new(from, to)
 end
 
 -- Caixa do corpo no espaço do root (centro e tamanho), a partir das peças diretas do personagem

@@ -85,6 +85,9 @@ local Config = {
 		-- studs: comprimento do gancho do DDNet (380 unidades) na escala da física, usado no puxão entre
 		-- jogadores (aceleração = DragAccel * distância / isto). Com o Range (40) o puxão ficava ~15% fraco.
 		PlayerPullLength = 34,
+		-- studs: o gancho acerta um jogador se passar a até isso do centro dele (DDNet: raio físico + 2 =
+		-- 30 unidades ≈ 2,7 studs; um pouco mais aqui, o boneco é maior que o tee).
+		PlayerHitRadius = 3,
 		PlayerHookServerSlack = 0.3, -- segundos de folga no servidor antes de forçar a soltura
 		DragSpeed = 68, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
 		-- studs: mais perto do ponto que isso não puxa. No DDNet são 46 unidades ≈ 3x o raio do tee; com o

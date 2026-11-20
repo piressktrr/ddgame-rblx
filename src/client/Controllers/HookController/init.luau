@@ -133,10 +133,7 @@ end
 
 -- O gancho acerta outros jogadores (DDNet). Ignora o próprio personagem e quem está em solo; em solo,
 -- ignora todos (modo fantasma).
-local playerParams = RaycastParams.new()
-playerParams.FilterType = Enum.RaycastFilterType.Include
-playerParams.RespectCanCollide = false
-local playerTargets: { Instance } = {}
+local playerTargets: { Instance } = {} -- personagens que o gancho pode acertar (fora o próprio e solo)
 
 local function refreshFilter()
 	local exclude: { Instance } = {}
@@ -153,7 +150,6 @@ local function refreshFilter()
 		end
 	end
 	raycastParams.FilterDescendantsInstances = exclude
-	playerParams.FilterDescendantsInstances = playerTargets
 end
 
 local function getOrigin(ctx: CharacterContext): Vector3
@@ -251,17 +247,45 @@ end
 
 -- Jogadores num raio à parte, que não depende de colisão: pendurado no gancho (estado Physics) o corpo
 -- do outro fica sem colisão e o raio do mundo o atravessava. Vale o que vier primeiro no caminho.
+-- Hitbox do jogador como no DDNet: o gancho acerta se passar a até `PlayerHitRadius` do centro dele
+-- (DDNet: raio físico + 2 = 30 unidades), mesmo sem tocar no corpo. Devolve o mais próximo no caminho.
+local function nearestPlayerOnSegment(origin: Vector3, castVector: Vector3): (Target?, number)
+	local lengthSquared = castVector:Dot(castVector)
+	local best: Target? = nil
+	local bestDistance = math.huge
+	if lengthSquared <= 0 then
+		return nil, bestDistance
+	end
+	for _, character in playerTargets do
+		local owner = Players:GetPlayerFromCharacter(character :: Model)
+		local otherRoot = (character :: Model):FindFirstChild("HumanoidRootPart")
+		local humanoid = (character :: Model):FindFirstChildOfClass("Humanoid")
+		if owner and otherRoot and otherRoot:IsA("BasePart") and humanoid and humanoid.Health > 0 then
+			local center = Aim.toPlane(otherRoot.Position, planeZ)
+			local t = math.clamp((center - origin):Dot(castVector) / lengthSquared, 0, 1)
+			local closest = origin + castVector * t
+			local along = t * math.sqrt(lengthSquared)
+			if (center - closest).Magnitude <= settings.PlayerHitRadius and along < bestDistance then
+				bestDistance = along
+				best = { state = "Valid", part = otherRoot, point = otherRoot.Position, player = owner }
+			end
+		end
+	end
+	return best, bestDistance
+end
+
 local function castSegment(origin: Vector3, castVector: Vector3): Target
-	local playerHit = if #playerTargets > 0 then workspace:Raycast(origin, castVector, playerParams) else nil
-	if not playerHit then
+	local playerTarget, playerDistance = nearestPlayerOnSegment(origin, castVector)
+	if not playerTarget then
 		return castWorld(origin, castVector)
 	end
-	local playerDistance = (playerHit.Position - origin).Magnitude
-	local worldTarget = castWorld(origin, castVector.Unit * playerDistance)
-	if worldTarget.state ~= "None" then
-		return worldTarget -- parede/bloco antes do jogador
+	if playerDistance > 0 then
+		local worldTarget = castWorld(origin, castVector.Unit * playerDistance)
+		if worldTarget.state ~= "None" then
+			return worldTarget -- parede/bloco antes do jogador
+		end
 	end
-	return evaluateHit(playerHit)
+	return playerTarget
 end
 
 local function findTarget(origin: Vector3, aimPoint: Vector3): Target
