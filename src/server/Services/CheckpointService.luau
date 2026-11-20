@@ -106,6 +106,7 @@ end
 
 function CheckpointService.Start()
 	Players.RespawnTime = Config.Race.RespawnTime
+	workspace.Gravity = Config.Movement.Gravity -- replica para os clientes
 
 	local tag = Config.Tags.Checkpoint
 	for _, instance in CollectionService:GetTagged(tag) do

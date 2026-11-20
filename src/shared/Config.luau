@@ -10,7 +10,7 @@ local Config = {
 		Distance = 64, -- distância da câmera até o plano; com FOV 50 mostra ~60 studs de altura
 		Height = 6, -- quanto a câmera fica acima do personagem
 		LookAhead = 6, -- studs que a câmera adianta na direção em que o personagem anda
-		LookAheadSpeed = 24, -- studs/s em X a partir dos quais o adiantamento é total (velocidade de andar)
+		LookAheadSpeed = 38, -- studs/s em X a partir dos quais o adiantamento é total (velocidade de andar)
 		FieldOfView = 50,
 		Smoothing = 10, -- maior = segue mais rápido
 	},
@@ -27,9 +27,12 @@ local Config = {
 
 	-- Movimento base do jogador (ADR 0043, RF-03; MovementController).
 	Movement = {
-		WalkSpeed = 24, -- studs/s (padrão do Roblox: 16)
-		-- Pulo normal fica no padrão do Roblox (JumpHeight 7.2, ~50 studs/s de saída).
-		DoubleJumpVelocity = 50, -- studs/s para cima no pulo duplo (a queda é zerada antes)
+		-- Inspirado no DDNet (medido no vídeo de referência), num meio-termo com a escala do jogo:
+		-- gravidade do DDNet (a mesma do gancho), andar e pulos um pouco menores que os do DDNet.
+		Gravity = 112.5, -- studs/s² no jogo todo (DDNet: 0,5 unidade/tick²; Roblox padrão: 196,2)
+		WalkSpeed = 38, -- studs/s (DDNet fiel seria 45; padrão do Roblox: 16)
+		JumpPower = 51, -- studs/s de saída do pulo do chão: ~11,5 studs de altura, ~0,9 s no ar
+		DoubleJumpVelocity = 48, -- studs/s para cima no pulo duplo (a queda é zerada antes): ~+10 studs
 		-- Tempo mínimo no ar antes do pulo duplo valer (não dispara junto com o primeiro pulo).
 		DoubleJumpMinAirTime = 0.12, -- segundos
 		-- Pedidos de pulo mais próximos que isto contam como o mesmo aperto (tecla segurada repete).
