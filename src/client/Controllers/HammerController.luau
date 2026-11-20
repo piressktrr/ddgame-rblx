@@ -1,6 +1,7 @@
 --!strict
 --[[
-	Martelo do DDRace no cliente (cooperação). Botão direito do mouse bate na direção do cursor.
+	Martelo do DDRace no cliente (cooperação). É uma arma: com ela equipada (WeaponController), o botão
+	esquerdo do mouse bate na direção do cursor (`HammerController.fire`).
 
 	- Quem bate: confere o intervalo e o gelo, vê quem está no círculo do martelo (`HammerRules`, sem
 	  parede no meio) e manda `HammerSwing(direção, alvos)`; o servidor valida (HammerService).
@@ -204,6 +205,11 @@ local function swing(aimPoint: Vector3?): { Player }
 	return hits
 end
 
+-- Disparo da arma (WeaponController): bate mirando no cursor.
+function HammerController.fire()
+	swing(nil)
+end
+
 function HammerController.Start()
 	swingRemote = Net.get("HammerSwing")
 	Net.get("HammerHit").OnClientEvent:Connect(function(push: unknown)
@@ -225,12 +231,6 @@ function HammerController.Start()
 				end
 			end
 			playEffects(attacker :: Player, direction :: Vector3, positions)
-		end
-	end)
-
-	UserInputService.InputBegan:Connect(function(input: InputObject, gameProcessed: boolean)
-		if input.UserInputType == Enum.UserInputType.MouseButton2 and not gameProcessed then
-			swing(nil)
 		end
 	end)
 
