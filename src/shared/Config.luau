@@ -146,6 +146,9 @@ local Config = {
 		AirFriction = 0.95, -- fração do X mantida por tick no ar sem A/D
 		GroundControlAccel = 450, -- studs/s² (2 unidades/tick²); limite = WalkSpeed do Humanoid
 		GroundFriction = 0.5, -- fração do X mantida por tick no chão sem A/D (para firme)
+		-- Fração do X mantida por tick ao tocar o chão acima da velocidade de andar (com ou sem A/D):
+		-- o embalo do ar some em poucos ticks (~0,1 s), só um pequeno deslize.
+		LandingFriction = 0.75,
 		-- studs/s; limite horizontal enquanto preso e no embalo. Acima de DragSpeed para o embalo acumular.
 		MaxSwingSpeed = 180,
 		-- Quão rápido o personagem gira para ficar em pé / virar de lado enquanto preso (mais baixo = giro
