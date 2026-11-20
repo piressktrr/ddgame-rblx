@@ -21,8 +21,16 @@ local localPlayer = Players.LocalPlayer
 local RopeReplicaController = {}
 
 local ropes: { [Player]: Trove.Trove } = {}
+local anchors: { [Player]: Attachment } = {} -- ponta da corda de cada outro jogador (para a pose)
+
+-- Ponto preso da corda de outro jogador, ou nil.
+function RopeReplicaController.getAnchor(owner: Player): Attachment?
+	local anchor = anchors[owner]
+	return if anchor and anchor.Parent then anchor else nil
+end
 
 local function clearRope(owner: Player)
+	anchors[owner] = nil
 	local trove = ropes[owner]
 	if trove then
 		ropes[owner] = nil
@@ -57,6 +65,7 @@ local function showRope(owner: Player, part: BasePart, localPoint: Vector3)
 	anchor.Position = localPoint
 	anchor.Parent = part
 	trove:Add(anchor)
+	anchors[owner] = anchor
 
 	trove:Add(HookChain.new(rootAttachment, anchor)) -- mesma corrente com garra do gancho próprio
 
