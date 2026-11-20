@@ -631,8 +631,8 @@ local function onPreSimulation(dt: number)
 		return
 	end
 	stepFlight(ctx, dt)
-	applyIncomingPulls(ctx, dt)
 	local current = attached
+	local stepped = false
 	if current then
 		-- A peça sumiu (destruída ou saiu do streaming): solta.
 		if not current.anchor.Parent or not current.part:IsDescendantOf(workspace) then
@@ -641,11 +641,11 @@ local function onPreSimulation(dt: number)
 			if current.physics:step(dt, getInput(ctx)) == "Release" then
 				release(true) -- chegou, bateu em algo ou soltou o botão: segue no embalo
 			end
-			return
+			stepped = true
 		end
 	end
 	local body = airBody
-	if body then
+	if body and not stepped then
 		if body:isMomentumOver() then
 			endAirBody()
 		else
@@ -653,6 +653,9 @@ local function onPreSimulation(dt: number)
 			body:step(dt, if isFrozen(ctx) then 0 else getInput(ctx).horizontal)
 		end
 	end
+	-- Puxão de outro jogador depois do atrito/controle do tick (ordem do DDNet): o atrito do chão não
+	-- come o puxão recém-aplicado.
+	applyIncomingPulls(ctx, dt)
 end
 
 local function onRender()
