@@ -14,11 +14,16 @@
 	Repassa a corda de cada jogador aos outros clientes (`HookRope`, RF-16): quem já está no servidor
 	recebe ao prender/soltar; quem entra recebe as cordas que já estão presas.
 
-	Fora desta fase (Fase 4): gancho em outro jogador.
+	Gancho em outro jogador (DDNet): o cliente manda a peça = HumanoidRootPart do alvo. O servidor
+	confere (alvo vivo, nenhum dos dois em solo, alcance) e marca `Config.Attributes.HookTarget` no
+	personagem de quem puxou; o cliente do alvo lê a marca e aplica o puxão no próprio corpo. Solta
+	sozinho depois de `PlayerHookDuration` (+ folga) ou se o alvo ficar inválido, avisando o cliente
+	com `HookRejected(id, "PlayerReleased")`.
 ]]
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
 
 local Config = require(ReplicatedStorage.Shared.Config)
 local HookRules = require(ReplicatedStorage.Shared.Logic.HookRules)
@@ -34,6 +39,7 @@ type PlayerState = {
 	attachedId: number?,
 	attachedPart: BasePart?,
 	attachedPoint: Vector3?,
+	targetPlayer: Player?, -- gancho preso em outro jogador
 	windowStart: number,
 	windowCount: number,
 }
@@ -66,6 +72,13 @@ local function clearAttached(player: Player, state: PlayerState)
 	state.attachedId = nil
 	state.attachedPart = nil
 	state.attachedPoint = nil
+	if state.targetPlayer then
+		state.targetPlayer = nil
+		local character = player.Character
+		if character then
+			character:SetAttribute(Config.Attributes.HookTarget, nil)
+		end
+	end
 	if wasAttached then
 		broadcastRope(player, nil, nil)
 	end
@@ -88,15 +101,34 @@ local function allowMessage(state: PlayerState): boolean
 	return state.windowCount <= settings.ServerMaxMessagesPerSecond
 end
 
-local function isPlayerCharacterPart(part: Instance): boolean
+local function playerFromPart(part: Instance): Player?
 	local model = part:FindFirstAncestorOfClass("Model")
 	while model do
-		if Players:GetPlayerFromCharacter(model) then
-			return true
+		local owner = Players:GetPlayerFromCharacter(model)
+		if owner then
+			return owner
 		end
 		model = model:FindFirstAncestorOfClass("Model")
 	end
-	return false
+	return nil
+end
+
+local function isSolo(character: Model?): boolean
+	return character ~= nil and character:GetAttribute(Config.Attributes.Solo) == true
+end
+
+-- Root do alvo se ele ainda pode ser puxado (vivo, fora do solo), ou nil.
+local function targetRoot(target: Player): BasePart?
+	local character = target.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+	if not target.Parent or not humanoid or humanoid.Health <= 0 or not root or not root:IsA("BasePart") then
+		return nil
+	end
+	if isSolo(character) then
+		return nil
+	end
+	return root
 end
 
 -- Converte os argumentos que vieram da rede. nil se algum tipo estiver errado.
@@ -133,13 +165,26 @@ local function validateAttach(
 	if not part:IsDescendantOf(workspace) then
 		return "InvalidPart"
 	end
-	if isPlayerCharacterPart(part) then
-		return "PlayerTarget" -- gancho em jogador: Fase 4
-	end
 	if
 		not HookRules.cooldownReady(state.lastAttachAt, now, settings.Cooldown - settings.ServerCooldownSlack)
 	then
 		return "Cooldown"
+	end
+	local target = playerFromPart(part)
+	if target then
+		-- Gancho em jogador: alvo válido, nenhum dos dois em solo, dentro do alcance.
+		if target == player then
+			return "Self"
+		end
+		local other = targetRoot(target)
+		if not other or isSolo(character) then
+			return "PlayerUnavailable"
+		end
+		local maxDistance = settings.Range + settings.ServerRangeTolerance
+		if not HookRules.isWithinRange(root.Position, other.Position, maxDistance) then
+			return "OutOfRange"
+		end
+		return nil
 	end
 	local maxDistance = settings.Range + settings.AimAssistRadius + settings.ServerRangeTolerance
 	if not HookRules.isWithinRange(root.Position, point, maxDistance) then
@@ -187,14 +232,23 @@ local function onAttach(player: Player, id: unknown, part: unknown, point: unkno
 		return
 	end
 
+	clearAttached(player, state) -- troca de alvo: a marca anterior sai
 	state.lastAttachAt = now
-	local key = HookSurface.getHookOnceKey(basePart)
+	local target = playerFromPart(basePart)
+	local key = if target then nil else HookSurface.getHookOnceKey(basePart)
 	if key then
 		state.usedHookOnce[key] = true
 	end
 	state.attachedId = attachId
 	state.attachedPart = basePart
 	state.attachedPoint = position
+	if target then
+		state.targetPlayer = target
+		local character = player.Character
+		if character then
+			character:SetAttribute(Config.Attributes.HookTarget, target.UserId)
+		end
+	end
 	broadcastRope(player, basePart, position)
 end
 
@@ -217,6 +271,7 @@ local function onPlayerAdded(player: Player)
 		attachedId = nil,
 		attachedPart = nil,
 		attachedPoint = nil,
+		targetPlayer = nil,
 		windowStart = 0,
 		windowCount = 0,
 	}
@@ -269,6 +324,33 @@ function HookService.Start()
 	end
 	Players.PlayerAdded:Connect(onPlayerAdded)
 	Players.PlayerRemoving:Connect(onPlayerRemoving)
+
+	-- Gancho em jogador: solta sozinho no tempo do DDNet (+ folga) ou se o alvo deixar de valer.
+	local maxHold = settings.PlayerHookDuration + settings.PlayerHookServerSlack
+	local maxDistance = settings.Range * 1.5 + settings.ServerRangeTolerance
+	RunService.Heartbeat:Connect(function()
+		local now = os.clock()
+		for player, state in states do
+			local target = state.targetPlayer
+			if not target then
+				continue
+			end
+			local other = targetRoot(target)
+			local character = player.Character
+			local root = character and character:FindFirstChild("HumanoidRootPart")
+			local tooFar = other ~= nil
+				and root ~= nil
+				and root:IsA("BasePart")
+				and (other.Position - root.Position).Magnitude > maxDistance
+			if now - state.lastAttachAt > maxHold or not other or isSolo(character) or tooFar then
+				local id = state.attachedId
+				clearAttached(player, state)
+				if rejectedRemote and id then
+					rejectedRemote:FireClient(player, id, "PlayerReleased")
+				end
+			end
+		end
+	end)
 end
 
 return HookService

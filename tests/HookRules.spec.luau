@@ -252,6 +252,36 @@ return function()
 		end)
 	end)
 
+	describe("playerPull (gancho em jogador)", function()
+		local PULL = { accelPerTick = 10, range = 40, maxSpeed = 50, minDistance = 4 }
+
+		it("puxa na direção do outro, proporcional à distância e ao fator", function()
+			local v = HookRules.playerPull(Vector3.zero, Vector3.zero, Vector3.new(40, 0, 0), 1.5, PULL)
+			expect(v.X).to.be.near(15, 1e-4) -- 10 * (40/40) * 1.5
+			local half = HookRules.playerPull(Vector3.zero, Vector3.zero, Vector3.new(20, 0, 0), 1.5, PULL)
+			expect(half.X).to.be.near(7.5, 1e-4) -- metade da distância, metade do puxão
+		end)
+
+		it("perto demais não puxa (não chega ao centro)", function()
+			local v =
+				HookRules.playerPull(Vector3.new(3, 0, 0), Vector3.zero, Vector3.new(3, 0, 0), 1.5, PULL)
+			expect(v.X).to.equal(3)
+		end)
+
+		it("não corta o embalo acima do limite no sentido do puxão", function()
+			local v =
+				HookRules.playerPull(Vector3.new(80, 0, 0), Vector3.zero, Vector3.new(40, 0, 0), 1.5, PULL)
+			expect(v.X).to.equal(80)
+		end)
+
+		it("ignora o Z e mantém o Z da velocidade", function()
+			local v =
+				HookRules.playerPull(Vector3.new(0, 0, 2), Vector3.zero, Vector3.new(0, 40, 9), 0.25, PULL)
+			expect(v.Y).to.be.near(2.5, 1e-4)
+			expect(v.Z).to.equal(2)
+		end)
+	end)
+
 	describe("saturatedAdd (DDNet)", function()
 		it("soma dentro dos limites e para no limite", function()
 			expect(HookRules.saturatedAdd(-10, 10, 0, 4)).to.equal(4)

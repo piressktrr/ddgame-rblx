@@ -76,6 +76,13 @@ local Config = {
 		-- Gravidade do DDNet (0,5 unidade/tick²) enquanto o gancho controla o corpo (preso e embalo).
 		-- A do Roblox (196,2) é 1,74x mais forte nesta escala e encurtava a parábola.
 		HookGravity = 112.5, -- studs/s²
+
+		-- Gancho em outro jogador (DDNet: m_HookedPlayer). Puxão = DragAccel * distância/Range * fator.
+		PlayerHookDuration = 1.2, -- segundos até soltar sozinho (DDNet: 1 s + 1/5 s)
+		PlayerPullHookedFactor = 1.5, -- quem é puxado recebe 1,5x, na direção de quem puxa
+		PlayerPullHookerFactor = 0.25, -- quem puxa recebe 0,25x, na direção do puxado
+		PlayerPullMinDistance = 4.8, -- studs: mais perto que isso não puxa (DDNet: 1,5 corpo)
+		PlayerHookServerSlack = 0.3, -- segundos de folga no servidor antes de forçar a soltura
 		DragSpeed = 68, -- studs/s: o puxão só acelera até aqui (15 unidades/tick)
 		DragMinDistance = 4.8, -- studs: mais perto do ponto que isso não puxa (46 unidades)
 		DragDownFactor = 0.3, -- puxão para baixo vale 30% (fica mais fácil subir numa plataforma)
@@ -175,6 +182,9 @@ local Config = {
 		-- No personagem: true no modo solo (SoloService). Mecânicas entre jogadores (gancho em jogador,
 		-- empurrar) devem ignorar quem está em solo.
 		Solo = "Solo",
+		-- No personagem de quem puxa: UserId do jogador que está preso no gancho dele (servidor marca).
+		-- O cliente do puxado procura essa marca nos outros personagens para aplicar o puxão.
+		HookTarget = "HookTarget",
 	},
 
 	-- Modo solo (SoloService): no lugar do "servidor vazio" do DDNet, o jogador vira fantasma para os
