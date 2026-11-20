@@ -63,6 +63,10 @@ end
 
 local function isGrounded(humanoid: Humanoid): boolean
 	local state = humanoid:GetState()
+	if state == Enum.HumanoidStateType.Physics then
+		-- Gancho controla o corpo: o Humanoid não atualiza o chão; quem sabe é o AirBody.
+		return HookController.isBodyOnGround()
+	end
 	if SUPPORTED_STATES[state] then
 		return true
 	end
@@ -99,10 +103,16 @@ local function onJumpRequest()
 	if Zones.isFrozen(ctx.character:GetAttribute(Config.Attributes.FrozenUntil)) then
 		return
 	end
+	-- Gancho controlando o corpo (estado `Physics`) e no chão: o Humanoid não pula, o pulo é nosso.
+	if HookController.tryGroundJump(settings.JumpPower) then
+		DoubleJump.setGrounded(jumpState, true, os.clock()) -- pulo normal: a carga do duplo fica cheia
+		return
+	end
 	-- Atualiza antes de decidir: o pedido pode chegar antes do passo deste quadro.
 	DoubleJump.setGrounded(jumpState, isGrounded(ctx.humanoid), os.clock())
 	-- No embalo (corda já solta) o pulo duplo vale (Q42). Com a corda presa, não.
-	local inMomentum = HookController.isInMomentum()
+	-- Puxando outro jogador também vale (DDNet): quem puxa pula e dá o pulo duplo normalmente.
+	local inMomentum = HookController.isInMomentum() or HookController.isHookingPlayer()
 	local hookActive = not inMomentum
 		and (isHookActive(ctx) or ctx.humanoid:GetState() == Enum.HumanoidStateType.Physics)
 	if DoubleJump.request(jumpState, os.clock(), hookActive, RULES) then
@@ -145,7 +155,8 @@ local function onCharacterAdded(character: Model)
 	table.insert(
 		ctx.connections,
 		character:GetAttributeChangedSignal(settings.HookActiveAttribute):Connect(function()
-			if isHookActive(ctx) then
+			-- Gancho em jogador não recarrega (senão prender e soltar alguém daria pulos infinitos no ar).
+			if isHookActive(ctx) and not HookController.isHookingPlayer() then
 				DoubleJump.recharge(jumpState)
 			end
 		end)
