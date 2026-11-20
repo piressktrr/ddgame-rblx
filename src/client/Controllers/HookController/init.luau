@@ -68,6 +68,7 @@ type Attached = {
 	hookOnceKey: Instance?,
 	physics: HookPhysics.Physics,
 	trove: Trove.Trove,
+	targetPlayer: Player?, -- gancho preso em outro jogador
 }
 
 -- Gancho no ar: "Flying" indo na direção da mira, "Retracting" voltando ao personagem sem prender.
@@ -401,6 +402,7 @@ local function attach(ctx: CharacterContext, part: BasePart, point: Vector3, tar
 		hookOnceKey = hookOnceKey,
 		physics = physics,
 		trove = trove,
+		targetPlayer = targetPlayer,
 	}
 	publishHookActive()
 	if attachRemote then
@@ -838,6 +840,30 @@ function HookController.applyImpulse(push: Vector3)
 		knockedBack = true
 		body:beginMomentum()
 	end
+end
+
+-- Gancho preso em outro jogador (puxando alguém): pular e o pulo duplo valem (DDNet).
+function HookController.isHookingPlayer(): boolean
+	local current = attached
+	return current ~= nil and current.targetPlayer ~= nil
+end
+
+-- Pulo normal com o corpo no estado `Physics` e apoiado no chão (o Humanoid não pula nesse estado):
+-- põe `jumpVelocity` no Y. Devolve true se pulou.
+function HookController.isBodyOnGround(): boolean
+	local body = airBody
+	return body ~= nil and body:isOnGround()
+end
+
+function HookController.tryGroundJump(jumpVelocity: number): boolean
+	local ctx = context
+	local body = airBody
+	if not ctx or not body or not body:isOnGround() then
+		return false
+	end
+	local velocity = ctx.root.AssemblyLinearVelocity
+	ctx.root.AssemblyLinearVelocity = Vector3.new(velocity.X, jumpVelocity, velocity.Z)
+	return true
 end
 
 -- Embalo = corda já solta, mas o AirBody ainda controla o corpo.

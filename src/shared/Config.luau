@@ -81,7 +81,9 @@ local Config = {
 		PlayerHookDuration = 1.2, -- segundos até soltar sozinho (DDNet: 1 s + 1/5 s)
 		PlayerPullHookedFactor = 1.5, -- quem é puxado recebe 1,5x, na direção de quem puxa
 		PlayerPullHookerFactor = 0.25, -- quem puxa recebe 0,25x, na direção do puxado
-		PlayerPullMinDistance = 4.8, -- studs: mais perto que isso não puxa (DDNet: 1,5 corpo)
+		-- studs: mais perto que isso não puxa (DDNet: 1,5 corpo, no tamanho do avatar). Colado em quem
+		-- puxa, uma martelada não é anulada pelo puxão na hora.
+		PlayerPullMinDistance = 7,
 		-- studs: comprimento do gancho do DDNet (380 unidades) na escala da física, usado no puxão entre
 		-- jogadores (aceleração = DragAccel * distância / isto). Com o Range (40) o puxão ficava ~15% fraco.
 		-- Mais curto que o do DDNet (~30% mais forte) e limite maior: o avatar é bem maior que o tee e o
@@ -186,9 +188,10 @@ local Config = {
 	Hammer = {
 		Cooldown = 0.125, -- s entre marteladas (DDNet: 125 ms)
 		-- Hitbox: círculo à frente de quem bate (DDNet: centro a 21 unidades na mira, raio 14 + 28).
-		-- Escalado para o avatar (~5 studs de altura, ~1,7x o tee): acerta até ~10 studs à frente.
-		Reach = 3.6, -- studs do root até o centro do círculo, na direção da mira
-		Radius = 6.6, -- studs: acerta o root de quem estiver dentro
+		-- Hitbox = o próprio martelo (no tamanho do avatar): segmento do ombro até a cabeça do martelo.
+		PivotHeight = 1.5, -- studs: ombro acima do root
+		Reach = 5.5, -- studs do ombro até a cabeça do martelo (braço + cabo)
+		Radius = 2.4, -- studs: acerta o root de quem estiver a até isso do martelo (corpo colado nele)
 		-- Empurrão: (direção de quem bate até o alvo + (0, UpBias)) normalizado * Strength + (0, Lift).
 		-- Por isso bater de baixo joga mais alto do que bater de lado.
 		Strength = 45, -- studs/s (DDNet: 10 unidades/tick)
