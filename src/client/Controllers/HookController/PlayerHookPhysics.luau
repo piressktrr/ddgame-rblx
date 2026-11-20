@@ -26,7 +26,7 @@ local RELEASE_DISTANCE = settings.Range * 1.5 -- studs: alvo levado longe demais
 
 local PULL: HookRules.PlayerPullSettings = table.freeze({
 	accelPerTick = settings.DragAccel * TICK,
-	range = settings.Range,
+	range = settings.PlayerPullLength,
 	maxSpeed = settings.DragSpeed,
 	minDistance = settings.PlayerPullMinDistance,
 })
