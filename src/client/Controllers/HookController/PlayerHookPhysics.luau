@@ -77,6 +77,9 @@ function PlayerHookPhysics.new(params: Params): HookPhysics.Physics
 		if (other.Position - root.Position).Magnitude > RELEASE_DISTANCE then
 			return "Release"
 		end
+		-- Ordem do DDNet: primeiro o próprio tick (atrito/A/D), depois o puxão do gancho. Assim, no chão,
+		-- o atrito (0,5/tick) não apaga o arrasto do mesmo tick e quem puxa desliza de leve para o alvo.
+		params.body:step(dt, input.horizontal)
 		local ticks = math.min(dt / TICK, MAX_TICKS_PER_FRAME)
 		local velocity = root.AssemblyLinearVelocity
 		local pulled = HookRules.playerPull(
@@ -88,9 +91,11 @@ function PlayerHookPhysics.new(params: Params): HookPhysics.Physics
 			ticks
 		)
 		if pulled ~= velocity then
+			-- O peso do outro arrasta quem puxa (0,25x), também no chão: o corpo assume, senão o Humanoid
+			-- anularia o arrasto andando.
+			params.body:takeOff()
 			root.AssemblyLinearVelocity = pulled
 		end
-		params.body:step(dt, input.horizontal)
 		return "Continue"
 	end
 
