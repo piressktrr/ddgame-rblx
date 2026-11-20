@@ -19,9 +19,8 @@
 	fim (troca de mão única, sem piscar).
 
 	Depois de soltar vem o "embalo": no ar dura até `Config.Hook.MomentumMaxTime`; no chão, enquanto a
-	velocidade horizontal estiver acima da de andar. Sem A/D o atrito do chão do DDNet para firme; com
-	A/D no sentido do movimento a velocidade se mantém (é o que deixa encadear ganchos ganhando
-	velocidade). Aí o Humanoid volta a `Freefall` e retoma o controle. Enquanto o corpo controla, as
+	velocidade horizontal estiver acima da de andar. Ao tocar o chão, com ou sem A/D, a frenagem de pouso
+	(`Config.Hook.LandingFriction`) tira quase toda a velocidade do ar em poucos ticks. Aí o Humanoid volta a `Freefall` e retoma o controle. Enquanto o corpo controla, as
 	peças do personagem ficam sem atrito nem quique: só a regra do DDNet freia.
 
 	Pose: enquanto o corpo controla (no ar), `HookPose` põe uma pose procedural de voo (braço para o ponto
@@ -196,7 +195,14 @@ function AirBody.new(
 			then 1
 			elseif horizontal < -INPUT_DEADZONE then -1
 			else 0
-		if direction == 0 then
+		if grounded and math.abs(vx) > humanoid.WalkSpeed then
+			-- Pousou rápido: perde quase toda a velocidade do ar em poucos ticks, com ou sem A/D (não sai
+			-- "voando" pelo chão); abaixo da velocidade de andar o controle normal assume.
+			vx *= settings.LandingFriction ^ (dt * settings.TickRate)
+			if math.abs(vx) < humanoid.WalkSpeed then
+				vx = math.sign(vx) * humanoid.WalkSpeed
+			end
+		elseif direction == 0 then
 			local friction = if grounded then settings.GroundFriction else settings.AirFriction
 			vx *= friction ^ (dt * settings.TickRate)
 		else
@@ -251,8 +257,7 @@ function AirBody.new(
 		if os.clock() - start >= settings.MomentumMaxTime and not isGrounded() then
 			return true
 		end
-		-- No chão o embalo vale enquanto estiver acima da velocidade de andar: segurando A/D no mesmo
-		-- sentido ele se mantém (DDNet); sem A/D, o atrito do chão para firme em poucos ticks.
+		-- No chão o embalo acaba quando a frenagem de pouso (`LandingFriction`) leva o X à velocidade de andar.
 		return isGrounded() and math.abs(root.AssemblyLinearVelocity.X) <= humanoid.WalkSpeed
 	end
 
