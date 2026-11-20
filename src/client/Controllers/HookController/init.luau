@@ -112,6 +112,7 @@ local attached: Attached? = nil
 local flight: Flight? = nil
 -- Corpo sem controle do Humanoid: existe enquanto preso e durante o embalo depois de soltar.
 local airBody: AirBody.AirBody? = nil
+local knockedBack = false -- o embalo atual veio de uma martelada (continua mesmo congelado)
 local attachCounter = 0
 local lastAttachTime = -math.huge
 local firePending = false -- botão pressionado esperando a recarga acabar
@@ -322,6 +323,7 @@ end
 local function endAirBody()
 	local body = airBody
 	airBody = nil
+	knockedBack = false
 	if body then
 		body:destroy()
 	end
@@ -361,6 +363,7 @@ local function attach(ctx: CharacterContext, part: BasePart, point: Vector3, tar
 	-- Prender de novo durante o embalo reaproveita o mesmo corpo (sem devolver o controle ao Humanoid).
 	local body = airBody or AirBody.new(ctx.character, ctx.humanoid, ctx.root, ctx.rootAttachment)
 	airBody = body
+	knockedBack = false
 	body:cancelMomentum()
 	body:setAimPoint(anchor) -- braço da pose de voo aponta para o ponto preso (beginMomentum tira)
 
@@ -646,7 +649,8 @@ local function onPreSimulation(dt: number)
 		if body:isMomentumOver() then
 			endAirBody()
 		else
-			body:step(dt, getInput(ctx).horizontal)
+			-- Congelado (ex.: martelado no freeze) segue no embalo, mas sem A/D.
+			body:step(dt, if isFrozen(ctx) then 0 else getInput(ctx).horizontal)
 		end
 	end
 end
@@ -734,8 +738,8 @@ local function onCharacterAdded(character: Model)
 			firePending = false
 			endFlight()
 			release(true)
-			if not beingPulled then
-				endAirBody() -- sendo resgatado por outro jogador, o corpo continua no puxão
+			if not beingPulled and not knockedBack then
+				endAirBody() -- sendo resgatado por outro jogador (gancho ou martelo), o corpo continua
 			end
 		end
 	end)
@@ -811,6 +815,26 @@ local function createDebugBindable()
 		return fn(...)
 	end
 	bindable.Parent = script
+end
+
+-- Martelada (HammerController): soma `push` à velocidade do próprio corpo. O AirBody assume (no chão o
+-- Humanoid anularia o empurrão) e, sem gancho puxando, segue no embalo até pousar.
+function HookController.applyImpulse(push: Vector3)
+	local ctx = context
+	if not ctx or ctx.humanoid.Health <= 0 then
+		return
+	end
+	if not airBody then
+		airBody = AirBody.new(ctx.character, ctx.humanoid, ctx.root, ctx.rootAttachment)
+		publishHookActive()
+	end
+	local body = airBody :: AirBody.AirBody
+	body:takeOff()
+	ctx.root.AssemblyLinearVelocity += push
+	if not attached and not beingPulled then
+		knockedBack = true
+		body:beginMomentum()
+	end
 end
 
 -- Embalo = corda já solta, mas o AirBody ainda controla o corpo.
