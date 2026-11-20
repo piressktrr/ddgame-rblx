@@ -178,6 +178,25 @@ local Config = {
 		ForbiddenFlashScale = 1.6, -- quanto o anel cresce ao piscar
 	},
 
+	-- Martelo do DDRace (cooperação): bate em quem está perto, na direção da mira, e joga para cima.
+	-- Valores do DDNet convertidos (1 unidade = ~0,105 stud; 1 unidade/tick = 4,5 studs/s).
+	Hammer = {
+		Cooldown = 0.125, -- s entre marteladas (DDNet: 125 ms)
+		-- Hitbox: círculo à frente de quem bate (DDNet: centro a 21 unidades na mira, raio 14 + 28).
+		Reach = 2.2, -- studs do root até o centro do círculo, na direção da mira
+		Radius = 4.4, -- studs: acerta o root de quem estiver dentro
+		-- Empurrão: (direção de quem bate até o alvo + (0, UpBias)) normalizado * Strength + (0, Lift).
+		-- Por isso bater de baixo joga mais alto do que bater de lado.
+		Strength = 45, -- studs/s (DDNet: 10 unidades/tick)
+		UpBias = 1.1,
+		Lift = 4.5, -- studs/s extra para cima (DDNet: 1 unidade/tick)
+		Unfreeze = true, -- martelada descongela (DDNet); no freeze o gelo volta logo
+		ServerRadiusTolerance = 3, -- studs de folga no servidor (atraso da rede)
+		ServerCooldownSlack = 0.05,
+		SwingTime = 0.12, -- s da animação da batida
+		ShowTime = 0.25, -- s que o martelo fica visível depois de bater
+	},
+
 	-- Nomes de atributos replicados (SetAttribute) usados por mais de um módulo.
 	Attributes = {
 		Checkpoint = "Checkpoint", -- no Player: número do último checkpoint alcançado
