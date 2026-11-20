@@ -263,6 +263,96 @@ local function bendX(angle: number): CFrame
 	return CFrame.Angles(angle, 0, 0)
 end
 
+export type ArmDriver = {
+	-- Ombro do braço usado (mundo), para posicionar o que a mão segura.
+	shoulderPosition: (self: ArmDriver) -> Vector3,
+	-- Comprimento do braço (studs, do ombro à ponta da mão).
+	armLength: number,
+	-- Aponta o braço para `direction` (mundo) com peso `weight` (0..1) sobre a animação. Chamar a cada
+	-- quadro em `PreSimulation`; peso 0 devolve o braço à animação.
+	point: (self: ArmDriver, direction: Vector3, weight: number) -> (),
+}
+
+-- Braço do lado da câmera de um personagem qualquer (inclusive de outros jogadores: `Transform` é
+-- local), para o martelo. nil se o rig for desconhecido.
+function HookPose.armDriver(character: Model, humanoid: Humanoid): ArmDriver?
+	local rootPart = humanoid.RootPart
+	if not rootPart then
+		return nil
+	end
+	local camera = workspace.CurrentCamera
+	local right = true
+	if camera then
+		right = (camera.CFrame.Position - rootPart.Position):Dot(rootPart.CFrame.RightVector) >= 0
+	end
+	local isR15 = humanoid.RigType == Enum.HumanoidRigType.R15
+	local shoulder = if isR15
+		then findJoint(
+			character,
+			if right then "RightUpperArm" else "LeftUpperArm",
+			if right then "RightShoulder" else "LeftShoulder"
+		)
+		else findJoint(character, "Torso", if right then "Right Shoulder" else "Left Shoulder")
+	local elbow = if isR15
+		then findJoint(
+			character,
+			if right then "RightLowerArm" else "LeftLowerArm",
+			if right then "RightElbow" else "LeftElbow"
+		)
+		else nil
+	if not shoulder then
+		return nil
+	end
+	local joint: Joint = shoulder
+	local part0 = if joint.motor then joint.motor.Part0 else nil
+	if not part0 and joint.constraint then
+		local attachment0 = joint.constraint.Attachment0
+		part0 = if attachment0 then attachment0.Parent :: BasePart? else nil
+	end
+	local torso = part0
+	if not torso then
+		return nil
+	end
+	local length = 0
+	for _, name in
+		(if isR15
+			then if right
+				then { "RightUpperArm", "RightLowerArm", "RightHand" }
+				else { "LeftUpperArm", "LeftLowerArm", "LeftHand" }
+			else { if right then "Right Arm" else "Left Arm" }) :: { string }
+	do
+		local part = character:FindFirstChild(name)
+		if part and part:IsA("BasePart") then
+			length += part.Size.Y
+		end
+	end
+
+	local driver = { armLength = length } :: ArmDriver
+	function driver.shoulderPosition(_self: ArmDriver): Vector3
+		return (torso.CFrame * joint.c0).Position
+	end
+	function driver.point(_self: ArmDriver, direction: Vector3, weight: number)
+		if not joint.instance.Parent then
+			return
+		end
+		local base = readTransform(joint)
+		local written = joint.written
+		if written and nearlyEqual(base, written) then
+			base = joint.base
+		else
+			joint.base = base
+		end
+		local goal = aimTransform(joint, torso.CFrame:VectorToObjectSpace(direction))
+		local final = base:Lerp(goal, math.clamp(weight, 0, 1))
+		writeTransform(joint, final)
+		joint.written = final
+		if elbow and elbow.instance.Parent then
+			writeTransform(elbow, readTransform(elbow):Lerp(CFrame.identity, math.clamp(weight, 0, 1)))
+		end
+	end
+	return driver
+end
+
 function HookPose.new(character: Model, humanoid: Humanoid): HookPose
 	local pose = {} :: HookPose
 	local rootPart = humanoid.RootPart

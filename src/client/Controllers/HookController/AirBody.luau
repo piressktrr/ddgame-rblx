@@ -48,6 +48,8 @@ export type AirBody = {
 	beginMomentum: (self: AirBody) -> (),
 	cancelMomentum: (self: AirBody) -> (),
 	isMomentumOver: (self: AirBody) -> boolean,
+	-- O corpo assumiu (estado `Physics`) e está apoiado no chão: o Humanoid não pula sozinho aqui.
+	isOnGround: (self: AirBody) -> boolean,
 	destroy: (self: AirBody) -> (),
 }
 
@@ -263,6 +265,10 @@ function AirBody.new(
 		end
 		-- No chão o embalo acaba quando a frenagem de pouso (`LandingFriction`) leva o X à velocidade de andar.
 		return isGrounded() and math.abs(root.AssemblyLinearVelocity.X) <= humanoid.WalkSpeed
+	end
+
+	function body.isOnGround(_self: AirBody): boolean
+		return airborne and isGrounded()
 	end
 
 	function body.destroy(_self: AirBody)

@@ -23,16 +23,18 @@ local Zones = require(ReplicatedStorage.Shared.Logic.Zones)
 local Net = require(ReplicatedStorage.Shared.Net)
 
 local HookController = require(script.Parent.HookController)
+local HookPose = require(script.Parent.HookController.HookPose)
 
 local settings = Config.Hammer
 local player = Players.LocalPlayer
 
-local HANDLE_LENGTH = 4 -- tamanho do avatar (~1,7x o tee)
+-- Cabo da mão até a cabeça; braço (~2,5) + cabo = `Config.Hammer.Reach` (a hitbox é o martelo).
+local HANDLE_LENGTH = 3
 local HANDLE_COLOR = Color3.fromRGB(122, 84, 48)
 local HEAD_COLOR = Color3.fromRGB(150, 152, 162)
-local PIVOT_HEIGHT = 1.5 -- studs acima do root (o martelo gira em volta deste ponto)
+local PIVOT_HEIGHT = settings.PivotHeight -- sem rig conhecido: o martelo gira deste ponto acima do root
 local SWING_ANGLE = math.rad(110) -- de onde a batida começa (por cima), em relação à mira
-local FRONT_OFFSET = 1.2 -- studs para o lado da câmera (na frente do corpo)
+local ARM_BLEND_TIME = 0.05 -- s para o braço entrar/sair da batida
 local HIT_FX_TIME = 0.15
 local HIT_FX_SIZE = 4.4
 
@@ -89,40 +91,71 @@ local function playHitFx(position: Vector3)
 	end)
 end
 
--- Martelo que desce por cima até a direção da mira, preso ao personagem enquanto aparece.
+-- Batida em andamento por personagem (uma nova substitui a anterior, sem dois martelos).
+local activeSwings: { [Model]: () -> () } = {}
+
+-- Martelo na mão: o braço do lado da câmera desce por cima até a direção da mira e o martelo vai
+-- preso na mão (cabo saindo da mão, cabeça na ponta). Funciona no próprio personagem e nos outros
+-- (`Transform` do braço é local).
 local function playSwing(root: BasePart, aimDirection: Vector3)
+	local character = root.Parent
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if not character or not character:IsA("Model") or not humanoid then
+		return
+	end
+	local previous = activeSwings[character]
+	if previous then
+		previous()
+	end
+
 	local model = Instance.new("Model")
 	model.Name = "Hammer"
 	local handle =
-		newPart("Handle", Vector3.new(0.55, 0.55, HANDLE_LENGTH), HANDLE_COLOR, Enum.Material.WoodPlanks)
+		newPart("Handle", Vector3.new(0.45, 0.45, HANDLE_LENGTH), HANDLE_COLOR, Enum.Material.WoodPlanks)
 	handle.Parent = model
-	local head = newPart("Head", Vector3.new(2.5, 1.6, 1.6), HEAD_COLOR, Enum.Material.Metal)
+	local head = newPart("Head", Vector3.new(2.2, 1.4, 1.4), HEAD_COLOR, Enum.Material.Metal)
 	head.Parent = model
 	model.Parent = workspace.CurrentCamera
 
+	local arm = HookPose.armDriver(character, humanoid)
+	local armLength = if arm then arm.armLength else 0
 	local aimAngle = math.atan2(aimDirection.Y, aimDirection.X)
 	-- Começa por cima da cabeça: do lado de trás de quem mira para a direita (ou esquerda).
 	local startAngle = aimAngle + (if aimDirection.X >= 0 then SWING_ANGLE else -SWING_ANGLE)
 	local start = os.clock()
 	local connection: RBXScriptConnection
-	connection = RunService.RenderStepped:Connect(function()
+	local function finish()
+		activeSwings[character] = nil
+		connection:Disconnect()
+		model:Destroy()
+		if arm then
+			arm:point(aimDirection, 0)
+		end
+	end
+	-- `PreSimulation`: depois do Animator, para o braço não ser sobrescrito pela animação.
+	connection = RunService.PreSimulation:Connect(function()
 		local elapsed = os.clock() - start
 		if elapsed >= settings.ShowTime or not root.Parent then
-			connection:Disconnect()
-			model:Destroy()
+			finish()
 			return
 		end
 		local alpha = math.min(elapsed / settings.SwingTime, 1)
 		alpha = 1 - (1 - alpha) * (1 - alpha) -- desacelera no fim
 		local angle = startAngle + (aimAngle - startAngle) * alpha
 		local direction = Vector3.new(math.cos(angle), math.sin(angle), 0)
-		local camera = workspace.CurrentCamera
-		local toCamera = if camera.CFrame.Position.Z >= root.Position.Z then 1 else -1
-		local pivot = root.Position + Vector3.new(0, PIVOT_HEIGHT, FRONT_OFFSET * toCamera)
-		local handleCenter = pivot + direction * (HANDLE_LENGTH / 2)
-		handle.CFrame = CFrame.lookAlong(handleCenter, direction, Vector3.zAxis)
-		head.CFrame = CFrame.lookAlong(pivot + direction * HANDLE_LENGTH, direction, Vector3.zAxis)
+		-- Braço entra rápido e volta à animação nos últimos quadros.
+		local weight = math.min(elapsed / ARM_BLEND_TIME, 1, (settings.ShowTime - elapsed) / ARM_BLEND_TIME)
+		local shoulder = if arm
+			then arm:shoulderPosition()
+			else root.Position + Vector3.new(0, PIVOT_HEIGHT, 0)
+		if arm then
+			arm:point(direction, weight)
+		end
+		local grip = shoulder + direction * armLength
+		handle.CFrame = CFrame.lookAlong(grip + direction * (HANDLE_LENGTH / 2), direction, Vector3.zAxis)
+		head.CFrame = CFrame.lookAlong(grip + direction * HANDLE_LENGTH, direction, Vector3.zAxis)
 	end)
+	activeSwings[character] = finish
 end
 
 local function playEffects(attacker: Player, aimDirection: Vector3, hits: { Vector3 })
