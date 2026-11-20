@@ -179,6 +179,8 @@ export type PlayerPullSettings = {
 	range: number, -- studs: alcance do gancho (o puxão cresce com a distância / alcance)
 	maxSpeed: number, -- studs/s: limite por eixo (SaturatedAdd), como o DragSpeed
 	minDistance: number, -- studs: mais perto que isso não puxa (o puxado não chega ao centro)
+	-- studs: abaixo disso a força conta como se estivesse nesta distância (de perto ainda puxa firme).
+	closeDistance: number?,
 }
 
 -- Gancho em jogador, como o DDNet (CCharacterCore, `m_HookedPlayer`): a cada tick, quem é puxado
@@ -199,7 +201,8 @@ function HookRules.playerPull(
 		return velocity
 	end
 	local direction = delta / distance
-	local accel = settings.accelPerTick * (ticks or 1) * (distance / settings.range) * factor
+	local effective = math.max(distance, settings.closeDistance or 0)
+	local accel = settings.accelPerTick * (ticks or 1) * (effective / settings.range) * factor
 	local limit = settings.maxSpeed
 	return Vector3.new(
 		HookRules.saturatedAdd(-limit, limit, velocity.X, accel * direction.X),
