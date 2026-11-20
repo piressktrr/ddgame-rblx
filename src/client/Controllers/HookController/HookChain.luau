@@ -13,8 +13,8 @@ local RunService = game:GetService("RunService")
 local HookChain = {}
 
 local LINK_LENGTH = 0.85 -- studs por elo
-local LINK_WIDTH = 0.42 -- elo de frente: largura no plano
-local LINK_THICKNESS = 0.14 -- elo de lado: espessura no plano
+local LINK_WIDTH = 0.62 -- elo de frente: largura no plano
+local LINK_THICKNESS = 0.22 -- elo de lado: espessura no plano
 local LINK_OVERLAP = 1.15 -- elos se encaixam um no outro
 local MAX_LINKS = 80
 
@@ -44,12 +44,12 @@ function HookChain.new(from: Attachment, to: Attachment): Model
 	local links: { Part } = {}
 	-- Garra: base + duas pontas abertas em V, apontando para a frente.
 	local clawBase = newPart("ClawBase", CLAW)
-	clawBase.Size = Vector3.new(0.5, 0.3, 0.45)
+	clawBase.Size = Vector3.new(0.7, 0.42, 0.6)
 	clawBase.Parent = model
 	local prongs: { Part } = {}
 	for index = 1, 2 do
 		local prong = newPart("ClawProng", CLAW)
-		prong.Size = Vector3.new(0.13, 0.3, 0.6)
+		prong.Size = Vector3.new(0.18, 0.42, 0.8)
 		prong.Parent = model
 		prongs[index] = prong
 	end
@@ -90,9 +90,9 @@ function HookChain.new(from: Attachment, to: Attachment): Model
 		end
 
 		local tip = CFrame.lookAlong(b, direction, up)
-		clawBase.CFrame = tip * CFrame.new(0, 0, 0.1)
-		prongs[1].CFrame = tip * CFrame.new(0.17, 0, -0.25) * CFrame.Angles(0, math.rad(-35), 0)
-		prongs[2].CFrame = tip * CFrame.new(-0.17, 0, -0.25) * CFrame.Angles(0, math.rad(35), 0)
+		clawBase.CFrame = tip * CFrame.new(0, 0, 0.14)
+		prongs[1].CFrame = tip * CFrame.new(0.24, 0, -0.33) * CFrame.Angles(0, math.rad(-35), 0)
+		prongs[2].CFrame = tip * CFrame.new(-0.24, 0, -0.33) * CFrame.Angles(0, math.rad(35), 0)
 	end
 
 	update()
