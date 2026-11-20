@@ -241,6 +241,8 @@ local Config = {
 		OneWay = "OneWay", -- mão única (atributo `Config.MapElements.DirectionAttribute`)
 		HookThrough = "HookThrough", -- sólido para o jogador, o gancho atravessa
 		EditorSpawn = "EditorSpawn", -- no Studio, renasce aqui se `Enabled` (área do MapBuilder)
+		StartLine = "StartLine", -- linha de largada: ao entrar, começa/recomeça o tempo da run
+		FinishLine = "FinishLine", -- linha de chegada: ao entrar com a run valendo, salva o tempo
 	},
 
 	-- Elementos de mapa do MapBuilder (Shared.MapElements).

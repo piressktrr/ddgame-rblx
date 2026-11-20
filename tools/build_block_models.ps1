@@ -16,7 +16,9 @@ $elements = @(
     @{ id = "Unfreeze";    name = "DD Unfreeze";     tag = "UnfreezeZone"; color = @(255,215,70);  t = 0.45; collide = $false },
     @{ id = "OneWay";      name = "DD Mao unica";    tag = "OneWay";       color = @(235,242,255); t = 0.5;  collide = $false },
     @{ id = "Kill";        name = "DD Morte";        tag = "KillZone";     color = @(220,60,70);   t = 0.45; collide = $false },
-    @{ id = "HookOnce";    name = "DD Gancho unico"; tag = "HookOnce";     color = @(95,191,106);  t = 0;    collide = $true }
+    @{ id = "HookOnce";    name = "DD Gancho unico"; tag = "HookOnce";     color = @(95,191,106);  t = 0;    collide = $true },
+    @{ id = "StartLine";   name = "DD Largada";      tag = "StartLine";    color = @(60,110,200);  t = 0.3;  collide = $false },
+    @{ id = "FinishLine";  name = "DD Chegada";      tag = "FinishLine";   color = @(25,25,30);    t = 0.3;  collide = $false }
 )
 
 foreach ($e in $elements) {

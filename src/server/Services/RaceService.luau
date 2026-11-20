@@ -69,6 +69,17 @@ local function finish(player: Player, startedAt: number)
 	end
 end
 
+-- Linha de chegada (ZoneService): termina a run se ela está valendo e ainda não terminou.
+function RaceService.finishRun(player: Player)
+	if player:GetAttribute(Attributes.InRace) ~= true or busy[player] then
+		return
+	end
+	local startedAt = getNumber(player, Attributes.RaceStartedAt)
+	if startedAt and player:GetAttribute(Attributes.RaceFinishTime) == nil then
+		finish(player, startedAt)
+	end
+end
+
 local function checkFinish()
 	local finishes = CollectionService:GetTagged(Config.Tags.RaceFinish)
 	if #finishes == 0 then
