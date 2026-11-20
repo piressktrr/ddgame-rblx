@@ -27,14 +27,14 @@ local HookController = require(script.Parent.HookController)
 local settings = Config.Hammer
 local player = Players.LocalPlayer
 
-local HANDLE_LENGTH = 2.4
+local HANDLE_LENGTH = 4 -- tamanho do avatar (~1,7x o tee)
 local HANDLE_COLOR = Color3.fromRGB(122, 84, 48)
 local HEAD_COLOR = Color3.fromRGB(150, 152, 162)
-local PIVOT_HEIGHT = 1 -- studs acima do root (o martelo gira em volta deste ponto)
+local PIVOT_HEIGHT = 1.5 -- studs acima do root (o martelo gira em volta deste ponto)
 local SWING_ANGLE = math.rad(110) -- de onde a batida começa (por cima), em relação à mira
 local FRONT_OFFSET = 1.2 -- studs para o lado da câmera (na frente do corpo)
 local HIT_FX_TIME = 0.15
-local HIT_FX_SIZE = 2.6
+local HIT_FX_SIZE = 4.4
 
 local HammerController = {}
 
@@ -94,9 +94,9 @@ local function playSwing(root: BasePart, aimDirection: Vector3)
 	local model = Instance.new("Model")
 	model.Name = "Hammer"
 	local handle =
-		newPart("Handle", Vector3.new(0.35, 0.35, HANDLE_LENGTH), HANDLE_COLOR, Enum.Material.WoodPlanks)
+		newPart("Handle", Vector3.new(0.55, 0.55, HANDLE_LENGTH), HANDLE_COLOR, Enum.Material.WoodPlanks)
 	handle.Parent = model
-	local head = newPart("Head", Vector3.new(1.5, 0.95, 0.95), HEAD_COLOR, Enum.Material.Metal)
+	local head = newPart("Head", Vector3.new(2.5, 1.6, 1.6), HEAD_COLOR, Enum.Material.Metal)
 	head.Parent = model
 	model.Parent = workspace.CurrentCamera
 
@@ -188,7 +188,11 @@ local function swing(aimPoint: Vector3?): { Player }
 			local position = otherRoot.Position
 			if
 				HammerRules.isHit(root.Position, aimDirection, position, settings)
-				and not isBlocked(Vector3.new(center.X, center.Y, position.Z), position)
+				-- Parede no meio bloqueia (do centro do círculo ou do próprio corpo, o que estiver livre).
+				and not (
+					isBlocked(Vector3.new(center.X, center.Y, position.Z), position)
+					and isBlocked(root.Position, position)
+				)
 			then
 				table.insert(hits, other)
 				table.insert(hitPositions, position)

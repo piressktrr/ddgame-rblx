@@ -103,10 +103,13 @@ local function onSwing(player: Player, direction: unknown, targets: unknown)
 			continue
 		end
 		local position = targetRoot.Position
-		if not HammerRules.isHit(origin, aim, position, settings, settings.ServerRadiusTolerance) then
+		-- Folga cresce com a velocidade dos dois: no ar o servidor vê posições atrasadas.
+		local speeds = targetRoot.AssemblyLinearVelocity.Magnitude + root.AssemblyLinearVelocity.Magnitude
+		local tolerance = settings.ServerRadiusTolerance + speeds * settings.ServerLagWindow
+		if not HammerRules.isHit(origin, aim, position, settings, tolerance) then
 			continue
 		end
-		if blocked(Vector3.new(center.X, center.Y, position.Z), position) then
+		if blocked(Vector3.new(center.X, center.Y, position.Z), position) and blocked(origin, position) then
 			continue
 		end
 		if settings.Unfreeze then

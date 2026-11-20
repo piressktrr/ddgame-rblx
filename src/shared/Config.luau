@@ -84,7 +84,10 @@ local Config = {
 		PlayerPullMinDistance = 4.8, -- studs: mais perto que isso não puxa (DDNet: 1,5 corpo)
 		-- studs: comprimento do gancho do DDNet (380 unidades) na escala da física, usado no puxão entre
 		-- jogadores (aceleração = DragAccel * distância / isto). Com o Range (40) o puxão ficava ~15% fraco.
-		PlayerPullLength = 34,
+		-- Mais curto que o do DDNet (~30% mais forte) e limite maior: o avatar é bem maior que o tee e o
+		-- puxão com os valores puros parecia lento.
+		PlayerPullLength = 26,
+		PlayerPullSpeed = 90, -- studs/s: limite por eixo do puxão entre jogadores (DDNet: DragSpeed)
 		-- studs: o gancho acerta um jogador se passar a até isso do centro dele (DDNet: raio físico + 2 =
 		-- 30 unidades ≈ 2,7 studs; um pouco mais aqui, o boneco é maior que o tee).
 		PlayerHitRadius = 3,
@@ -183,8 +186,9 @@ local Config = {
 	Hammer = {
 		Cooldown = 0.125, -- s entre marteladas (DDNet: 125 ms)
 		-- Hitbox: círculo à frente de quem bate (DDNet: centro a 21 unidades na mira, raio 14 + 28).
-		Reach = 2.2, -- studs do root até o centro do círculo, na direção da mira
-		Radius = 4.4, -- studs: acerta o root de quem estiver dentro
+		-- Escalado para o avatar (~5 studs de altura, ~1,7x o tee): acerta até ~10 studs à frente.
+		Reach = 3.6, -- studs do root até o centro do círculo, na direção da mira
+		Radius = 6.6, -- studs: acerta o root de quem estiver dentro
 		-- Empurrão: (direção de quem bate até o alvo + (0, UpBias)) normalizado * Strength + (0, Lift).
 		-- Por isso bater de baixo joga mais alto do que bater de lado.
 		Strength = 45, -- studs/s (DDNet: 10 unidades/tick)
@@ -192,6 +196,9 @@ local Config = {
 		Lift = 4.5, -- studs/s extra para cima (DDNet: 1 unidade/tick)
 		Unfreeze = true, -- martelada descongela (DDNet); no freeze o gelo volta logo
 		ServerRadiusTolerance = 3, -- studs de folga no servidor (atraso da rede)
+		-- s: folga extra proporcional à velocidade dos dois (no ar, a posição que o servidor vê atrasa
+		-- vários studs em relação à que quem bate viu).
+		ServerLagWindow = 0.25,
 		ServerCooldownSlack = 0.05,
 		SwingTime = 0.12, -- s da animação da batida
 		ShowTime = 0.25, -- s que o martelo fica visível depois de bater
