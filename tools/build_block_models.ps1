@@ -9,7 +9,7 @@ $tmp = Join-Path $out "projects"
 New-Item -ItemType Directory -Force $tmp | Out-Null
 
 $elements = @(
-    @{ id = "Block";       name = "DD Bloco";        tag = $null;          color = @(150,150,105); t = 0;    collide = $true },
+    @{ id = "Block";       name = "DD Bloco";        tag = $null;          color = @(176,152,104); t = 0;    collide = $true },
     @{ id = "Unhookable";  name = "DD Unhookable";   tag = "NoHook";       color = @(142,91,214);  t = 0;    collide = $true },
     @{ id = "HookThrough"; name = "DD Hookthrough";  tag = "HookThrough";  color = @(45,45,52);    t = 0;    collide = $true },
     @{ id = "Freeze";      name = "DD Freeze";       tag = "FreezeZone";   color = @(70,75,90);    t = 0.45; collide = $false },
