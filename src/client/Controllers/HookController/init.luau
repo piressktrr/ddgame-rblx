@@ -876,12 +876,12 @@ function HookController.Start()
 	end
 
 	UserInputService.InputBegan:Connect(function(input: InputObject, gameProcessed: boolean)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 and not gameProcessed then
+		if input.UserInputType == Enum.UserInputType.MouseButton2 and not gameProcessed then
 			pressFire()
 		end
 	end)
 	UserInputService.InputEnded:Connect(function(input: InputObject)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		if input.UserInputType == Enum.UserInputType.MouseButton2 then
 			releaseFire()
 		end
 	end)
