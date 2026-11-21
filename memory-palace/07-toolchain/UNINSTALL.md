@@ -17,6 +17,8 @@ pasta do projeto, e como remover cada item. Ele é atualizado sempre que algo no
 | Bibliotecas só de desenvolvimento: TestEZ (dentro do projeto) | `D:\Projetos\dddrace-roblox\DevPackages\` | ~0,5 MB |
 | Arquivo de jogo de teste (dentro do projeto) | `D:\Projetos\dddrace-roblox\build\` | < 1 MB |
 | Plugin do Rojo no Roblox Studio | `C:\Users\Usuario\AppData\Local\Roblox\Plugins\RojoManagedPlugin.rbxm` | ~0,5 MB |
+| FFmpeg (fora do PATH) | `D:\Ferramentas\ffmpeg\` | ~0,3 GB |
+| Frames do vídeo de referência de 2026-11-14 (fora do Git) | `D:\Projetos\dddrace-roblox\memory-palace\04-game-design\referencias\imagens\video-2026-11-14\` | ~40 GB |
 
 **Ainda não instalados** (entram nesta lista quando forem instalados):
 
@@ -99,6 +101,15 @@ O MCP não instalou nada novo: o `StudioMCP.exe` e o `mcp.bat` vêm com o própr
 (`C:\Users\Usuario\AppData\Local\Roblox\`) e saem quando o Studio for desinstalado.
 Para desligar a conexão com o Claude, apague o arquivo `.mcp.json` da raiz do projeto.
 
+### 5b. FFmpeg e frames de vídeo
+
+Não mexe no PATH nem no registro. Para remover, apague as pastas:
+
+```powershell
+Remove-Item -Recurse -Force "D:\Ferramentas\ffmpeg"
+Remove-Item -Recurse -Force "D:\Projetos\dddrace-roblox\memory-palace\04-game-design\referencias\imagens\video-2026-11-14"
+```
+
 ### 6. Extensões do VS Code (quando forem instaladas)
 
 No VS Code: aba **Extensões** (Ctrl+Shift+X) → clique na extensão → **Desinstalar**.
@@ -126,3 +137,4 @@ Se todos os `Test-Path` mostrarem `False` e o último comando não mostrar nada,
 | 2026-11-11 | Plugin do Rojo no Studio (`RojoManagedPlugin.rbxm`) |
 | 2026-11-11 | MCP do Roblox Studio configurado (`.mcp.json` no projeto; nada instalado no PC) |
 | 2026-11-17 | TestEZ 0.4.1 via Wally em `DevPackages\` (só dentro do projeto; nada instalado no PC) |
+| 2026-11-21 | FFmpeg 9.1 em `D:\Ferramentas\ffmpeg\` e frames do vídeo de referência (fora do Git) |

@@ -69,3 +69,4 @@ Modelo:
 | [0049](0049-killzone-aceita-gancho.md) | A zona mortal aceita o gancho; `Kill` vira peça sólida (Q43) | Aceita |
 | [0050](0050-mapa-fase2-aprovado.md) | Mapa da Fase 2 aprovado: 9 estágios, 22 rotas, substitui o Map01 (Q44–Q55) | Aceita |
 | [0051](0051-ad-no-embalo-fica.md) | A/D continua empurrando no embalo depois do gancho (Q56) | Aceita |
+| [0052](0052-mapa-desafiador-e-dinamico.md) | Mapa desafiador com trechos fáceis, dinâmico, com bifurcações; criação automatizada em etapas | Aceita |

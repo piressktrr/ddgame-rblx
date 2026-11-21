@@ -28,6 +28,7 @@ Quando uma decisão muda, a antiga não é apagada: ganha o status "Substituída
 | [2026-11-15](#2026-11-15--experimento-de-câmera-e-reorganização) | Experimento | Mapa em 6 estágios, experimento de câmera (reprovado), checkpoints, palácio reorganizado |
 | [2026-11-16](#2026-11-16--25d-e-gancho) | 2.5D e gancho | Jogo fica 2.5D, mapa v2, gancho (balanço → puxão), corda para todos, pulo duplo e lobby |
 | [2026-11-17](#2026-11-17--fase-3-zonas-corrida-tutorial) | Fase 3 | PR para a main, decisões 0045–0048, zonas, timer/HUD, tutorial e testes |
+| [2026-11-21](#2026-11-21--vídeo-de-referência-do-mapa) | Referência | Frames do vídeo de 2026-11-14 extraídos e estudo de padrões para o mapa |
 
 ---
 
@@ -134,3 +135,11 @@ Diário: [diario/2026-11-17.md](diario/2026-11-17.md) · Commit `7c05f55` · PR 
 - **Greybox do mapa novo** (9 estágios, substitui o Map01) e **lição 7 do tutorial** (salto de embalo), montados
   no Studio; sem playtest do mapa.
 - **Hoje:** veja o [STATUS](STATUS.md) para o próximo passo.
+
+## 2026-11-21 — Vídeo de referência do mapa
+Diário: [diario/2026-11-21.md](diario/2026-11-21.md)
+
+- **Estudo:** [referencia-video-2026-11-14](../04-game-design/estudos/referencia-video-2026-11-14.md) — padrões de design
+  tirados de um vídeo de 1 h de DDNet (só padrões, nada copiado), para modelar o mapa.
+- **Ferramenta:** FFmpeg em `D:\Ferramentas\ffmpeg` ([TOOLS](../07-toolchain/TOOLS.md)); 214.900 frames fora do Git.
+- Os dias 2026-11-18 a 2026-11-20 (física do DDNet, martelo, MapBuilder, PRs #4–#25) ainda não têm diário.

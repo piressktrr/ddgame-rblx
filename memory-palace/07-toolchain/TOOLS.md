@@ -61,6 +61,14 @@ Todas são instaladas e versionadas pelo **Rokit**. As versões ficam no [`rokit
 - **Configuração:** [`stylua.toml`](../../stylua.toml) (tabs, 110 colunas, aspas duplas).
 - **Repositório:** https://github.com/JohnnyMorganz/StyLua
 
+### FFmpeg (9.1, build "essentials" do gyan.dev)
+- **O que é:** ferramenta de linha de comando para vídeo e áudio.
+- **Para que serve:** extrair frames de vídeos de referência (ex.: os frames do vídeo de 2026-11-14 em
+  `memory-palace/04-game-design/referencias/imagens/video-2026-11-14/`, fora do Git).
+- **Onde está:** `D:\Ferramentas\ffmpeg\bin\` (fora do PATH; chame pelo caminho completo). Instalado no D:
+  porque o C: (SSD) está quase cheio; arquivos temporários em `D:\Temp`.
+- **Origem:** https://www.gyan.dev/ffmpeg/builds/ (link oficial do ffmpeg.org para Windows), checksum SHA-256 conferido.
+
 ---
 
 ## Extensões do VS Code
@@ -167,3 +175,4 @@ Testes (Studio em modo Edit, Rojo conectado): `return require(game.ServerStorage
 | 2026-11-11 | Plugin do Rojo 7.7.1 instalado no Studio |
 | 2026-11-11 | MCP do Roblox Studio configurado no projeto (`.mcp.json`) |
 | 2026-11-17 | TestEZ 0.4.1 (dev-dependency), pasta `tests/`, `ServerStorage.Tests`/`DevPackages`, selene `roblox+testez` |
+| 2026-11-21 | FFmpeg 9.1 essentials em `D:\Ferramentas\ffmpeg` (extrair frames de vídeo de referência) |
