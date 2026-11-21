@@ -297,8 +297,8 @@ local Config = {
 
 	-- Menu principal (MenuController): tela de jogo "de verdade" antes de entrar, no lugar do lobby.
 	Menu = {
-		Title = "CORRIDA E FUGA",
-		Subtitle = "puxe, martele, corra junto",
+		Title = "RACE AND ESCAPE",
+		Subtitle = "ninguém escapa sozinho",
 		Version = "v0.3 · alpha",
 		MapName = "Mapa 1 · Floresta", -- nome do Map01 na lista de mapas
 		MapStages = 9,
