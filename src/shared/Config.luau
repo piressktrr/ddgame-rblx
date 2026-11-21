@@ -295,6 +295,35 @@ local Config = {
 		BoardMaxRows = 10, -- jogadores mostrados no placar
 	},
 
+	-- Menu principal (MenuController): tela de jogo "de verdade" antes de entrar, no lugar do lobby.
+	Menu = {
+		Title = "CORRIDA E FUGA",
+		Subtitle = "puxe, martele, corra junto",
+		Version = "v0.3 · alpha",
+		MapName = "Mapa 1 · Floresta", -- nome do Map01 na lista de mapas
+		MapStages = 9,
+		Font = Enum.Font.FredokaOne,
+		BodyFont = Enum.Font.GothamMedium,
+		-- Paleta própria (céu de fim de tarde) para não copiar o visual de outro jogo.
+		SkyTop = Color3.fromRGB(64, 112, 176),
+		SkyBottom = Color3.fromRGB(246, 196, 128),
+		RayColor = Color3.fromRGB(255, 236, 190),
+		RayCount = 14,
+		RaySpeed = 4, -- graus/s que os raios de sol giram
+		CloudCount = 7,
+		ButtonColor = Color3.fromRGB(34, 40, 56),
+		ButtonHoverColor = Color3.fromRGB(255, 176, 64),
+		ButtonTextColor = Color3.fromRGB(245, 245, 250),
+		ButtonSize = Vector2.new(440, 64),
+		PanelColor = Color3.fromRGB(26, 30, 42),
+		AccentColor = Color3.fromRGB(255, 176, 64),
+		BackgroundPanSpeed = 14, -- studs/s que a câmera do fundo (o mapa de verdade) anda
+		BackgroundOverlay = 0.45, -- transparência do véu escuro sobre o mapa do fundo (0 = escuro total)
+		HoverScale = 1.04,
+		FadeTime = 0.35,
+		DisplayOrder = 20,
+	},
+
 	Tags = {
 		NoHook = "NoHook",
 		HookOnce = "HookOnce",
