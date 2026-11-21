@@ -1,0 +1,404 @@
+{
+  "schema": 1,
+  "generated_by": "tools/mapkit/metrics.py",
+  "config": {
+    "path": "src/shared/Config.luau",
+    "sha256": "aeacf8308d81d56173ac882d05981d4f7b6130f615f5acaff645e38ef3f1e42e",
+    "grid": 4.0,
+    "cell": 2.0,
+    "hook_mode": "DDNet"
+  },
+  "metrics": {
+    "jump": {
+      "jump_height": 11.559,
+      "jump_height_analytic": 11.56,
+      "jump_air_time": 0.917,
+      "jump_air_time_analytic": 0.907,
+      "jump_time_to_apex": 0.453,
+      "double_jump_height": 21.797,
+      "double_jump_height_analytic": 21.8,
+      "double_jump_best_time_for_height": 0.45,
+      "double_jump_air_time_at_best_height": 1.5,
+      "double_jump_gain": 10.24
+    },
+    "reach": {
+      "rows": [
+        {
+          "level": -24,
+          "jump_gap": 49.44,
+          "double_jump_gap": 83.926,
+          "double_jump_time": 1.083
+        },
+        {
+          "level": -16,
+          "jump_gap": 45.824,
+          "double_jump_gap": 79.492,
+          "double_jump_time": 1.033
+        },
+        {
+          "level": -12,
+          "jump_gap": 43.819,
+          "double_jump_gap": 77.095,
+          "double_jump_time": 1.0
+        },
+        {
+          "level": -8,
+          "jump_gap": 41.633,
+          "double_jump_gap": 74.553,
+          "double_jump_time": 0.967
+        },
+        {
+          "level": -4,
+          "jump_gap": 39.211,
+          "double_jump_gap": 71.833,
+          "double_jump_time": 0.933
+        },
+        {
+          "level": 0,
+          "jump_gap": 36.451,
+          "double_jump_gap": 68.889,
+          "double_jump_time": 0.9
+        },
+        {
+          "level": 4,
+          "jump_gap": 33.155,
+          "double_jump_gap": 65.563,
+          "double_jump_time": 0.817
+        },
+        {
+          "level": 8,
+          "jump_gap": 28.782,
+          "double_jump_gap": 61.132,
+          "double_jump_time": 0.7
+        },
+        {
+          "level": 12,
+          "jump_gap": null,
+          "double_jump_gap": 57.868,
+          "double_jump_time": 0.75
+        },
+        {
+          "level": 16,
+          "jump_gap": null,
+          "double_jump_gap": 52.694,
+          "double_jump_time": 0.683
+        },
+        {
+          "level": 20,
+          "jump_gap": null,
+          "double_jump_gap": 45.048,
+          "double_jump_time": 0.583
+        }
+      ]
+    },
+    "hook_climb_range": {
+      "anchor_height": 39.5,
+      "hang_root_below_anchor": 5.925,
+      "hang_feet_below_anchor": 8.925,
+      "max_feet_rise_no_double_jump": 50.742,
+      "release_time_no_double_jump": 0.617,
+      "max_feet_rise_with_double_jump": 60.972,
+      "release_time_with_double_jump": 0.617
+    },
+    "hook_climb_on_screen": {
+      "anchor_height": 34.0,
+      "hang_root_below_anchor": 5.875,
+      "hang_feet_below_anchor": 8.875,
+      "max_feet_rise_no_double_jump": 45.153,
+      "release_time_no_double_jump": 0.517,
+      "max_feet_rise_with_double_jump": 55.383,
+      "release_time_with_double_jump": 0.517
+    },
+    "hook_gap": {
+      "gap": 168.003,
+      "anchor_angle_deg": 20,
+      "anchor_dx_from_edge": 54.748,
+      "anchor_dy_from_ledge": 27.898,
+      "fire_time": 0.45,
+      "release_time": 1.167,
+      "release_speed": 72.028,
+      "max_speed": 84.263,
+      "max_horizontal_speed": 77.083
+    },
+    "hook_wall_climb": {
+      "rows": [
+        {
+          "distance_from_wall": 2,
+          "max_wall_height": 38.0
+        },
+        {
+          "distance_from_wall": 12,
+          "max_wall_height": 38.0
+        },
+        {
+          "distance_from_wall": 20,
+          "max_wall_height": 38.0
+        }
+      ],
+      "max_wall_height": 38.0
+    },
+    "camera": {
+      "aspect": "16:9",
+      "visible_height": 59.687,
+      "visible_width": 106.111,
+      "visible_up_from_root": 35.844,
+      "visible_down_from_root": 23.844,
+      "visible_side_stopped": 53.055,
+      "visible_ahead_running": 59.055,
+      "visible_behind_running": 47.055,
+      "front_face_visible_height": 54.092,
+      "smoothing": 10.0,
+      "note": "FOV vertical; área no plano Z do jogo (a face da frente dos blocos fica mais perto)."
+    },
+    "fall": {
+      "fall_damage": false,
+      "note": "Sem dano de queda: nenhum código do jogo tira vida por queda e o Humanoid do Roblox não tem dano de queda. Só matam a zona Kill e cair abaixo do FallenPartsDestroyHeight do place.",
+      "rows": [
+        {
+          "height": 12,
+          "speed": 51.962,
+          "time": 0.462,
+          "camera_lag": 5.196,
+          "visible_below_feet": 15.648
+        },
+        {
+          "height": 24,
+          "speed": 73.485,
+          "time": 0.653,
+          "camera_lag": 7.348,
+          "visible_below_feet": 13.496
+        },
+        {
+          "height": 40,
+          "speed": 94.868,
+          "time": 0.843,
+          "camera_lag": 9.487,
+          "visible_below_feet": 11.357
+        },
+        {
+          "height": 60,
+          "speed": 116.19,
+          "time": 1.033,
+          "camera_lag": 11.619,
+          "visible_below_feet": 9.225
+        },
+        {
+          "height": 100,
+          "speed": 150.0,
+          "time": 1.333,
+          "camera_lag": 15.0,
+          "visible_below_feet": 5.844
+        },
+        {
+          "height": 160,
+          "speed": 189.737,
+          "time": 1.687,
+          "camera_lag": 18.974,
+          "visible_below_feet": 1.87
+        }
+      ]
+    },
+    "speeds": {
+      "walk": 38.0,
+      "air_control": 22.0,
+      "drag_max": 68.0,
+      "max_swing": 180.0,
+      "hook_fire": 360.0,
+      "jump_up": 51.0,
+      "double_jump_up": 48.0
+    },
+    "body": {
+      "width": 2.0,
+      "height": 5.5,
+      "feet_below_root": 3.0,
+      "head_above_root": 2.5
+    },
+    "hook": {
+      "range": 40.0,
+      "cooldown": 0.1,
+      "drag_min_distance": 6.0,
+      "fire_time_at_range": 0.111,
+      "on_screen_up": 35.844,
+      "on_screen_down": 23.844,
+      "on_screen_side": 40.0
+    },
+    "rules": [
+      {
+        "id": "step_jump_comfort",
+        "op": "<=",
+        "studs": 8.0,
+        "blocks": 2.0,
+        "cells": 4.0,
+        "text": "Degrau (só pulo, sem gancho): confortável."
+      },
+      {
+        "id": "step_jump_max",
+        "op": "<=",
+        "studs": 10.0,
+        "blocks": 2.5,
+        "cells": 5.0,
+        "text": "Degrau máximo só com pulo (na grade de células; acima disso precisa do pulo duplo)."
+      },
+      {
+        "id": "step_double_jump_comfort",
+        "op": "<=",
+        "studs": 16.0,
+        "blocks": 4.0,
+        "cells": 8.0,
+        "text": "Degrau com pulo duplo: confortável."
+      },
+      {
+        "id": "step_double_jump_max",
+        "op": "<=",
+        "studs": 20.0,
+        "blocks": 5.0,
+        "cells": 10.0,
+        "text": "Degrau máximo com pulo duplo bem cronometrado (no topo do 1º pulo)."
+      },
+      {
+        "id": "step_needs_hook",
+        "op": ">=",
+        "studs": 24.0,
+        "blocks": 6.0,
+        "cells": 12.0,
+        "text": "Degrau a partir do qual só se sobe com gancho (impossível com os dois pulos)."
+      },
+      {
+        "id": "gap_jump_comfort",
+        "op": "<=",
+        "studs": 24.0,
+        "blocks": 6.0,
+        "cells": 12.0,
+        "text": "Vão no mesmo nível só com pulo: confortável (borda a borda)."
+      },
+      {
+        "id": "gap_jump_max",
+        "op": "<=",
+        "studs": 32.0,
+        "blocks": 8.0,
+        "cells": 16.0,
+        "text": "Vão no mesmo nível só com pulo: difícil (pular quase na borda)."
+      },
+      {
+        "id": "gap_double_jump_comfort",
+        "op": "<=",
+        "studs": 48.0,
+        "blocks": 12.0,
+        "cells": 24.0,
+        "text": "Vão no mesmo nível com pulo duplo: confortável."
+      },
+      {
+        "id": "gap_double_jump_max",
+        "op": "<=",
+        "studs": 60.0,
+        "blocks": 15.0,
+        "cells": 30.0,
+        "text": "Vão no mesmo nível com pulo duplo: difícil (duplo tarde, perto do pouso)."
+      },
+      {
+        "id": "gap_needs_hook",
+        "op": ">=",
+        "studs": 72.0,
+        "blocks": 18.0,
+        "cells": 36.0,
+        "text": "Vão a partir do qual só se passa com gancho (ou embalo de gancho)."
+      },
+      {
+        "id": "gap_hook_comfort",
+        "op": "<=",
+        "studs": 84.0,
+        "blocks": 21.0,
+        "cells": 42.0,
+        "text": "Vão com 1 gancho + embalo + pulo duplo: confortável (metade do máximo medido)."
+      },
+      {
+        "id": "wall_one_hook_max",
+        "op": "<=",
+        "studs": 32.0,
+        "blocks": 8.0,
+        "cells": 16.0,
+        "text": "Parede que se sobe com 1 gancho (prende na face perto do topo e passa por cima)."
+      },
+      {
+        "id": "wall_needs_two_hooks",
+        "op": ">",
+        "studs": 38.0,
+        "blocks": 9.5,
+        "cells": 19.0,
+        "text": "Parede mais alta que isto precisa de 2 ganchos (soltar e prender de novo no ar)."
+      },
+      {
+        "id": "hook_target_distance",
+        "op": "<=",
+        "studs": 36.0,
+        "blocks": 9.0,
+        "cells": 18.0,
+        "text": "Distância do root até o ponto de gancho (alcance com folga)."
+      },
+      {
+        "id": "hook_target_up",
+        "op": "<=",
+        "studs": 32.0,
+        "blocks": 8.0,
+        "cells": 16.0,
+        "text": "Ponto de gancho acima do jogador: no máximo isto, para ficar na tela com folga."
+      },
+      {
+        "id": "hook_target_down",
+        "op": "<=",
+        "studs": 20.0,
+        "blocks": 5.0,
+        "cells": 10.0,
+        "text": "Ponto de gancho abaixo do jogador: no máximo isto (a câmera mostra menos para baixo)."
+      },
+      {
+        "id": "hook_chain_spacing",
+        "op": "<=",
+        "studs": 28.0,
+        "blocks": 7.0,
+        "cells": 14.0,
+        "text": "Espaço horizontal entre pontos de gancho seguidos na mesma altura (pendurado no anterior)."
+      },
+      {
+        "id": "ceiling_walk_min",
+        "op": ">=",
+        "studs": 8.0,
+        "blocks": 2.0,
+        "cells": 4.0,
+        "text": "Altura livre mínima para passar andando (corpo de 5,5)."
+      },
+      {
+        "id": "ceiling_jump_free",
+        "op": ">=",
+        "studs": 20.0,
+        "blocks": 5.0,
+        "cells": 10.0,
+        "text": "Altura livre para pular sem bater a cabeça (pulo inteiro)."
+      },
+      {
+        "id": "corridor_width_min",
+        "op": ">=",
+        "studs": 4.0,
+        "blocks": 1.0,
+        "cells": 2.0,
+        "text": "Largura mínima de poço/corredor vertical (corpo de 2; 1 bloco)."
+      },
+      {
+        "id": "shaft_width_hook",
+        "op": ">=",
+        "studs": 8.0,
+        "blocks": 2.0,
+        "cells": 4.0,
+        "text": "Largura confortável de poço para subir com gancho/pulos (balanço e erro de mira)."
+      },
+      {
+        "id": "hang_clearance",
+        "op": ">=",
+        "studs": 12.0,
+        "blocks": 3.0,
+        "cells": 6.0,
+        "text": "Do ponto de gancho no teto até o chão, para ficar pendurado sem encostar os pés."
+      }
+    ]
+  }
+}

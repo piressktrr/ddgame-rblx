@@ -9,12 +9,17 @@
 
 	Os elementos (cor, tag, colisão) vêm de ReplicatedStorage.Shared.MapElements, os mesmos que o jogo
 	usa: o place precisa estar aberto com o código sincronizado pelo Rojo.
+
+	Exportar / Importar: o mapa do Editor como dados (`maps/<nome>/tiles.json`, formato
+	race-and-escape/tiles@1 de tools/mapkit/README.md). Seção "Importar / exportar" abaixo.
 ]]
 
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
+local StudioService = game:GetService("StudioService")
 
 if RunService:IsRunning() then
 	return -- não roda durante o playtest
@@ -309,7 +314,8 @@ local function mergeModel(model: Model)
 	table.clear(cellIndex)
 end
 
-local function placeSpawn(model: Model, center: Vector3)
+local function placeSpawn(model: Model, center: Vector3, size: number?)
+	local side = size or state.grid
 	for _, existing in CollectionService:GetTagged(Config.Tags.EditorSpawn) do
 		remove(existing)
 	end
@@ -317,8 +323,8 @@ local function placeSpawn(model: Model, center: Vector3)
 	part.Name = "EditorSpawn"
 	part.Anchored = true
 	part.CanCollide = false
-	part.Size = Vector3.new(state.grid, 0.4, settings.BlockDepth)
-	part.CFrame = CFrame.new(center - Vector3.new(0, state.grid / 2 - 0.2, 0))
+	part.Size = Vector3.new(side, 0.4, settings.BlockDepth)
+	part.CFrame = CFrame.new(center - Vector3.new(0, side / 2 - 0.2, 0))
 	part.Color = Color3.fromRGB(80, 220, 120)
 	part.Transparency = 0.3
 	part:SetAttribute("Enabled", true)
@@ -609,6 +615,452 @@ statusLabel.TextXAlignment = Enum.TextXAlignment.Left
 statusLabel.TextYAlignment = Enum.TextYAlignment.Top
 statusLabel.LayoutOrder = nextOrder()
 statusLabel.Parent = root
+
+-- Importar / exportar ----------------------------------------------------------------------------
+--[[
+	Mapa como dados (ADR 0052): grade `race-and-escape/tiles@1`, a mesma de tools/mapkit/tiles.py
+	(formato em tools/mapkit/README.md). Célula (i, j): i da esquerda para a direita, j de BAIXO
+	para cima; `rows[1]` é a linha mais alta. Exportar escreve o JSON com a mesma ordem e o mesmo
+	espaçamento do Python (diff limpo). tools/mapkit/export_editor.luau repete a exportação para o
+	Command Bar / MCP: mudou aqui, mude lá.
+]]
+
+local TILES_FORMAT = "race-and-escape/tiles@1"
+local LEGEND_ORDER = { ".", "#", "x", "h", "f", "u", "o", "k", "g", "S", "F", "s", "e", "c", "R" }
+local LEGEND: { [string]: string } = {
+	["#"] = "Block",
+	x = "Unhookable",
+	h = "HookThrough",
+	f = "Freeze",
+	u = "Unfreeze",
+	o = "OneWay",
+	k = "Kill",
+	g = "HookOnce",
+	S = "StartLine",
+	F = "FinishLine",
+	s = "SoloStart",
+	e = "SoloEnd",
+	c = "Checkpoint",
+	R = "RaceStart",
+}
+local LEGEND_CHAR: { [string]: string } = {}
+for char, id in LEGEND do
+	LEGEND_CHAR[id] = char
+end
+local OUTPUT_CHUNK = 8000 -- caracteres por print no Output (quebra só entre linhas do JSON)
+
+local function jsonString(value: string): string
+	local escaped = string.gsub(value, '[%c"\\]', function(char)
+		if char == '"' then
+			return '\\"'
+		elseif char == "\\" then
+			return "\\\\"
+		elseif char == "\n" then
+			return "\\n"
+		elseif char == "\t" then
+			return "\\t"
+		end
+		return string.format("\\u%04x", string.byte(char))
+	end)
+	return `"{escaped}"`
+end
+
+-- Lê o Editor e monta o JSON do formato. Peças unidas viram as células que cobrem.
+local function exportTiles(model: Model): (string, number)
+	local cells: { [string]: string } = {}
+	local directions: { [string]: string } = {}
+	local minX, minY, maxX, maxY = math.huge, math.huge, -math.huge, -math.huge
+	local function include(x: number, y: number)
+		minX, minY = math.min(minX, x), math.min(minY, y)
+		maxX, maxY = math.max(maxX, x), math.max(maxY, y)
+	end
+	local count = 0
+	for _, child in model:GetChildren() do
+		if isElementPart(child) and LEGEND_CHAR[child:GetAttribute("Element")] then
+			local part = child :: BasePart
+			local elementId = part:GetAttribute("Element") :: string
+			local ix, iy, w, h = coveredCells(part)
+			for x = ix, ix + w - 1 do
+				for y = iy, iy + h - 1 do
+					local key = cellKey(x, y)
+					if not cells[key] then
+						count += 1
+					end
+					cells[key] = elementId
+					if elementId == "OneWay" then
+						directions[key] = partDirection(part)
+					end
+					include(x, y)
+				end
+			end
+		end
+	end
+	local spawnCell: { number }? = nil
+	local spawnPart = CollectionService:GetTagged(Config.Tags.EditorSpawn)[1]
+	if spawnPart and spawnPart:IsA("BasePart") and spawnPart:IsDescendantOf(model) then
+		-- O pé fica na base da peça do spawn (placeSpawn): célula que contém essa base.
+		local sx = math.floor(spawnPart.Position.X / UNIT)
+		local sy = math.floor((spawnPart.Position.Y - spawnPart.Size.Y / 2 + 0.01) / UNIT)
+		include(sx, sy)
+		spawnCell = { sx, sy }
+	end
+	if minX == math.huge then
+		minX, minY, maxX, maxY = 0, 0, -1, -1
+	end
+	local width, height = maxX - minX + 1, maxY - minY + 1
+
+	local lines = {
+		"{",
+		` "format": {jsonString(TILES_FORMAT)},`,
+		` "name": {jsonString(model.Name)},`,
+		` "source": {jsonString(`MapBuilder ({model:GetFullName()})`)},`,
+		` "cell": {UNIT},`,
+		` "origin": [{minX * UNIT}, {minY * UNIT}],`,
+		` "width": {width},`,
+		` "height": {height},`,
+		` "legend": \{`,
+	}
+	for index, char in LEGEND_ORDER do
+		local id = LEGEND[char]
+		local value = if id then jsonString(id) else "null"
+		local comma = if index < #LEGEND_ORDER then "," else ""
+		table.insert(lines, `  {jsonString(char)}: {value}{comma}`)
+	end
+	table.insert(lines, " },")
+	table.insert(
+		lines,
+		if spawnCell then ` "spawn": [{spawnCell[1] - minX}, {spawnCell[2] - minY}],` else ` "spawn": null,`
+	)
+	local directionLines = {}
+	for y = minY, maxY do
+		for x = minX, maxX do
+			local direction = directions[cellKey(x, y)]
+			if direction then
+				table.insert(directionLines, `  "{x - minX},{y - minY}": {jsonString(direction)}`)
+			end
+		end
+	end
+	if #directionLines == 0 then
+		table.insert(lines, ` "directions": \{\},`)
+	else
+		table.insert(lines, ` "directions": \{`)
+		table.insert(lines, table.concat(directionLines, ",\n"))
+		table.insert(lines, " },")
+	end
+	table.insert(lines, ` "attributes": \{\},`)
+	if height <= 0 then
+		table.insert(lines, ` "rows": []`)
+	else
+		table.insert(lines, ` "rows": [`)
+		local rows = {}
+		for y = maxY, minY, -1 do
+			local chars = table.create(width)
+			for x = minX, maxX do
+				local id = cells[cellKey(x, y)]
+				table.insert(chars, if id then LEGEND_CHAR[id] else ".")
+			end
+			table.insert(rows, `  "{table.concat(chars)}"`)
+		end
+		table.insert(lines, table.concat(rows, ",\n"))
+		table.insert(lines, " ]")
+	end
+	table.insert(lines, "}")
+	return table.concat(lines, "\n") .. "\n", count
+end
+
+local function printChunked(text: string)
+	local chunk = {}
+	local size = 0
+	local function flush()
+		if #chunk > 0 then
+			print(table.concat(chunk, "\n"))
+			table.clear(chunk)
+			size = 0
+		end
+	end
+	for line in string.gmatch(text, "[^\n]+") do
+		if size + #line > OUTPUT_CHUNK then
+			flush()
+		end
+		table.insert(chunk, line)
+		size += #line + 1
+	end
+	flush()
+end
+
+type ImportPlan = {
+	name: string,
+	cells: { any }, -- GridMerge.Cell
+	spawn: Vector3?,
+	skipped: { [string]: number },
+	warnings: { string },
+}
+
+-- Lê o JSON e monta a lista de células (índices de UNIT studs no mundo) sem mexer no mapa.
+local function planImport(text: string): (ImportPlan?, string?)
+	local ok, data = pcall(function()
+		return HttpService:JSONDecode(text)
+	end)
+	if not ok or typeof(data) ~= "table" then
+		return nil, "JSON inválido"
+	end
+	if data.format ~= TILES_FORMAT then
+		return nil, `formato {tostring(data.format)} (esperado {TILES_FORMAT})`
+	end
+	local cell = tonumber(data.cell) or UNIT
+	local scale = math.round(cell / UNIT)
+	if scale < 1 or math.abs(scale * UNIT - cell) > 1e-6 then
+		return nil, `cell = {cell}: precisa ser múltiplo de {UNIT} studs`
+	end
+	local origin = data.origin or { 0, 0 }
+	local ox = math.round((tonumber(origin[1]) or 0) / UNIT)
+	local oy = math.round((tonumber(origin[2]) or 0) / UNIT)
+	local warnings = {}
+	if
+		math.abs(ox * UNIT - (tonumber(origin[1]) or 0)) > 1e-6
+		or math.abs(oy * UNIT - (tonumber(origin[2]) or 0)) > 1e-6
+	then
+		table.insert(warnings, `origem arredondada para a grade de {UNIT} studs`)
+	end
+	-- JSON null some na decodificação: caractere fora da legenda = vazio.
+	local legend = if typeof(data.legend) == "table" then data.legend else LEGEND
+	local directions = if typeof(data.directions) == "table" then data.directions else {}
+	local rows = if typeof(data.rows) == "table" then data.rows else {}
+	local height = #rows
+	local cells = {}
+	local skipped: { [string]: number } = {}
+	for r, row in rows do
+		local j = height - r
+		for i = 1, #row do
+			local id = legend[string.sub(row, i, i)]
+			if typeof(id) ~= "string" then
+				continue
+			end
+			local element = MapElements.byId[id]
+			if not element then
+				skipped[id] = (skipped[id] or 0) + 1
+				continue
+			end
+			local direction = "Up"
+			if element.usesDirection then
+				local given = directions[`{i - 1},{j}`]
+				direction = if MapElements.isDirection(given) then given else "Up"
+			end
+			local kind = `{id}|{direction}`
+			for a = 0, scale - 1 do
+				for b = 0, scale - 1 do
+					table.insert(cells, { x = ox + (i - 1) * scale + a, y = oy + j * scale + b, kind = kind })
+				end
+			end
+		end
+	end
+	if typeof(data.collide) == "table" and next(data.collide) then
+		table.insert(warnings, "`collide` ignorado: o MapBuilder monta cada elemento com a colisão padrão")
+	end
+	if typeof(data.attributes) == "table" and next(data.attributes) then
+		table.insert(
+			warnings,
+			"`attributes` ignorado (Order, RequiresHookLevel...): o MapBuilder não guarda atributos"
+		)
+	end
+	local spawn: Vector3? = nil
+	if typeof(data.spawn) == "table" and tonumber(data.spawn[1]) and tonumber(data.spawn[2]) then
+		local sx = ox + data.spawn[1] * scale
+		local sy = oy + data.spawn[2] * scale
+		spawn = Vector3.new((sx + 0.5) * UNIT, (sy + 0.5) * UNIT, planeZ)
+	end
+	local name = if typeof(data.name) == "string" then data.name else "?"
+	return { name = name, cells = cells, spawn = spawn, skipped = skipped, warnings = warnings }, nil
+end
+
+-- Apaga o Editor e pinta o plano (um passo só no Ctrl+Z).
+local function applyImport(plan: ImportPlan)
+	local model = getModel()
+	local recording = ChangeHistoryService:TryBeginRecording("MapBuilder", "Importar mapa")
+	for _, child in model:GetChildren() do
+		remove(child)
+	end
+	for _, rect in GridMerge.merge(plan.cells) do
+		local elementId, direction = string.match(rect.kind, "^(.-)|(.*)$")
+		placeRect(model, elementId :: string, direction :: string, rect.x, rect.y, rect.w, rect.h)
+	end
+	if plan.spawn then
+		placeSpawn(model, plan.spawn, UNIT)
+	end
+	table.clear(cellIndex)
+	if recording then
+		ChangeHistoryService:FinishRecording(recording, Enum.FinishRecordingOperation.Commit)
+	end
+end
+
+local ioTitle = Instance.new("TextLabel")
+ioTitle.Size = UDim2.new(1, 0, 0, 20)
+ioTitle.BackgroundTransparency = 1
+ioTitle.Font = Enum.Font.GothamBold
+ioTitle.TextSize = 13
+ioTitle.TextColor3 = Color3.fromRGB(220, 220, 220)
+ioTitle.TextXAlignment = Enum.TextXAlignment.Left
+ioTitle.Text = "Mapa como dados (tiles.json)"
+ioTitle.LayoutOrder = nextOrder()
+ioTitle.Parent = root
+
+local exportButton = makeButton(root, "Exportar", Color3.fromRGB(50, 90, 140), 26)
+local importFileButton = makeButton(root, "Importar arquivo .json", Color3.fromRGB(50, 90, 140), 26)
+local importTextButton = makeButton(root, "Importar do texto colado", Color3.fromRGB(60, 60, 70), 26)
+
+local ioBox = Instance.new("TextBox")
+ioBox.Size = UDim2.new(1, 0, 0, 140)
+ioBox.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+ioBox.BorderSizePixel = 0
+ioBox.ClipsDescendants = true
+ioBox.ClearTextOnFocus = false
+ioBox.TextEditable = true
+ioBox.MultiLine = true
+ioBox.TextWrapped = false
+ioBox.TextXAlignment = Enum.TextXAlignment.Left
+ioBox.TextYAlignment = Enum.TextYAlignment.Top
+ioBox.Font = Enum.Font.Code
+ioBox.TextSize = 11
+ioBox.TextColor3 = Color3.fromRGB(210, 220, 210)
+ioBox.PlaceholderText = "Exportar mostra o JSON aqui (Ctrl+A, Ctrl+C). Para importar, cole o JSON aqui."
+ioBox.PlaceholderColor3 = Color3.fromRGB(120, 120, 130)
+ioBox.Text = ""
+ioBox.LayoutOrder = nextOrder()
+ioBox.Parent = root
+
+local confirmFrame = Instance.new("Frame")
+confirmFrame.Size = UDim2.fromScale(1, 0)
+confirmFrame.AutomaticSize = Enum.AutomaticSize.Y
+confirmFrame.BackgroundColor3 = Color3.fromRGB(70, 40, 40)
+confirmFrame.BorderSizePixel = 0
+confirmFrame.Visible = false
+confirmFrame.LayoutOrder = nextOrder()
+confirmFrame.Parent = root
+local confirmLayout = Instance.new("UIListLayout")
+confirmLayout.Padding = UDim.new(0, 4)
+confirmLayout.SortOrder = Enum.SortOrder.LayoutOrder
+confirmLayout.Parent = confirmFrame
+local confirmLabel = Instance.new("TextLabel")
+confirmLabel.Size = UDim2.fromScale(1, 0)
+confirmLabel.AutomaticSize = Enum.AutomaticSize.Y
+confirmLabel.BackgroundTransparency = 1
+confirmLabel.Font = Enum.Font.Gotham
+confirmLabel.TextSize = 12
+confirmLabel.TextWrapped = true
+confirmLabel.TextColor3 = Color3.new(1, 1, 1)
+confirmLabel.TextXAlignment = Enum.TextXAlignment.Left
+confirmLabel.LayoutOrder = nextOrder()
+confirmLabel.Parent = confirmFrame
+local confirmButton = makeButton(confirmFrame, "Apagar o Editor e importar", Color3.fromRGB(160, 50, 50), 26)
+local cancelButton = makeButton(confirmFrame, "Cancelar", Color3.fromRGB(60, 60, 70), 26)
+
+local ioStatus = Instance.new("TextLabel")
+ioStatus.Size = UDim2.fromScale(1, 0)
+ioStatus.AutomaticSize = Enum.AutomaticSize.Y
+ioStatus.BackgroundTransparency = 1
+ioStatus.Font = Enum.Font.Gotham
+ioStatus.TextSize = 12
+ioStatus.TextWrapped = true
+ioStatus.TextColor3 = Color3.fromRGB(200, 200, 200)
+ioStatus.TextXAlignment = Enum.TextXAlignment.Left
+ioStatus.Text = ""
+ioStatus.LayoutOrder = nextOrder()
+ioStatus.Parent = root
+
+local pendingPlan: ImportPlan? = nil
+
+local function finishImport(plan: ImportPlan)
+	applyImport(plan)
+	local skipped = {}
+	for id, n in plan.skipped do
+		table.insert(skipped, `{id} {n}`)
+	end
+	table.sort(skipped)
+	local message = `Importado "{plan.name}": {#plan.cells} células`
+	if #skipped > 0 then
+		message ..= `; sem elemento no MapBuilder (ficaram de fora): {table.concat(skipped, ", ")}`
+	end
+	for _, warning in plan.warnings do
+		message ..= `\n{warning}`
+	end
+	ioStatus.Text = message
+	print(`[MapBuilder] {message}`)
+	refreshTestToggle()
+	focusCamera2D()
+end
+
+local function startImport(text: string)
+	local plan, err = planImport(text)
+	if not plan then
+		ioStatus.Text = `Importar: {err}`
+		warn(`[MapBuilder] importar: {err}`)
+		return
+	end
+	local existing = #getModel():GetChildren()
+	if existing == 0 then
+		finishImport(plan)
+		return
+	end
+	pendingPlan = plan
+	confirmLabel.Text =
+		`Importar "{plan.name}" ({#plan.cells} células) apaga as {existing} peças de Workspace.Maps.{settings.EditorModelName}. Ctrl+Z desfaz.`
+	confirmFrame.Visible = true
+end
+
+confirmButton.Activated:Connect(function()
+	local plan = pendingPlan
+	pendingPlan = nil
+	confirmFrame.Visible = false
+	if plan then
+		finishImport(plan)
+	end
+end)
+cancelButton.Activated:Connect(function()
+	pendingPlan = nil
+	confirmFrame.Visible = false
+	ioStatus.Text = "Importação cancelada"
+end)
+
+exportButton.Activated:Connect(function()
+	local text, count = exportTiles(getModel())
+	ioBox.Text = text
+	ioStatus.Text =
+		`Exportado: {count} células, {#text} caracteres. Copie da caixa (Ctrl+A, Ctrl+C) e salve em maps/<nome>/tiles.json; também está no Output.`
+	print(`[MapBuilder] exportar: {count} células, {#text} caracteres (JSON abaixo)`)
+	printChunked(text)
+end)
+
+importFileButton.Activated:Connect(function()
+	local ok, file = pcall(function()
+		return StudioService:PromptImportFileAsync({ "json" })
+	end)
+	if not ok then
+		ioStatus.Text =
+			'Não deu para abrir o seletor de arquivo; cole o JSON na caixa e use "Importar do texto colado".'
+		warn(`[MapBuilder] PromptImportFileAsync falhou: {file}`)
+		return
+	end
+	if not file then
+		ioStatus.Text = "Nenhum arquivo escolhido"
+		return
+	end
+	local readOk, text = pcall(function()
+		return (file :: any):GetBinaryContents()
+	end)
+	if not readOk then
+		ioStatus.Text = `Não deu para ler o arquivo: {text}`
+		return
+	end
+	startImport(text)
+end)
+
+importTextButton.Activated:Connect(function()
+	if ioBox.Text == "" then
+		ioStatus.Text = "Cole o JSON na caixa primeiro"
+		return
+	end
+	startImport(ioBox.Text)
+end)
 
 -- Pintura --------------------------------------------------------------------------------------------
 
