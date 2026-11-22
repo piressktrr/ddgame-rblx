@@ -383,7 +383,14 @@ def _components(cells: set[tuple[int, int]]) -> list[list[tuple[int, int]]]:
     return out
 
 
-def build_geometry(tm: TileMap, params: MovementParams | None = None, cfg: Any = None) -> Geometry:
+def build_geometry(
+    tm: TileMap,
+    params: MovementParams | None = None,
+    cfg: Any = None,
+    stages: list[tuple[str, float, float, float, float]] | None = None,
+) -> Geometry:
+    """`stages`: caixas (nome, x1, y1, x2, y2) em studs que dão nome aos trechos; padrão = `STAGES[tm.name]`
+    (só o map01 tem). O montador (`assemble.py`) passa uma caixa por trecho."""
     p = params or default_params()
     cfg = cfg if cfg is not None else load_config()
     world = TileSimWorld(tm)
@@ -391,7 +398,7 @@ def build_geometry(tm: TileMap, params: MovementParams | None = None, cfg: Any =
     cell = float(tm.cell)
     body_cells = max(1, math.ceil(p.box_height / cell - 1e-9))  # 3 células de 2 studs
     zones = _zone_boxes(tm, cfg)
-    stages = STAGES.get(tm.name, [])
+    stages = list(stages) if stages is not None else STAGES.get(tm.name, [])
 
     # Colunas em pé: chão sólido embaixo, corpo cabe, sem tocar zona que mata/congela.
     standable: set[tuple[int, int]] = set()
@@ -2054,6 +2061,7 @@ def validate(
     progress: Callable[[str], None] | None = None,
     refine: bool = True,
     bifurcations: bool = True,
+    stages: list[tuple[str, float, float, float, float]] | None = None,
 ) -> Validation:
     t_start = time.time()
     settings = settings or Settings()
@@ -2061,7 +2069,7 @@ def validate(
     metrics = load_metrics()
     limits = screen_limits(metrics, p)
     rules = rules_by_id(metrics)
-    geo = build_geometry(tm, p)
+    geo = build_geometry(tm, p, stages=stages)
     if progress:
         progress(
             f"  geometria: {len(geo.platforms)} plataformas ({sum(1 for q in geo.platforms if q.in_region)} na área jogável), "

@@ -8,6 +8,9 @@ Biblioteca Python (só biblioteca padrão) para medir, converter e validar mapas
 | `convert_layout.py` | converte `maps/<mapa>/layout.json` (do `tools/map2d.py`) em `maps/<mapa>/tiles.json` |
 | `export_editor.luau` | colar no Command Bar ou rodar pelo MCP `execute_luau`: devolve o JSON do `Workspace.Maps.Editor` |
 | `validate.py` + `report.py` | validador (etapa 3): joga o mapa pela simulação e grava o relatório `.md` + `.svg` (seção "Validador") |
+| `chunks.py` | trechos `chunk@1` (etapa 4): carregar, conferir, encaixe, validar cada trecho sozinho (seção "Trechos e montador") |
+| `assemble.py` | montador (etapa 4): plano → mapa `tiles.json` + validação + relatório por seção |
+| `preview.py` | prévias SVG/PNG de trechos e do mapa montado (cores do `MapElements.luau`) |
 | `tests/` | `python -I -X utf8 -m unittest discover -s tools/mapkit/tests -t .` (da raiz) |
 
 `luau_config.py`, `physics.py` e `metrics.py` são da etapa 1/3 (medidas e simulador).
@@ -232,3 +235,151 @@ Opções: `--out caminho.md` (o `.svg` vai junto, mesmo nome; padrão
   velocidade instantânea, sem subida automática de degrau). Pousar com embalo conta como parar ali.
 - "Na tela" usa a área visível com a câmera parada (sem o adiantamento nem o atraso da queda).
 - Estágios (E1..E9, respiros R1..R8) só existem para o map01 (caixas de `tools/map_layout.py`).
+
+## Trechos e montador (`chunks.py`, `assemble.py`, `preview.py`; ADR 0052 etapa 4)
+
+Biblioteca de **trechos** (pedaços de mapa com metadados) e um **montador** que junta trechos num mapa
+candidato, valida o mapa inteiro com 1 jogador e relata. Ferramenta só: o mapa novo só entra no jogo com o
+dono (ADR 0055). Só biblioteca padrão.
+
+### Trecho (`race-and-escape/chunk@1`)
+
+Formato completo em [`maps/trechos/README.md`](../../maps/trechos/README.md): uma grade `tiles@1` (mesma
+legenda) + `id`, `name`, `theme`, `pattern`, `rhythm`, `difficulty` (alvo 1–5), `solo`, `checkpoint_end`,
+`mechanics` (`required`/`optional`), `doors` (entradas e saídas: lado L/R/T/B, `pos`, `width`) e `lanes`
+(faixas de uma bifurcação). Desenhado em blocos (`tiles.cell` = bloco em studs; padrão de
+`maps/scale.json`, senão 4 studs).
+
+```
+python -I -X utf8 tools/mapkit/chunks.py                 # confere + valida cada trecho sozinho + prévias
+python -I -X utf8 tools/mapkit/chunks.py --static        # só a conferência estática
+```
+
+Opções: `--out pasta` (padrão `maps/trechos/previa/`), `--full` (validador completo), `--no-refine`,
+`--jobs N` (um trecho por processo). Em código:
+
+```python
+from tools.mapkit.chunks import load_library, check_chunk, fit, validate_chunk
+lib = load_library()                         # id -> Chunk (maps/trechos)
+check_chunk(lib["ex-corredor"])              # ["erro: ...", "aviso: ..."]: portas, chão das portas, metadados
+fit(a, "out", b, "in")                       # (ok, motivo): lados opostos e abertura que deixa o corpo passar
+rep = validate_chunk(lib["ex-bifurcacao"])   # ChunkReport
+```
+
+`validate_chunk` monta um mapa de teste (`isolated_map`: o trecho com almofadas — corredor com o spawn na
+entrada, corredor/sala com a FinishLine na saída, laterais fechadas com bloco sem gancho) e roda o
+`validate.py`. O `ChunkReport` traz: `ok` (rota solo da entrada à saída), tempos e menor janela das três
+rotas (mais rápida, jogador médio, mais segura), `mechanics_used` (rótulos das manobras + gancho em
+HookOnce + passar por mão única/degelo + andar), `paths` (caminhos de verdade), `lanes` (cada faixa: passa?
+tempo, chance sem erro), `measured` × `target` e `problems`.
+
+- **Dificuldade medida:** pela menor janela da rota **mais segura** (1 = sem precisão, 2 ≥ 0,4 s,
+  3 = 0,2–0,4 s, 4 = 0,1–0,2 s, 5 < 0,1 s; +1 com 3+ manobras < 0,2 s). Diferença de 2+ da alvo = aviso.
+- **Caminhos:** com faixas, as que passam sem tocar a área das outras (2+ = bifurcação); sem faixas, os
+  caminhos por plataformas diferentes do validador (`disjoint_between`, guloso: um piso).
+- **Faixas:** tempo = caminho mais rápido da faixa; risco = caminho mais seguro dela; as duas com a janela
+  da família (a mesma régua). Aviso se a `rapida` não for mais rápida que a `segura` ou se a `segura` for
+  mais arriscada (folga de 2 pontos percentuais).
+
+### Plano (`race-and-escape/plan@1`)
+
+```json
+{
+ "format": "race-and-escape/plan@1",
+ "name": "Mapa novo (proposta A)",
+ "library": "maps/trechos",
+ "block": null,
+ "max_width": 1200,
+ "turn": "up",
+ "target_minutes": 8,
+ "sections": [
+  {"id": "s1", "name": "Bosque", "theme": "floresta",
+   "chunks": ["ex-corredor", {"chunk": "ex-bifurcacao", "mirror": false}, {"connector": "respiro", "blocks": 6}]},
+  {"id": "s2", "name": "Gruta", "theme": "gruta", "chunks": ["ex-vao-gancho", {"connector": "degraus", "rise": 4}]}
+ ]
+}
+```
+
+| Campo | Significado |
+|---|---|
+| `library` | pasta(s) ou arquivo(s) de trechos (texto ou lista; relativo à pasta do plano ou à raiz). Padrão `maps/trechos` |
+| `block` | células por bloco das peças geradas; `null` = `maps/scale.json` (ou 2) |
+| `max_width` | studs de largura antes de virar (curva); padrão 1200 |
+| `turn` | `up` (a próxima fileira fica em cima) ou `down` |
+| `target_minutes` | duração alvo do jogador médio (padrão 8) |
+| `origin` | studs da célula (0, 0) do mapa montado (padrão `[0, 0]`) |
+| `row_gap_blocks`, `start_blocks`, `checkpoint_blocks`, `finish_blocks`, `respiro_blocks` | folga entre fileiras (2) e comprimentos das salas geradas (10, 8, 10, 6), em blocos |
+| `sections` | seções temáticas, na ordem. Cada uma: `id`, `name`, `theme`, `chunks` (itens) |
+| `chunks` | (no lugar de `sections`) lista única; as seções são cortadas depois de cada trecho com `checkpoint_end` |
+
+Itens de `chunks`: `"id"` (trecho), `{"chunk": id, "mirror": true/false, "entry": porta, "exit": porta}`
+(sem `mirror` o montador escolhe o sentido; sem `entry`/`exit`, as portas que seguem o sentido da fileira),
+ou um conector gerado: `{"connector": "respiro", "blocks": n}` (corredor reto), `{"connector": "degraus",
+"rise": n}` (n blocos; negativo desce) ou `{"connector": "curva"}` (vira já; `rise` opcional, em blocos).
+
+### Montador
+
+```
+python -I -X utf8 tools/mapkit/assemble.py plano.json --out maps/<nome>/          # monta + valida (rápido) + relata
+python -I -X utf8 tools/mapkit/assemble.py plano.json --out maps/<nome>/ --full   # validador completo
+python -I -X utf8 tools/mapkit/assemble.py plano.json --no-validate               # só monta e desenha
+python -I -X utf8 tools/mapkit/assemble.py plano.json --chunks                    # + cada trecho sozinho no relatório
+```
+
+Opções: `--jobs N` (padrão CPUs − 1), `--no-refine`, `--block N`. Grava em `--out` (padrão
+`maps/<nome do plano>/`):
+
+| Arquivo | O quê |
+|---|---|
+| `tiles.json` | o mapa montado (`tiles@1`, células de 2 studs) |
+| `montagem.json` | onde ficou cada peça (células e studs), portas usadas, espelhado ou não, seção |
+| `relatorio.md` | resumo (rota solo? tempo total × alvo), tempo por seção (parcial de cada checkpoint), curva de dificuldade por peça (alvo × medida), bifurcações (faixas no mapa montado), problemas, peças |
+| `mapa.svg`, `mapa.png` | prévia com as cores do MapBuilder, caixas e rótulos dos trechos/seções, entradas/saídas, checkpoints com o parcial, rota mais rápida (azul) e do jogador médio (laranja tracejada). O PNG não tem texto |
+| `validacao.md`, `validacao.svg` | o relatório completo do validador (etapa 3), com um "estágio" por peça |
+
+Como monta:
+
+1. **Largada**: sala com parede atrás, spawn e `StartLine` (coluna) perto da saída.
+2. **Trechos** na ordem do plano, cada entrada colada na saída anterior (alinhada pelo chão nas laterais,
+   pela 1ª coluna em cima/embaixo). O trecho é **espelhado** quando a fileira corre para a esquerda.
+3. **Mapa enrolado**: se o próximo trecho passar de `max_width` (ou de x = 0, voltando), entra uma
+   **curva**: torre com patamares em zigue-zague a cada degrau confortável (`step_jump_comfort`), metade da
+   largura cada um, subindo (ou descendo) até a próxima fileira ficar `row_gap_blocks` acima (abaixo) de
+   tudo o que já foi posto. Depois dela a corrida volta no sentido contrário.
+4. **Sem sobreposição**: se o trecho encostar em outra peça, entram **degraus** gerados antes dele
+   (metade do degrau confortável, 4 studs) até ele caber; se ainda encostar, vira erro no relatório.
+5. **Checkpoint** no fim de cada seção (menos a última): sala com uma faixa de `Checkpoint` no chão, com os
+   atributos `Order` (1, 2, ...), `Split = true` (marca de **tempo parcial**), `Section` (id) e `Name`
+   (nome da seção). O MapBuilder ainda não tem elemento Checkpoint: o plugin pula essas células ao
+   importar (e avisa); o validador já usa o `Order`.
+6. **Chegada**: sala com `FinishLine` no chão e parede no fim.
+7. Peças geradas: chão de bloco, teto e paredes **sem gancho** (corredor fechado: ninguém salta para a
+   fileira de cima), altura livre = `ceiling_jump_free` (pulo inteiro sem bater a cabeça).
+
+Análise (`analyze`): rota solo (todos os checkpoints na ordem até a chegada), tempo por seção pelas
+`sections` das rotas do validador (mais rápida e jogador médio) e total × alvo (±25% = ok), dificuldade
+medida por peça (rota mais segura dentro da caixa da peça), caminhos por peça (faixas no mapa montado ou
+`disjoint_between` no trecho da rota) e avisos: seção sem bifurcação, seção sem trecho fácil (medida ≤ 2),
+3+ trechos difíceis (≥ 4) seguidos, dificuldade só subindo por 4 trechos, medida longe da alvo, trecho
+com `checkpoint_end` no meio da seção, faixa que não passa no mapa montado.
+
+### Desempenho (7 processos, validador rápido)
+
+- Um trecho sozinho: 2–5 s (trechos de exemplo, 100–150 studs de largura); com refinamento, até ~10 s.
+- Mapa com 20 trechos de exemplo (28 peças, 1.184 × 184 studs, 2 curvas): ~50 s para montar, validar e
+  desenhar. Trechos maiores ou `--full` custam mais (o map01 inteiro leva ~3 min no rápido).
+
+### Limitações
+
+- O que o validador não simula continua fora: parceiro, martelo, empurrão, Bouncer, nível do gancho.
+- O trecho sozinho é jogado com almofadas que imitam o vizinho; entrada por baixo começa parada num piso
+  logo abaixo do buraco, saída por cima termina numa sala com chão em volta do buraco. A validação que vale
+  é a do mapa montado.
+- O montador não gera adaptador entre saída vertical e entrada lateral (vira erro: ponha um trecho de
+  transição). A curva e os degraus só existem para portas laterais.
+- A colocação é gulosa (um trecho de cada vez, sem voltar atrás) e as caixas são retangulares: um trecho
+  fundo empurra a fileira para cima com degraus, e podem sobrar vãos entre as fileiras.
+- Dificuldade medida = janela de acerto; não conta distância, tela nem quanto o erro custa além do `RETRY`
+  fixo do validador.
+- `validate.py` ganhou só o parâmetro opcional `stages` (`validate(..., stages=[(nome, x1, y1, x2, y2)])` e
+  `build_geometry(..., stages=...)`): uma caixa por peça, que dá nome aos estágios do relatório.

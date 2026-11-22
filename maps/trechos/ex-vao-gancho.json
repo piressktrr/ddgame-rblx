@@ -1,0 +1,53 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "ex-vao-gancho",
+ "name": "Vão sobre o vermelho (exemplo)",
+ "theme": "exemplo",
+ "pattern": "vao-com-ancora",
+ "rhythm": "gargalo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": true,
+ "mechanics": {"required": ["hook"], "optional": ["momentum", "double"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 1, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Exemplo mínimo: vão de 64 studs (acima do pulo duplo) com o chão vermelho; um bloco de gancho no teto.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 32,
+  "height": 10,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   ".............######.............",
+   "................................",
+   "................................",
+   "................................",
+   "................................",
+   "................................",
+   "................................",
+   "................................",
+   "########kkkkkkkkkkkkkkkk########"
+  ]
+ }
+}
