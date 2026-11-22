@@ -9,7 +9,7 @@
 | O quê | Onde (fora do Git) | Quantidade |
 |---|---|---|
 | Vídeo original | `D:\Videos\2026-11-14 22-08-44.mp4` | 59:42, 1536×864, 60 fps |
-| Todos os frames (JPG, qualidade alta) | `referencias/imagens/video-2026-11-14/todos/f_NNNNNN.jpg` | 214.900 (frame N = segundo N/60) |
+| Todos os frames (JPG, qualidade alta) | `referencias/imagens/video-2026-11-14/todos/f_NNNNNN.jpg` | 214.899 (frame N = segundo N/60) |
 | 1 frame por segundo | `referencias/imagens/video-2026-11-14/1fps/s_NNNN.jpg` | 3.582 (`s_NNNN` = segundo NNNN−1) |
 | Folhas de contato (12 quadros/minuto, com hora) | `referencias/imagens/video-2026-11-14/folhas/min_NN.jpg` | 60 (`min_01` = 0:00–0:59) |
 

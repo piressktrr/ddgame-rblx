@@ -28,7 +28,8 @@ Quando uma decisão muda, a antiga não é apagada: ganha o status "Substituída
 | [2026-11-15](#2026-11-15--experimento-de-câmera-e-reorganização) | Experimento | Mapa em 6 estágios, experimento de câmera (reprovado), checkpoints, palácio reorganizado |
 | [2026-11-16](#2026-11-16--25d-e-gancho) | 2.5D e gancho | Jogo fica 2.5D, mapa v2, gancho (balanço → puxão), corda para todos, pulo duplo e lobby |
 | [2026-11-17](#2026-11-17--fase-3-zonas-corrida-tutorial) | Fase 3 | PR para a main, decisões 0045–0048, zonas, timer/HUD, tutorial e testes |
-| [2026-11-21](#2026-11-21--vídeo-de-referência-do-mapa) | Referência | Frames do vídeo de 2026-11-14 extraídos e estudo de padrões para o mapa |
+| [2026-11-21](#2026-11-21--vídeo-de-referência-do-mapa) | Referência | Frames do vídeo de 2026-11-14 extraídos e estudo de padrões para o mapa; ADR 0052 |
+| [2026-11-22](#2026-11-22--ferramentas-para-criar-o-mapa) | Ferramentas | Medidas, simulador, formato do mapa, validador e relatório do Map01 |
 
 ---
 
@@ -141,5 +142,14 @@ Diário: [diario/2026-11-21.md](diario/2026-11-21.md)
 
 - **Estudo:** [referencia-video-2026-11-14](../04-game-design/estudos/referencia-video-2026-11-14.md) — padrões de design
   tirados de um vídeo de 1 h de DDNet (só padrões, nada copiado), para modelar o mapa.
-- **Ferramenta:** FFmpeg em `D:\Ferramentas\ffmpeg` ([TOOLS](../07-toolchain/TOOLS.md)); 214.900 frames fora do Git.
+- **Ferramenta:** FFmpeg em `D:\Ferramentas\ffmpeg` ([TOOLS](../07-toolchain/TOOLS.md)); 214.899 frames fora do Git.
+- **Decisão:** [0052](../02-decisoes/0052-mapa-desafiador-e-dinamico.md) mapa desafiador com trechos fáceis, dinâmico,
+  com bifurcações, e criação automatizada em etapas.
 - Os dias 2026-11-18 a 2026-11-20 (física do DDNet, martelo, MapBuilder, PRs #4–#25) ainda não têm diário.
+
+## 2026-11-22 — Ferramentas para criar o mapa
+Diário: [diario/2026-11-22.md](diario/2026-11-22.md)
+
+- **Código (`tools/mapkit/`):** medidas do `Config` ([MEDIDAS_DO_MAPA](../04-game-design/MEDIDAS_DO_MAPA.md)), simulador,
+  formato `tiles.json`, Exportar/Importar no MapBuilder, validador.
+- **Estudo:** [validação do Map01](../04-game-design/estudos/validacao-map01.md).

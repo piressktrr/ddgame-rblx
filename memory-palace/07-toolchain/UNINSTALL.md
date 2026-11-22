@@ -18,7 +18,7 @@ pasta do projeto, e como remover cada item. Ele é atualizado sempre que algo no
 | Arquivo de jogo de teste (dentro do projeto) | `D:\Projetos\dddrace-roblox\build\` | < 1 MB |
 | Plugin do Rojo no Roblox Studio | `C:\Users\Usuario\AppData\Local\Roblox\Plugins\RojoManagedPlugin.rbxm` | ~0,5 MB |
 | FFmpeg (fora do PATH) | `D:\Ferramentas\ffmpeg\` | ~0,3 GB |
-| Frames do vídeo de referência de 2026-11-14 (fora do Git) | `D:\Projetos\dddrace-roblox\memory-palace\04-game-design\referencias\imagens\video-2026-11-14\` | ~40 GB |
+| Frames do vídeo de referência de 2026-11-14 (fora do Git) | `D:\Projetos\dddrace-roblox\memory-palace\04-game-design\referencias\imagens\video-2026-11-14\` | ~16 GB |
 
 **Ainda não instalados** (entram nesta lista quando forem instalados):
 
