@@ -305,9 +305,9 @@ local function buildLogo(root: Frame)
 	titleGradient.Rotation = 90
 	titleGradient.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), menu.AccentColor)
 	titleGradient.Parent = title
-	local subtitle = newLabel(menu.Subtitle, 24, menu.Font, logo)
+	local subtitle = newLabel(menu.Subtitle, 30, menu.Font, logo)
 	subtitle.Position = UDim2.fromOffset(0, 100)
-	subtitle.Size = UDim2.new(1, 0, 0, 30)
+	subtitle.Size = UDim2.new(1, 0, 0, 36)
 	subtitle.TextColor3 = Color3.fromRGB(255, 244, 220)
 	local subStroke = Instance.new("UIStroke")
 	subStroke.Color = Color3.fromRGB(30, 34, 52)
@@ -672,7 +672,7 @@ local function keyArt(art: Frame, keys: { string })
 	layout.Padding = UDim.new(0, 6)
 	layout.Parent = art
 	for _, key in keys do
-		local pill = newLabel(key, 15, menu.Font, art)
+		local pill = newLabel(key, 13, menu.Font, art)
 		pill.AutomaticSize = Enum.AutomaticSize.X
 		pill.Size = UDim2.fromOffset(30, 30)
 		pill.BackgroundTransparency = 0
@@ -680,8 +680,8 @@ local function keyArt(art: Frame, keys: { string })
 		pill.TextColor3 = Color3.fromRGB(30, 34, 52)
 		corner(pill, 6)
 		local padding = Instance.new("UIPadding")
-		padding.PaddingLeft = UDim.new(0, 8)
-		padding.PaddingRight = UDim.new(0, 8)
+		padding.PaddingLeft = UDim.new(0, 6)
+		padding.PaddingRight = UDim.new(0, 6)
 		padding.Parent = pill
 	end
 end
@@ -718,7 +718,7 @@ local function buildMainColumn(root: Frame)
 	local _, controlsArt = bigButton(mainColumn, "Controles", 3, function()
 		showPanel("Controles")
 	end)
-	keyArt(controlsArt, { "A", "D", "Espaço", "Mouse" })
+	keyArt(controlsArt, { "A / D", "Espaço", "Mouse" })
 	local _, newsArt = bigButton(mainColumn, "Novidades", 4, function()
 		showPanel("Novidades")
 	end)
