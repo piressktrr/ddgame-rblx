@@ -19,3 +19,7 @@ sourcemap.json
 
 # Imagens de referência de terceiros: ficam só no PC, fora do GitHub
 memory-palace/04-game-design/referencias/imagens/
+
+# Python
+__pycache__/
+*.pyc

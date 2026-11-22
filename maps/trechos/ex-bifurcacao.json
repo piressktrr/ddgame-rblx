@@ -1,0 +1,60 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "ex-bifurcacao",
+ "name": "Fosso com atalho (exemplo)",
+ "theme": "exemplo",
+ "pattern": "fosso-atalho",
+ "rhythm": "amplo",
+ "difficulty": 2,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": [], "optional": ["walk", "jump", "double", "hook", "momentum"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 5, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 5, "width": 5}
+ ],
+ "lanes": [
+  {"id": "alto", "name": "por cima, no gancho", "kind": "rapida", "area": [10, 6, 17, 12]},
+  {"id": "fosso", "name": "pelo fosso, andando", "kind": "segura", "area": [7, 1, 16, 2]}
+ ],
+ "notes": "Exemplo mínimo de bifurcação: descer no fosso e subir quatro degraus baixos (seguro) ou atravessar no gancho (rápido). Só o bloco do alto segura o gancho.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 36,
+  "height": 14,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "....................................",
+   "............####....................",
+   "....................................",
+   "....................................",
+   "....................................",
+   "....................................",
+   "....................................",
+   "....................................",
+   "xxxxxx..................xxxxxxxxxxxx",
+   "xxxxxx................xxxxxxxxxxxxxx",
+   "xxxxxx..............xxxxxxxxxxxxxxxx",
+   "xxxxxx............xxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

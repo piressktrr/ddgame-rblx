@@ -1,0 +1,59 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s3-planicie",
+ "name": "Planície do vento",
+ "theme": "ventania",
+ "pattern": "original: colinas de respiro",
+ "rhythm": "respiro",
+ "difficulty": 2,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["jump"], "optional": ["hook", "momentum"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 6, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Respiro depois do checkpoint: colinas de 1–2 blocos com patamares largos. Um único ponto de gancho pendurado no meio deixa quem já sabe cortar caminho com um balanço (opcional; o resto é Unhookable).",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 72,
+  "height": 16,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x.................................x....................................x",
+   "x.................................x....................................x",
+   "x.................................##...................................x",
+   "x......................................................................x",
+   "x.......................................................................",
+   "x.......................................................................",
+   "x.......................................................................",
+   "x.......................................................................",
+   "x.......................................................................",
+   "..........................................................xxxxxxxxxxxxxx",
+   "........................................xxxxxxxxxx........xxxxxxxxxxxxxx",
+   "....................xxxxxxxxxx..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "....................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

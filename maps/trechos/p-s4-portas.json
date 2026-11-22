@@ -1,0 +1,59 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s4-portas",
+ "name": "Casa das portas",
+ "theme": "portas",
+ "pattern": "portas de parede (vídeo)",
+ "rhythm": "apertado",
+ "difficulty": 4,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["jump", "double"], "optional": []},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 3, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Doze salas de 5 blocos separadas por paredes finas com um furo de 3 blocos de altura (o corpo tem 1,4) a 2, 3 ou 4 blocos do chão: pulo simples ou pulo duplo bem medido, sala após sala. Em cima de cada furo, uma pele de gelo: quem pula alto demais congela ~1 s e cai na sala (perde tempo, nunca fica preso). Tudo Unhookable.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 90,
+  "height": 16,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x.......x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x..............x",
+   "x.......x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x..............x",
+   "x.......x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x..............x",
+   "x.......x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x..............x",
+   "x.......x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x..............x",
+   "x.......x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x..............x",
+   "x.......x.....x.....x.....f.....x.....f.....x.....f.....x.....f.....f.....x..............x",
+   "x.......x.....f.....x...........f...........x...........f.................f...............",
+   "x.......f...........f.......................f.............................................",
+   "..........................................................................................",
+   "..........................x...........x...........x...........x.....x.....................",
+   "..............x...........x.....x.....x...........x.....x.....x.....x.....x...............",
+   "........x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.......xxxxxxxx",
+   "........x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.....x.......xxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

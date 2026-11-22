@@ -2,7 +2,37 @@
 
 > Atualize este arquivo ao fim de toda sessão de trabalho (qualquer agente).
 
-## Onde estamos (2026-11-17)
+## Onde estamos (2026-11-22)
+
+- **Branch:** `feat/mapa-automacao` (sai de `design/referencia-video-mapa`), sem push. A `main` tem os PRs #8–#25
+  (física do DDNet, martelo, MapBuilder); os docs desses dias ainda não foram escritos (ver Q57).
+- **Criação de mapa automatizada (ADR 0052), etapas 1–3 prontas, mapa não alterado:**
+  - Etapa 1: [medidas do mapa](../04-game-design/MEDIDAS_DO_MAPA.md) tiradas do `Config` e simulador da física em
+    `tools/mapkit/physics.py`.
+  - Etapa 2: formato `tiles.json` (grade de 2 studs), `maps/map01/tiles.json`, Exportar/Importar no MapBuilder
+    (plugin **não testado** no Studio).
+  - Etapa 3: validador `tools/mapkit/validate.py` e [relatório do Map01](../04-game-design/estudos/validacao-map01.md)
+    (modo rápido): 88% das manobras da rota rápida usam gancho, só 4 de 9 estágios com bifurcação real, picos de
+    dificuldade em todo estágio, 12 plataformas nunca alcançadas, 4 pontos de gancho fora do alcance.
+  - 68 testes Python verdes (`python -I -X utf8 -m unittest discover -s tools/mapkit/tests -t .`).
+- **Bloqueios:** MCP do Studio fora do ar (erro de versão de protocolo); Lune (ler o place sem Studio) não foi
+  autorizado. Sem isso, o mapa pintado no MapBuilder (`Workspace.Maps.Editor`) não pôde ser exportado e validado.
+- **Respostas do dono (Q57–Q59 e as 12 da revisão):** ADRs 0053 (gelo não mata, vermelho volta ao checkpoint e
+  segura o gancho, física do DDNet, martelo e solo ficam), 0054 (Bouncer continua, lâmina adiada) e 0055 (Map01 sai;
+  mapa novo no MapBuilder, solo possível, checkpoint por trecho temático com parcial, ~8 min, Claude propõe).
+- **Etapa 3b — escala do bloco:** [bloco de 4 studs](../04-game-design/estudos/escala-do-bloco.md), medido nos frames
+  do vídeo (`maps/scale.json`).
+- **Etapa 4 — ferramenta:** biblioteca de trechos e montador (`chunks.py`, `assemble.py`, `preview.py`), commit `185dda0`.
+- **Etapa 4 / ADR 0055 — proposta A do mapa novo (nada no Studio):** 26 trechos `p-*` em `maps/trechos/`
+  (gerados por `tools/mapkit/proposals/proposta_a.py`), plano e mapa montado em `maps/proposta-a/` e
+  [estudo para o dono](../04-game-design/estudos/proposta-mapa-a.md). Validador (rápido): rota solo ok, jogador médio
+  7 min 10 s, rápida 4 min 42 s, gancho 57 % das manobras (34 % só nos trechos; o resto nas curvas do montador), 6
+  seções com bifurcação e respiro, sem avisos. Pendências: modo completo do validador, curvas do montador prendem o
+  gancho, 9 armadilhas no teto das fileiras (vão entre fileiras do montador).
+- **Próximo passo:** o dono decide a proposta A (Q60) e a lista de acertos de lobby, placares e playground; depois
+  levar o mapa aprovado ao MapBuilder.
+
+## Onde estávamos (2026-11-17)
 
 - **Branch:** `feature/implement-the-map`. PR [#2](https://github.com/piressktrr/ddgame-rblx/pull/2) com merge na
   `main` (`bd7a03c`); o trabalho abaixo vai num PR novo.
@@ -98,3 +128,8 @@ Pendente por causa da revisão:
 | 2026-11-17 | Claude Code | README da raiz reescrito para o estado atual (nome, 2.5D, gancho de puxão, servidor aberto, gelo que mata, lobby/tutorial, como rodar, pastas, links para a linha do tempo e o STATUS) |
 | 2026-11-17 | Claude Code + 2 subagentes | Revisão da Fase 3 (8 correções em RaceService, CheckpointService, UIController; testes de pickEffect/isFrozen) e estudo + rascunho do mapa da Fase 2 (9 estágios, 22 rotas; tools/map_sketch_fase2.py). Q43–Q55 novas. selene/stylua/rojo build ok; nada testado em jogo |
 | 2026-11-17 | Claude Code + 2 subagentes | Dono respondeu Q43–Q55 (ADR 0049 KillZone grudável e sólida; 0050 mapa da Fase 2 aprovado, substitui o Map01). Greybox do mapa novo montado no Studio (525 peças, conferência ok) e lição 7 do tutorial (salto de embalo, testada por script). Q56 nova (A/D no embalo). Place salvo; sem playtest do mapa |
+| 2026-11-21 | Claude Code + 4 subagentes | FFmpeg 9.1 em D:\Ferramentas\ffmpeg; 214.899 frames do vídeo de 2026-11-14 (+1 fps e folhas de contato) em referencias/imagens/video-2026-11-14 (fora do Git); estudo de padrões para o mapa em 04-game-design/estudos/referencia-video-2026-11-14.md |
+| 2026-11-21 | Claude Code | ADR 0052 (mapa desafiador e criação automatizada); Q57 |
+| 2026-11-22 | Claude Code + 3 subagentes | ADR 0052 etapas 1–3: medidas do Config, simulador, formato tiles.json, Exportar/Importar no MapBuilder, validador e relatório do Map01 (modo rápido). Q58, Q59. 68 testes ok; mapa não alterado; plugin não testado (Studio fora) |
+| 2026-11-22 | Claude Code (subagente) | Proposta A do mapa novo (ADR 0055): 26 trechos p-* + gerador em tools/mapkit/proposals, mapa montado em maps/proposta-a, estudo proposta-mapa-a.md; jogador médio 7 min 10 s, solo ok; Q60. Nada no Studio |
+| 2026-11-22 | Claude Code | ADRs 0053–0055 (respostas do dono), Kill segura o gancho, escala do bloco (4 studs), ferramenta da etapa 4; conferência da proposta A (90 testes, selene/stylua ok) e commit |

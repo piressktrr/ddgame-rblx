@@ -1,0 +1,60 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s1-fosso-duplo",
+ "name": "Fosso do pulo duplo",
+ "theme": "vale",
+ "pattern": "ensinar→cobrar (vídeo, padrão 2)",
+ "rhythm": "amplo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["double"], "optional": ["walk", "jump"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 6, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 6, "width": 5}
+ ],
+ "lanes": [
+  {"id": "alto", "name": "por cima, três pulos duplos", "kind": "rapida", "area": [10, 6, 54, 10]},
+  {"id": "fosso", "name": "pelo fosso, pulando calombos", "kind": "segura", "area": [11, 1, 48, 4]}
+ ],
+ "notes": "Primeira bifurcação. Por cima: três vãos de 11 blocos que só o pulo duplo passa, com lajes de 6 para pousar. Por baixo: desce 5 blocos (queda ainda visível), atravessa o fosso pulando três calombos e sobe dois degraus. Quem erra o pulo duplo cai no fosso e segue pela rota segura: rede de segurança sem castigo. Na dupla: nada especial.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 66,
+  "height": 14,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x................................................................x",
+   "x................................................................x",
+   "..................................................................",
+   "..................................................................",
+   "..................................................................",
+   "..................................................................",
+   "..................................................................",
+   "xxxxxxxxxx...........xxxxxx...........xxxxxx...........xxxxxxxxxxx",
+   "xxxxxxxxxx..........................................xxxxxxxxxxxxxx",
+   "xxxxxxxxxx..........................................xxxxxxxxxxxxxx",
+   "xxxxxxxxxx.....xx..............xx.............xx.xxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxx.....xx..............xx.............xx.xxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="280" viewBox="0 0 900 280" font-family="sans-serif">
+<defs>
+<pattern id="chk-Unhookable" width="12.857142857142858" height="12.857142857142858" patternUnits="userSpaceOnUse"><rect width="12.857142857142858" height="12.857142857142858" fill="#67809a"/><rect width="6.428571428571429" height="6.428571428571429" fill="#53687c"/><rect x="6.428571428571429" y="6.428571428571429" width="6.428571428571429" height="6.428571428571429" fill="#53687c"/></pattern>
+<pattern id="chk-StartLine" width="12.857142857142858" height="12.857142857142858" patternUnits="userSpaceOnUse"><rect width="12.857142857142858" height="12.857142857142858" fill="#f0f0f5"/><rect width="6.428571428571429" height="6.428571428571429" fill="#3c6ec8"/><rect x="6.428571428571429" y="6.428571428571429" width="6.428571428571429" height="6.428571428571429" fill="#3c6ec8"/></pattern>
+<pattern id="chk-FinishLine" width="12.857142857142858" height="12.857142857142858" patternUnits="userSpaceOnUse"><rect width="12.857142857142858" height="12.857142857142858" fill="#f0f0f5"/><rect width="6.428571428571429" height="6.428571428571429" fill="#19191e"/><rect x="6.428571428571429" y="6.428571428571429" width="6.428571428571429" height="6.428571428571429" fill="#19191e"/></pattern>
+<pattern id="chk-Checkpoint" width="12.857142857142858" height="12.857142857142858" patternUnits="userSpaceOnUse"><rect width="12.857142857142858" height="12.857142857142858" fill="#e3b341"/><rect width="6.428571428571429" height="6.428571428571429" fill="#a87d16"/><rect x="6.428571428571429" y="6.428571428571429" width="6.428571428571429" height="6.428571428571429" fill="#a87d16"/></pattern>
+</defs>
+<rect width="900" height="280" fill="#1c1f26"/>
+<text x="8" y="20" fill="#f0f0f0" font-size="15" font-weight="bold">p-s2-galeria — Galeria das cortinas</text>
+<rect x="0.0" y="197.1" width="900.0" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="128.6" y="184.3" width="771.4" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="257.1" y="171.4" width="642.9" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="257.1" y="158.6" width="102.9" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="488.6" y="145.7" width="411.4" height="25.7" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="617.1" y="132.9" width="282.9" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="30.0" width="12.9" height="102.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="308.6" y="42.9" width="12.9" height="25.7" fill="#464b5a" opacity="0.73"/>
+<rect x="424.3" y="42.9" width="12.9" height="25.7" fill="#464b5a" opacity="0.73"/>
+<rect x="552.9" y="42.9" width="12.9" height="25.7" fill="#464b5a" opacity="0.73"/>
+<rect x="720.0" y="42.9" width="12.9" height="25.7" fill="#464b5a" opacity="0.73"/>
+<rect x="887.1" y="30.0" width="12.9" height="38.6" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="12.9" y="30.0" width="874.3" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<polyline fill="none" stroke="#4fc3ff" stroke-width="2.0" opacity="0.95" points="-48.2,197.1 41.8,197.1 41.8,197.1 45.9,191.9 49.9,187.0 54.0,182.6 58.1,178.5 62.1,174.8 66.2,171.6 70.3,168.7 74.4,166.3 78.4,164.2 82.5,159.3 86.6,154.8 90.6,150.6 94.7,146.9 98.8,143.5 102.9,140.6 106.9,138.1 111.0,136.0 115.1,134.2 119.1,132.9 123.2,132.0 127.3,131.5 131.4,131.3 135.4,131.6 139.5,132.3 143.6,133.4 147.6,134.9 151.7,136.8 155.8,139.0 159.9,141.7 163.9,144.8 168.0,148.3 172.1,152.2 176.1,156.5 180.2,161.2 184.3,166.3 188.4,171.8 192.4,177.7 196.5,184.0 198.5,184.3 215.4,184.3 219.4,179.0 223.5,174.2 227.6,169.7 231.6,165.6 235.7,162.0 239.8,158.7 243.9,155.9 247.9,153.4 252.0,151.4 256.1,149.7 260.1,148.5 264.2,147.6 268.3,147.2 272.4,147.2 276.4,147.5 280.5,148.3 284.6,149.5 288.6,151.0 292.7,153.0 296.8,155.4 300.9,158.1 302.9,158.6 311.8,158.6 356.8,158.6 356.8,158.6 360.9,158.6 364.9,158.6 369.0,159.0 373.1,159.8 377.1,161.0 381.2,162.6 385.3,164.6 389.4,167.1 393.4,169.9 395.5,171.4 446.8,171.4 450.9,166.2 454.9,161.3 459.0,156.8 463.1,152.8 467.1,149.1 471.2,145.9 475.3,143.0 479.4,140.6 483.4,138.5 487.5,136.9 491.6,135.6 495.6,134.8 499.7,134.3 503.8,134.3 507.9,134.7 511.9,135.4 516.0,136.6 520.1,138.2 524.1,140.1 528.2,142.5 532.3,145.3 534.3,145.7 575.4,145.7 579.4,140.5 583.5,135.6 587.6,131.1 591.6,127.1 595.7,123.4 599.8,120.2 603.9,117.3 607.9,114.9 612.0,112.8 616.1,111.2 620.1,109.9 624.2,109.1 628.3,108.6 632.4,108.6 636.4,109.0 640.5,109.7 644.6,110.9 648.6,112.4 652.7,114.4 656.8,116.8 660.9,119.6 664.9,122.7 669.0,126.3 673.1,130.3 677.1,132.9 703.9,132.9 787.5,132.9 806.8,132.9 810.9,127.6 814.9,122.7 819.0,118.3 823.1,114.2 827.1,110.6 831.2,107.3 835.3,104.5 839.4,102.0 843.4,100.0 847.5,98.3 851.6,97.1 855.6,96.2 859.7,95.8 863.8,95.7 867.9,96.1 871.9,96.9 876.0,98.0 880.1,99.6 884.1,101.6 888.2,103.9 892.3,106.7 896.4,109.9 900.4,113.5 904.5,117.4 908.6,121.8 912.6,126.6 916.7,131.8 918.8,132.9"/>
+<rect x="0.0" y="190.7" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="184.3" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="177.9" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="171.4" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="165.0" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="158.6" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="152.1" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="145.7" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="139.3" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="132.9" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<text x="8.428571428571429" y="165.0" fill="#3ddc84" font-size="11" font-weight="bold">entrada in (esquerda)</text>
+<rect x="893.6" y="126.4" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="120.0" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="113.6" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="107.1" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="100.7" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="94.3" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="87.9" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="81.4" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="75.0" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="68.6" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<text x="902.0285714285715" y="100.7" fill="#ff8c42" font-size="11" font-weight="bold">saída out (direita)</text>
+<rect x="8.0" y="220.0" width="14" height="8" fill="#3ddc84"/>
+<text x="26.0" y="228.0" fill="#e8e8e8" font-size="12">entrada</text>
+<rect x="83.0" y="220.0" width="14" height="8" fill="#ff8c42"/>
+<text x="101.0" y="228.0" fill="#e8e8e8" font-size="12">saída</text>
+<rect x="144.0" y="220.0" width="14" height="8" fill="#4fc3ff"/>
+<text x="162.0" y="228.0" fill="#e8e8e8" font-size="12">rota mais rápida</text>
+<text x="8" y="246.0" fill="#cfd6de" font-size="12">tema torres · padrão original: respiro com o tema do gelo · ritmo respiro · 70 × 14 blocos de 4 studs · exige jump</text>
+<text x="8" y="264.0" fill="#cfd6de" font-size="12">rota solo ok · rápida 7.6 s · jogador médio 8.9 s · dificuldade alvo 2 / medida 2 · 1 caminho(s)</text>
+</svg>

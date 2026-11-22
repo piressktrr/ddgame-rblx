@@ -1,0 +1,54 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s2-brasas",
+ "name": "Corredor de brasas",
+ "theme": "torres",
+ "pattern": "corredor de freeze com ilhas (vídeo), em pulos",
+ "rhythm": "apertado",
+ "difficulty": 4,
+ "solo": true,
+ "checkpoint_end": true,
+ "mechanics": {"required": ["jump"], "optional": ["double", "unfreeze"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 5, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 5, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Corredor baixo (5 blocos de altura livre) sem gancho nenhum: ilhas de só 2 blocos e onze vãos de 6 a 8 sobre chão falso de gelo — pulo no limite ou pulo duplo baixo (o teto corta o duplo alto). Ritmo de 'respira e salta'. Quem cai descongela no fundo e volta pelo degrau do próprio vão (perde ~3 s). Fecha a seção 2.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 116,
+  "height": 11,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "....................................................................................................................",
+   "....................................................................................................................",
+   "....................................................................................................................",
+   "....................................................................................................................",
+   "....................................................................................................................",
+   "xxxxxxx..ffffxx..fffffxx..fffffxx..ffffffxx..ffffxx..ffffffxx..fffffxx..ffffffxx..ffffxx..ffffffxx..fffffxxxxxxxxxxx",
+   "xxxxxxxx.....xxx......xxx......xxx.......xxx.....xxx.......xxx......xxx.......xxx.....xxx.......xxx......xxxxxxxxxxx",
+   "xxxxxxxxuuuuuxxxuuuuuuxxxuuuuuuxxxuuuuuuuxxxuuuuuxxxuuuuuuuxxxuuuuuuxxxuuuuuuuxxxuuuuuxxxuuuuuuuxxxuuuuuuxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "ex-corredor",
+ "name": "Corredor de respiro (exemplo)",
+ "theme": "exemplo",
+ "pattern": "respiro-plano",
+ "rhythm": "respiro",
+ "difficulty": 1,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["walk"], "optional": ["jump"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 1, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Exemplo mínimo para os testes: chão reto, sem manobra obrigatória.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 24,
+  "height": 8,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxx",
+   "........................",
+   "........................",
+   "........................",
+   "........................",
+   "........................",
+   "........................",
+   "########################"
+  ]
+ }
+}

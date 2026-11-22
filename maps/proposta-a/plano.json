@@ -1,0 +1,79 @@
+{
+ "format": "race-and-escape/plan@1",
+ "name": "Mapa novo (proposta A)",
+ "library": "maps/trechos",
+ "block": null,
+ "max_width": 1200,
+ "turn": "up",
+ "target_minutes": 8,
+ "sections": [
+  {
+   "id": "s1",
+   "name": "Vale do Despertar",
+   "theme": "vale",
+   "chunks": [
+    "p-s1-escadaria",
+    "p-s1-fosso-duplo",
+    "p-s1-primeiro-gancho",
+    "p-s1-cortinas"
+   ]
+  },
+  {
+   "id": "s2",
+   "name": "Torres Geladas",
+   "theme": "torres",
+   "chunks": [
+    "p-s2-galeria",
+    "p-s2-teto-de-gelo",
+    "p-s2-patamar",
+    "p-s2-torres",
+    "p-s2-brasas"
+   ]
+  },
+  {
+   "id": "s3",
+   "name": "Ventania",
+   "theme": "ventania",
+   "chunks": [
+    "p-s3-planicie",
+    "p-s3-balanco",
+    "p-s3-rajada",
+    "p-s3-verde"
+   ]
+  },
+  {
+   "id": "s4",
+   "name": "Casa das Portas",
+   "theme": "portas",
+   "chunks": [
+    "p-s4-saguao",
+    "p-s4-portas",
+    "p-s4-valvulas",
+    "p-s4-dica",
+    "p-s4-sala-um-ponto"
+   ]
+  },
+  {
+   "id": "s5",
+   "name": "Poço Fundo",
+   "theme": "poco",
+   "chunks": [
+    "p-s5-descida",
+    "p-s5-ilhas",
+    "p-s5-chamine",
+    "p-s5-furo"
+   ]
+  },
+  {
+   "id": "s6",
+   "name": "Cume",
+   "theme": "cume",
+   "chunks": [
+    "p-s6-mirante",
+    "p-s6-gaiola",
+    "p-s6-ponte",
+    "p-s6-reta"
+   ]
+  }
+ ]
+}

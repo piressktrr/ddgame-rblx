@@ -1,0 +1,61 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s3-verde",
+ "name": "Ponte dos verdes",
+ "theme": "ventania",
+ "pattern": "original: corrente de gancho único sobre o vermelho",
+ "rhythm": "gargalo",
+ "difficulty": 4,
+ "solo": true,
+ "checkpoint_end": true,
+ "mechanics": {"required": ["hookonce", "hook"], "optional": ["momentum", "double", "hookthrough", "kill"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 7, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 7, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Gargalo da seção: três pontos VERDES (gancho único: cada um prende uma vez só) sobre um fosso vermelho de 50 blocos, com uma ilha HookThrough no meio para respirar. Errou = vermelho = volta ao checkpoint, e os verdes voltam junto (ADR 0053). Na dupla: quem passou pode puxar o parceiro com o gancho em jogador. Fecha a seção 3.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 72,
+  "height": 18,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x...............x.....................x......x.........................x",
+   "x...............x.....................x......x.........................x",
+   "x...............gg....................gg.....gg........................x",
+   "x......................................................................x",
+   "x......................................................................x",
+   "........................................................................",
+   "........................................................................",
+   "........................................................................",
+   "........................................................................",
+   "........................................................................",
+   "xxxxxxxxxx..................hhhh............................xxxxxxxxxxxx",
+   "xxxxxxxxxx..................xxxx............................xxxxxxxxxxxx",
+   "xxxxxxxxxx..................xxxx............................xxxxxxxxxxxx",
+   "xxxxxxxxxx..................xxxx............................xxxxxxxxxxxx",
+   "xxxxxxxxxx..................xxxx............................xxxxxxxxxxxx",
+   "xxxxxxxxxxkkkkkkkkkkkkkkkkkkxxxxkkkkkkkkkkkkkkkkkkkkkkkkkkkkxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

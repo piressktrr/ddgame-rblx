@@ -1,0 +1,57 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s2-galeria",
+ "name": "Galeria das cortinas",
+ "theme": "torres",
+ "pattern": "original: respiro com o tema do gelo",
+ "rhythm": "respiro",
+ "difficulty": 2,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["jump"], "optional": ["walk"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 6, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Respiro logo depois do checkpoint 1: patamares de 8–10 e degraus de 1–2, sem vão. Cortinas de gelo altas (fora do alcance do pulo simples) mostram o tema da seção sem castigar ninguém.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 70,
+  "height": 14,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x.......................f........f.........f............f............x",
+   "x.......................f........f.........f............f............x",
+   "x.....................................................................",
+   "x.....................................................................",
+   "x.....................................................................",
+   "x.....................................................................",
+   "x.....................................................................",
+   "................................................xxxxxxxxxxxxxxxxxxxxxx",
+   "......................................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "....................xxxxxxxx..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "....................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

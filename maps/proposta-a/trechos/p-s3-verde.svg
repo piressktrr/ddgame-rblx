@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="325" viewBox="0 0 900 325" font-family="sans-serif">
+<defs>
+<pattern id="chk-Unhookable" width="12.5" height="12.5" patternUnits="userSpaceOnUse"><rect width="12.5" height="12.5" fill="#67809a"/><rect width="6.25" height="6.25" fill="#53687c"/><rect x="6.25" y="6.25" width="6.25" height="6.25" fill="#53687c"/></pattern>
+<pattern id="chk-StartLine" width="12.5" height="12.5" patternUnits="userSpaceOnUse"><rect width="12.5" height="12.5" fill="#f0f0f5"/><rect width="6.25" height="6.25" fill="#3c6ec8"/><rect x="6.25" y="6.25" width="6.25" height="6.25" fill="#3c6ec8"/></pattern>
+<pattern id="chk-FinishLine" width="12.5" height="12.5" patternUnits="userSpaceOnUse"><rect width="12.5" height="12.5" fill="#f0f0f5"/><rect width="6.25" height="6.25" fill="#19191e"/><rect x="6.25" y="6.25" width="6.25" height="6.25" fill="#19191e"/></pattern>
+<pattern id="chk-Checkpoint" width="12.5" height="12.5" patternUnits="userSpaceOnUse"><rect width="12.5" height="12.5" fill="#e3b341"/><rect width="6.25" height="6.25" fill="#a87d16"/><rect x="6.25" y="6.25" width="6.25" height="6.25" fill="#a87d16"/></pattern>
+</defs>
+<rect width="900" height="325" fill="#1c1f26"/>
+<text x="8" y="20" fill="#f0f0f0" font-size="15" font-weight="bold">p-s3-verde — Ponte dos verdes</text>
+<rect x="0.0" y="242.5" width="900.0" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="167.5" width="125.0" height="75.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="125.0" y="230.0" width="225.0" height="12.5" fill="#b74a54" opacity="0.82"/>
+<rect x="350.0" y="180.0" width="50.0" height="62.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="400.0" y="230.0" width="350.0" height="12.5" fill="#b74a54" opacity="0.82"/>
+<rect x="750.0" y="167.5" width="150.0" height="75.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="350.0" y="167.5" width="50.0" height="12.5" fill="#2d2d34" opacity="0.85"/>
+<rect x="0.0" y="30.0" width="12.5" height="75.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="887.5" y="30.0" width="12.5" height="75.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="200.0" y="67.5" width="25.0" height="12.5" fill="#71a377" opacity="1.0"/>
+<rect x="475.0" y="67.5" width="25.0" height="12.5" fill="#71a377" opacity="1.0"/>
+<rect x="562.5" y="67.5" width="25.0" height="12.5" fill="#71a377" opacity="1.0"/>
+<rect x="200.0" y="30.0" width="12.5" height="37.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="475.0" y="30.0" width="12.5" height="37.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="562.5" y="30.0" width="12.5" height="37.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="12.5" y="30.0" width="187.5" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="212.5" y="30.0" width="262.5" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="487.5" y="30.0" width="75.0" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="575.0" y="30.0" width="312.5" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<polyline fill="none" stroke="#4fc3ff" stroke-width="2.0" opacity="0.95" points="-46.9,167.5 40.6,167.5 40.6,167.5 44.6,162.4 48.5,157.7 52.5,153.3 56.5,149.4 60.4,145.8 64.4,142.7 68.3,139.9 72.3,137.5 76.3,135.5 80.2,133.9 84.2,132.7 88.1,131.9 92.1,131.4 94.1,131.4 94.1,131.4 98.0,131.5 102.0,132.1 105.9,133.0 111.4,133.7 118.5,134.0 125.6,134.6 132.6,135.7 139.7,137.2 146.8,139.0 153.9,141.2 160.9,143.9 168.0,146.9 175.1,150.3 182.2,154.1 189.7,157.2 197.2,152.4 204.7,148.0 212.2,144.0 219.7,140.3 227.2,137.1 234.7,134.2 242.3,131.8 249.8,129.7 257.3,128.0 264.8,126.7 272.3,125.8 279.8,125.3 287.3,125.2 294.8,125.5 302.3,126.1 309.9,127.2 317.4,128.6 324.9,130.5 332.4,132.7 339.9,135.3 347.4,138.3 354.9,141.7 362.4,145.5 369.9,149.7 377.4,154.3 385.0,159.2 392.5,164.6 396.2,167.4 396.9,167.5 400.8,162.4 404.8,157.7 408.7,153.3 412.7,149.4 416.7,145.8 420.6,142.7 424.6,139.9 428.5,137.5 432.5,135.5 436.5,133.9 440.4,132.7 444.4,131.9 448.3,131.4 450.3,131.4 450.3,131.4 454.3,131.5 458.2,132.1 462.2,133.0 467.6,133.5 474.6,133.5 481.7,133.7 488.8,134.4 495.8,135.4 502.9,136.9 510.0,138.7 517.1,141.0 524.2,143.6 531.3,146.6 538.5,149.4 546.2,151.6 554.0,146.8 561.8,142.4 569.6,138.3 577.4,134.7 585.2,131.5 593.0,128.6 600.8,126.1 608.6,124.1 616.4,122.4 624.2,121.1 632.0,120.2 639.8,119.7 647.6,119.6 655.4,119.9 663.2,120.5 671.0,121.6 678.8,123.0 686.6,124.9 694.4,127.1 702.2,129.7 710.0,132.7 717.8,136.1 725.6,139.9 733.4,144.1 741.2,148.6 749.0,153.6 756.8,159.0 764.6,164.7 768.5,167.5 753.1,167.5 815.6,167.5 834.4,167.5 838.3,162.4 842.3,157.7 846.3,153.3 850.2,149.4 854.2,145.8 858.1,142.7 862.1,139.9 866.0,137.5 870.0,135.5 874.0,133.9 877.9,132.7 881.9,131.9 885.8,131.4 889.8,131.4 893.8,131.8 897.7,132.5 901.7,133.6 905.6,135.2 909.6,137.1 913.5,139.4 917.5,142.1 921.5,145.2 925.4,148.6 929.4,152.5 933.3,156.8 937.3,161.4 941.3,166.4 943.2,167.5"/>
+<rect x="0.0" y="161.2" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="155.0" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="148.8" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="142.5" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="136.2" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="130.0" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="123.8" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="117.5" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="111.2" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="105.0" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<text x="8.25" y="136.2" fill="#3ddc84" font-size="11" font-weight="bold">entrada in (esquerda)</text>
+<rect x="893.8" y="161.2" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="155.0" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="148.8" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="142.5" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="136.2" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="130.0" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="123.8" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="117.5" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="111.2" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="105.0" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<text x="902.05" y="136.2" fill="#ff8c42" font-size="11" font-weight="bold">saída out (direita)</text>
+<rect x="8.0" y="265.0" width="14" height="8" fill="#3ddc84"/>
+<text x="26.0" y="273.0" fill="#e8e8e8" font-size="12">entrada</text>
+<rect x="83.0" y="265.0" width="14" height="8" fill="#ff8c42"/>
+<text x="101.0" y="273.0" fill="#e8e8e8" font-size="12">saída</text>
+<rect x="144.0" y="265.0" width="14" height="8" fill="#4fc3ff"/>
+<text x="162.0" y="273.0" fill="#e8e8e8" font-size="12">rota mais rápida</text>
+<text x="8" y="291.0" fill="#cfd6de" font-size="12">tema ventania · padrão original: corrente de gancho único sobre o vermelho · ritmo gargalo · 72 × 18 blocos de 4 studs · exige hookonce, hook</text>
+<text x="8" y="309.0" fill="#cfd6de" font-size="12">rota solo ok · rápida 6.1 s · jogador médio 21.5 s · dificuldade alvo 4 / medida 5 · 1 caminho(s)</text>
+</svg>

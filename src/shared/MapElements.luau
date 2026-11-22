@@ -103,13 +103,14 @@ MapElements.list = table.freeze({
 	{
 		id = "Kill",
 		label = "Morte",
-		description = "Atravessável; volta na hora ao checkpoint",
+		-- Sólido para o gancho prender (ADR 0049, 0053); encostar continua levando ao checkpoint.
+		description = "Sólido; o gancho prende; encostar volta na hora ao checkpoint",
 		tag = Tags.KillZone,
 		-- Medido: (164, 97, 114) sobre o céu; cor que dá esse resultado com 30% de transparência.
 		color = Color3.fromRGB(183, 74, 84),
 		transparency = 0.3,
 		material = Enum.Material.SmoothPlastic,
-		canCollide = false,
+		canCollide = true,
 		usesDirection = false,
 	},
 	{

@@ -1,0 +1,63 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s6-ponte",
+ "name": "Ponte do cume",
+ "theme": "cume",
+ "pattern": "original: corrente de gancho com verde, vermelho e gelo",
+ "rhythm": "gargalo",
+ "difficulty": 5,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["hook", "solo"], "optional": ["hookonce", "momentum", "double", "kill", "freeze"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 8, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 8, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "O gargalo final: 52 blocos de vermelho com uma ilha no meio. Primeira metade: um ponto normal e um VERDE (uso único), com pouso na ilha. Segunda: outro verde, um ponto VERMELHO (prende o gancho, mas encostar nele volta ao checkpoint) e um ponto normal antes da chegada. Uma cortina de gelo sobre a ilha castiga o pulo alto. Errou = checkpoint, e os verdes voltam. É TRECHO SOLO avisado (padrão do vídeo): linhas SoloStart e SoloEnd na entrada e na saída; cada um da dupla passa sozinho (placas com os ícones riscados ficam para o MapBuilder).",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 72,
+  "height": 20,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x..............x......x............ff...x......x......x................x",
+   "x..............x......x............ff...x......x......x................x",
+   "x..............x......x............ff...x......x......x................x",
+   "x..............##.....gg...........ff...gg.....x......##...............x",
+   "x..............................................kk......................x",
+   "x......................................................................x",
+   "....s.............................................................e.....",
+   "....s.............................................................e.....",
+   "....s.............................................................e.....",
+   "....s.............................................................e.....",
+   "....s.............................................................e.....",
+   "xxxxxxxxxx....................xxxx............................xxxxxxxxxx",
+   "xxxxxxxxxx....................xxxx............................xxxxxxxxxx",
+   "xxxxxxxxxx....................xxxx............................xxxxxxxxxx",
+   "xxxxxxxxxx....................xxxx............................xxxxxxxxxx",
+   "xxxxxxxxxx....................xxxx............................xxxxxxxxxx",
+   "xxxxxxxxxx....................xxxx............................xxxxxxxxxx",
+   "xxxxxxxxxxkkkkkkkkkkkkkkkkkkkkxxxxkkkkkkkkkkkkkkkkkkkkkkkkkkkkxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

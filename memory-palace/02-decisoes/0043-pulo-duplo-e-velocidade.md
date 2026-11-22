@@ -1,5 +1,5 @@
 # 0043 — Pulo duplo e velocidade maior no movimento base
-- Status: Aceita (substitui 0027)
+- Status: Aceita (substitui 0027); valores substituídos em parte por 0053 (andar 38, física do DDNet)
 - Data: 2026-11-16
 ## Decisão (pedido do dono)
 - **Pulo duplo:** um segundo pulo no ar, uma vez até tocar o chão (ou até prender o gancho, que devolve o pulo).

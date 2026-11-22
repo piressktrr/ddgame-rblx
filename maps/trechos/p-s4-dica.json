@@ -1,0 +1,58 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s4-dica",
+ "name": "Galeria do teto falso",
+ "theme": "portas",
+ "pattern": "dica negativa (vídeo) sobre o vermelho",
+ "rhythm": "gargalo",
+ "difficulty": 4,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["hook", "momentum"], "optional": ["double", "kill"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 6, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 6, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Galeria com piso vermelho e teto todo prendível: dá para atravessar pendurado, de gancho em gancho, até a 'dica negativa' — 9 blocos de teto sem gancho bem onde o próximo ponto estaria. Ali é preciso balançar, soltar no embalo e pousar numa ilha de 4; depois, outra faixa sem gancho e outra ilha antes da saída. Ensina que o xadrez no teto muda o plano.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 80,
+  "height": 15,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxx##################xxxxxxxxx################xxxxxxxxx##########xxxxxxxxx",
+   "x..............................................................................x",
+   "x..............................................................................x",
+   "x..............................................................................x",
+   "................................................................................",
+   "................................................................................",
+   "................................................................................",
+   "................................................................................",
+   "................................................................................",
+   "xxxxxxxxx...........................xxxx...................xxxx........xxxxxxxxx",
+   "xxxxxxxxx...........................xxxx...................xxxx........xxxxxxxxx",
+   "xxxxxxxxx...........................xxxx...................xxxx........xxxxxxxxx",
+   "xxxxxxxxx...........................xxxx...................xxxx........xxxxxxxxx",
+   "xxxxxxxxxkkkkkkkkkkkkkkkkkkkkkkkkkkkxxxxkkkkkkkkkkkkkkkkkkkxxxxkkkkkkkkxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

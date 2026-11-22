@@ -1,0 +1,55 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s1-escadaria",
+ "name": "Escadaria de boas-vindas",
+ "theme": "vale",
+ "pattern": "original: degraus de pulo",
+ "rhythm": "respiro",
+ "difficulty": 2,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["jump"], "optional": ["walk", "double"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 6, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Abertura do mapa. Degraus de 1–2 blocos (pulo simples confortável), patamares de 8–10 e descidas a pé. Tudo Unhookable: aqui o gancho não ajuda, o jogador pega o ritmo do pulo. Sem risco nenhum.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 72,
+  "height": 12,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x.......................................................................",
+   "x.......................................................................",
+   "x.......................................................................",
+   "x.......................................................................",
+   "x.......................................................................",
+   "..............................................xxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "..............................xxxxxxxx........xxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "..............................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "....................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

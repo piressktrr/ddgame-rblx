@@ -1,5 +1,5 @@
 # 0014 — Gelo: 15 s congelado e depois morte
-- Status: Aceita
+- Status: Substituída por 0053 (gelo não mata)
 - Data: 2026-11-12
 ## Contexto
 Esperar ser salvo deixa o jogo lento para o padrão do Roblox.

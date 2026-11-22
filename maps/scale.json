@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "doc": "memory-palace/04-game-design/estudos/escala-do-bloco.md",
+  "source_video": "memory-palace/04-game-design/referencias/imagens/video-2026-11-14 (fora do Git)",
+  "block_studs": 4,
+  "cell_studs": 2,
+  "cells_per_block": 2,
+  "ddnet_tile_px": 34.3,
+  "ddnet_tiles_on_screen": [44.8, 25.2],
+  "our_blocks_on_screen": [26.5, 14.9],
+  "ddnet_measured": {
+    "tee_hitbox_tiles": 0.875,
+    "tee_drawn_tiles": 1.3,
+    "run_tiles_per_s": 15.7,
+    "jump_tiles": 5.8,
+    "jump_apex_s": 0.55,
+    "jump_air_s": 1.08,
+    "double_jump_tiles": [9.2, 10.3],
+    "running_jump_gap_tiles": 17,
+    "hook_tiles": 11.9,
+    "camera": "centrada no boneco: 12,6 tiles acima e abaixo, 22,4 para cada lado"
+  },
+  "conversion": {
+    "movement_studs_per_ddnet_tile": 2.24,
+    "movement_blocks_per_ddnet_tile": 0.56,
+    "hook_studs_per_ddnet_tile": 3.37,
+    "hook_blocks_per_ddnet_tile": 0.84,
+    "narrow_vertical_hole_blocks": 1,
+    "narrow_door_height_blocks": 2,
+    "thin_wall_or_cap_blocks": 1,
+    "freeze_skin_cells": 1,
+    "rule": "Distâncias de movimento (sala, vão, altura, tela): tiles do DDNet x 0,56 = blocos (≈ 1 tile por célula). Distâncias de gancho: tiles x 0,84 = blocos. Coisas de 1 tile (furo, parede, tampa): 1 bloco; porta por onde se passa andando: 2 blocos de altura. Pele de freeze: 1 célula. Depois arredonde e confira nas regras do maps/metrics.json."
+  },
+  "candidates": {
+    "2": {"blocks_on_screen": [53.1, 29.9], "body_blocks": [1, 2.75], "jump": 5.8, "double_jump": 10.9, "jump_gap": 18.3, "hook": 20, "min_vertical_hole": 2, "min_door_height": 4, "verdict": "casa pulo e tela 1:1, mas o furo de 1 bloco não passa o corpo e o gancho fica 1,7x mais longo"},
+    "4": {"blocks_on_screen": [26.5, 14.9], "body_blocks": [0.5, 1.38], "jump": 2.9, "double_jump": 5.45, "jump_gap": 9.1, "hook": 10, "min_vertical_hole": 1, "min_door_height": 2, "verdict": "escolhido: furo de 1 bloco passa o corpo, gancho 10 ≈ 11,9 tiles; pulo e tela pela metade (medir distâncias em células)"},
+    "6": {"blocks_on_screen": [17.7, 9.9], "body_blocks": [0.33, 0.92], "jump": 1.9, "double_jump": 3.6, "jump_gap": 6.1, "hook": 6.7, "min_vertical_hole": 1, "min_door_height": 1, "verdict": "só casa a altura do corpo; grade grossa demais (pulo < 2 blocos, tela 18x10)"}
+  },
+  "patterns": {
+    "wall_doors": {
+      "name": "Portas de parede",
+      "ddnet_tiles": {"room_inner_w": 6, "room_inner_h": 11, "wall": 1, "hole": 1, "cap": 1, "hole_bottom_above_floor": [3, 7]},
+      "frames": ["1fps/s_0182", "1fps/s_0236", "todos/f_014010"],
+      "blocks": {"room_inner_w": 4, "room_inner_h": [6, 7], "wall": 1, "hole_w": 1, "hole_h": 2, "hole_h_hard_cells": 3, "cap_unhookable": 1, "hole_bottom_above_floor": [2, 4]},
+      "checks": "furo 8 studs (ceiling_walk_min); versão difícil 3 células = 6 studs (corpo 5,5; testar no Studio); base do furo 8 = step_jump_comfort, 12-16 = pulo duplo; base + furo + tampa <= altura da sala; teto a 24-28 do chão = 21-25 acima do root (hook_target_up 32)"
+    },
+    "single_point_room": {
+      "name": "Sala de um ponto só",
+      "ddnet_tiles": {"room_inner_w": 28, "room_inner_h": 16, "hook_points": 1},
+      "frames": ["1fps/s_0464"],
+      "blocks": {"room_inner_w": 16, "room_inner_h": 8, "hook_points": 1, "freeze_under_point_radius": [0, 6]},
+      "checks": "altura limitada a 8 (ponto a 29 acima do root, hook_target_up 32); a sala toda cabe na tela (64 x 32 studs); solo: da borda do freeze a 6 blocos, pular e prender no topo do pulo (≈ 30 de distância, hook_target_distance 36)",
+      "adapt": "ADR 0055: tem de dar sozinho. A dupla (martelo, gancho em jogador) só encurta."
+    },
+    "frozen_towers": {
+      "name": "Torres geladas",
+      "ddnet_tiles": {"pillar_w": [2, 3], "pillar_h": [7, 12], "gap": 8, "top_step": [3, 4], "freeze_top": 1, "ceiling_above_floor": 19},
+      "frames": ["1fps/s_0921", "1fps/s_0981", "1fps/s_0276"],
+      "blocks": {"pillar_w": [1, 2], "pillar_h": [4, 7], "gap": 5, "top_step": [1, 2], "freeze_top_cells": 1, "ceiling_above_floor": [10, 11]},
+      "checks": "vão 20 = gap_jump_comfort 24; degrau de topo 8 = step_jump_comfort; teto a 3-4 blocos do topo mais alto (hang_clearance 12); passo entre pilares 6-7 blocos <= hook_chain_spacing 7",
+      "adapt": "Com freeze no topo, o solo passa pelo teto prendível (pendurado de pilar em pilar); a dupla pode pousar e puxar."
+    },
+    "ember_corridor": {
+      "name": "Corredor de brasas",
+      "ddnet_tiles": {"inner_h": [3, 7], "freeze_skin": 1, "island_w": [4, 6], "short_pull": 6},
+      "frames": ["1fps/s_0701", "1fps/s_2131", "1fps/s_3046"],
+      "blocks": {"inner_h": [4, 5], "freeze_skin_cells": 1, "island_w": 3, "island_gap": [4, 6], "island_gap_hard": 8, "short_pull": 5},
+      "checks": "altura 5 = ceiling_jump_free 20 (pulo inteiro sem bater); vão entre ilhas 16-24 = gap_jump_comfort, 32 = gap_jump_max; puxão de 20 studs < hook_target_distance 36",
+      "adapt": "Corredor de 3 tiles do vídeo vira 4-5 blocos: o nosso corpo é alto e o pulo precisa de teto."
+    },
+    "switching_hole": {
+      "name": "Furo que troca de lado",
+      "ddnet_tiles": {"room_inner_w": 19, "room_inner_h": 5, "floor": 1, "hole": 1, "cap": 1, "hole_offset": 5, "floors": [4, 6]},
+      "frames": ["1fps/s_2816", "1fps/s_2666"],
+      "blocks": {"room_inner_w": 11, "room_inner_h": 3, "floor": 1, "hole_w": 1, "cap_unhookable": 1, "hole_offset": [3, 8], "floors": [4, 6]},
+      "checks": "de chão a chão 16 studs = step_double_jump_comfort; furo 4 studs = corridor_width_min (precisão); teto da sala de cima a 28 do chão = 25 acima do root (hook_target_up)",
+      "adapt": "Começa com teto prendível; no fim exige a mira certa pelo furo (não o parceiro), para dar sozinho."
+    },
+    "negative_hint": {
+      "name": "Dica negativa",
+      "ddnet_tiles": {"w": [1, 3], "h": 1},
+      "frames": ["1fps/s_3362"],
+      "blocks": {"w": [1, 2], "h": 1},
+      "checks": "um Unhookable isolado onde o gancho 'óbvio' prenderia; o resto da sala prendível"
+    },
+    "solo_gate": {
+      "name": "Trecho solo avisado",
+      "ddnet_tiles": {"band": 1, "shaft_w": 3},
+      "frames": ["1fps/s_1813"],
+      "blocks": {"band": 1, "band_h_min": 2, "shaft_w": 2},
+      "checks": "faixa de 1 bloco cobrindo a passagem inteira (porta >= 2 blocos); poço 8 studs = shaft_width_hook"
+    },
+    "safety_net": {
+      "name": "Rede de segurança",
+      "ddnet_tiles": {},
+      "frames": [],
+      "blocks": {"pit_no_exit_max_depth": 5, "max_seconds_to_checkpoint_or_unfreeze": 15},
+      "checks": "poço sem gancho mais fundo que 5 blocos (step_double_jump_max 20) precisa de parede prendível ou Mão única lateral"
+    },
+    "chimney": {
+      "name": "Chaminé (poço de subir)",
+      "ddnet_tiles": {"shaft_w": [3, 4], "wall": 1},
+      "frames": ["1fps/s_0581", "1fps/s_1066"],
+      "blocks": {"shaft_w": 2, "wall": 1},
+      "checks": "8 studs = shaft_width_hook; 1 bloco (4) só como aperto proposital (corridor_width_min)"
+    },
+    "maze": {
+      "name": "Labirinto",
+      "ddnet_tiles": {"corridor": 1, "wall": 1},
+      "frames": ["1fps/s_0981", "1fps/s_0276"],
+      "blocks": {"corridor_vertical": 1, "corridor_horizontal_h": 2, "wall": 1},
+      "checks": "corredor em pé 4 studs (corridor_width_min); corredor deitado 8 studs (ceiling_walk_min)",
+      "adapt": "O corpo é 2,75x mais alto que largo: corredores horizontais têm o dobro da altura dos verticais."
+    },
+    "checkpoint_split": {
+      "name": "Checkpoint com parcial",
+      "ddnet_tiles": {"section_length": [25, 90], "section_seconds": [45, 75], "avg_progress_tiles_per_s": [0.6, 1.2]},
+      "frames": ["folhas/min_03", "folhas/min_05", "todos/f_009600-f_016560 (rastreio do cenário)"],
+      "blocks": {"section_length": [15, 50], "section_screens": [0.6, 2], "section_seconds": [30, 90], "checkpoint_every_seconds": [60, 120]},
+      "checks": "~8 min no total (ADR 0055) = 5 a 8 checkpoints"
+    }
+  },
+  "notes": "Medido em 2026-11-22 nos frames do vídeo de 2026-11-14 (DDNet, mapa de terceiros: só padrões e proporções, nunca o traçado). O DDNet usa 1 tile = 32 unidades; no vídeo 1 tile = 34,3 px (zoom padrão). Nenhum bloco casa tudo: o pulo e a tela pedem ~2,2-2,4 studs por tile; o gancho pede 3,4; a altura do corpo pede 6,3. O bloco de 4 fica entre eles e mantém o furo de 1 bloco passável; as distâncias de movimento ficam na célula de 2. Todo número de padrão deve passar nas regras de maps/metrics.json e no validador."
+}

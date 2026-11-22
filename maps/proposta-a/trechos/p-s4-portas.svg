@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260" viewBox="0 0 900 260" font-family="sans-serif">
+<defs>
+<pattern id="chk-Unhookable" width="10.0" height="10.0" patternUnits="userSpaceOnUse"><rect width="10.0" height="10.0" fill="#67809a"/><rect width="5.0" height="5.0" fill="#53687c"/><rect x="5.0" y="5.0" width="5.0" height="5.0" fill="#53687c"/></pattern>
+<pattern id="chk-StartLine" width="10.0" height="10.0" patternUnits="userSpaceOnUse"><rect width="10.0" height="10.0" fill="#f0f0f5"/><rect width="5.0" height="5.0" fill="#3c6ec8"/><rect x="5.0" y="5.0" width="5.0" height="5.0" fill="#3c6ec8"/></pattern>
+<pattern id="chk-FinishLine" width="10.0" height="10.0" patternUnits="userSpaceOnUse"><rect width="10.0" height="10.0" fill="#f0f0f5"/><rect width="5.0" height="5.0" fill="#19191e"/><rect x="5.0" y="5.0" width="5.0" height="5.0" fill="#19191e"/></pattern>
+<pattern id="chk-Checkpoint" width="10.0" height="10.0" patternUnits="userSpaceOnUse"><rect width="10.0" height="10.0" fill="#e3b341"/><rect width="5.0" height="5.0" fill="#a87d16"/><rect x="5.0" y="5.0" width="5.0" height="5.0" fill="#a87d16"/></pattern>
+</defs>
+<rect width="900" height="260" fill="#1c1f26"/>
+<text x="8" y="20" fill="#f0f0f0" font-size="15" font-weight="bold">p-s4-portas — Casa das portas</text>
+<rect x="0.0" y="180.0" width="900.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="80.0" y="160.0" width="10.0" height="20.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="140.0" y="150.0" width="10.0" height="30.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="200.0" y="160.0" width="10.0" height="20.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="260.0" y="140.0" width="10.0" height="40.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="320.0" y="150.0" width="10.0" height="30.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="380.0" y="140.0" width="10.0" height="40.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="440.0" y="160.0" width="10.0" height="20.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="500.0" y="140.0" width="10.0" height="40.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="560.0" y="150.0" width="10.0" height="30.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="620.0" y="140.0" width="10.0" height="40.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="680.0" y="140.0" width="10.0" height="40.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="740.0" y="150.0" width="10.0" height="30.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="820.0" y="160.0" width="80.0" height="20.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="30.0" width="10.0" height="100.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="80.0" y="120.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="200.0" y="120.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="440.0" y="120.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="80.0" y="30.0" width="10.0" height="90.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="140.0" y="110.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="200.0" y="30.0" width="10.0" height="90.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="320.0" y="110.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="440.0" y="30.0" width="10.0" height="90.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="560.0" y="110.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="740.0" y="110.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="140.0" y="30.0" width="10.0" height="80.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="260.0" y="100.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="320.0" y="30.0" width="10.0" height="80.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="380.0" y="100.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="500.0" y="100.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="560.0" y="30.0" width="10.0" height="80.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="620.0" y="100.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="680.0" y="100.0" width="10.0" height="10.0" fill="#464b5a" opacity="0.73"/>
+<rect x="740.0" y="30.0" width="10.0" height="80.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="890.0" y="30.0" width="10.0" height="80.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="260.0" y="30.0" width="10.0" height="70.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="380.0" y="30.0" width="10.0" height="70.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="500.0" y="30.0" width="10.0" height="70.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="620.0" y="30.0" width="10.0" height="70.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="680.0" y="30.0" width="10.0" height="70.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="10.0" y="30.0" width="70.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="90.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="150.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="210.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="270.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="330.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="390.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="450.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="510.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="570.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="630.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="690.0" y="30.0" width="50.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="750.0" y="30.0" width="140.0" height="10.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<polyline fill="none" stroke="#4fc3ff" stroke-width="2.0" opacity="0.95" points="-37.5,180.0 22.5,180.0 22.5,180.0 77.5,180.0 77.5,180.0 77.5,175.9 77.5,172.1 77.5,168.7 77.5,165.5 77.5,162.7 77.5,160.1 79.1,157.9 82.2,156.0 85.4,154.4 88.6,153.1 91.7,152.2 94.9,151.5 98.1,151.2 101.2,151.1 104.4,151.4 107.6,152.0 110.7,152.9 113.9,154.1 117.1,155.7 120.2,157.5 123.4,159.7 126.6,162.1 129.7,164.9 132.9,168.0 136.1,164.2 137.5,160.6 137.5,157.4 137.5,154.5 137.5,151.9 137.5,149.6 140.7,147.7 143.8,146.0 147.0,144.7 150.2,143.6 153.3,142.9 156.5,142.5 159.7,142.4 162.8,142.6 166.0,143.2 169.2,144.0 172.3,145.2 175.5,146.6 178.7,148.4 181.8,150.5 185.0,152.9 188.2,155.6 191.3,158.7 194.5,162.0 197.5,165.7 197.5,169.6 197.5,173.9 197.5,178.5 197.5,180.0 197.5,180.0 197.5,175.9 197.5,172.1 197.5,168.7 197.5,165.5 197.5,162.7 197.5,160.1 199.1,157.9 202.2,156.0 205.4,154.4 208.6,150.6 211.7,147.0 214.9,143.8 218.1,140.9 221.2,138.3 224.4,136.0 227.6,134.1 230.7,132.4 233.9,131.1 237.1,130.0 240.2,129.3 243.4,128.9 246.6,128.8 249.7,129.0 252.9,129.6 256.1,130.4 259.2,131.6 262.4,133.0 265.6,134.8 268.7,136.9 271.9,139.3 275.1,142.0 278.2,145.1 281.4,148.4 284.6,152.1 287.7,156.0 290.9,160.3 294.1,164.9 297.2,169.8 300.4,175.0 303.6,180.0 317.5,180.0 317.5,175.9 317.5,172.1 317.5,168.7 317.5,165.5 317.5,162.7 317.5,160.1 317.5,157.9 317.5,156.0 317.5,154.4 317.5,150.6 319.1,147.0 322.2,143.8 325.4,140.9 328.6,138.3 331.7,136.0 334.9,134.1 338.1,132.4 341.2,131.1 344.4,130.0 347.6,129.3 350.7,128.9 353.9,128.8 357.1,129.0 360.2,129.6 363.4,130.4 366.6,131.6 369.7,133.0 372.9,134.8 376.1,136.9 379.2,139.3 380.8,140.0 382.5,140.0 387.5,140.0 387.5,140.0 390.7,140.0 393.8,140.0 397.0,140.4 400.2,141.0 403.3,141.9 406.5,143.2 409.7,144.7 412.8,146.6 416.0,148.8 419.2,151.3 422.3,154.1 425.5,157.2 428.7,160.7 431.8,164.4 435.0,168.5 437.5,172.9 437.5,177.5 437.5,180.0 437.5,180.0 437.5,175.9 437.5,172.1 437.5,168.7 437.5,165.5 437.5,162.7 437.5,160.1 439.1,157.9 442.2,156.0 445.4,154.4 448.6,150.6 451.7,147.0 454.9,143.8 458.1,140.9 461.2,138.3 464.4,136.0 467.6,134.1 470.7,132.4 473.9,131.1 477.1,130.0 480.2,129.3 483.4,128.9 486.6,128.8 489.7,129.0 492.9,129.6 496.1,130.4 499.2,131.6 502.4,133.0 505.6,134.8 508.7,136.9 511.9,139.3 515.1,142.0 518.2,145.1 521.4,148.4 524.6,152.1 527.7,156.0 530.9,160.3 534.1,164.9 537.2,169.8 540.4,175.0 543.6,180.0 557.5,180.0 557.5,175.9 557.5,172.1 557.5,168.7 557.5,165.5 557.5,162.7 557.5,160.1 557.5,157.9 557.5,156.0 557.5,154.4 557.5,150.6 559.1,147.0 562.2,143.8 565.4,140.9 568.6,138.3 571.7,136.0 574.9,134.1 578.1,132.4 581.2,131.1 584.4,130.0 587.6,129.3 590.7,128.9 593.9,128.8 597.1,129.0 600.2,129.6 603.4,130.4 606.6,131.6 609.7,133.0 612.9,134.8 616.1,136.9 619.2,139.3 620.8,140.0 622.5,140.0 627.5,140.0 627.5,140.0 630.7,140.0 633.8,140.0 637.0,140.4 640.2,141.0 643.3,141.9 646.5,143.2 649.7,144.7 652.8,146.6 656.0,148.8 659.2,151.3 662.3,154.1 665.5,157.2 668.7,160.7 671.8,164.4 675.0,168.5 677.5,172.9 677.5,177.5 677.5,180.0 677.5,180.0 677.5,175.9 677.5,172.1 677.5,168.7 677.5,165.5 677.5,162.7 677.5,160.1 677.5,157.9 677.5,156.0 677.5,154.4 677.5,150.6 677.5,147.0 677.5,143.8 677.5,140.9 679.1,138.3 682.3,136.0 685.4,134.1 688.6,132.4 691.8,131.1 694.9,130.0 698.1,129.3 701.3,128.9 704.4,128.8 707.6,129.0 710.8,129.6 713.9,130.4 717.1,131.6 720.3,133.0 723.4,134.8 726.6,136.9 729.8,139.3 732.9,142.0 736.1,145.1 739.3,148.4 740.8,150.0 742.5,150.0 745.7,145.9 748.8,142.1 752.0,138.7 755.2,135.5 758.3,132.7 761.5,130.1 764.7,127.9 767.8,126.0 771.0,124.4 774.2,120.6 777.3,117.0 780.5,113.8 783.7,110.9 786.8,108.3 790.0,106.0 793.2,104.1 796.3,102.4 799.5,101.1 802.7,100.0 805.8,99.3 809.0,98.9 812.2,98.8 815.3,99.0 818.5,99.6 821.7,100.4 824.8,101.6 828.0,103.0 831.2,104.8 834.3,106.9 837.5,109.3 840.7,112.0 843.8,115.1 847.0,118.4 850.2,122.1 853.3,126.0 856.5,130.3 859.7,134.9 862.8,139.8 866.0,145.0 869.2,150.6 872.3,156.4 875.5,160.0"/>
+<rect x="0.0" y="175.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="170.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="165.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="160.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="155.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="150.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="145.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="140.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="135.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="130.0" width="5.0" height="5.0" fill="#3ddc84" opacity="0.75"/>
+<text x="7.0" y="155.0" fill="#3ddc84" font-size="11" font-weight="bold">entrada in (esquerda)</text>
+<rect x="895.0" y="155.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="150.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="145.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="140.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="135.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="130.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="125.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="120.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="115.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.0" y="110.0" width="5.0" height="5.0" fill="#ff8c42" opacity="0.75"/>
+<text x="902.0" y="135.0" fill="#ff8c42" font-size="11" font-weight="bold">saída out (direita)</text>
+<rect x="8.0" y="200.0" width="14" height="8" fill="#3ddc84"/>
+<text x="26.0" y="208.0" fill="#e8e8e8" font-size="12">entrada</text>
+<rect x="83.0" y="200.0" width="14" height="8" fill="#ff8c42"/>
+<text x="101.0" y="208.0" fill="#e8e8e8" font-size="12">saída</text>
+<rect x="144.0" y="200.0" width="14" height="8" fill="#4fc3ff"/>
+<text x="162.0" y="208.0" fill="#e8e8e8" font-size="12">rota mais rápida</text>
+<text x="8" y="226.0" fill="#cfd6de" font-size="12">tema portas · padrão portas de parede (vídeo) · ritmo apertado · 90 × 16 blocos de 4 studs · exige jump, double</text>
+<text x="8" y="244.0" fill="#cfd6de" font-size="12">rota solo ok · rápida 12.4 s · jogador médio 17.0 s · dificuldade alvo 4 / medida 4 · 1 caminho(s)</text>
+</svg>

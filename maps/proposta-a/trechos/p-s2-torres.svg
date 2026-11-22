@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="293" viewBox="0 0 900 293" font-family="sans-serif">
+<defs>
+<pattern id="chk-Unhookable" width="12.857142857142858" height="12.857142857142858" patternUnits="userSpaceOnUse"><rect width="12.857142857142858" height="12.857142857142858" fill="#67809a"/><rect width="6.428571428571429" height="6.428571428571429" fill="#53687c"/><rect x="6.428571428571429" y="6.428571428571429" width="6.428571428571429" height="6.428571428571429" fill="#53687c"/></pattern>
+<pattern id="chk-StartLine" width="12.857142857142858" height="12.857142857142858" patternUnits="userSpaceOnUse"><rect width="12.857142857142858" height="12.857142857142858" fill="#f0f0f5"/><rect width="6.428571428571429" height="6.428571428571429" fill="#3c6ec8"/><rect x="6.428571428571429" y="6.428571428571429" width="6.428571428571429" height="6.428571428571429" fill="#3c6ec8"/></pattern>
+<pattern id="chk-FinishLine" width="12.857142857142858" height="12.857142857142858" patternUnits="userSpaceOnUse"><rect width="12.857142857142858" height="12.857142857142858" fill="#f0f0f5"/><rect width="6.428571428571429" height="6.428571428571429" fill="#19191e"/><rect x="6.428571428571429" y="6.428571428571429" width="6.428571428571429" height="6.428571428571429" fill="#19191e"/></pattern>
+<pattern id="chk-Checkpoint" width="12.857142857142858" height="12.857142857142858" patternUnits="userSpaceOnUse"><rect width="12.857142857142858" height="12.857142857142858" fill="#e3b341"/><rect width="6.428571428571429" height="6.428571428571429" fill="#a87d16"/><rect x="6.428571428571429" y="6.428571428571429" width="6.428571428571429" height="6.428571428571429" fill="#a87d16"/></pattern>
+</defs>
+<rect width="900" height="293" fill="#1c1f26"/>
+<text x="8" y="20" fill="#f0f0f0" font-size="15" font-weight="bold">p-s2-torres — Torres geladas</text>
+<rect x="0.0" y="210.0" width="900.0" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="184.3" width="154.3" height="25.7" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="154.3" y="197.1" width="617.1" height="12.9" fill="#ffd746" opacity="0.73"/>
+<rect x="771.4" y="120.0" width="128.6" height="90.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="158.6" width="128.6" height="25.7" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="167.1" y="132.9" width="38.6" height="51.4" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="257.1" y="120.0" width="38.6" height="64.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="347.1" y="132.9" width="38.6" height="51.4" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="437.1" y="107.1" width="38.6" height="77.1" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="527.1" y="120.0" width="38.6" height="64.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="617.1" y="107.1" width="38.6" height="77.1" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="707.1" y="120.0" width="38.6" height="64.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="205.7" y="158.6" width="51.4" height="12.9" fill="#464b5a" opacity="0.73"/>
+<rect x="295.7" y="158.6" width="51.4" height="12.9" fill="#464b5a" opacity="0.73"/>
+<rect x="385.7" y="158.6" width="51.4" height="12.9" fill="#464b5a" opacity="0.73"/>
+<rect x="475.7" y="158.6" width="51.4" height="12.9" fill="#464b5a" opacity="0.73"/>
+<rect x="565.7" y="158.6" width="51.4" height="12.9" fill="#464b5a" opacity="0.73"/>
+<rect x="655.7" y="158.6" width="51.4" height="12.9" fill="#464b5a" opacity="0.73"/>
+<rect x="745.7" y="158.6" width="25.7" height="12.9" fill="#464b5a" opacity="0.73"/>
+<rect x="0.0" y="145.7" width="102.9" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="30.0" width="12.9" height="51.4" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="887.1" y="30.0" width="12.9" height="25.7" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="12.9" y="30.0" width="141.4" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="154.3" y="30.0" width="617.1" height="12.9" fill="#96976c" opacity="1.0"/>
+<rect x="771.4" y="30.0" width="115.7" height="12.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<polyline fill="none" stroke="#4fc3ff" stroke-width="2.0" opacity="0.95" points="-48.2,145.7 28.9,145.7 28.9,145.7 99.6,145.7 99.6,145.7 103.7,145.7 107.8,145.8 111.9,146.2 116.9,145.5 123.2,143.2 130.0,140.5 136.8,138.1 143.7,135.9 150.7,134.0 157.8,132.2 164.9,130.7 172.0,129.3 179.1,128.0 186.3,126.7 193.4,125.1 200.3,123.0 207.0,120.4 213.8,118.3 220.5,116.5 227.3,115.2 234.0,114.3 240.8,113.7 247.5,113.6 254.3,113.9 261.0,114.5 267.8,115.6 274.5,117.1 281.3,119.0 283.9,120.0 292.5,120.0 296.6,120.0 300.6,120.1 304.7,120.5 310.1,120.1 317.0,118.8 324.2,117.7 331.4,116.9 338.7,116.4 346.0,116.4 353.3,116.7 360.6,117.5 367.9,118.6 375.1,113.7 382.4,109.1 389.7,105.0 397.0,101.2 404.3,97.9 411.6,95.0 418.8,92.4 426.1,90.3 433.4,88.6 440.7,87.3 448.0,86.3 455.3,85.8 462.6,85.7 469.8,86.0 477.1,86.7 484.4,87.7 491.7,89.2 499.0,91.1 506.3,93.4 513.6,96.1 520.8,99.2 528.1,102.7 535.4,106.6 542.7,110.9 550.0,115.6 556.5,120.0 562.5,120.0 566.6,114.7 570.6,109.9 574.7,105.4 578.8,101.4 582.9,97.7 586.9,94.4 591.0,91.6 595.1,89.1 599.1,87.1 603.2,85.4 607.3,84.2 611.4,83.4 615.4,82.9 617.5,82.8 617.5,82.8 621.5,83.0 625.6,83.6 629.7,84.5 635.4,85.3 642.7,86.0 649.9,87.1 657.2,88.5 664.5,90.4 671.7,92.6 679.0,95.3 686.3,98.4 693.6,101.8 700.8,105.7 708.3,109.4 716.3,112.4 724.4,107.5 732.5,103.0 740.6,98.8 748.7,95.1 756.8,91.8 764.9,88.8 773.0,86.3 781.1,84.2 789.2,82.4 797.3,81.1 805.5,80.2 813.6,79.7 821.7,79.5 829.8,79.8 837.9,80.5 846.0,81.6 854.1,83.1 862.2,85.0 870.3,87.3 878.4,89.9 886.5,93.0 894.6,96.5 902.7,100.4 910.8,104.7 918.9,109.4 927.1,114.5 935.2,120.0"/>
+<rect x="0.0" y="139.3" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="132.9" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="126.4" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="120.0" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="113.6" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="107.1" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="100.7" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="94.3" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="87.9" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="81.4" width="6.4" height="6.4" fill="#3ddc84" opacity="0.75"/>
+<text x="8.428571428571429" y="113.6" fill="#3ddc84" font-size="11" font-weight="bold">entrada in (esquerda)</text>
+<rect x="893.6" y="113.6" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="107.1" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="100.7" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="94.3" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="87.9" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="81.4" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="75.0" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="68.6" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="62.1" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.6" y="55.7" width="6.4" height="6.4" fill="#ff8c42" opacity="0.75"/>
+<text x="902.0285714285715" y="87.9" fill="#ff8c42" font-size="11" font-weight="bold">saída out (direita)</text>
+<rect x="8.0" y="232.85714285714286" width="14" height="8" fill="#3ddc84"/>
+<text x="26.0" y="240.85714285714286" fill="#e8e8e8" font-size="12">entrada</text>
+<rect x="83.0" y="232.85714285714286" width="14" height="8" fill="#ff8c42"/>
+<text x="101.0" y="240.85714285714286" fill="#e8e8e8" font-size="12">saída</text>
+<rect x="144.0" y="232.85714285714286" width="14" height="8" fill="#4fc3ff"/>
+<text x="162.0" y="240.85714285714286" fill="#e8e8e8" font-size="12">rota mais rápida</text>
+<text x="8" y="258.8571428571429" fill="#cfd6de" font-size="12">tema torres · padrão torres geladas (vídeo), sem gelo no topo · ritmo apertado · 70 × 15 blocos de 4 studs · exige —</text>
+<text x="8" y="276.8571428571429" fill="#cfd6de" font-size="12">rota solo ok · rápida 5.5 s · jogador médio 10.4 s · dificuldade alvo 4 / medida 3 · 2 caminho(s)</text>
+</svg>

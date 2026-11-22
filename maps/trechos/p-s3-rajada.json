@@ -1,0 +1,61 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s3-rajada",
+ "name": "Rajada",
+ "theme": "ventania",
+ "pattern": "original: balanço e pouso de precisão",
+ "rhythm": "apertado",
+ "difficulty": 4,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["hook", "momentum"], "optional": ["double", "hookthrough", "unfreeze"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 7, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 7, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Quatro balanços seguidos, cada um terminando num poleiro HookThrough de só 2 blocos (não prende o gancho): prender, soltar na hora certa e frear no poleiro. Embaixo, 66 blocos de chão falso de gelo sobre degelo; quem cai volta andando até o degrau da entrada (cair no fim custa caro). A dupla pode esperar no poleiro e puxar o parceiro.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 86,
+  "height": 18,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x...............x..............x.............x.............x.........................x",
+   "x...............x..............x.............x.............x.........................x",
+   "x...............##.............##............##............##........................x",
+   "x....................................................................................x",
+   "x....................................................................................x",
+   "......................................................................................",
+   "......................................................................................",
+   "......................................................................................",
+   "......................................................................................",
+   "........................hh.............hh............hh............hh.................",
+   "xxxxxxxxx..fffffffffffff..fffffffffffff..ffffffffffff..ffffffffffff..ffffffxxxxxxxxxxx",
+   "xxxxxxxxxx.................................................................xxxxxxxxxxx",
+   "xxxxxxxxxxuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

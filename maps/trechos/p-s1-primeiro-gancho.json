@@ -1,0 +1,63 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s1-primeiro-gancho",
+ "name": "O primeiro gancho",
+ "theme": "vale",
+ "pattern": "sala de um ponto só (vídeo), versão de ensino",
+ "rhythm": "gargalo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["hook"], "optional": ["momentum", "double"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 6, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 14, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Ensina o gancho em três batidas: (A) um único bloco prendível pendurado sobre um vão de 16; (B) uma parede de 6 blocos que só se sobe prendendo na quina de cima (o resto é Unhookable); (C) um vão de 20, mais alto, com um ponto só. Quem cai em A ou C anda até os degraus do fundo e tenta de novo (sem gelo, sem vermelho). Gargalo de propósito: uma rota só.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 72,
+  "height": 20,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x................x.....................................x................",
+   "x................x....................................###...............",
+   "x................x......................................................",
+   "x................x......................................................",
+   "x................x......................................................",
+   "x................x..................................................xxxx",
+   "x................x....................##xxxxxxxx....................xxxx",
+   "x...............###...................xxxxxxxxxxxx..................xxxx",
+   "......................................xxxxxxxxxxxx..................xxxx",
+   "......................................xxxxxxxxxxxxxx................xxxx",
+   "......................................xxxxxxxxxxxxxx................xxxx",
+   "......................................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "..........................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxx................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxx..............xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxx..............xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxx............xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxx............xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s4-valvulas",
+ "name": "Válvulas",
+ "theme": "portas",
+ "pattern": "original: corredores paralelos com mão única",
+ "rhythm": "amplo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": [], "optional": ["hook", "momentum", "jump", "oneway", "kill", "freeze"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 9, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 6, "width": 5}
+ ],
+ "lanes": [
+  {"id": "cima", "name": "corredor de cima: gancho no teto sobre o vermelho", "kind": "rapida", "area": [16, 9, 67, 16]},
+  {"id": "baixo", "name": "corredor de baixo: a pé", "kind": "segura", "area": [10, 1, 61, 6]}
+ ],
+ "notes": "Dois corredores. Em cima (rápida): dois trechos de 17 blocos de piso vermelho (longe demais para o pulo duplo) que se cruzam pendurado no teto prendível, com uma cortina de gelo entre eles (obriga a pousar no meio). Embaixo (segura): corredor a pé com calombos. Alçapões de MÃO ÚNICA (para baixo) no piso de cima deixam desistir para a rota de baixo, mas ninguém sobe por eles; no fim, uma válvula de mão única para a direita impede voltar. O validador trata mão única como ar (alçapão = buraco, válvula = abertura); as rotas dele andam no sentido da seta.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 80,
+  "height": 17,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "directions": {
+   "71,6": "Right",
+   "71,7": "Right",
+   "11,8": "Down",
+   "12,8": "Down",
+   "13,8": "Down",
+   "40,8": "Down",
+   "41,8": "Down",
+   "42,8": "Down",
+   "71,8": "Right",
+   "71,9": "Right",
+   "71,10": "Right"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxx#################xxxxxxxxxxxxx#################xxxxxxxxxxxxxxxx",
+   "x.....................................f................................x.......x",
+   "x.....................................f................................x.......x",
+   "......................................f................................x.......x",
+   "......................................f................................x.......x",
+   ".......................................................................x.......x",
+   ".......................................................................o........",
+   ".......................................................................o........",
+   "xxxxxxxxxxxoooxxxkkkkkkkkkkkkkkkkkxxxxxxoooxxxxkkkkkkkkkkkkkkkkkxxxx...o........",
+   "xxxxxxxxx..............................................................o........",
+   "xxxxxxxxx..............................................................o........",
+   "xxxxxxxxx...........................................................xxxxxxxxxxxx",
+   "xxxxxxxxx........................................................xxxxxxxxxxxxxxx",
+   "xxxxxxxxx........................................................xxxxxxxxxxxxxxx",
+   "xxxxxxxxx...xx......xx......xx......xx......xx......xx....xx..xxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxx...xx......xx......xx......xx......xx......xx....xx..xxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}
