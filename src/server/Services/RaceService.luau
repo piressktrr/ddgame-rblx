@@ -12,6 +12,7 @@
 	- `RaceAction` (cliente -> servidor):
 	    "Again": recomeça do `RaceStart` com timer novo.
 	    "Lobby": sai da corrida e volta ao `LobbySpawn`.
+	    "Play": do menu principal (fora de corrida), começa a corrida no `RaceStart` (como o portal).
 	  Os dois recarregam o personagem (`LoadCharacter`): isso solta o gancho, devolve os verdes
 	  (`HookOnceEpoch` muda no HookService ao renascer), tira o gelo e quem posiciona é o LobbyService
 	  (RaceStart se em corrida e sem checkpoint, lobby se fora de corrida).
@@ -152,7 +153,7 @@ local function backToLobby(player: Player)
 end
 
 local function onAction(player: Player, action: unknown)
-	if action ~= "Again" and action ~= "Lobby" then
+	if action ~= "Again" and action ~= "Lobby" and action ~= "Play" then
 		return
 	end
 	local now = os.clock()
@@ -160,12 +161,13 @@ local function onAction(player: Player, action: unknown)
 	if busy[player] or (last and now - last < settings.ActionCooldown) then
 		return
 	end
-	-- "De novo" só existe dentro da corrida; do lobby se entra pelo portal.
-	if action == "Again" and player:GetAttribute(Attributes.InRace) ~= true then
+	-- "De novo" só existe dentro da corrida; "Jogar" (menu) só fora dela.
+	local inRace = player:GetAttribute(Attributes.InRace) == true
+	if (action == "Again" and not inRace) or (action == "Play" and inRace) then
 		return
 	end
 	lastActionAt[player] = now
-	if action == "Again" then
+	if action == "Again" or action == "Play" then
 		again(player)
 	else
 		backToLobby(player)
