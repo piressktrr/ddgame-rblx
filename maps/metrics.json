@@ -3,7 +3,7 @@
   "generated_by": "tools/mapkit/metrics.py",
   "config": {
     "path": "src/shared/Config.luau",
-    "sha256": "aeacf8308d81d56173ac882d05981d4f7b6130f615f5acaff645e38ef3f1e42e",
+    "sha256": "116898900952e41da7f69184cc7234a05db6c0a0dd34963f4192917167cadd55",
     "grid": 4.0,
     "cell": 2.0,
     "hook_mode": "DDNet"

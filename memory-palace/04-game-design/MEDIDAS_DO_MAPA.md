@@ -3,7 +3,7 @@
 > **Arquivo gerado** por `tools/mapkit/metrics.py`. Não edite à mão: mude o `Config.luau`
 > ou o simulador e regenere. ADR 0052, etapa 1.
 >
-> Config: `src/shared/Config.luau` · sha256 `aeacf8308d81d561…` · gancho modo `DDNet`.
+> Config: `src/shared/Config.luau` · sha256 `116898900952e41d…` · gancho modo `DDNet`.
 > Unidades: studs; **bloco** = `MapElements.DefaultGrid` = 4 studs; **célula** do MapBuilder = 2 studs.
 
 ## Como regenerar
