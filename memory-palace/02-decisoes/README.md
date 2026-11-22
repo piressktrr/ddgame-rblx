@@ -31,12 +31,12 @@ Modelo:
 | [0011](0011-camera-2-5d.md) | Câmera 2.5D lateral | Aceita (confirmada por 0038) |
 | [0012](0012-varias-rotas.md) | Mapas com várias rotas até o final | Aceita |
 | [0013](0013-sem-bond-por-enquanto.md) | Sem Bond por enquanto (substitui 0002) | Aceita |
-| [0014](0014-gelo-mata.md) | Gelo: 15 s congelado, depois morte | Aceita |
+| [0014](0014-gelo-mata.md) | Gelo: 15 s congelado, depois morte | Substituída por 0053 |
 | [0015](0015-cores.md) | Linguagem de cores (parcial) | Aceita |
 | [0016](0016-gancho-regras.md) | Regras do gancho | Aceita |
 | [0017](0017-bouncer.md) | Bouncer, pistola de impulso | Aceita |
 | [0018](0018-progresso-por-jogador.md) | Progresso por jogador, checkpoints ~3 min | Aceita |
-| [0019](0019-lamina-magica.md) | Lâmina mágica (empurrão) | Aceita |
+| [0019](0019-lamina-magica.md) | Lâmina mágica (empurrão) | Adiada (0054) |
 | [0020](0020-mesmo-mapa-solo-e-grupo.md) | Mesmo mapa solo e grupo | Aceita |
 | [0021](0021-cores-finais.md) | Descongelar laranja-brasa, não-grudável roxo | Aceita |
 | [0022](0022-mvp-um-mapa.md) | MVP com um mapa (substitui 0010) | Aceita |
@@ -51,7 +51,7 @@ Modelo:
 | [0031](0031-experimento-de-camera.md) | Experimento de câmera (descartado) | Substituída por 0038 |
 | [0032](0032-rebirth-proposta.md) | Ciclo de rebirth | Proposta |
 | [0033](0033-gancho-no-centro.md) | Gancho é a habilidade central e evolui; velocidade depois | Aceita |
-| [0034](0034-checkpoint-a-cada-3-estagios.md) | Checkpoint a cada 3 estágios | Aceita |
+| [0034](0034-checkpoint-a-cada-3-estagios.md) | Checkpoint a cada 3 estágios | Substituída por 0055 |
 | [0035](0035-mapa-do-experimento-reprovado.md) | Greybox do experimento reprovado (descartado) | Substituída por 0038 |
 | [0036](0036-gancho-balanco-ropeconstraint.md) | Gancho: balanço (B) com RopeConstraint, mira com esfera, corda recolhível | Substituída em parte (0042) |
 | [0037](0037-gancho-em-jogador.md) | Gancho em jogador: caminho A; C como plano B; só após mapa aprovado | Aceita |
@@ -62,11 +62,14 @@ Modelo:
 | [0042](0042-gancho-puxao-direto.md) | Gancho vira puxão direto ao alvo (um clique), segurar para ficar preso, sem W/S | Aceita |
 | [0043](0043-pulo-duplo-e-velocidade.md) | Pulo duplo e velocidade de andar maior (substitui 0027) | Aceita |
 | [0044](0044-lobby-greybox.md) | Lobby antes do mapa, portal para o início da corrida | Aceita |
-| [0045](0045-gelo-fica-15s.md) | Gelo fica em 15 s (Q19) | Aceita |
+| [0045](0045-gelo-fica-15s.md) | Gelo fica em 15 s (Q19) | Substituída por 0053 |
 | [0046](0046-movimento-pelo-gancho.md) | Percurso quase todo com o gancho, em todos os estágios (Q30) | Aceita |
 | [0047](0047-mapa-8-estagios-varios-caminhos.md) | Mapa novo: 8+ estágios, dificuldade média, vários caminhos (Q31) | Aceita |
 | [0048](0048-nivel-do-gancho-salvo.md) | Nível do gancho salvo entre sessões (Q41) | Aceita |
 | [0049](0049-killzone-aceita-gancho.md) | A zona mortal aceita o gancho; `Kill` vira peça sólida (Q43) | Aceita |
-| [0050](0050-mapa-fase2-aprovado.md) | Mapa da Fase 2 aprovado: 9 estágios, 22 rotas, substitui o Map01 (Q44–Q55) | Aceita |
+| [0050](0050-mapa-fase2-aprovado.md) | Mapa da Fase 2 aprovado: 9 estágios, 22 rotas, substitui o Map01 (Q44–Q55) | Substituída por 0055 |
 | [0051](0051-ad-no-embalo-fica.md) | A/D continua empurrando no embalo depois do gancho (Q56) | Aceita |
 | [0052](0052-mapa-desafiador-e-dinamico.md) | Mapa desafiador com trechos fáceis, dinâmico, com bifurcações; criação automatizada em etapas | Aceita |
+| [0053](0053-regras-ddnet-gelo-zona-mortal.md) | Gelo não mata; vermelho volta ao checkpoint; física do DDNet; martelo e solo ficam (Q57–Q59) | Aceita |
+| [0054](0054-bouncer-continua-lamina-adiada.md) | Bouncer continua; lâmina adiada | Aceita |
+| [0055](0055-mapa-novo-no-mapbuilder.md) | Mapa novo no MapBuilder; solo possível; checkpoint por trecho com parcial; ~8 min | Aceita |

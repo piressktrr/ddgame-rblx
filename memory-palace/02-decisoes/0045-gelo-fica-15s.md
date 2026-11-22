@@ -1,5 +1,5 @@
 # 0045 — Gelo fica em 15 s
-- Status: Aceita (confirma 0014; responde Q19)
+- Status: Substituída por 0053 (gelo não mata)
 - Data: 2026-11-17
 ## Decisão
 O tempo congelado continua **15 s** (`Config.Freeze.Duration`), sem revisão pendente.

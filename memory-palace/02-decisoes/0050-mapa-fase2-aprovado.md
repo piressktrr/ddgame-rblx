@@ -1,5 +1,5 @@
 # 0050 — Mapa da Fase 2 aprovado como proposto
-- Status: Aceita (responde Q44–Q55; detalha o 0047 e afrouxa em parte o 0041)
+- Status: Substituída por 0055 (Map01 sai; mapa novo no MapBuilder)
 - Data: 2026-11-17
 ## Contexto
 O [estudo do mapa da Fase 2](../04-game-design/estudos/mapa-fase2.md) e o

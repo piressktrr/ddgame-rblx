@@ -1,5 +1,5 @@
 # 0040 — Meta de duração, nível do gancho no MVP e nova ordem das fases
-- Status: Aceita (refina 0018, 0030, 0033; responde Q40 A, C e D)
+- Status: Aceita (refina 0018, 0030, 0033; responde Q40 A, C e D); meta de tempo substituída por 0055 (~8 min)
 - Data: 2026-11-16
 ## Decisão
 - **Checkpoint (A):** vale o ADR 0034 (a cada 3 estágios). A **duração de uma corrida completa é uma

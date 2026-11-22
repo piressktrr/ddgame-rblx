@@ -67,7 +67,7 @@ RULES: dict[str, ElementRule] = {
     "Freeze": ElementRule(False, None, "freeze"),
     "Unfreeze": ElementRule(False, None, "unfreeze"),
     "OneWay": ElementRule(False, "through", None),  # sólido só contra a seta (OneWayController)
-    "Kill": ElementRule(False, None, "kill"),
+    "Kill": ElementRule(True, "hook", "kill"),  # sólido e prende o gancho (ADR 0049, 0053)
     "HookOnce": ElementRule(True, "once", None),
     "StartLine": ElementRule(False, None, "start"),
     "FinishLine": ElementRule(False, None, "finish"),

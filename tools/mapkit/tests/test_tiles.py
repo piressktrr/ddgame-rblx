@@ -124,7 +124,7 @@ class TestWorld(unittest.TestCase):
         w = self.world
         self.assertTrue(w.is_solid(1, 1))  # chão
         self.assertTrue(w.is_solid(5, 3))  # hookthrough
-        self.assertFalse(w.is_solid(9, 3))  # morte (MapBuilder: atravessável)
+        self.assertTrue(w.is_solid(9, 3))  # morte: sólida e prende o gancho (ADR 0049, 0053)
         self.assertTrue(w.is_solid(13, 3))  # unhookable
         self.assertTrue(w.is_solid(17, 3))  # gancho único
         self.assertFalse(w.is_solid(3, 3))
@@ -148,7 +148,7 @@ class TestWorld(unittest.TestCase):
         self.assertIsNone(w.zone_at(3, 3))
         self.assertEqual(w.hook_surface_at(1, 1), "hook")
         self.assertEqual(w.hook_surface_at(5, 3), "through")
-        self.assertIsNone(w.hook_surface_at(9, 3))
+        self.assertEqual(w.hook_surface_at(9, 3), "hook")  # morte segura o gancho (ADR 0053)
         self.assertEqual(w.hook_surface_at(13, 3), "nohook")
         self.assertEqual(w.hook_surface_at(17, 3), "once")
 
@@ -167,12 +167,13 @@ class TestWorld(unittest.TestCase):
         self.assertEqual(hit.cell, (1, 0))
         self.assertAlmostEqual(hit.point[1], 2.0)
         self.assertAlmostEqual(hit.distance, 1.0)
-        # Para a direita, de x = 3: atravessa hookthrough (x 4..6) e morte (8..10), barra no unhookable.
+        # Para a direita, de x = 3: atravessa o hookthrough (x 4..6) e prende na morte (8..10), que segura o
+        # gancho (ADR 0049, 0053).
         hit = w.raycast_hook((3, 3), (1, 0), 50)
-        self.assertEqual((hit.surface, hit.cell), ("nohook", (6, 1)))
-        self.assertAlmostEqual(hit.point[0], 12.0)
+        self.assertEqual((hit.surface, hit.cell), ("hook", (4, 1)))
+        self.assertAlmostEqual(hit.point[0], 8.0)
         # Curto demais.
-        self.assertIsNone(w.raycast_hook((3, 3), (1, 0), 8.5))
+        self.assertIsNone(w.raycast_hook((3, 3), (1, 0), 4.5))
         # Para cima: nada (sai da grade).
         self.assertIsNone(w.raycast_hook((3, 3), (0, 1), 500))
         # Diagonal para baixo e para a esquerda acerta o chão ou a parede.
@@ -181,7 +182,7 @@ class TestWorld(unittest.TestCase):
         self.assertIn(hit.cell, {(0, 1), (1, 0), (0, 0)})
         # Começando dentro do bloco: a própria célula não conta.
         hit = w.raycast_hook((1, 3), (1, 0), 50)
-        self.assertEqual(hit.surface, "nohook")
+        self.assertEqual((hit.surface, hit.cell), ("hook", (4, 1)))  # atravessa o hookthrough, prende na morte
         self.assertIsNone(w.raycast_hook((0, 0), (0, 0), 50))
 
     def test_raycast_from_outside(self):
