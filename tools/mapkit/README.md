@@ -11,6 +11,7 @@ Biblioteca Python (só biblioteca padrão) para medir, converter e validar mapas
 | `chunks.py` | trechos `chunk@1` (etapa 4): carregar, conferir, encaixe, validar cada trecho sozinho (seção "Trechos e montador") |
 | `assemble.py` | montador (etapa 4): plano → mapa `tiles.json` + validação + relatório por seção |
 | `preview.py` | prévias SVG/PNG de trechos e do mapa montado (cores do `MapElements.luau`) |
+| `proposals/` | gerador dos trechos de proposta (`p-*`), ferramentas de inspeção e números do mapa (seção "Propostas") |
 | `tests/` | `python -I -X utf8 -m unittest discover -s tools/mapkit/tests -t .` (da raiz) |
 
 `luau_config.py`, `physics.py` e `metrics.py` são da etapa 1/3 (medidas e simulador).
@@ -383,3 +384,27 @@ com `checkpoint_end` no meio da seção, faixa que não passa no mapa montado.
   fixo do validador.
 - `validate.py` ganhou só o parâmetro opcional `stages` (`validate(..., stages=[(nome, x1, y1, x2, y2)])` e
   `build_geometry(..., stages=...)`): uma caixa por peça, que dá nome aos estágios do relatório.
+
+## Propostas (`proposals/`, ADR 0055)
+
+O Claude gera trechos de proposta e um mapa candidato; o dono aprova. Os trechos `p-*` de `maps/trechos/` saem
+de um gerador (não edite o JSON à mão: mude o gerador e rode de novo).
+
+| Arquivo | O que faz |
+|---|---|
+| `proposals/kit.py` | desenho em blocos (`G`: `box`, `ground`, `door`, `oneway`, `shell`) e metadados do `chunk@1` (`meta`, `lane`) |
+| `proposals/trechos_a.py` | os trechos da proposta A, um por função (convenções no topo de `proposta_a.py`) |
+| `proposals/proposta_a.py` | grava `maps/trechos/p-*.json` (`--ascii` imprime as grades; ids na linha = só esses) |
+| `proposals/inspect_chunk.py` | um trecho sozinho, manobra por manobra das três rotas (rótulo, tempo, janela, de onde para onde, em blocos) |
+| `proposals/stats_proposta.py` | monta e valida o plano de novo e imprime o mix de manobras (mapa todo × só trechos), erros esperados e a conferência da mão única |
+
+```
+python -I -X utf8 tools/mapkit/proposals/proposta_a.py
+python -I -X utf8 tools/mapkit/chunks.py maps/trechos/p-*.json --out maps/proposta-a/trechos
+python -I -X utf8 tools/mapkit/assemble.py maps/proposta-a/plano.json --out maps/proposta-a/
+python -I -X utf8 tools/mapkit/proposals/stats_proposta.py maps/proposta-a/plano.json
+```
+
+Lições do validador para quem desenha (2026-11-22): a janela do pulo duplo refinada fica em ~0,37 s (régua do
+refinamento), então trecho com pulo duplo na rota mede 3; trecho "fácil" (medida 2) é feito de degraus de 1–2,
+descidas a pé e patamares largos (≥ 8), com o último patamar longo; a mão única é ar para o simulador.

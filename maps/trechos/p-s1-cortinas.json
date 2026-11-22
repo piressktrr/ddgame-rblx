@@ -1,0 +1,57 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s1-cortinas",
+ "name": "Cortinas de gelo",
+ "theme": "vale",
+ "pattern": "freeze como chão falso + rede de segurança (vídeo, padrões 3, 6 e 10)",
+ "rhythm": "amplo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": true,
+ "mechanics": {"required": ["jump", "double"], "optional": ["unfreeze"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 4, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 8, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Primeiro gelo. Cada vão tem um 'chão falso' de gelo: quem cai atravessa, congela, pousa no degelo logo abaixo (descongela na hora) e volta pelo degrauzinho — o gelo nunca é chão. Cortinas curtas de gelo penduradas no teto castigam o pulo duplo dado cedo demais (bater nelas congela ~1 s e derruba). No fim, cinco vãos seguidos (5, 6, 7, 7, 5) no ritmo 'respira e salta'. Fecha a seção 1.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 92,
+  "height": 14,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x.........................f.........ff......................................................",
+   "x.........................f.........ff......................................................",
+   "x.........................f.........ff......................................................",
+   "x.........................f.................................................................",
+   "............................................................................................",
+   "......................................xxxxxx..fffxxx..ffffxxx..fffffxxx..fffffxxx..fffxxxxxx",
+   "......................................xxxxxxx....xxxx.....xxxx......xxxx......xxxx....xxxxxx",
+   "......................................xxxxxxxuuuuxxxxuuuuuxxxxuuuuuuxxxxuuuuuuxxxxuuuuxxxxxx",
+   "......................................xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxx..ffffxxxxxx..fffffffffxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxx.....xxxxxxx..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxuuuuuxxxxxxxuuuuuuuuuuxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

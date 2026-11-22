@@ -1,0 +1,57 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s4-saguao",
+ "name": "Saguão das portas",
+ "theme": "portas",
+ "pattern": "portas de parede (vídeo), versão andando",
+ "rhythm": "respiro",
+ "difficulty": 2,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["walk", "jump"], "optional": []},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 5, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Respiro e apresentação das portas: paredes finas com uma abertura de 2 blocos no chão (passa andando, não dá para pular dentro dela). Degraus de 1–2. Prepara a sala seguinte.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 68,
+  "height": 14,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x.......................x.................x.................x......x",
+   "x.......................x.................x.................x......x",
+   "x.......................x.................x.................x......x",
+   "x.......................x.................x.................x.......",
+   "x.......................x.................x.................x.......",
+   "x.......................x.................x.................x.......",
+   "x.......................x.................x.........................",
+   "........................x.................x.........................",
+   "................................................xxxxxxxxxxxxxxxxxxxx",
+   "................................................xxxxxxxxxxxxxxxxxxxx",
+   "....................xxxxxxxxxx........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "............xxxxxxxxxxxxxxxxxx........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

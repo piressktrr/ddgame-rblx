@@ -1,0 +1,57 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s6-mirante",
+ "name": "Mirante",
+ "theme": "cume",
+ "pattern": "original: respiro antes do final",
+ "rhythm": "respiro",
+ "difficulty": 2,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["jump"], "optional": ["walk"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 5, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Respiro largo depois do checkpoint: patamares de 8–10, degraus de 1–2 e descidas a pé. Lugar para a dupla se reagrupar antes do final.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 64,
+  "height": 14,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x..............................................................x",
+   "x..............................................................x",
+   "x..............................................................x",
+   "x...............................................................",
+   "x...............................................................",
+   "x...............................................................",
+   "x...............................................................",
+   "................................................................",
+   "..............................................xxxxxxxxxxxxxxxxxx",
+   "............................xxxxxxxxxx........xxxxxxxxxxxxxxxxxx",
+   "..........xxxxxxxxxx........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

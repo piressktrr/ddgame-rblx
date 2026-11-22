@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="276" viewBox="0 0 900 276" font-family="sans-serif">
+<defs>
+<pattern id="chk-Unhookable" width="9.782608695652174" height="9.782608695652174" patternUnits="userSpaceOnUse"><rect width="9.782608695652174" height="9.782608695652174" fill="#67809a"/><rect width="4.891304347826087" height="4.891304347826087" fill="#53687c"/><rect x="4.891304347826087" y="4.891304347826087" width="4.891304347826087" height="4.891304347826087" fill="#53687c"/></pattern>
+<pattern id="chk-StartLine" width="9.782608695652174" height="9.782608695652174" patternUnits="userSpaceOnUse"><rect width="9.782608695652174" height="9.782608695652174" fill="#f0f0f5"/><rect width="4.891304347826087" height="4.891304347826087" fill="#3c6ec8"/><rect x="4.891304347826087" y="4.891304347826087" width="4.891304347826087" height="4.891304347826087" fill="#3c6ec8"/></pattern>
+<pattern id="chk-FinishLine" width="9.782608695652174" height="9.782608695652174" patternUnits="userSpaceOnUse"><rect width="9.782608695652174" height="9.782608695652174" fill="#f0f0f5"/><rect width="4.891304347826087" height="4.891304347826087" fill="#19191e"/><rect x="4.891304347826087" y="4.891304347826087" width="4.891304347826087" height="4.891304347826087" fill="#19191e"/></pattern>
+<pattern id="chk-Checkpoint" width="9.782608695652174" height="9.782608695652174" patternUnits="userSpaceOnUse"><rect width="9.782608695652174" height="9.782608695652174" fill="#e3b341"/><rect width="4.891304347826087" height="4.891304347826087" fill="#a87d16"/><rect x="4.891304347826087" y="4.891304347826087" width="4.891304347826087" height="4.891304347826087" fill="#a87d16"/></pattern>
+</defs>
+<rect width="900" height="276" fill="#1c1f26"/>
+<text x="8" y="20" fill="#f0f0f0" font-size="15" font-weight="bold">p-s6-gaiola — Gaiola</text>
+<rect x="0.0" y="196.3" width="900.0" height="9.8" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="167.0" width="146.7" height="29.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="146.7" y="186.5" width="48.9" height="9.8" fill="#b74a54" opacity="0.82"/>
+<rect x="195.7" y="167.0" width="48.9" height="29.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="244.6" y="186.5" width="58.7" height="9.8" fill="#b74a54" opacity="0.82"/>
+<rect x="303.3" y="167.0" width="48.9" height="29.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="352.2" y="186.5" width="58.7" height="9.8" fill="#b74a54" opacity="0.82"/>
+<rect x="410.9" y="167.0" width="48.9" height="29.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="459.8" y="186.5" width="58.7" height="9.8" fill="#b74a54" opacity="0.82"/>
+<rect x="518.5" y="167.0" width="48.9" height="29.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="567.4" y="186.5" width="58.7" height="9.8" fill="#b74a54" opacity="0.82"/>
+<rect x="626.1" y="167.0" width="48.9" height="29.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="675.0" y="186.5" width="58.7" height="9.8" fill="#b74a54" opacity="0.82"/>
+<rect x="733.7" y="167.0" width="166.3" height="29.3" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="215.2" y="118.0" width="9.8" height="48.9" fill="#2d2d34" opacity="0.85"/>
+<rect x="430.4" y="118.0" width="9.8" height="48.9" fill="#2d2d34" opacity="0.85"/>
+<rect x="645.7" y="118.0" width="9.8" height="48.9" fill="#2d2d34" opacity="0.85"/>
+<rect x="0.0" y="30.0" width="9.8" height="88.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="890.2" y="30.0" width="9.8" height="88.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="9.8" y="88.7" width="880.4" height="9.8" fill="#2d2d34" opacity="0.85"/>
+<rect x="117.4" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="185.9" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="254.3" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="322.8" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="391.3" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="459.8" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="528.3" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="596.7" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="665.2" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="733.7" y="49.6" width="19.6" height="9.8" fill="#96976c" opacity="1.0"/>
+<rect x="9.8" y="30.0" width="880.4" height="9.8" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<polyline fill="none" stroke="#4fc3ff" stroke-width="2.0" opacity="0.95" points="-36.7,167.0 22.0,167.0 22.0,167.0 25.1,163.0 28.2,159.3 31.3,155.9 34.4,152.8 37.5,150.0 40.6,147.5 43.7,145.3 46.8,143.5 49.9,141.9 53.0,140.7 56.1,139.7 59.2,139.1 62.3,138.7 63.8,138.7 63.8,138.7 66.9,138.8 70.0,139.2 73.1,140.0 77.0,139.9 81.7,138.5 87.0,136.8 92.3,135.2 97.6,133.7 103.0,132.5 108.4,131.4 113.9,130.5 119.3,129.8 124.8,129.2 130.3,128.5 135.8,127.5 141.2,126.7 146.6,126.2 152.1,126.0 157.5,124.1 162.9,120.5 168.3,117.2 173.8,114.2 179.2,111.9 184.6,112.1 190.1,112.6 195.5,113.4 200.9,114.5 206.3,115.9 211.8,117.7 214.5,118.0 217.7,118.0 220.8,118.0 223.9,118.0 227.8,117.2 232.8,115.3 238.0,113.4 243.2,111.9 248.8,112.0 254.3,112.4 259.8,113.1 265.4,114.1 270.9,115.4 276.5,117.0 282.0,118.9 287.6,121.2 293.1,123.7 298.6,126.5 304.2,129.7 309.7,133.1 315.3,136.9 320.8,140.9 326.4,145.3 331.9,149.9 337.4,154.9 343.0,160.2 348.5,165.8 350.7,167.0 349.7,167.0 352.8,163.0 355.9,159.3 359.0,155.9 362.1,152.8 365.2,150.0 368.3,147.5 371.4,145.3 374.5,143.5 377.6,141.9 380.7,140.7 383.8,139.7 386.9,139.1 390.0,138.7 391.5,138.7 391.5,138.7 394.6,138.8 397.7,139.2 400.8,140.0 403.3,139.9 405.2,138.7 406.9,136.3 408.7,132.9 410.5,128.4 412.3,123.2 414.1,118.0 415.9,112.7 417.6,112.0 419.2,112.0 420.5,112.0 421.6,112.0 423.2,112.2 425.0,112.8 426.8,113.7 428.6,114.9 430.4,116.3 432.8,118.0 432.9,118.0 436.0,118.0 439.1,118.0 442.9,117.1 447.7,114.9 452.7,112.7 458.0,112.0 463.5,112.0 469.1,112.4 474.6,113.1 480.2,114.1 485.7,115.4 491.2,117.0 496.8,118.9 502.3,121.1 507.9,123.6 513.4,126.4 519.0,129.5 524.5,133.0 530.0,136.7 535.6,140.8 541.1,145.1 546.7,149.8 552.2,154.7 557.8,160.0 563.3,165.6 565.5,167.0 564.9,167.0 564.9,163.0 564.9,159.3 564.9,155.9 564.9,152.8 564.9,150.0 564.9,147.5 564.9,145.3 564.9,143.5 564.9,141.9 564.9,140.7 564.9,139.7 564.9,139.1 564.9,138.7 564.9,138.7 564.9,138.7 568.0,138.8 571.1,139.2 574.4,139.6 578.4,138.5 583.0,136.1 587.8,133.4 592.7,130.8 597.6,128.3 602.5,125.8 607.5,123.4 612.4,121.0 617.3,118.5 622.2,115.9 626.9,113.1 631.3,112.0 635.6,112.2 639.9,112.8 644.1,113.7 648.4,114.9 652.7,116.3 656.5,118.0 653.0,118.0 656.1,114.0 659.2,112.0 662.3,112.2 665.4,112.8 668.5,113.7 671.6,114.9 674.7,116.3 677.8,118.1 680.9,120.2 684.0,122.7 687.1,125.4 690.2,128.4 693.3,131.7 694.8,133.5 694.8,133.5 697.9,137.3 701.0,141.4 704.3,145.4 708.6,148.1 713.6,149.5 719.1,150.1 724.6,150.9 730.2,152.1 735.7,153.6 741.4,154.5 747.1,155.2 752.8,155.3 758.6,155.3 764.3,154.6 770.0,154.3 775.7,154.3 781.3,150.5 787.0,147.0 792.7,143.9 798.4,141.1 804.1,138.5 809.8,136.3 815.5,134.4 821.2,132.7 826.9,131.4 832.6,130.4 838.3,129.7 844.0,129.3 849.7,129.2 855.4,129.4 861.1,130.0 866.7,130.8 872.4,131.9 878.1,133.3 883.8,135.1 889.5,137.1 895.2,139.5 900.9,142.2 906.6,145.1 912.3,148.4 918.0,152.0 923.7,155.8 929.4,160.0 935.1,164.5 937.9,166.9"/>
+<rect x="0.0" y="162.1" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="157.2" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="152.3" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="147.4" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="142.5" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="137.6" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="132.7" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="127.8" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="122.9" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="118.0" width="4.9" height="4.9" fill="#3ddc84" opacity="0.75"/>
+<text x="6.891304347826087" y="142.5" fill="#3ddc84" font-size="11" font-weight="bold">entrada in (esquerda)</text>
+<rect x="895.1" y="162.1" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="157.2" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="152.3" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="147.4" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="142.5" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="137.6" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="132.7" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="127.8" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="122.9" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<rect x="895.1" y="118.0" width="4.9" height="4.9" fill="#ff8c42" opacity="0.75"/>
+<text x="901.9913043478261" y="142.5" fill="#ff8c42" font-size="11" font-weight="bold">saída out (direita)</text>
+<rect x="8.0" y="216.08695652173913" width="14" height="8" fill="#3ddc84"/>
+<text x="26.0" y="224.08695652173913" fill="#e8e8e8" font-size="12">entrada</text>
+<rect x="83.0" y="216.08695652173913" width="14" height="8" fill="#ff8c42"/>
+<text x="101.0" y="224.08695652173913" fill="#e8e8e8" font-size="12">saída</text>
+<rect x="144.0" y="216.08695652173913" width="14" height="8" fill="#4fc3ff"/>
+<text x="162.0" y="224.08695652173913" fill="#e8e8e8" font-size="12">rota mais rápida</text>
+<text x="8" y="242.08695652173913" fill="#cfd6de" font-size="12">tema cume · padrão original: gancho através da grade · ritmo apertado · 92 × 18 blocos de 4 studs · exige hook, hookthrough</text>
+<text x="8" y="260.0869565217391" fill="#cfd6de" font-size="12">rota solo ok · rápida 8.1 s · jogador médio 22.6 s · dificuldade alvo 4 / medida 5 · 1 caminho(s)</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="250" viewBox="0 0 900 250" font-family="sans-serif">
+<defs>
+<pattern id="chk-Unhookable" width="12.5" height="12.5" patternUnits="userSpaceOnUse"><rect width="12.5" height="12.5" fill="#67809a"/><rect width="6.25" height="6.25" fill="#53687c"/><rect x="6.25" y="6.25" width="6.25" height="6.25" fill="#53687c"/></pattern>
+<pattern id="chk-StartLine" width="12.5" height="12.5" patternUnits="userSpaceOnUse"><rect width="12.5" height="12.5" fill="#f0f0f5"/><rect width="6.25" height="6.25" fill="#3c6ec8"/><rect x="6.25" y="6.25" width="6.25" height="6.25" fill="#3c6ec8"/></pattern>
+<pattern id="chk-FinishLine" width="12.5" height="12.5" patternUnits="userSpaceOnUse"><rect width="12.5" height="12.5" fill="#f0f0f5"/><rect width="6.25" height="6.25" fill="#19191e"/><rect x="6.25" y="6.25" width="6.25" height="6.25" fill="#19191e"/></pattern>
+<pattern id="chk-Checkpoint" width="12.5" height="12.5" patternUnits="userSpaceOnUse"><rect width="12.5" height="12.5" fill="#e3b341"/><rect width="6.25" height="6.25" fill="#a87d16"/><rect x="6.25" y="6.25" width="6.25" height="6.25" fill="#a87d16"/></pattern>
+</defs>
+<rect width="900" height="250" fill="#1c1f26"/>
+<text x="8" y="20" fill="#f0f0f0" font-size="15" font-weight="bold">p-s1-escadaria — Escadaria de boas-vindas</text>
+<rect x="0.0" y="167.5" width="900.0" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="125.0" y="155.0" width="775.0" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="250.0" y="142.5" width="650.0" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="375.0" y="130.0" width="525.0" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="375.0" y="117.5" width="100.0" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="575.0" y="105.0" width="325.0" height="25.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="30.0" width="12.5" height="75.0" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="12.5" y="30.0" width="887.5" height="12.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<polyline fill="none" stroke="#4fc3ff" stroke-width="2.0" opacity="0.95" points="-46.9,167.5 40.6,167.5 40.6,167.5 44.6,162.4 48.5,157.7 52.5,153.3 56.5,149.4 60.4,145.8 64.4,142.7 68.3,139.9 72.3,137.5 76.3,135.5 80.2,130.7 84.2,126.3 88.1,122.3 92.1,118.6 96.0,115.4 100.0,112.5 104.0,110.1 107.9,108.0 111.9,106.3 115.8,105.0 119.8,104.1 123.8,103.6 127.7,103.5 131.7,103.8 135.6,104.5 139.6,105.5 143.5,107.0 147.5,108.8 151.5,111.0 155.4,113.6 159.4,116.6 163.3,120.0 167.3,123.8 171.2,128.0 175.2,132.6 179.2,137.5 183.1,142.9 187.1,148.6 191.0,154.8 193.0,155.0 209.4,155.0 213.3,149.9 217.3,145.2 221.2,140.8 225.2,136.9 229.2,133.3 233.1,130.2 237.1,127.4 241.0,125.0 245.0,123.0 249.0,121.4 252.9,120.2 256.9,119.4 260.8,118.9 264.8,118.9 268.7,119.3 272.7,120.0 276.7,121.1 280.6,122.7 284.6,124.6 288.5,126.9 292.5,129.6 296.5,132.7 300.4,136.1 304.4,140.0 308.3,142.5 334.4,142.5 338.3,137.4 342.3,132.7 346.2,128.3 350.2,124.4 354.2,120.8 358.1,117.7 362.1,114.9 366.0,112.5 370.0,110.5 374.0,108.9 377.9,107.7 381.9,106.9 385.8,106.4 389.8,106.4 393.7,106.8 397.7,107.5 401.7,108.6 405.6,110.2 409.6,112.1 413.5,114.4 417.5,117.1 419.5,117.5 428.1,117.5 471.9,117.5 471.9,117.5 475.8,117.5 479.8,117.5 483.7,117.9 487.7,118.7 491.7,119.9 495.6,121.5 499.6,123.4 503.5,125.8 507.5,128.5 509.5,130.0 546.9,130.0 550.8,124.9 554.8,120.2 558.7,115.8 562.7,111.9 566.7,108.3 570.6,105.2 574.6,102.4 578.5,100.0 582.5,98.0 586.5,96.4 590.4,95.2 594.4,94.4 598.3,93.9 602.3,93.9 606.2,94.3 610.2,95.0 614.2,96.1 618.1,97.7 622.1,99.6 626.0,101.9 630.0,104.6 632.0,105.0 671.9,105.0 765.6,105.0 765.6,105.0 853.1,105.0 834.4,105.0 838.3,99.9 842.3,95.2 846.3,90.8 850.2,86.9 854.2,83.3 858.1,80.2 862.1,77.4 866.0,75.0 870.0,73.0 874.0,71.4 877.9,70.2 881.9,69.4 885.8,68.9 889.8,68.9 893.8,69.3 897.7,70.0 901.7,71.1 905.6,72.7 909.6,74.6 913.5,76.9 917.5,79.6 921.5,82.7 925.4,86.1 929.4,90.0 933.3,94.3 937.3,98.9 941.3,103.9 943.2,105.0"/>
+<rect x="0.0" y="161.2" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="155.0" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="148.8" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="142.5" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="136.2" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="130.0" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="123.8" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="117.5" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="111.2" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="105.0" width="6.2" height="6.2" fill="#3ddc84" opacity="0.75"/>
+<text x="8.25" y="136.2" fill="#3ddc84" font-size="11" font-weight="bold">entrada in (esquerda)</text>
+<rect x="893.8" y="98.8" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="92.5" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="86.2" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="80.0" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="73.8" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="67.5" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="61.2" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="55.0" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="48.8" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="893.8" y="42.5" width="6.2" height="6.2" fill="#ff8c42" opacity="0.75"/>
+<text x="902.05" y="73.8" fill="#ff8c42" font-size="11" font-weight="bold">saída out (direita)</text>
+<rect x="8.0" y="190.0" width="14" height="8" fill="#3ddc84"/>
+<text x="26.0" y="198.0" fill="#e8e8e8" font-size="12">entrada</text>
+<rect x="83.0" y="190.0" width="14" height="8" fill="#ff8c42"/>
+<text x="101.0" y="198.0" fill="#e8e8e8" font-size="12">saída</text>
+<rect x="144.0" y="190.0" width="14" height="8" fill="#4fc3ff"/>
+<text x="162.0" y="198.0" fill="#e8e8e8" font-size="12">rota mais rápida</text>
+<text x="8" y="216.0" fill="#cfd6de" font-size="12">tema vale · padrão original: degraus de pulo · ritmo respiro · 72 × 12 blocos de 4 studs · exige jump</text>
+<text x="8" y="234.0" fill="#cfd6de" font-size="12">rota solo ok · rápida 8.1 s · jogador médio 9.2 s · dificuldade alvo 2 / medida 2 · 1 caminho(s)</text>
+</svg>

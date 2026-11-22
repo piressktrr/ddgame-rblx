@@ -1,0 +1,64 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s6-reta",
+ "name": "Reta final",
+ "theme": "cume",
+ "pattern": "original: bifurcação de chegada",
+ "rhythm": "amplo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["jump"], "optional": ["hook", "momentum", "double", "hookthrough"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 9, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 9, "width": 5}
+ ],
+ "lanes": [
+  {"id": "embalo", "name": "balanços por cima, com poleiros", "kind": "rapida", "area": [12, 9, 62, 16]},
+  {"id": "chao", "name": "a pé pelo vale", "kind": "segura", "area": [11, 4, 58, 7]}
+ ],
+ "notes": "Chegada. Rápida: balanços por cima do vale, com dois poleiros HookThrough para pousar entre um e outro. Segura: descer 5 e atravessar o vale a pé, pulando cinco calombos, e subir no fim. Quem erra um balanço cai no vale e segue a pé. A chegada vem logo depois (montador).",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 76,
+  "height": 18,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x..................x.................x................x....................x",
+   "x..................##................##...............##...................x",
+   "x..........................................................................x",
+   "............................................................................",
+   "............................................................................",
+   "............................................................................",
+   "............................................................................",
+   "............................................................................",
+   "xxxxxxxxxx....................hh...............hh................xxxxxxxxxxx",
+   "xxxxxxxxxx.......................................................xxxxxxxxxxx",
+   "xxxxxxxxxx..................................................xxxxxxxxxxxxxxxx",
+   "xxxxxxxxxx......xxx.......xxx.......xxx.......xxx.......xxx.xxxxxxxxxxxxxxxx",
+   "xxxxxxxxxx......xxx.......xxx.......xxx.......xxx.......xxx.xxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

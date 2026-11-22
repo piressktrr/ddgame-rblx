@@ -1,0 +1,61 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s6-gaiola",
+ "name": "Gaiola",
+ "theme": "cume",
+ "pattern": "original: gancho através da grade",
+ "rhythm": "apertado",
+ "difficulty": 4,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["hook", "hookthrough"], "optional": ["momentum", "double", "kill"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 4, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 4, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Corredor com teto de grade HookThrough: o gancho atravessa a grade e prende nos blocos de cima, e o corpo fica colado embaixo da grade. Piso de plataformas com seis vãos vermelhos de 5–6 e três paredes de grade de 5 blocos no caminho (o corpo bate, o gancho passa): passa-se pela fresta de 2 entre a parede e o teto, puxado pelo gancho ou num pulo duplo certeiro. Ensina a ler o preto.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 92,
+  "height": 18,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x..........................................................................................x",
+   "x...........##.....##.....##.....##.....##.....##.....##.....##.....##.....##..............x",
+   "x..........................................................................................x",
+   "x..........................................................................................x",
+   "x..........................................................................................x",
+   "xhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhx",
+   "x..........................................................................................x",
+   "x..........................................................................................x",
+   "......................h.....................h.....................h.........................",
+   "......................h.....................h.....................h.........................",
+   "......................h.....................h.....................h.........................",
+   "......................h.....................h.....................h.........................",
+   "......................h.....................h.....................h.........................",
+   "xxxxxxxxxxxxxxx.....xxxxx......xxxxx......xxxxx......xxxxx......xxxxx......xxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxx.....xxxxx......xxxxx......xxxxx......xxxxx......xxxxx......xxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxkkkkkxxxxxkkkkkkxxxxxkkkkkkxxxxxkkkkkkxxxxxkkkkkkxxxxxkkkkkkxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

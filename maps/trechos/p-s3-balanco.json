@@ -1,0 +1,66 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s3-balanco",
+ "name": "Balanço do vale",
+ "theme": "ventania",
+ "pattern": "original: vão de embalo sobre rota baixa",
+ "rhythm": "amplo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": [], "optional": ["hook", "momentum", "double", "jump", "hookthrough", "kill"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 10, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 10, "width": 5}
+ ],
+ "lanes": [
+  {"id": "balanco", "name": "um balanço só, por cima", "kind": "rapida", "area": [12, 10, 39, 18]},
+  {"id": "baixo", "name": "por baixo, a pé", "kind": "segura", "area": [13, 5, 29, 8]}
+ ],
+ "notes": "Bifurcação do embalo. Rápida: prender no único ponto e soltar no embalo (com pulo duplo no fim) para cruzar 28 blocos de uma vez. Segura: descer 5 blocos, andar pelo piso de baixo pulando calombos e subir por duas plataformas HookThrough. O ponto não é alcançável de baixo (fora da tela), então as rotas não se misturam; quem erra o balanço cai na rota segura. Depois, o vermelho aparece: um vão de 6 (pulo simples) e um de 14 (pulo duplo no limite, ou um balanço curto no ponto de cima).",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 90,
+  "height": 20,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x..................x....................................................x................x",
+   "x..................x....................................................x................x",
+   "x.................###...................................................##...............x",
+   "x........................................................................................x",
+   "..........................................................................................",
+   "..........................................................................................",
+   "..........................................................................................",
+   "..........................................................................................",
+   "..........................................................................................",
+   "xxxxxxxxxxxx............................xxxxxxxxxxxxxxx......xxxxxx..............xxxxxxxxx",
+   "xxxxxxxxxxxx.......................hhh..xxxxxxxxxxxxxxx......xxxxxx..............xxxxxxxxx",
+   "xxxxxxxxxxxx............................xxxxxxxxxxxxxxx......xxxxxx..............xxxxxxxxx",
+   "xxxxxxxxxxxx.....xx......xx....hhh......xxxxxxxxxxxxxxxkkkkkkxxxxxxkkkkkkkkkkkkkkxxxxxxxxx",
+   "xxxxxxxxxxxx.....xx......xx.............xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

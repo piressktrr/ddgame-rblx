@@ -153,3 +153,8 @@ Diário: [diario/2026-11-22.md](diario/2026-11-22.md)
 - **Código (`tools/mapkit/`):** medidas do `Config` ([MEDIDAS_DO_MAPA](../04-game-design/MEDIDAS_DO_MAPA.md)), simulador,
   formato `tiles.json`, Exportar/Importar no MapBuilder, validador.
 - **Estudo:** [validação do Map01](../04-game-design/estudos/validacao-map01.md).
+- **Decisões:** ADRs 0053 (gelo não mata, vermelho volta ao checkpoint e segura o gancho, física do DDNet), 0054
+  (Bouncer continua, lâmina adiada) e 0055 (Map01 sai, mapa novo no MapBuilder, ~8 min).
+- **Escala:** [bloco de 4 studs](../04-game-design/estudos/escala-do-bloco.md) medido nos frames do vídeo.
+- **Proposta A do mapa novo (ADR 0055):** 26 trechos gerados e validados, mapa montado em `maps/proposta-a/` e
+  [estudo para o dono](../04-game-design/estudos/proposta-mapa-a.md) (7 min 10 s para o jogador médio). Q60.

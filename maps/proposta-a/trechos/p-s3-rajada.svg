@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="306" viewBox="0 0 900 306" font-family="sans-serif">
+<defs>
+<pattern id="chk-Unhookable" width="10.465116279069768" height="10.465116279069768" patternUnits="userSpaceOnUse"><rect width="10.465116279069768" height="10.465116279069768" fill="#67809a"/><rect width="5.232558139534884" height="5.232558139534884" fill="#53687c"/><rect x="5.232558139534884" y="5.232558139534884" width="5.232558139534884" height="5.232558139534884" fill="#53687c"/></pattern>
+<pattern id="chk-StartLine" width="10.465116279069768" height="10.465116279069768" patternUnits="userSpaceOnUse"><rect width="10.465116279069768" height="10.465116279069768" fill="#f0f0f5"/><rect width="5.232558139534884" height="5.232558139534884" fill="#3c6ec8"/><rect x="5.232558139534884" y="5.232558139534884" width="5.232558139534884" height="5.232558139534884" fill="#3c6ec8"/></pattern>
+<pattern id="chk-FinishLine" width="10.465116279069768" height="10.465116279069768" patternUnits="userSpaceOnUse"><rect width="10.465116279069768" height="10.465116279069768" fill="#f0f0f5"/><rect width="5.232558139534884" height="5.232558139534884" fill="#19191e"/><rect x="5.232558139534884" y="5.232558139534884" width="5.232558139534884" height="5.232558139534884" fill="#19191e"/></pattern>
+<pattern id="chk-Checkpoint" width="10.465116279069768" height="10.465116279069768" patternUnits="userSpaceOnUse"><rect width="10.465116279069768" height="10.465116279069768" fill="#e3b341"/><rect width="5.232558139534884" height="5.232558139534884" fill="#a87d16"/><rect x="5.232558139534884" y="5.232558139534884" width="5.232558139534884" height="5.232558139534884" fill="#a87d16"/></pattern>
+</defs>
+<rect width="900" height="306" fill="#1c1f26"/>
+<text x="8" y="20" fill="#f0f0f0" font-size="15" font-weight="bold">p-s3-rajada — Rajada</text>
+<rect x="0.0" y="176.5" width="900.0" height="41.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="155.6" width="104.7" height="20.9" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="104.7" y="166.0" width="680.2" height="10.5" fill="#ffd746" opacity="0.73"/>
+<rect x="784.9" y="145.1" width="115.1" height="31.4" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="0.0" y="145.1" width="94.2" height="10.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="115.1" y="145.1" width="136.0" height="10.5" fill="#464b5a" opacity="0.73"/>
+<rect x="272.1" y="145.1" width="136.0" height="10.5" fill="#464b5a" opacity="0.73"/>
+<rect x="429.1" y="145.1" width="125.6" height="10.5" fill="#464b5a" opacity="0.73"/>
+<rect x="575.6" y="145.1" width="125.6" height="10.5" fill="#464b5a" opacity="0.73"/>
+<rect x="722.1" y="145.1" width="62.8" height="10.5" fill="#464b5a" opacity="0.73"/>
+<rect x="251.2" y="134.7" width="20.9" height="10.5" fill="#2d2d34" opacity="0.85"/>
+<rect x="408.1" y="134.7" width="20.9" height="10.5" fill="#2d2d34" opacity="0.85"/>
+<rect x="554.7" y="134.7" width="20.9" height="10.5" fill="#2d2d34" opacity="0.85"/>
+<rect x="701.2" y="134.7" width="20.9" height="10.5" fill="#2d2d34" opacity="0.85"/>
+<rect x="0.0" y="30.0" width="10.5" height="62.8" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="889.5" y="30.0" width="10.5" height="62.8" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="167.4" y="61.4" width="20.9" height="10.5" fill="#96976c" opacity="1.0"/>
+<rect x="324.4" y="61.4" width="20.9" height="10.5" fill="#96976c" opacity="1.0"/>
+<rect x="470.9" y="61.4" width="20.9" height="10.5" fill="#96976c" opacity="1.0"/>
+<rect x="617.4" y="61.4" width="20.9" height="10.5" fill="#96976c" opacity="1.0"/>
+<rect x="167.4" y="30.0" width="10.5" height="31.4" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="324.4" y="30.0" width="10.5" height="31.4" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="470.9" y="30.0" width="10.5" height="31.4" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="617.4" y="30.0" width="10.5" height="31.4" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="10.5" y="30.0" width="157.0" height="10.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="177.9" y="30.0" width="146.5" height="10.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="334.9" y="30.0" width="136.0" height="10.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="481.4" y="30.0" width="136.0" height="10.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<rect x="627.9" y="30.0" width="261.6" height="10.5" fill="url(#chk-Unhookable)" opacity="1.0"/>
+<polyline fill="none" stroke="#4fc3ff" stroke-width="2.0" opacity="0.95" points="-39.2,145.1 23.5,145.1 23.5,145.1 91.6,145.1 91.6,145.1 94.9,140.8 98.2,136.9 101.5,133.2 104.8,129.9 108.1,127.0 111.5,124.3 114.8,122.0 118.1,120.0 121.4,118.3 124.7,117.0 128.0,116.0 131.3,115.3 134.7,114.9 138.0,114.9 141.3,115.2 144.6,115.8 147.9,116.8 151.2,118.0 154.5,119.6 157.8,121.6 161.2,123.8 164.5,126.4 167.8,129.3 171.1,132.6 174.4,128.5 177.7,124.8 181.0,121.5 184.4,118.4 187.7,115.7 191.0,113.3 194.3,111.3 197.6,109.5 200.9,108.1 204.2,107.0 207.6,106.3 210.9,105.9 214.2,105.8 217.5,106.0 220.8,106.6 224.1,107.4 227.4,108.7 230.8,110.2 234.1,112.1 237.4,114.2 240.7,116.8 244.0,119.6 247.3,122.8 250.6,126.3 254.0,130.1 257.3,134.3 258.9,134.7 253.8,134.7 269.5,134.7 269.5,134.7 272.8,134.7 276.1,134.7 279.8,134.7 284.7,133.6 290.4,132.1 296.2,130.7 302.0,129.7 307.9,128.9 313.8,128.3 319.7,128.1 325.6,128.1 331.5,128.5 337.5,128.7 343.4,128.2 349.1,126.8 354.6,124.7 359.9,122.1 365.2,119.9 370.4,118.0 375.7,116.4 380.9,115.1 386.2,114.2 391.5,113.6 396.7,113.3 402.0,111.2 407.2,107.3 412.5,103.8 417.8,100.6 423.0,97.7 428.3,95.2 433.5,93.0 438.8,91.1 444.1,89.5 449.3,88.2 454.6,87.3 459.8,86.7 465.1,86.5 470.4,86.5 475.6,86.9 480.9,87.7 486.2,88.7 491.4,90.1 496.7,91.8 501.9,93.8 507.2,96.2 512.5,98.8 517.7,101.9 523.0,105.2 528.2,108.9 533.5,112.8 538.8,117.2 544.0,121.8 549.3,126.8 554.5,132.1 557.2,134.7 557.3,134.7 560.6,134.7 563.9,134.7 567.2,134.7 571.6,133.9 577.2,132.4 583.0,131.1 588.8,130.0 594.7,129.3 600.6,128.8 606.5,128.6 612.4,128.7 618.3,129.1 624.3,129.9 630.2,131.0 636.2,131.4 642.3,131.2 648.2,130.4 654.1,129.9 660.0,129.7 666.0,127.6 671.9,123.8 677.8,120.2 683.8,117.0 689.7,114.2 695.6,111.6 701.6,109.4 707.5,107.5 713.4,105.9 719.3,104.7 725.3,103.8 731.2,103.2 737.1,102.9 743.1,103.0 749.0,103.4 754.9,104.1 760.9,105.1 766.8,106.5 772.7,108.2 778.7,110.2 784.6,112.6 790.5,115.3 796.4,118.3 802.4,121.6 808.3,125.3 814.2,129.3 820.2,133.6 826.1,138.2 832.0,143.2 835.0,145.1"/>
+<rect x="0.0" y="139.9" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="134.7" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="129.4" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="124.2" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="119.0" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="113.7" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="108.5" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="103.3" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="98.0" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<rect x="0.0" y="92.8" width="5.2" height="5.2" fill="#3ddc84" opacity="0.75"/>
+<text x="7.232558139534884" y="119.0" fill="#3ddc84" font-size="11" font-weight="bold">entrada in (esquerda)</text>
+<rect x="894.8" y="139.9" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="134.7" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="129.4" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="124.2" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="119.0" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="113.7" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="108.5" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="103.3" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="98.0" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<rect x="894.8" y="92.8" width="5.2" height="5.2" fill="#ff8c42" opacity="0.75"/>
+<text x="902.0325581395348" y="119.0" fill="#ff8c42" font-size="11" font-weight="bold">saída out (direita)</text>
+<rect x="8.0" y="228.37209302325584" width="14" height="8" fill="#3ddc84"/>
+<text x="26.0" y="236.37209302325584" fill="#e8e8e8" font-size="12">entrada</text>
+<rect x="83.0" y="228.37209302325584" width="14" height="8" fill="#ff8c42"/>
+<text x="101.0" y="236.37209302325584" fill="#e8e8e8" font-size="12">saída</text>
+<rect x="144.0" y="228.37209302325584" width="14" height="8" fill="#4fc3ff"/>
+<text x="162.0" y="236.37209302325584" fill="#e8e8e8" font-size="12">rota mais rápida</text>
+<text x="8" y="254.37209302325584" fill="#cfd6de" font-size="12">tema ventania · padrão original: balanço e pouso de precisão · ritmo apertado · 86 × 18 blocos de 4 studs · exige hook, momentum</text>
+<text x="8" y="272.37209302325584" fill="#cfd6de" font-size="12">rota solo ok · rápida 7.8 s · jogador médio 14.0 s · dificuldade alvo 4 / medida 5 · 1 caminho(s)</text>
+<text x="8" y="290.37209302325584" fill="#cfd6de" font-size="12">aviso: mecânica exigida &#x27;momentum&#x27; não foi usada por nenhuma rota do validador (dá para passar sem ela)</text>
+</svg>

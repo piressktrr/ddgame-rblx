@@ -1,0 +1,64 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s5-ilhas",
+ "name": "Ilhas suspensas",
+ "theme": "poco",
+ "pattern": "campo de ilhas flutuantes (vídeo), sem freeze",
+ "rhythm": "amplo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["jump"], "optional": ["hook", "momentum", "hookthrough"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 6, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 6, "width": 5}
+ ],
+ "lanes": [
+  {"id": "ganchos", "name": "dois balanços por cima, com um poleiro alto", "kind": "rapida", "area": [17, 9, 54, 16]},
+  {"id": "ilhas", "name": "de ilha em ilha", "kind": "segura", "area": [12, 5, 58, 8]}
+ ],
+ "notes": "Campo de ilhas HookThrough (pisa, o gancho atravessa) com vãos de 3–4 e degraus de 1. Rápida: dois pontos de gancho altos e um poleiro no meio para atravessar em dois balanços. Segura: pular de ilha em ilha. Quem cai pousa no chão 5 blocos abaixo e volta pela esquerda (o fundo não leva à saída). Respiro antes da subida.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 72,
+  "height": 18,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x.................x...........................x........................x",
+   "x.................x...........................x........................x",
+   "x.................##..........................##.......................x",
+   "x......................................................................x",
+   "x......................................................................x",
+   "x......................................................................x",
+   "........................................................................",
+   "..................................hhhh..................................",
+   "........................................................................",
+   "........................................................................",
+   "....................hhhhh............hhhhh...........hhhhhh.............",
+   "xxxxxxxxx...hhhhh...........hhhhh............hhhhh............xxxxxxxxxx",
+   "xxxxxxxxx.....................................................xxxxxxxxxx",
+   "xxxxxxxxx.xx..................................................xxxxxxxxxx",
+   "xxxxxxxxx.xx..................................................xxxxxxxxxx",
+   "xxxxxxxxx.xx..................................................xxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

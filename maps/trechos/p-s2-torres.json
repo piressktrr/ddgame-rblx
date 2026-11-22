@@ -1,0 +1,58 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s2-torres",
+ "name": "Torres geladas",
+ "theme": "torres",
+ "pattern": "torres geladas (vídeo), sem gelo no topo",
+ "rhythm": "apertado",
+ "difficulty": 4,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": [], "optional": ["jump", "hook", "momentum", "unfreeze"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 6, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 8, "width": 5}
+ ],
+ "lanes": [],
+ "notes": "Sete pilares Unhookable de 3 blocos, topos desencontrados (1–2) e um teto todo prendível. Dois jeitos: atravessar pendurado no teto, de balanço em balanço (pousando nos pilares altos), ou pular de pilar em pilar (vãos de 4) sem gancho. Embaixo, chão falso de gelo e fundo de degelo; quem cai anda de volta por baixo dos pilares e sobe os degraus. Na dupla: um fica no pilar e puxa o outro (padrão do vídeo); o validador não simula dupla.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 70,
+  "height": 15,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxx################################################xxxxxxxxxx",
+   "x....................................................................x",
+   "x.....................................................................",
+   "x.....................................................................",
+   "......................................................................",
+   "......................................................................",
+   "..................................xxx...........xxx...................",
+   "....................xxx...........xxx....xxx....xxx....xxx..xxxxxxxxxx",
+   ".............xxx....xxx....xxx....xxx....xxx....xxx....xxx..xxxxxxxxxx",
+   "xxxxxxxx.....xxx....xxx....xxx....xxx....xxx....xxx....xxx..xxxxxxxxxx",
+   "xxxxxxxxxx...xxxffffxxxffffxxxffffxxxffffxxxffffxxxffffxxxffxxxxxxxxxx",
+   "xxxxxxxxxx...xxx....xxx....xxx....xxx....xxx....xxx....xxx..xxxxxxxxxx",
+   "xxxxxxxxxxxx................................................xxxxxxxxxx",
+   "xxxxxxxxxxxxuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}

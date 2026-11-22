@@ -1,0 +1,62 @@
+{
+ "format": "race-and-escape/chunk@1",
+ "id": "p-s2-patamar",
+ "name": "Patamar das pontes",
+ "theme": "torres",
+ "pattern": "original: duas pistas paralelas",
+ "rhythm": "amplo",
+ "difficulty": 3,
+ "solo": true,
+ "checkpoint_end": false,
+ "mechanics": {"required": ["jump"], "optional": ["walk", "double", "hookthrough"]},
+ "doors": [
+  {"id": "in", "role": "entry", "side": "L", "pos": 1, "width": 5},
+  {"id": "out", "role": "exit", "side": "R", "pos": 5, "width": 5}
+ ],
+ "lanes": [
+  {"id": "ponte", "name": "pela ponte alta", "kind": "rapida", "area": [14, 7, 53, 11]},
+  {"id": "chao", "name": "pelo chão, pulando calombos", "kind": "segura", "area": [14, 1, 49, 4]}
+ ],
+ "notes": "Duas pistas paralelas, sem gancho: a ponte alta (HookThrough — pisa, mas o gancho atravessa) é reta com dois vãos de 4–5; o chão tem calombos de 2. Ninguém se perde aqui.",
+ "tiles": {
+  "cell": 4,
+  "origin": [0, 0],
+  "width": 72,
+  "height": 16,
+  "legend": {
+   ".": null,
+   "#": "Block",
+   "x": "Unhookable",
+   "h": "HookThrough",
+   "f": "Freeze",
+   "u": "Unfreeze",
+   "o": "OneWay",
+   "k": "Kill",
+   "g": "HookOnce",
+   "S": "StartLine",
+   "F": "FinishLine",
+   "s": "SoloStart",
+   "e": "SoloEnd",
+   "c": "Checkpoint",
+   "R": "RaceStart"
+  },
+  "rows": [
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "x......................................................................x",
+   "x......................................................................x",
+   "x......................................................................x",
+   "x......................................................................x",
+   "x......................................................................x",
+   "x.......................................................................",
+   "x.......................................................................",
+   "x.......................................................................",
+   "x.............hhhhhhhhhhhhhh....hhhhhhhhhhhh....hhhhhh..................",
+   "........................................................................",
+   ".........hhhh...........................................xxxxxxxxxxxxxxxx",
+   "........................................................xxxxxxxxxxxxxxxx",
+   "....hhhh.......xx.....xx.....xx.....xx.....xx.....xxxxxxxxxxxxxxxxxxxxxx",
+   "...............xx.....xx.....xx.....xx.....xx.....xxxxxxxxxxxxxxxxxxxxxx",
+   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ]
+ }
+}
